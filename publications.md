@@ -2118,28 +2118,6 @@ Model overview. The image is split into fixed-size patches; each patch is linear
 </td>
 </tr>
 <tr>
-<td></td>
-<td markdown="block">
-<details>
-<summary markdown="span"><span class="pub-title">Finetuned Language Models Are Zero-Shot Learners (FLAN)</span><span class="pub-meta">, Google (ICLR 2022)</span><a class="pub-link" href="https://arxiv.org/abs/2109.01652" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
-<div class="pub-notes" markdown="block">
-
-The paper presents a simple method for improving the [zero-shot learning](https://en.wikipedia.org/wiki/Zero-shot_learning) abilities of language models. It shows that **instruction tuning** -- finetuning language models on a collection of over 60 NLP datasets described via instructions -- substantially improves zero-shot performance on unseen tasks.
-The intuition is that NLP tasks can be described via natural language instructions, so performing instruction tuning teaches the model to follow instructions, also for unseen tasks.
-
-For each dataset, the authors manually compose ten unique templates that use natural language instructions to describe the task for that dataset. The resulting 137B model (FLAN) surpasses zero-shot 175B GPT-3 on 20 of the 25 datasets evaluated, and even beats few-shot GPT-3 by a large margin on ANLI, RTE, BoolQ, AI2-ARC, OpenbookQA, and StoryCloze. The following picture illustrates how one example (a premise, a hypothesis and the target options) is written with different instruction templates:
-
-{: .picture}
-<img loading="lazy" width="88.2%" height="88.2%" src="{{ site.assets }}/publications/finetune_language_models.svg"/>
-
-{: .caption}
-Multiple instruction templates describing a natural language inference task. Adapted from: [Finetuned Language Models Are Zero-Shot Learners](https://arxiv.org/abs/2109.01652)
-
-</div>
-</details>
-</td>
-</tr>
-<tr>
 <td><span class="post-label">2020</span></td>
 <td markdown="block">
 <details>
