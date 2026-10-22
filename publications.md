@@ -2231,7 +2231,7 @@ for generating useful multi-hop connections".
 The following picture illustrates a stack of GT layers, where each layer selects edge types with a 1x1 convolution, and the selected adjacency matrices are multiplied into meta-path graphs:
 
 {: .picture}
-<img loading="lazy" width="92.2%" height="92.2%" src="{{ site.assets }}/publications/graph_transformer_networks.svg"/>
+<img loading="lazy" width="92.3%" height="92.3%" src="{{ site.assets }}/publications/graph_transformer_networks.svg"/>
 
 {: .caption}
 Graph Transformer Networks (GTNs) learn to generate a set of new meta-path adjacency matrices 𝔸<sup>(<i>l</i>)</sup> using GT layers and perform graph convolution as in GCNs on the new graph structures. Multiple node representations from the same GCNs on multiple meta-path graphs are integrated by concatenation and improve the performance of node classification. ℚ<sub>1</sub><sup>(<i>l</i>)</sup> and ℚ<sub>2</sub><sup>(<i>l</i>)</sup> ∈ <b>R</b><sup><i>N</i>×<i>N</i>×<i>C</i></sup> are intermediate adjacency tensors to compute meta-paths at the <i>l</i>th layer. Adapted from: [Graph Transformer Networks](https://arxiv.org/abs/1911.06455)

@@ -3960,43 +3960,43 @@
         <mxCell id="graph_transformer_networks-281" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#82b366;strokeWidth=1.4;endFill=1;endSize=5;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="graph_transformer_networks-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="75.6" y="185.59" as="sourcePoint" />
-            <mxPoint x="164.53" y="58.8" as="targetPoint" />
+            <mxPoint x="167.47" y="54.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="graph_transformer_networks-282" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#d79b00;strokeWidth=1.4;endFill=1;endSize=5;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="graph_transformer_networks-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="75.6" y="186.11" as="sourcePoint" />
-            <mxPoint x="158.6" y="186.11" as="targetPoint" />
+            <mxPoint x="168" y="186.11" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="graph_transformer_networks-283" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#d79b00;strokeWidth=1.4;endFill=1;endSize=5;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="graph_transformer_networks-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="75.6" y="186.64" as="sourcePoint" />
-            <mxPoint x="164.53" y="353.64" as="targetPoint" />
+            <mxPoint x="167.47" y="359.17" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="graph_transformer_networks-284" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#82b366;strokeWidth=1.4;endFill=1;endSize=5;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="graph_transformer_networks-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="211.84" y="43.84" as="sourcePoint" />
-            <mxPoint x="239.66" y="43.84" as="targetPoint" />
+            <mxPoint x="246.49" y="43.84" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="graph_transformer_networks-285" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#82b366;strokeWidth=1.4;endFill=1;endSize=5;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="graph_transformer_networks-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="213.94" y="173.51" as="sourcePoint" />
-            <mxPoint x="241.24" y="173.51" as="targetPoint" />
+            <mxPoint x="246.22" y="173.51" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="graph_transformer_networks-286" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#82b366;strokeWidth=1.4;endFill=1;endSize=5;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="graph_transformer_networks-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="211.84" y="341.78" as="sourcePoint" />
-            <mxPoint x="239.14" y="341.78" as="targetPoint" />
+            <mxPoint x="246.22" y="341.78" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="graph_transformer_networks-288" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4;fontFamily=Source Sans 3;" edge="1" parent="graph_transformer_networks-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="332.59" y="158.55" as="sourcePoint" />
-            <mxPoint x="366.35" y="87.73" as="targetPoint" />
+            <mxPoint x="366.35" y="90.06" as="targetPoint" />
             <Array as="points">
               <mxPoint x="366.35" y="158.55" />
             </Array>
@@ -4014,13 +4014,13 @@
         <mxCell id="graph_transformer_networks-290" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4;fontFamily=Source Sans 3;" edge="1" parent="graph_transformer_networks-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="521.22" y="141.75" as="sourcePoint" />
-            <mxPoint x="521.22" y="191.84" as="targetPoint" />
+            <mxPoint x="521.22" y="189.61" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="graph_transformer_networks-291" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4;fontFamily=Source Sans 3;" edge="1" parent="graph_transformer_networks-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="331.54" y="327.07" as="sourcePoint" />
-            <mxPoint x="521.22" y="207.38" as="targetPoint" />
+            <mxPoint x="521.22" y="209.61" as="targetPoint" />
             <Array as="points">
               <mxPoint x="521.22" y="327.07" />
             </Array>
@@ -4028,14 +4028,14 @@
         </mxCell>
         <mxCell id="graph_transformer_networks-297" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#82b366;strokeWidth=1.4;endFill=1;endSize=5;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="graph_transformer_networks-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="374.06" y="80.59" as="sourcePoint" />
-            <mxPoint x="393.49" y="80.59" as="targetPoint" />
+            <mxPoint x="376.35" y="80.06" as="sourcePoint" />
+            <mxPoint x="397.95" y="80.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="graph_transformer_networks-298" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#82b366;strokeWidth=1.4;endFill=1;endSize=5;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="graph_transformer_networks-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="529.2" y="199.76" as="sourcePoint" />
-            <mxPoint x="547.31" y="199.76" as="targetPoint" />
+            <mxPoint x="531.22" y="199.61" as="sourcePoint" />
+            <mxPoint x="554.14" y="199.61" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="graph_transformer_networks-369" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#d6b656;strokeWidth=1.4;endFill=1;endSize=5;startSize=4;curved=1;fontFamily=Source Sans 3;" edge="1" parent="graph_transformer_networks-figure">
@@ -4067,7 +4067,7 @@
         <mxCell id="graph_transformer_networks-371" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#d79b00;strokeWidth=1.4;endFill=1;endSize=5;startSize=4;fontFamily=Source Sans 3;" edge="1" parent="graph_transformer_networks-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="644.44" y="179.81" as="sourcePoint" />
-            <mxPoint x="673.31" y="179.81" as="targetPoint" />
+            <mxPoint x="679.88" y="179.81" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="graph_transformer_networks-372" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#d6b656;strokeWidth=1.4;endFill=1;endSize=5;startSize=4;fontFamily=Source Sans 3;" edge="1" parent="graph_transformer_networks-figure">
@@ -4094,7 +4094,7 @@
             <mxPoint x="756.26" y="183.49" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="graph_transformer_networks-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
+        <mxCell id="graph_transformer_networks-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
           <mxGeometry x="15.49" y="156.97" width="59.59" height="58.27" as="geometry" />
         </mxCell>
         <mxCell id="graph_transformer_networks-2" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
@@ -4103,7 +4103,7 @@
         <mxCell id="graph_transformer_networks-3" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
           <mxGeometry x="57.91" y="159.86" width="4.2" height="4.2" as="geometry" />
         </mxCell>
-        <mxCell id="graph_transformer_networks-4" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
+        <mxCell id="graph_transformer_networks-4" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
           <mxGeometry x="10.5" y="161.96" width="59.59" height="58.27" as="geometry" />
         </mxCell>
         <mxCell id="graph_transformer_networks-5" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
@@ -4115,10 +4115,10 @@
         <mxCell id="graph_transformer_networks-7" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
           <mxGeometry x="62.21" y="175.66" width="4.2" height="4.2" as="geometry" />
         </mxCell>
-        <mxCell id="graph_transformer_networks-8" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
+        <mxCell id="graph_transformer_networks-8" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
           <mxGeometry x="4.73" y="167.74" width="59.59" height="58.27" as="geometry" />
         </mxCell>
-        <mxCell id="graph_transformer_networks-9" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
+        <mxCell id="graph_transformer_networks-9" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
           <mxGeometry x="0" y="172.46" width="59.59" height="58.27" as="geometry" />
         </mxCell>
         <mxCell id="graph_transformer_networks-10" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="graph_transformer_networks-figure">
@@ -4187,7 +4187,7 @@
         <mxCell id="graph_transformer_networks-27" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
           <mxGeometry x="33.44" y="221.81" width="4.2" height="4.2" as="geometry" />
         </mxCell>
-        <mxCell id="graph_transformer_networks-28" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="graph_transformer_networks-figure">
+        <mxCell id="graph_transformer_networks-28" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="graph_transformer_networks-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="0" y="172.46" as="sourcePoint" />
             <mxPoint x="15.49" y="156.97" as="targetPoint" />
@@ -4199,12 +4199,13 @@
             <mxPoint x="75.08" y="156.97" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="graph_transformer_networks-30" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="graph_transformer_networks-figure">
+        <mxCell id="graph_transformer_networks-30" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="graph_transformer_networks-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="59.59" y="230.74" as="sourcePoint" />
             <mxPoint x="75.08" y="215.25" as="targetPoint" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="graph_transformer_networks-outline-37" value="" edge="1" parent="graph_transformer_networks-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="0" y="172.46" as="sourcePoint" /><mxPoint x="15.49" y="156.97" as="targetPoint" /><Array as="points"><mxPoint x="15.49" y="156.97" /><mxPoint x="75.08" y="156.97" /><mxPoint x="75.08" y="215.24" /><mxPoint x="59.59" y="230.73" /><mxPoint x="0" y="230.73" /><mxPoint x="0" y="172.46" /></Array></mxGeometry></mxCell>
         <mxCell id="graph_transformer_networks-32" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#82b366;fontSize=16;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
           <mxGeometry x="167.47" y="25.46" width="17.85" height="18.38" as="geometry" />
         </mxCell>
@@ -5052,10 +5053,10 @@
           <mxGeometry x="517.78" y="120.36" width="1.84" height="1.84" as="geometry" />
         </mxCell>
         <mxCell id="graph_transformer_networks-295" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=16;shape=sumEllipse;perimeter=ellipsePerimeter;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
-          <mxGeometry x="358.63" y="72.34" width="15.44" height="15.44" as="geometry" />
+          <mxGeometry x="356.35" y="70.06" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="graph_transformer_networks-296" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=16;shape=sumEllipse;perimeter=ellipsePerimeter;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
-          <mxGeometry x="513.45" y="191.89" width="15.44" height="15.44" as="geometry" />
+          <mxGeometry x="511.22" y="189.61" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="graph_transformer_networks-299" value="" style="shape=cube;whiteSpace=wrap;html=1;flipH=1;size=7.35;fillColor=#ffffff;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;rounded=0;" vertex="1" parent="graph_transformer_networks-figure">
           <mxGeometry x="416.85" y="29.14" width="66.15" height="64.05" as="geometry" />
@@ -5375,14 +5376,14 @@
         <mxCell id="graph_transformer_networks-279" value="ℚ&lt;sub style=&quot;vertical-align:-0.3em;line-height:0;&quot;&gt;2&lt;/sub&gt;&lt;sup style=&quot;margin-left:-0.56em;vertical-align:0.75em;line-height:0;&quot;&gt;(1)&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=16;spacing=0;spacingLeft=3.19;spacingRight=3.19;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
           <mxGeometry x="262.26" y="226.28" width="46.48" height="19.2" as="geometry" />
         </mxCell>
-        <mxCell id="graph_transformer_networks-280" value="ℚ&lt;sub style=&quot;vertical-align:-0.3em;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;sup style=&quot;margin-left:-0.56em;vertical-align:0.75em;line-height:0;&quot;&gt;(&lt;i&gt;l&lt;/i&gt;)&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=16;spacing=0;spacingLeft=3.19;spacingRight=3.19;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
-          <mxGeometry x="263.31" y="394.28" width="42.93" height="19.2" as="geometry" />
+        <mxCell id="graph_transformer_networks-280" value="ℚ&lt;sub style=&quot;vertical-align:-0.3em;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;sup style=&quot;margin-left:-0.56em;vertical-align:0.75em;line-height:0;&quot;&gt;(𝑙)&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=16;spacing=0;spacingLeft=3.19;spacingRight=3.19;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
+          <mxGeometry x="263.31" y="394.28" width="44.93" height="19.2" as="geometry" />
         </mxCell>
         <mxCell id="graph_transformer_networks-330" value="𝔸&lt;sup&gt;(1)&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=16;spacing=0;spacingLeft=2.96;spacingRight=2.96;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
           <mxGeometry x="412.94" y="120.38" width="38.02" height="19.2" as="geometry" />
         </mxCell>
-        <mxCell id="graph_transformer_networks-366" value="𝔸&lt;sup&gt;(&lt;i&gt;l&lt;/i&gt;)&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=16;spacing=0;spacingLeft=2.96;spacingRight=2.96;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
-          <mxGeometry x="568.34" y="242.19" width="34.47" height="19.2" as="geometry" />
+        <mxCell id="graph_transformer_networks-366" value="𝔸&lt;sup&gt;(𝑙)&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=16;spacing=0;spacingLeft=2.96;spacingRight=2.96;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
+          <mxGeometry x="568.34" y="242.19" width="36.47" height="19.2" as="geometry" />
         </mxCell>
         <mxCell id="graph_transformer_networks-368" value="GCN" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;spacing=0;spacingLeft=3.33;spacingRight=3.33;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="graph_transformer_networks-figure">
           <mxGeometry x="679.38" y="174.61" width="37.22" height="16.8" as="geometry" />
