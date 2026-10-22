@@ -124,7 +124,7 @@ I also keep a curated list of <a href="{{ site.publications_permalink }}">public
 <tr>
 <td><span class="post-label">univ</span></td>
 <td>
-  <a href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/">Introduction to Machine Learning (Princeton COS 324)</a><a class="pub-link" href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a> <span style="white-space: nowrap;">(<a href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/files/backprop.pdf">Computing Gradients with Backpropagation</a><a class="pub-link" href="{{ site.assets }}/resources/princeton_course_autodiff.pdf" target="_blank" rel="noopener" title="Download the PDF"><i class="fa-solid fa-download" aria-hidden="true"></i></a>)</span>
+  <a href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/">Introduction to Machine Learning - Automatic Differentiation (Princeton COS 324)</a><a class="pub-link" href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a><a class="pub-link" href="{{ site.assets }}/resources/princeton_course_autodiff.pdf" target="_blank" rel="noopener" title="Download the PDF"><i class="fa-solid fa-download" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>
