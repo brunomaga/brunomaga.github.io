@@ -139,7 +139,7 @@ Having a single edge between each pair of nodes is often not the case in real-li
 The solution starts by defining a data format that can hold high-cardinality elements per pair of graph nodes. It is called the **extended CSR**, or XCSR for short, and is defined as the previous CSR data structure with an added dimension that holds the number of elements per matrix cell (or edges between pairs of nodes). The layout is as follows:
 
 {: .picture}
-<img width="98.8%" height="98.8%" src="{{ site.assets }}/matrix-transpose/xcrs_format.svg">
+<img width="99.7%" height="99.7%" src="{{ site.assets }}/matrix-transpose/xcrs_format.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)
