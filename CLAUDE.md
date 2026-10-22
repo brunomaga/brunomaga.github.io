@@ -154,11 +154,16 @@ word helps:
   company where it was developed.
 - Only these two posts have these limits: the other posts, the drafts and the publications page name hardware,
   vendors and libraries as usual.
-- The expert parallelism post shows each communication model once, in one picture each, in the order of its
-  argument: AllGather-ReduceScatter; its INC form, with fewer relays and less bandwidth; All-to-All, which avoids
-  the worst case of AllGather (every token sent to every rank); its INC form, All-to-All-Unique and
-  All-to-All-Reduce; and the partial collectives (One-to-Many and Many-to-One), which lower the memory that INC
-  All-to-All needs in the switch.
+- Exception, at the user's request (2026-10-22): the expert parallelism post names the INC switches and deployments
+  that it cites as other work (SHArP, SHARPv2, NVLink SHARP, Megatron-Core, vLLM, DeepSeek-V3 and DeepSeek-V4).
+  The hardware and libraries of the post's own experiments stay unnamed.
+- The expert parallelism post shows each communication model once, in one picture each followed by its table of
+  operations, steps and relays (from the paper's appendix), in this order: AllGather-ReduceScatter; All-to-All,
+  which sends each rank only the tokens it needs but needs a count exchange first; then in-network computing (INC)
+  and the INC form of AllGather-ReduceScatter, which removes two steps (pack and global reduce); the INC
+  All-to-All, as All-to-All-Unique and All-to-All-Reduce; and the partial collectives (One-to-Many-Unique and
+  Many-to-One-Reduce), which lower the memory that INC All-to-All needs in the switch. No INC picture appears before
+  INC is introduced. The two timelines of the collective and partial collective combine stand side by side.
 
 ### Titles
 

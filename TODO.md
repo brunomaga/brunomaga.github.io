@@ -1079,21 +1079,6 @@ Content problems that need the author's decision, such as overlap between posts.
   partial collective operations (its table of collective and partial collective results) and the number of microbatches in
   flight with the memory each one takes. The post shows the two decode placeholders with a note in their captions,
   and leaves the rest out. Fix: add these results to the post once the paper has them.
-- The SHArP reference of the section In-network computing links to a PDF on the website of a network vendor
-  (network.nvidia.com), in one of the two posts that follow "The author's papers". The text names no vendor, but the
-  link does. Fix: link the paper's page in IEEE Xplore instead (Graham et al., "Scalable Hierarchical Aggregation
-  Protocol (SHArP): A Hardware Architecture for Efficient Data Reduction", COMHPC 2016), after checking its address;
-  or keep the link if the user accepts a vendor address for cited work.
-- Results, the AllGather-ReduceScatter backend: "the results have the same shape and are slightly smaller:
-  MegaKernel+INC improves on the Baseline by 8.9% to 18.5%, and on MegaKernel by up to 10.6%". The gain over the
-  Baseline is about that of All-to-All (8.7% to 19.2% from the values of `ep_results.svg`), and the gain over
-  MegaKernel is larger than with All-to-All (up to 7.8%), so "slightly smaller" does not say what is smaller. Fix:
-  check the numbers in the paper and write, e.g., "the results have the same shape: MegaKernel+INC improves on the
-  Baseline by 8.9% to 18.5%, about as much as with All-to-All, and on MegaKernel by up to 10.6%, more than with
-  All-to-All".
-- A new version of the paper is in the paper's repository. Proposed fix, in iteration 3, after the merge of iteration
-  2: update the text of the post where the new version of the paper changes it. The new pictures of the paper come
-  with the picture work, which owns the figure files.
 
 ### Knowledge distillation, speculative decoding and multi-token prediction (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
 
