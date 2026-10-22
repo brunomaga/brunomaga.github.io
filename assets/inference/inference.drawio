@@ -9593,7 +9593,7 @@
             <mxPoint x="61.5" y="57.4" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="quantization_mapping-4" value="-3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="quantization_mapping-figure">
+        <mxCell id="quantization_mapping-4" value="−3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="quantization_mapping-figure">
           <mxGeometry x="53" y="27.2" width="17" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="quantization_mapping-5" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;labelBackgroundColor=#ffffff;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="quantization_mapping-figure">
@@ -9602,7 +9602,7 @@
             <mxPoint x="181.5" y="57.4" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="quantization_mapping-6" value="-1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="quantization_mapping-figure">
+        <mxCell id="quantization_mapping-6" value="−1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="quantization_mapping-figure">
           <mxGeometry x="173" y="27.2" width="17" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="quantization_mapping-7" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;labelBackgroundColor=#ffffff;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="quantization_mapping-figure">
@@ -9648,7 +9648,7 @@
           <mxGeometry x="284.5" y="47.4" width="10" height="10" as="geometry" />
         </mxCell>
         <mxCell id="quantization_mapping-18" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;shape=ellipse;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="quantization_mapping-figure">
-          <mxGeometry x="302.5" y="47.4" width="10" height="10" as="geometry" />
+          <mxGeometry x="308.5" y="47.4" width="10" height="10" as="geometry" />
         </mxCell>
         <mxCell id="quantization_mapping-19" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;shape=ellipse;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="quantization_mapping-figure">
           <mxGeometry x="350.5" y="47.4" width="10" height="10" as="geometry" />
@@ -9668,7 +9668,7 @@
         <mxCell id="quantization_mapping-23" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="quantization_mapping-figure">
           <mxGeometry x="57.5" y="128.4" width="8" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="quantization_mapping-24" value="-7" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="quantization_mapping-figure">
+        <mxCell id="quantization_mapping-24" value="−7" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="quantization_mapping-figure">
           <mxGeometry x="53" y="138.2" width="17" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="quantization_mapping-25" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="quantization_mapping-figure">
@@ -9749,7 +9749,7 @@
             <mxPoint x="61.5" y="231.4" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="quantization_mapping-47" value="-3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="quantization_mapping-figure">
+        <mxCell id="quantization_mapping-47" value="−3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="quantization_mapping-figure">
           <mxGeometry x="53" y="201.2" width="17" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="quantization_mapping-48" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;labelBackgroundColor=#ffffff;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="quantization_mapping-figure">
@@ -9758,7 +9758,7 @@
             <mxPoint x="181.5" y="231.4" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="quantization_mapping-49" value="-1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="quantization_mapping-figure">
+        <mxCell id="quantization_mapping-49" value="−1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="quantization_mapping-figure">
           <mxGeometry x="173" y="201.2" width="17" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="quantization_mapping-50" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;labelBackgroundColor=#ffffff;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="quantization_mapping-figure">
@@ -9804,7 +9804,7 @@
           <mxGeometry x="284.5" y="221.4" width="10" height="10" as="geometry" />
         </mxCell>
         <mxCell id="quantization_mapping-61" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;shape=ellipse;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="quantization_mapping-figure">
-          <mxGeometry x="302.5" y="221.4" width="10" height="10" as="geometry" />
+          <mxGeometry x="308.5" y="221.4" width="10" height="10" as="geometry" />
         </mxCell>
         <mxCell id="quantization_mapping-62" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;shape=ellipse;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="quantization_mapping-figure">
           <mxGeometry x="350.5" y="221.4" width="10" height="10" as="geometry" />
