@@ -2863,7 +2863,7 @@
         <mxCell id="performers-58" value="𝔼" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="performers-figure">
           <mxGeometry x="281.16" y="56.69" width="19.45" height="23.2" as="geometry" />
         </mxCell>
-        <mxCell id="performers-61" value="&lt;i&gt;O&lt;/i&gt;(&lt;i&gt;L&lt;/i&gt;&lt;i&gt;m&lt;/i&gt;&lt;i&gt;d&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="performers-figure">
+        <mxCell id="performers-61" value="&lt;i&gt;O&lt;/i&gt;(&lt;i&gt;L&lt;/i&gt;&lt;i&gt;m&lt;/i&gt;&lt;i&gt;d&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="performers-figure">
           <mxGeometry x="329.18" y="7.45" width="46.32" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="performers-72" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="performers-figure">
@@ -2932,7 +2932,7 @@
         <mxCell id="performers-83" value="Q′" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="performers-figure">
           <mxGeometry x="329.72" y="161.65" width="23.95" height="23.2" as="geometry" />
         </mxCell>
-        <mxCell id="performers-85" value="&lt;i&gt;O&lt;/i&gt;(&lt;i&gt;L&lt;/i&gt;&lt;i&gt;m&lt;/i&gt;&lt;i&gt;d&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="performers-figure">
+        <mxCell id="performers-85" value="&lt;i&gt;O&lt;/i&gt;(&lt;i&gt;L&lt;/i&gt;&lt;i&gt;m&lt;/i&gt;&lt;i&gt;d&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="performers-figure">
           <mxGeometry x="417.6" y="13.84" width="46.32" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="performers-96" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="performers-figure">
