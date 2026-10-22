@@ -123,7 +123,7 @@ The model proposes a network of 10000 simulated LIF neurons (80% excitatory, 20%
 <img width="33.4%" height="33.4%" src="{{ site.assets }}/lif-brunel/network.svg">
 
 {: .caption}
-The Brunel network: $$N_E$$ excitatory neurons (E) and $$N_I$$ inhibitory neurons (I). Each neuron receives $$C_E$$ connections from excitatory neurons, $$C_I$$ from inhibitory neurons, and $$C_E$$ from Poisson generators (PG). Arrows are excitatory connections, and open circles inhibitory ones. Adapted from: [NEST by Example, Fig. 2](https://www.nest-simulator.org/wp-content/uploads/2015/02/NEST_by_Example.pdf)
+The Brunel network: $$N_E$$ excitatory neurons (E) and $$N_I$$ inhibitory neurons (I). Each neuron receives $$C_E$$ connections from excitatory neurons, $$C_I$$ from inhibitory neurons, and $$C_E$$ from Poisson generators (PG). Arrows are excitatory connections, and flat bars inhibitory ones. Adapted from: [NEST by Example, Fig. 2](https://www.nest-simulator.org/wp-content/uploads/2015/02/NEST_by_Example.pdf)
 
 The tricky part here is to define the parameters of the network in terms of connectivity, synaptic weights, firing threshold, etc. The original [paper][brunel-paper] describes them in detail, but for simplicity, they are summarized in the tables below: 
 
