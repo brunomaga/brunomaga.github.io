@@ -8791,186 +8791,285 @@
           <mxGeometry x="0" y="1890.17" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="1930.17" width="522.67" height="141.06" as="geometry" />
+          <mxGeometry x="0" y="1930.17" width="675.33" height="141.06" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial-1" value="parameters" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_serial-figure">
-          <mxGeometry x="114.44" y="0" width="69.8" height="20.8" as="geometry" />
+          <mxGeometry x="146.43" y="0" width="69.8" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial-2" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="149.33" y="19.73" as="sourcePoint" />
-            <mxPoint x="84" y="43.06" as="targetPoint" />
+            <mxPoint x="181.33" y="19.73" as="sourcePoint" />
+            <mxPoint x="85.33" y="41.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_serial-3" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="149.33" y="19.73" as="sourcePoint" />
-            <mxPoint x="149.33" y="43.06" as="targetPoint" />
+            <mxPoint x="181.33" y="19.73" as="sourcePoint" />
+            <mxPoint x="181.33" y="41.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_serial-4" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="149.33" y="19.73" as="sourcePoint" />
-            <mxPoint x="214.67" y="43.06" as="targetPoint" />
+            <mxPoint x="181.33" y="19.73" as="sourcePoint" />
+            <mxPoint x="277.33" y="41.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_serial-5" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_serial-figure">
-          <mxGeometry x="70" y="43.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="71.33" y="41.73" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial-6" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="84" y="64.06" as="sourcePoint" />
-            <mxPoint x="84" y="75.73" as="targetPoint" />
+            <mxPoint x="85.33" y="62.73" as="sourcePoint" />
+            <mxPoint x="85.33" y="75.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_serial-7" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_serial-figure">
-          <mxGeometry x="135.33" y="43.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="167.33" y="41.73" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial-8" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="149.33" y="64.06" as="sourcePoint" />
-            <mxPoint x="149.33" y="75.73" as="targetPoint" />
+            <mxPoint x="181.33" y="62.73" as="sourcePoint" />
+            <mxPoint x="181.33" y="75.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_serial-9" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_serial-figure">
-          <mxGeometry x="200.67" y="43.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="263.33" y="41.73" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial-10" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="214.67" y="64.06" as="sourcePoint" />
-            <mxPoint x="214.67" y="75.73" as="targetPoint" />
+            <mxPoint x="277.33" y="62.73" as="sourcePoint" />
+            <mxPoint x="277.33" y="75.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_serial-11" value="Linear" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_serial-figure">
-          <mxGeometry x="70" y="75.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="71.33" y="75.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial-12" value="Relu" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_serial-figure">
-          <mxGeometry x="102.67" y="75.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="119.33" y="75.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial-13" value="Linear" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_serial-figure">
-          <mxGeometry x="135.33" y="75.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="167.33" y="75.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial-14" value="Relu" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_serial-figure">
-          <mxGeometry x="168" y="75.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="215.33" y="75.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial-15" value="Linear" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_serial-figure">
-          <mxGeometry x="200.67" y="75.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="263.33" y="75.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial-16" value="Relu" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_serial-figure">
-          <mxGeometry x="233.33" y="75.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="311.33" y="75.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial-17" value="bwd R" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_serial-figure">
-          <mxGeometry x="289.33" y="75.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="359.33" y="75.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial-18" value="bwd L" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_serial-figure">
-          <mxGeometry x="322" y="75.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="407.33" y="75.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial-19" value="bwd R" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_serial-figure">
-          <mxGeometry x="354.67" y="75.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="455.33" y="75.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial-20" value="bwd L" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_serial-figure">
-          <mxGeometry x="387.33" y="75.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="503.33" y="75.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial-21" value="bwd R" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_serial-figure">
-          <mxGeometry x="420" y="75.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="551.33" y="75.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial-22" value="bwd L" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_serial-figure">
-          <mxGeometry x="452.67" y="75.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="599.33" y="75.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial-23" value="optim" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#ffe6cc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_serial-figure">
-          <mxGeometry x="494.67" y="75.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="647.33" y="75.73" width="28" height="65.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_serial-24" value="Data 1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_serial-figure">
-          <mxGeometry x="0" y="78.06" width="51.33" height="23.33" as="geometry" />
+        <mxCell id="dnn_serial-24" value="Data 1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_serial-figure">
+          <mxGeometry x="0" y="96.73" width="51.33" height="23.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial-25" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="25.67" y="101.39" as="sourcePoint" />
-            <mxPoint x="70" y="127.06" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="25.67" y="127.06" />
-            </Array>
+            <mxPoint x="51.33" y="108.4" as="sourcePoint" />
+            <mxPoint x="71.33" y="108.4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_serial-f1" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="99.33" y="108.4" as="sourcePoint" />
+            <mxPoint x="119.33" y="108.4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_serial-f2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="147.33" y="108.4" as="sourcePoint" />
+            <mxPoint x="167.33" y="108.4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_serial-f3" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="195.33" y="108.4" as="sourcePoint" />
+            <mxPoint x="215.33" y="108.4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_serial-f4" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="243.33" y="108.4" as="sourcePoint" />
+            <mxPoint x="263.33" y="108.4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_serial-f5" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="291.33" y="108.4" as="sourcePoint" />
+            <mxPoint x="311.33" y="108.4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_serial-f6" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="339.33" y="108.4" as="sourcePoint" />
+            <mxPoint x="359.33" y="108.4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_serial-f7" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="387.33" y="108.4" as="sourcePoint" />
+            <mxPoint x="407.33" y="108.4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_serial-f8" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="435.33" y="108.4" as="sourcePoint" />
+            <mxPoint x="455.33" y="108.4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_serial-f9" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="483.33" y="108.4" as="sourcePoint" />
+            <mxPoint x="503.33" y="108.4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_serial-f10" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="531.33" y="108.4" as="sourcePoint" />
+            <mxPoint x="551.33" y="108.4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_serial-f11" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="579.33" y="108.4" as="sourcePoint" />
+            <mxPoint x="599.33" y="108.4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_serial-f12" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="627.33" y="108.4" as="sourcePoint" />
+            <mxPoint x="647.33" y="108.4" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_serial_compiled-label" value="dnn_serial_compiled.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="2131.23" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial_compiled-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="2171.23" width="522.67" height="98" as="geometry" />
+          <mxGeometry x="0" y="2171.23" width="675.33" height="141.06" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial_compiled-1" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_serial_compiled-figure">
-          <mxGeometry x="70" y="0" width="28" height="21" as="geometry" />
+          <mxGeometry x="71.33" y="41.73" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial_compiled-2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="84" y="21" as="sourcePoint" />
-            <mxPoint x="84" y="32.67" as="targetPoint" />
+            <mxPoint x="85.33" y="62.73" as="sourcePoint" />
+            <mxPoint x="85.33" y="75.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_serial_compiled-3" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_serial_compiled-figure">
-          <mxGeometry x="135.33" y="0" width="28" height="21" as="geometry" />
+          <mxGeometry x="167.33" y="41.73" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial_compiled-4" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="149.33" y="21" as="sourcePoint" />
-            <mxPoint x="149.33" y="32.67" as="targetPoint" />
+            <mxPoint x="181.33" y="62.73" as="sourcePoint" />
+            <mxPoint x="181.33" y="75.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_serial_compiled-5" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_serial_compiled-figure">
-          <mxGeometry x="200.67" y="0" width="28" height="21" as="geometry" />
+          <mxGeometry x="263.33" y="41.73" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial_compiled-6" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="214.67" y="21" as="sourcePoint" />
-            <mxPoint x="214.67" y="32.67" as="targetPoint" />
+            <mxPoint x="277.33" y="62.73" as="sourcePoint" />
+            <mxPoint x="277.33" y="75.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_serial_compiled-7" value="Compiled forward" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_serial_compiled-figure">
-          <mxGeometry x="70" y="32.67" width="191.33" height="65.33" as="geometry" />
+          <mxGeometry x="71.33" y="75.73" width="268" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial_compiled-8" value="Compiled backward" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_serial_compiled-figure">
-          <mxGeometry x="289.33" y="32.67" width="191.33" height="65.33" as="geometry" />
+          <mxGeometry x="359.33" y="75.73" width="268" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial_compiled-9" value="optim" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#ffe6cc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_serial_compiled-figure">
-          <mxGeometry x="494.67" y="32.67" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="647.33" y="75.73" width="28" height="65.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_serial_compiled-10" value="Data 1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_serial_compiled-figure">
-          <mxGeometry x="0" y="35" width="51.33" height="23.33" as="geometry" />
+        <mxCell id="dnn_serial_compiled-10" value="Data 1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_serial_compiled-figure">
+          <mxGeometry x="0" y="96.73" width="51.33" height="23.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_serial_compiled-11" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="25.67" y="58.33" as="sourcePoint" />
-            <mxPoint x="70" y="84" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="25.67" y="84" />
-            </Array>
+            <mxPoint x="51.33" y="108.4" as="sourcePoint" />
+            <mxPoint x="71.33" y="108.4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_serial_compiled-p1" value="parameters" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_serial_compiled-figure">
+          <mxGeometry x="146.43" y="0" width="69.8" height="20.8" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn_serial_compiled-p2" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial_compiled-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181.33" y="19.73" as="sourcePoint" />
+            <mxPoint x="85.33" y="41.73" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_serial_compiled-p3" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial_compiled-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181.33" y="19.73" as="sourcePoint" />
+            <mxPoint x="181.33" y="41.73" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_serial_compiled-p4" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial_compiled-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="181.33" y="19.73" as="sourcePoint" />
+            <mxPoint x="277.33" y="41.73" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_serial_compiled-f1" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial_compiled-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="339.33" y="108.4" as="sourcePoint" />
+            <mxPoint x="359.33" y="108.4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_serial_compiled-f2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_serial_compiled-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="627.33" y="108.4" as="sourcePoint" />
+            <mxPoint x="647.33" y="108.4" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-label" value="dnn_multiproc.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
-          <mxGeometry x="0" y="2329.23" width="600" height="30" as="geometry" />
+          <mxGeometry x="0" y="2372.29" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="2369.23" width="536.67" height="396.47" as="geometry" />
+          <mxGeometry x="0" y="2412.29" width="695.5" height="396.47" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-1" value="Forward" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="dnn_multiproc-figure">
           <mxGeometry x="69.83" y="0" width="57.88" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-2" value="Backward" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="289.17" y="0" width="66.45" height="20.8" as="geometry" />
+          <mxGeometry x="364.83" y="0" width="66.45" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=20;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="68.5" y="22.06" width="212.33" height="338.33" as="geometry" />
+          <mxGeometry x="68.5" y="22.06" width="288" height="338.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=20;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="287.83" y="22.06" width="214.67" height="338.33" as="geometry" />
+          <mxGeometry x="363.5" y="22.06" width="294" height="338.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_multiproc-5" value="GPU 1" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;horizontal=0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc-figure">
+        <mxCell id="dnn_multiproc-5" value="Node 1" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;horizontal=0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc-figure">
           <mxGeometry x="45.27" y="71.48" width="20.8" height="45.83" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_multiproc-6" value="GPU 2" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;horizontal=0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc-figure">
+        <mxCell id="dnn_multiproc-6" value="Node 2" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;horizontal=0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc-figure">
           <mxGeometry x="45.27" y="239.48" width="20.8" height="45.83" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_multiproc-7" value="Data 1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
+        <mxCell id="dnn_multiproc-7" value="Data 1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc-figure">
           <mxGeometry x="0" y="22.06" width="51.33" height="23.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-8" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
@@ -8982,7 +9081,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="dnn_multiproc-9" value="Data 2" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
+        <mxCell id="dnn_multiproc-9" value="Data 2" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc-figure">
           <mxGeometry x="0" y="327.73" width="51.33" height="23.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-10" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
@@ -8995,264 +9094,408 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-11" value="Linear" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="75.5" y="61.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="78.5" y="61.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-12" value="Relu" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="108.17" y="61.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="126.5" y="61.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-13" value="Linear" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="140.83" y="61.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="174.5" y="61.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-14" value="Relu" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="173.5" y="61.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="222.5" y="61.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-15" value="Linear" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="206.17" y="61.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="270.5" y="61.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-16" value="Relu" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="238.83" y="61.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="318.5" y="61.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-17" value="Linear" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="75.5" y="229.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="78.5" y="229.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-18" value="Relu" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="108.17" y="229.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="126.5" y="229.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-19" value="Linear" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="140.83" y="229.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="174.5" y="229.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-20" value="Relu" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="173.5" y="229.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="222.5" y="229.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-21" value="Linear" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="206.17" y="229.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="270.5" y="229.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-22" value="Relu" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="238.83" y="229.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="318.5" y="229.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-23" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="75.5" y="29.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="78.5" y="27.73" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-24" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="89.5" y="50.06" as="sourcePoint" />
-            <mxPoint x="89.5" y="61.73" as="targetPoint" />
+            <mxPoint x="92.5" y="48.73" as="sourcePoint" />
+            <mxPoint x="92.5" y="61.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-25" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="140.83" y="29.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="174.5" y="27.73" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-26" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="154.83" y="50.06" as="sourcePoint" />
-            <mxPoint x="154.83" y="61.73" as="targetPoint" />
+            <mxPoint x="188.5" y="48.73" as="sourcePoint" />
+            <mxPoint x="188.5" y="61.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-27" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="206.17" y="29.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="270.5" y="27.73" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-28" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="220.17" y="50.06" as="sourcePoint" />
-            <mxPoint x="220.17" y="61.73" as="targetPoint" />
+            <mxPoint x="284.5" y="48.73" as="sourcePoint" />
+            <mxPoint x="284.5" y="61.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-29" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="75.5" y="309.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="78.5" y="309.06" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-30" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="89.5" y="309.06" as="sourcePoint" />
-            <mxPoint x="89.5" y="295.06" as="targetPoint" />
+            <mxPoint x="92.5" y="309.06" as="sourcePoint" />
+            <mxPoint x="92.5" y="295.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-31" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="140.83" y="309.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="174.5" y="309.06" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-32" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="154.83" y="309.06" as="sourcePoint" />
-            <mxPoint x="154.83" y="295.06" as="targetPoint" />
+            <mxPoint x="188.5" y="309.06" as="sourcePoint" />
+            <mxPoint x="188.5" y="295.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-33" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="206.17" y="309.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="270.5" y="309.06" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-34" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="220.17" y="309.06" as="sourcePoint" />
-            <mxPoint x="220.17" y="295.06" as="targetPoint" />
+            <mxPoint x="284.5" y="309.06" as="sourcePoint" />
+            <mxPoint x="284.5" y="295.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-35" value="parameters" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="119.94" y="375.67" width="69.8" height="20.8" as="geometry" />
+          <mxGeometry x="153.6" y="375.67" width="69.8" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-36" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="154.83" y="376.73" as="sourcePoint" />
-            <mxPoint x="89.5" y="330.06" as="targetPoint" />
+            <mxPoint x="188.5" y="376.73" as="sourcePoint" />
+            <mxPoint x="92.5" y="330.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-37" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="154.83" y="376.73" as="sourcePoint" />
-            <mxPoint x="154.83" y="330.06" as="targetPoint" />
+            <mxPoint x="188.5" y="376.73" as="sourcePoint" />
+            <mxPoint x="188.5" y="330.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-38" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="154.83" y="376.73" as="sourcePoint" />
-            <mxPoint x="220.17" y="330.06" as="targetPoint" />
+            <mxPoint x="188.5" y="376.73" as="sourcePoint" />
+            <mxPoint x="284.5" y="330.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-39" value="bwd R" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="294.83" y="61.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="373.5" y="61.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-40" value="bwd L" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="327.5" y="61.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="421.5" y="61.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-41" value="bwd R" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="360.17" y="61.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="469.5" y="61.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-42" value="bwd L" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="392.83" y="61.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="517.5" y="61.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-43" value="bwd R" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="425.5" y="61.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="565.5" y="61.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-44" value="bwd L" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="458.17" y="61.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="613.5" y="61.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-45" value="bwd R" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="294.83" y="229.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="373.5" y="229.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-46" value="bwd L" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="327.5" y="229.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="421.5" y="229.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-47" value="bwd R" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="360.17" y="229.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="469.5" y="229.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-48" value="bwd L" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="392.83" y="229.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="517.5" y="229.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-49" value="bwd R" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="425.5" y="229.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="565.5" y="229.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-50" value="bwd L" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="458.17" y="229.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="613.5" y="229.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-51" value="" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=20;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="320.5" y="136.39" width="42" height="84" as="geometry" />
+          <mxGeometry x="414.5" y="136.39" width="42" height="84" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-52" value="" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="333.33" y="145.73" width="16.33" height="14" as="geometry" />
+          <mxGeometry x="427.33" y="145.73" width="16.33" height="14" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-53" value="" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="333.33" y="197.06" width="16.33" height="14" as="geometry" />
+          <mxGeometry x="427.33" y="197.06" width="16.33" height="14" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-54" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;startFill=1;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="341.5" y="159.73" as="sourcePoint" />
-            <mxPoint x="341.5" y="197.06" as="targetPoint" />
+            <mxPoint x="435.5" y="159.73" as="sourcePoint" />
+            <mxPoint x="435.5" y="197.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-55" value="" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=20;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="385.83" y="136.39" width="42" height="84" as="geometry" />
+          <mxGeometry x="510.5" y="136.39" width="42" height="84" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-56" value="" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="398.67" y="145.73" width="16.33" height="14" as="geometry" />
+          <mxGeometry x="523.33" y="145.73" width="16.33" height="14" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-57" value="" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="398.67" y="197.06" width="16.33" height="14" as="geometry" />
+          <mxGeometry x="523.33" y="197.06" width="16.33" height="14" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-58" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;startFill=1;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="406.83" y="159.73" as="sourcePoint" />
-            <mxPoint x="406.83" y="197.06" as="targetPoint" />
+            <mxPoint x="531.5" y="159.73" as="sourcePoint" />
+            <mxPoint x="531.5" y="197.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-59" value="" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=20;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="451.17" y="136.39" width="42" height="84" as="geometry" />
+          <mxGeometry x="606.5" y="136.39" width="42" height="84" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-60" value="" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="464" y="145.73" width="16.33" height="14" as="geometry" />
+          <mxGeometry x="619.33" y="145.73" width="16.33" height="14" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-61" value="" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="464" y="197.06" width="16.33" height="14" as="geometry" />
+          <mxGeometry x="619.33" y="197.06" width="16.33" height="14" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-62" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;startFill=1;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="472.17" y="159.73" as="sourcePoint" />
-            <mxPoint x="472.17" y="197.06" as="targetPoint" />
+            <mxPoint x="627.5" y="159.73" as="sourcePoint" />
+            <mxPoint x="627.5" y="197.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-63" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="341.5" y="127.06" as="sourcePoint" />
-            <mxPoint x="341.5" y="145.73" as="targetPoint" />
+            <mxPoint x="435.5" y="127.06" as="sourcePoint" />
+            <mxPoint x="435.5" y="145.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-64" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="341.5" y="211.06" as="sourcePoint" />
-            <mxPoint x="341.5" y="229.73" as="targetPoint" />
+            <mxPoint x="435.5" y="211.06" as="sourcePoint" />
+            <mxPoint x="435.5" y="229.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-65" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="406.83" y="127.06" as="sourcePoint" />
-            <mxPoint x="406.83" y="145.73" as="targetPoint" />
+            <mxPoint x="531.5" y="127.06" as="sourcePoint" />
+            <mxPoint x="531.5" y="145.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-66" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="406.83" y="211.06" as="sourcePoint" />
-            <mxPoint x="406.83" y="229.73" as="targetPoint" />
+            <mxPoint x="531.5" y="211.06" as="sourcePoint" />
+            <mxPoint x="531.5" y="229.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-67" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="472.17" y="127.06" as="sourcePoint" />
-            <mxPoint x="472.17" y="145.73" as="targetPoint" />
+            <mxPoint x="627.5" y="127.06" as="sourcePoint" />
+            <mxPoint x="627.5" y="145.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-68" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="472.17" y="211.06" as="sourcePoint" />
-            <mxPoint x="472.17" y="229.73" as="targetPoint" />
+            <mxPoint x="627.5" y="211.06" as="sourcePoint" />
+            <mxPoint x="627.5" y="229.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc-69" value="optim" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#ffe6cc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="514.17" y="61.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="667.5" y="61.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc-70" value="optim" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#ffe6cc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc-figure">
-          <mxGeometry x="514.17" y="229.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="667.5" y="229.73" width="28" height="65.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_multiproc-x1770" parent="dnn_multiproc-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#f8cecc;fontStyle=0;" vertex="1"><mxGeometry x="357.52" y="380.07" width="20" height="12" as="geometry" /></mxCell><mxCell id="dnn_multiproc-x1771" parent="dnn_multiproc-figure" value="allreduce" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="381.52" y="377.67" width="55.3" height="16.8" as="geometry" /></mxCell><mxCell id="dnn_multiproc_compiled-label" value="dnn_multiproc_compiled.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
-          <mxGeometry x="0" y="2825.7" width="600" height="30" as="geometry" />
+        <mxCell id="dnn_multiproc-x1770" parent="dnn_multiproc-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#f8cecc;fontStyle=0;" vertex="1"><mxGeometry x="471.14" y="380.07" width="20" height="12" as="geometry" /></mxCell><mxCell id="dnn_multiproc-x1771" parent="dnn_multiproc-figure" value="allreduce" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="495.14" y="377.67" width="54.71" height="16.8" as="geometry" /></mxCell>
+        <mxCell id="dnn_multiproc-f1" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="106.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="126.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="154.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="174.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f3" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="202.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="222.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f4" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="270.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f5" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="298.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="318.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f6" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="346.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="373.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f7" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="401.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="421.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f8" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="449.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="469.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f9" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="497.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="517.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f10" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="545.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="565.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f11" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="593.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="613.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f12" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="641.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="667.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f13" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="106.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="126.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f14" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="154.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="174.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f15" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="202.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="222.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f16" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="270.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f17" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="298.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="318.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f18" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="346.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="373.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f19" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="401.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="421.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f20" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="449.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="469.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f21" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="497.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="517.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f22" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="545.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="565.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f23" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="593.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="613.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc-f24" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="641.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="667.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell><mxCell id="dnn_multiproc_compiled-label" value="dnn_multiproc_compiled.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
+          <mxGeometry x="0" y="2868.76" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="2865.7" width="564.67" height="396.47" as="geometry" />
+          <mxGeometry x="0" y="2908.76" width="725.5" height="396.47" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-1" value="Forward" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry x="69.83" y="0" width="57.88" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-2" value="Backward" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="289.17" y="0" width="66.45" height="20.8" as="geometry" />
+          <mxGeometry x="364.83" y="0" width="66.45" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=20;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="68.5" y="22.06" width="212.33" height="338.33" as="geometry" />
+          <mxGeometry x="68.5" y="22.06" width="288" height="338.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=20;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="287.83" y="22.06" width="214.67" height="338.33" as="geometry" />
+          <mxGeometry x="363.5" y="22.06" width="294" height="338.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_multiproc_compiled-5" value="GPU 1" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;horizontal=0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc_compiled-figure">
+        <mxCell id="dnn_multiproc_compiled-5" value="Node 1" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;horizontal=0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry x="45.27" y="71.48" width="20.8" height="45.83" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_multiproc_compiled-6" value="GPU 2" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;horizontal=0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc_compiled-figure">
+        <mxCell id="dnn_multiproc_compiled-6" value="Node 2" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;horizontal=0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry x="45.27" y="239.48" width="20.8" height="45.83" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_multiproc_compiled-7" value="Data 1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_compiled-figure">
+        <mxCell id="dnn_multiproc_compiled-7" value="Data 1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry x="0" y="22.06" width="51.33" height="23.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-8" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
@@ -9264,7 +9507,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="dnn_multiproc_compiled-9" value="Data 2" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_compiled-figure">
+        <mxCell id="dnn_multiproc_compiled-9" value="Data 2" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry x="0" y="327.73" width="51.33" height="23.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-10" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
@@ -9277,198 +9520,222 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-11" value="Compiled forward" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="75.5" y="61.73" width="191.33" height="65.33" as="geometry" />
+          <mxGeometry x="78.5" y="61.73" width="268" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-12" value="Compiled forward" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="75.5" y="229.73" width="191.33" height="65.33" as="geometry" />
+          <mxGeometry x="78.5" y="229.73" width="268" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-13" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="75.5" y="29.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="78.5" y="27.73" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-14" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="89.5" y="50.06" as="sourcePoint" />
-            <mxPoint x="89.5" y="61.73" as="targetPoint" />
+            <mxPoint x="92.5" y="48.73" as="sourcePoint" />
+            <mxPoint x="92.5" y="61.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-15" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="140.83" y="29.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="174.5" y="27.73" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-16" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="154.83" y="50.06" as="sourcePoint" />
-            <mxPoint x="154.83" y="61.73" as="targetPoint" />
+            <mxPoint x="188.5" y="48.73" as="sourcePoint" />
+            <mxPoint x="188.5" y="61.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-17" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="206.17" y="29.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="270.5" y="27.73" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-18" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="220.17" y="50.06" as="sourcePoint" />
-            <mxPoint x="220.17" y="61.73" as="targetPoint" />
+            <mxPoint x="284.5" y="48.73" as="sourcePoint" />
+            <mxPoint x="284.5" y="61.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-19" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="75.5" y="309.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="78.5" y="309.06" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-20" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="89.5" y="309.06" as="sourcePoint" />
-            <mxPoint x="89.5" y="295.06" as="targetPoint" />
+            <mxPoint x="92.5" y="309.06" as="sourcePoint" />
+            <mxPoint x="92.5" y="295.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-21" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="140.83" y="309.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="174.5" y="309.06" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-22" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="154.83" y="309.06" as="sourcePoint" />
-            <mxPoint x="154.83" y="295.06" as="targetPoint" />
+            <mxPoint x="188.5" y="309.06" as="sourcePoint" />
+            <mxPoint x="188.5" y="295.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-23" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="206.17" y="309.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="270.5" y="309.06" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-24" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="220.17" y="309.06" as="sourcePoint" />
-            <mxPoint x="220.17" y="295.06" as="targetPoint" />
+            <mxPoint x="284.5" y="309.06" as="sourcePoint" />
+            <mxPoint x="284.5" y="295.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-25" value="parameters" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="119.94" y="375.67" width="69.8" height="20.8" as="geometry" />
+          <mxGeometry x="153.6" y="375.67" width="69.8" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-26" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="154.83" y="376.73" as="sourcePoint" />
-            <mxPoint x="89.5" y="330.06" as="targetPoint" />
+            <mxPoint x="188.5" y="376.73" as="sourcePoint" />
+            <mxPoint x="92.5" y="330.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-27" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="154.83" y="376.73" as="sourcePoint" />
-            <mxPoint x="154.83" y="330.06" as="targetPoint" />
+            <mxPoint x="188.5" y="376.73" as="sourcePoint" />
+            <mxPoint x="188.5" y="330.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-28" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="154.83" y="376.73" as="sourcePoint" />
-            <mxPoint x="220.17" y="330.06" as="targetPoint" />
+            <mxPoint x="188.5" y="376.73" as="sourcePoint" />
+            <mxPoint x="284.5" y="330.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-29" value="Compiled backward" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="294.83" y="61.73" width="191.33" height="65.33" as="geometry" />
+          <mxGeometry x="373.5" y="61.73" width="268" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-30" value="Compiled backward" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="294.83" y="229.73" width="191.33" height="65.33" as="geometry" />
+          <mxGeometry x="373.5" y="229.73" width="268" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-31" value="" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=20;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="454.67" y="136.39" width="77" height="84" as="geometry" />
+          <mxGeometry x="610" y="136.39" width="77" height="84" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-32" value="" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="459.33" y="145.73" width="16.33" height="14" as="geometry" />
+          <mxGeometry x="614.66" y="145.73" width="16.33" height="14" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-33" value="" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="459.33" y="197.06" width="16.33" height="14" as="geometry" />
+          <mxGeometry x="614.66" y="197.06" width="16.33" height="14" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-34" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;startFill=1;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="467.5" y="159.73" as="sourcePoint" />
-            <mxPoint x="467.5" y="197.06" as="targetPoint" />
+            <mxPoint x="622.82" y="159.73" as="sourcePoint" />
+            <mxPoint x="622.82" y="197.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-35" value="" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="485" y="145.73" width="16.33" height="14" as="geometry" />
+          <mxGeometry x="640.33" y="145.73" width="16.33" height="14" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-36" value="" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="485" y="197.06" width="16.33" height="14" as="geometry" />
+          <mxGeometry x="640.33" y="197.06" width="16.33" height="14" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-37" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;startFill=1;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="493.17" y="159.73" as="sourcePoint" />
-            <mxPoint x="493.17" y="197.06" as="targetPoint" />
+            <mxPoint x="648.5" y="159.73" as="sourcePoint" />
+            <mxPoint x="648.5" y="197.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-38" value="" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="510.67" y="145.73" width="16.33" height="14" as="geometry" />
+          <mxGeometry x="666" y="145.73" width="16.33" height="14" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-39" value="" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="510.67" y="197.06" width="16.33" height="14" as="geometry" />
+          <mxGeometry x="666" y="197.06" width="16.33" height="14" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-40" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;startFill=1;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="518.83" y="159.73" as="sourcePoint" />
-            <mxPoint x="518.83" y="197.06" as="targetPoint" />
+            <mxPoint x="674.16" y="159.73" as="sourcePoint" />
+            <mxPoint x="674.16" y="197.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-41" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="486.17" y="127.06" as="sourcePoint" />
-            <mxPoint x="467.5" y="145.73" as="targetPoint" />
+            <mxPoint x="641.5" y="127.06" as="sourcePoint" />
+            <mxPoint x="622.82" y="145.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-42" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="467.5" y="211.06" as="sourcePoint" />
-            <mxPoint x="486.17" y="229.73" as="targetPoint" />
+            <mxPoint x="622.82" y="211.06" as="sourcePoint" />
+            <mxPoint x="641.5" y="229.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-43" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="486.17" y="127.06" as="sourcePoint" />
-            <mxPoint x="493.17" y="145.73" as="targetPoint" />
+            <mxPoint x="641.5" y="127.06" as="sourcePoint" />
+            <mxPoint x="648.5" y="145.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-44" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="493.17" y="211.06" as="sourcePoint" />
-            <mxPoint x="486.17" y="229.73" as="targetPoint" />
+            <mxPoint x="648.5" y="211.06" as="sourcePoint" />
+            <mxPoint x="641.5" y="229.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-45" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="486.17" y="127.06" as="sourcePoint" />
-            <mxPoint x="518.83" y="145.73" as="targetPoint" />
+            <mxPoint x="641.5" y="127.06" as="sourcePoint" />
+            <mxPoint x="674.16" y="145.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-46" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="518.83" y="211.06" as="sourcePoint" />
-            <mxPoint x="486.17" y="229.73" as="targetPoint" />
+            <mxPoint x="674.16" y="211.06" as="sourcePoint" />
+            <mxPoint x="641.5" y="229.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-47" value="optim" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#ffe6cc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="542.17" y="61.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="697.5" y="61.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_compiled-48" value="optim" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#ffe6cc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_compiled-figure">
-          <mxGeometry x="542.17" y="229.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="697.5" y="229.73" width="28" height="65.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_multiproc_compiled-x1772" parent="dnn_multiproc_compiled-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#f8cecc;fontStyle=0;" vertex="1"><mxGeometry x="357.52" y="380.07" width="20" height="12" as="geometry" /></mxCell><mxCell id="dnn_multiproc_compiled-x1773" parent="dnn_multiproc_compiled-figure" value="allreduce" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="381.52" y="377.67" width="55.3" height="16.8" as="geometry" /></mxCell><mxCell id="dnn_multiproc_optimized-label" value="dnn_multiproc_optimized.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
-          <mxGeometry x="0" y="3322.17" width="600" height="30" as="geometry" />
+        <mxCell id="dnn_multiproc_compiled-x1772" parent="dnn_multiproc_compiled-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#f8cecc;fontStyle=0;" vertex="1"><mxGeometry x="471.14" y="380.07" width="20" height="12" as="geometry" /></mxCell><mxCell id="dnn_multiproc_compiled-x1773" parent="dnn_multiproc_compiled-figure" value="allreduce" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="495.14" y="377.67" width="54.71" height="16.8" as="geometry" /></mxCell>
+        <mxCell id="dnn_multiproc_compiled-f1" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="346.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="373.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc_compiled-f2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="641.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="697.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc_compiled-f3" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="346.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="373.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc_compiled-f4" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_compiled-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="641.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="697.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell><mxCell id="dnn_multiproc_optimized-label" value="dnn_multiproc_optimized.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
+          <mxGeometry x="0" y="3365.23" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="3362.17" width="536.67" height="396.47" as="geometry" />
+          <mxGeometry x="0" y="3405.23" width="695.5" height="396.47" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-1" value="Forward" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry x="69.83" y="0" width="57.88" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-2" value="Backward" style="text;html=1;align=left;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="289.17" y="0" width="66.45" height="20.8" as="geometry" />
+          <mxGeometry x="364.83" y="0" width="66.45" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=20;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="68.5" y="22.06" width="212.33" height="338.33" as="geometry" />
+          <mxGeometry x="68.5" y="22.06" width="288" height="338.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=20;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="287.83" y="22.06" width="214.67" height="338.33" as="geometry" />
+          <mxGeometry x="363.5" y="22.06" width="294" height="338.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_multiproc_optimized-5" value="GPU 1" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;horizontal=0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc_optimized-figure">
+        <mxCell id="dnn_multiproc_optimized-5" value="Node 1" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;horizontal=0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry x="45.27" y="71.48" width="20.8" height="45.83" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_multiproc_optimized-6" value="GPU 2" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;horizontal=0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc_optimized-figure">
+        <mxCell id="dnn_multiproc_optimized-6" value="Node 2" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;horizontal=0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry x="45.27" y="239.48" width="20.8" height="45.83" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_multiproc_optimized-7" value="Data 1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_optimized-figure">
+        <mxCell id="dnn_multiproc_optimized-7" value="Data 1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry x="0" y="22.06" width="51.33" height="23.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-8" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
@@ -9480,7 +9747,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="dnn_multiproc_optimized-9" value="Data 2" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_optimized-figure">
+        <mxCell id="dnn_multiproc_optimized-9" value="Data 2" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry x="0" y="327.73" width="51.33" height="23.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-10" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
@@ -9493,208 +9760,280 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-11" value="Dynamo&lt;br&gt;fwd 1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="77.83" y="61.73" width="60.67" height="65.33" as="geometry" />
+          <mxGeometry x="78.5" y="61.73" width="76" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-12" value="Dynamo&lt;br&gt;fwd 2" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="143.17" y="61.73" width="60.67" height="65.33" as="geometry" />
+          <mxGeometry x="174.5" y="61.73" width="76" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-13" value="Dynamo&lt;br&gt;fwd 3" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="208.5" y="61.73" width="60.67" height="65.33" as="geometry" />
+          <mxGeometry x="270.5" y="61.73" width="76" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-14" value="Dynamo&lt;br&gt;fwd 1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="77.83" y="229.73" width="60.67" height="65.33" as="geometry" />
+          <mxGeometry x="78.5" y="229.73" width="76" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-15" value="Dynamo&lt;br&gt;fwd 2" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="143.17" y="229.73" width="60.67" height="65.33" as="geometry" />
+          <mxGeometry x="174.5" y="229.73" width="76" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-16" value="Dynamo&lt;br&gt;fwd 3" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#dae8fc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="208.5" y="229.73" width="60.67" height="65.33" as="geometry" />
+          <mxGeometry x="270.5" y="229.73" width="76" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-17" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="94.17" y="29.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="102.5" y="27.73" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-18" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="108.17" y="50.06" as="sourcePoint" />
-            <mxPoint x="108.17" y="61.73" as="targetPoint" />
+            <mxPoint x="116.5" y="48.73" as="sourcePoint" />
+            <mxPoint x="116.5" y="61.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-19" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="159.5" y="29.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="198.5" y="27.73" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-20" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="173.5" y="50.06" as="sourcePoint" />
-            <mxPoint x="173.5" y="61.73" as="targetPoint" />
+            <mxPoint x="212.5" y="48.73" as="sourcePoint" />
+            <mxPoint x="212.5" y="61.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-21" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="224.83" y="29.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="294.5" y="27.73" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-22" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="238.83" y="50.06" as="sourcePoint" />
-            <mxPoint x="238.83" y="61.73" as="targetPoint" />
+            <mxPoint x="308.5" y="48.73" as="sourcePoint" />
+            <mxPoint x="308.5" y="61.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-23" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="94.17" y="309.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="102.5" y="309.06" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-24" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="108.17" y="309.06" as="sourcePoint" />
-            <mxPoint x="108.17" y="295.06" as="targetPoint" />
+            <mxPoint x="116.5" y="309.06" as="sourcePoint" />
+            <mxPoint x="116.5" y="295.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-25" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="159.5" y="309.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="198.5" y="309.06" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-26" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="173.5" y="309.06" as="sourcePoint" />
-            <mxPoint x="173.5" y="295.06" as="targetPoint" />
+            <mxPoint x="212.5" y="309.06" as="sourcePoint" />
+            <mxPoint x="212.5" y="295.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-27" value="" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="224.83" y="309.06" width="28" height="21" as="geometry" />
+          <mxGeometry x="294.5" y="309.06" width="28" height="21" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-28" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="238.83" y="309.06" as="sourcePoint" />
-            <mxPoint x="238.83" y="295.06" as="targetPoint" />
+            <mxPoint x="308.5" y="309.06" as="sourcePoint" />
+            <mxPoint x="308.5" y="295.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-29" value="parameters" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="138.59" y="375.67" width="69.8" height="20.8" as="geometry" />
+          <mxGeometry x="177.6" y="375.67" width="69.8" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-30" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="173.5" y="376.73" as="sourcePoint" />
-            <mxPoint x="108.17" y="330.06" as="targetPoint" />
+            <mxPoint x="212.5" y="376.73" as="sourcePoint" />
+            <mxPoint x="116.5" y="330.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-31" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="173.5" y="376.73" as="sourcePoint" />
-            <mxPoint x="173.5" y="330.06" as="targetPoint" />
+            <mxPoint x="212.5" y="376.73" as="sourcePoint" />
+            <mxPoint x="212.5" y="330.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-32" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="173.5" y="376.73" as="sourcePoint" />
-            <mxPoint x="238.83" y="330.06" as="targetPoint" />
+            <mxPoint x="212.5" y="376.73" as="sourcePoint" />
+            <mxPoint x="308.5" y="330.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-33" value="Dynamo&lt;br&gt;bwd 3" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="297.17" y="61.73" width="60.67" height="65.33" as="geometry" />
+          <mxGeometry x="373.5" y="61.73" width="76" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-34" value="Dynamo&lt;br&gt;bwd 2" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="362.5" y="61.73" width="60.67" height="65.33" as="geometry" />
+          <mxGeometry x="469.5" y="61.73" width="76" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-35" value="Dynamo&lt;br&gt;bwd 1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="427.83" y="61.73" width="60.67" height="65.33" as="geometry" />
+          <mxGeometry x="565.5" y="61.73" width="76" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-36" value="Dynamo&lt;br&gt;bwd 3" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="297.17" y="229.73" width="60.67" height="65.33" as="geometry" />
+          <mxGeometry x="373.5" y="229.73" width="76" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-37" value="Dynamo&lt;br&gt;bwd 2" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="362.5" y="229.73" width="60.67" height="65.33" as="geometry" />
+          <mxGeometry x="469.5" y="229.73" width="76" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-38" value="Dynamo&lt;br&gt;bwd 1" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#e1d5e7;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="427.83" y="229.73" width="60.67" height="65.33" as="geometry" />
+          <mxGeometry x="565.5" y="229.73" width="76" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-39" value="" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=20;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="306.5" y="136.39" width="42" height="84" as="geometry" />
+          <mxGeometry x="390.5" y="136.39" width="42" height="84" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-40" value="" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="319.33" y="145.73" width="16.33" height="14" as="geometry" />
+          <mxGeometry x="403.33" y="145.73" width="16.33" height="14" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-41" value="" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="319.33" y="197.06" width="16.33" height="14" as="geometry" />
+          <mxGeometry x="403.33" y="197.06" width="16.33" height="14" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-42" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;startFill=1;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="327.5" y="159.73" as="sourcePoint" />
-            <mxPoint x="327.5" y="197.06" as="targetPoint" />
+            <mxPoint x="411.5" y="159.73" as="sourcePoint" />
+            <mxPoint x="411.5" y="197.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-43" value="" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=20;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="371.83" y="136.39" width="42" height="84" as="geometry" />
+          <mxGeometry x="486.5" y="136.39" width="42" height="84" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-44" value="" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="384.67" y="145.73" width="16.33" height="14" as="geometry" />
+          <mxGeometry x="499.33" y="145.73" width="16.33" height="14" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-45" value="" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="384.67" y="197.06" width="16.33" height="14" as="geometry" />
+          <mxGeometry x="499.33" y="197.06" width="16.33" height="14" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-46" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;startFill=1;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="392.83" y="159.73" as="sourcePoint" />
-            <mxPoint x="392.83" y="197.06" as="targetPoint" />
+            <mxPoint x="507.5" y="159.73" as="sourcePoint" />
+            <mxPoint x="507.5" y="197.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-47" value="" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=20;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="437.17" y="136.39" width="42" height="84" as="geometry" />
+          <mxGeometry x="582.5" y="136.39" width="42" height="84" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-48" value="" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="450" y="145.73" width="16.33" height="14" as="geometry" />
+          <mxGeometry x="595.33" y="145.73" width="16.33" height="14" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-49" value="" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;rounded=0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="450" y="197.06" width="16.33" height="14" as="geometry" />
+          <mxGeometry x="595.33" y="197.06" width="16.33" height="14" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-50" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;startFill=1;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="458.17" y="159.73" as="sourcePoint" />
-            <mxPoint x="458.17" y="197.06" as="targetPoint" />
+            <mxPoint x="603.5" y="159.73" as="sourcePoint" />
+            <mxPoint x="603.5" y="197.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-51" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="327.5" y="127.06" as="sourcePoint" />
-            <mxPoint x="327.5" y="145.73" as="targetPoint" />
+            <mxPoint x="411.5" y="127.06" as="sourcePoint" />
+            <mxPoint x="411.5" y="145.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-52" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="327.5" y="211.06" as="sourcePoint" />
-            <mxPoint x="327.5" y="229.73" as="targetPoint" />
+            <mxPoint x="411.5" y="211.06" as="sourcePoint" />
+            <mxPoint x="411.5" y="229.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-53" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="392.83" y="127.06" as="sourcePoint" />
-            <mxPoint x="392.83" y="145.73" as="targetPoint" />
+            <mxPoint x="507.5" y="127.06" as="sourcePoint" />
+            <mxPoint x="507.5" y="145.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-54" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="392.83" y="211.06" as="sourcePoint" />
-            <mxPoint x="392.83" y="229.73" as="targetPoint" />
+            <mxPoint x="507.5" y="211.06" as="sourcePoint" />
+            <mxPoint x="507.5" y="229.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-55" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="458.17" y="127.06" as="sourcePoint" />
-            <mxPoint x="458.17" y="145.73" as="targetPoint" />
+            <mxPoint x="603.5" y="127.06" as="sourcePoint" />
+            <mxPoint x="603.5" y="145.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-56" value="" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="458.17" y="211.06" as="sourcePoint" />
-            <mxPoint x="458.17" y="229.73" as="targetPoint" />
+            <mxPoint x="603.5" y="211.06" as="sourcePoint" />
+            <mxPoint x="603.5" y="229.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-57" value="optim" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#ffe6cc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="514.17" y="61.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="667.5" y="61.73" width="28" height="65.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_multiproc_optimized-58" value="optim" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Source Sans 3;fontSize=14;fillColor=#ffe6cc;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dnn_multiproc_optimized-figure">
-          <mxGeometry x="514.17" y="229.73" width="28" height="65.33" as="geometry" />
+          <mxGeometry x="667.5" y="229.73" width="28" height="65.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_multiproc_optimized-x1774" parent="dnn_multiproc_optimized-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#f8cecc;fontStyle=0;" vertex="1"><mxGeometry x="357.52" y="380.07" width="20" height="12" as="geometry" /></mxCell><mxCell id="dnn_multiproc_optimized-x1775" parent="dnn_multiproc_optimized-figure" value="allreduce" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="381.52" y="377.67" width="55.3" height="16.8" as="geometry" /></mxCell><mxCell id="torch_compile_dataset-label" value="torch_compile_dataset.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
-          <mxGeometry x="0" y="3818.64" width="600" height="30" as="geometry" />
+        <mxCell id="dnn_multiproc_optimized-x1774" parent="dnn_multiproc_optimized-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#f8cecc;fontStyle=0;" vertex="1"><mxGeometry x="471.14" y="380.07" width="20" height="12" as="geometry" /></mxCell><mxCell id="dnn_multiproc_optimized-x1775" parent="dnn_multiproc_optimized-figure" value="allreduce" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="495.14" y="377.67" width="54.71" height="16.8" as="geometry" /></mxCell>
+        <mxCell id="dnn_multiproc_optimized-f1" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="154.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="174.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc_optimized-f2" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="270.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc_optimized-f3" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="346.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="373.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc_optimized-f4" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="449.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="469.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc_optimized-f5" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="545.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="565.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc_optimized-f6" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="641.5" y="94.39" as="sourcePoint" />
+            <mxPoint x="667.5" y="94.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc_optimized-f7" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="154.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="174.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc_optimized-f8" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="250.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="270.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc_optimized-f9" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="346.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="373.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc_optimized-f10" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="449.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="469.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc_optimized-f11" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="545.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="565.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn_multiproc_optimized-f12" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="dnn_multiproc_optimized-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="641.5" y="262.39" as="sourcePoint" />
+            <mxPoint x="667.5" y="262.39" as="targetPoint" />
+          </mxGeometry>
+        </mxCell><mxCell id="torch_compile_dataset-label" value="torch_compile_dataset.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
+          <mxGeometry x="0" y="3861.7" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="torch_compile_dataset-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="3858.64" width="537.03" height="312.08" as="geometry" />
+          <mxGeometry x="0" y="3901.7" width="537.03" height="312.08" as="geometry" />
         </mxCell>
         <mxCell id="torch_compile_dataset-8KhQIsR3PBAN01NNNfWR-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" parent="torch_compile_dataset-figure" vertex="1">
           <mxGeometry x="0.36" y="42" width="11.67" height="70" as="geometry" />
