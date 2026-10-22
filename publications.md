@@ -2158,7 +2158,7 @@ on a relatively modest amount of data and stopping significantly before converge
 The following picture illustrates the test loss as a function of the compute, the dataset size and the number of parameters:
 
 {: .picture}
-<img loading="lazy" width="74%" height="74%" src="{{ site.assets }}/publications/scaling_laws.svg"/>
+<img loading="lazy" width="99.9%" height="99.9%" src="{{ site.assets }}/publications/scaling_laws.svg"/>
 
 {: .caption}
 Language modeling performance improves smoothly as the model size, dataset size, and amount of compute used for training increase. For optimal performance all three factors must be scaled up in tandem. Empirical performance has a power-law relationship with each individual factor when not bottlenecked by the other two. Adapted from: [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361)
