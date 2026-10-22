@@ -10781,7 +10781,7 @@
         <mxCell id="microscaling-1" value="FP4 E2M1: 1 sign, 2 exponent and 1 mantissa bits" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
           <mxGeometry x="0" y="0" width="304.14" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="microscaling-2" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;fontSize=14;labelBackgroundColor=#ffffff;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="microscaling-figure">
+        <mxCell id="microscaling-2" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;labelBackgroundColor=#ffffff;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="microscaling-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="3.03" y="47.17" as="sourcePoint" />
             <mxPoint x="762.86" y="47.17" as="targetPoint" />
@@ -10802,7 +10802,7 @@
         <mxCell id="microscaling-7" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
           <mxGeometry x="349.88" y="44.11" width="6.13" height="6.13" as="geometry" />
         </mxCell>
-        <mxCell id="microscaling-8" value="-0.5" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
+        <mxCell id="microscaling-8" value="−0.5" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
           <mxGeometry x="339.95" y="49.47" width="26" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-9" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
@@ -10814,7 +10814,7 @@
         <mxCell id="microscaling-11" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
           <mxGeometry x="319.87" y="44.11" width="6.13" height="6.13" as="geometry" />
         </mxCell>
-        <mxCell id="microscaling-12" value="-1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
+        <mxCell id="microscaling-12" value="−1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
           <mxGeometry x="314.45" y="49.47" width="17" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-13" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
@@ -10826,7 +10826,7 @@
         <mxCell id="microscaling-15" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
           <mxGeometry x="289.88" y="44.11" width="6.13" height="6.13" as="geometry" />
         </mxCell>
-        <mxCell id="microscaling-16" value="-1.5" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
+        <mxCell id="microscaling-16" value="−1.5" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
           <mxGeometry x="279.96" y="49.47" width="26" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-17" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
@@ -10838,7 +10838,7 @@
         <mxCell id="microscaling-19" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
           <mxGeometry x="259.88" y="44.11" width="6.13" height="6.13" as="geometry" />
         </mxCell>
-        <mxCell id="microscaling-20" value="-2" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
+        <mxCell id="microscaling-20" value="−2" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
           <mxGeometry x="254.45" y="49.47" width="17" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-21" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
@@ -10850,7 +10850,7 @@
         <mxCell id="microscaling-23" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
           <mxGeometry x="199.88" y="44.11" width="6.13" height="6.13" as="geometry" />
         </mxCell>
-        <mxCell id="microscaling-24" value="-3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
+        <mxCell id="microscaling-24" value="−3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
           <mxGeometry x="194.45" y="49.47" width="17" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-25" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
@@ -10862,7 +10862,7 @@
         <mxCell id="microscaling-27" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
           <mxGeometry x="139.88" y="44.11" width="6.13" height="6.13" as="geometry" />
         </mxCell>
-        <mxCell id="microscaling-28" value="-4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
+        <mxCell id="microscaling-28" value="−4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
           <mxGeometry x="134.46" y="49.47" width="17" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-29" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
@@ -10874,7 +10874,7 @@
         <mxCell id="microscaling-31" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
           <mxGeometry x="19.88" y="44.11" width="6.13" height="6.13" as="geometry" />
         </mxCell>
-        <mxCell id="microscaling-32" value="-6" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
+        <mxCell id="microscaling-32" value="−6" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
           <mxGeometry x="14.45" y="49.47" width="17" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-33" value="MXFP4: blocks of 32 values, one E8M0 scale (a power of 2) per block" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
@@ -10977,11 +10977,11 @@
           <mxGeometry x="333.94" y="108.45" width="10.72" height="10.72" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-66" value="E8M0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=12;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
-          <mxGeometry x="153.93" y="126.83" width="38.3" height="16.85" as="geometry" />
+          <mxGeometry x="153.93" y="131.83" width="38.3" height="16.85" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-67" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;labelBackgroundColor=#ffffff;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="microscaling-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="173.08" y="126.83" as="sourcePoint" />
+            <mxPoint x="173.08" y="131.83" as="sourcePoint" />
             <mxPoint x="173.08" y="119.17" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -11082,16 +11082,16 @@
           <mxGeometry x="686.3" y="108.45" width="10.72" height="10.72" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-100" value="E8M0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=12;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
-          <mxGeometry x="506.29" y="126.83" width="38.3" height="16.85" as="geometry" />
+          <mxGeometry x="506.29" y="131.83" width="38.3" height="16.85" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-101" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;labelBackgroundColor=#ffffff;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="microscaling-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="525.44" y="126.83" as="sourcePoint" />
+            <mxPoint x="525.44" y="131.83" as="sourcePoint" />
             <mxPoint x="525.44" y="119.17" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="microscaling-102" value="4.25 bits per value" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
-          <mxGeometry x="712.38" y="126.06" width="95.65" height="18.4" as="geometry" />
+          <mxGeometry x="712.38" y="131.06" width="95.65" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-103" value="NVFP4: blocks of 16 values, one FP8 E4M3 scale per block, one FP32 scale per tensor" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
           <mxGeometry x="0" y="176.18" width="517.82" height="20.8" as="geometry" />
@@ -11145,11 +11145,11 @@
           <mxGeometry x="162.36" y="200.37" width="10.72" height="10.72" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-120" value="E4M3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
-          <mxGeometry x="68.14" y="218.75" width="38.3" height="16.85" as="geometry" />
+          <mxGeometry x="68.14" y="223.75" width="38.3" height="16.85" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-121" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;labelBackgroundColor=#ffffff;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="microscaling-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="87.29" y="218.75" as="sourcePoint" />
+            <mxPoint x="87.29" y="223.75" as="sourcePoint" />
             <mxPoint x="87.29" y="211.09" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -11202,11 +11202,11 @@
           <mxGeometry x="343.14" y="200.37" width="10.72" height="10.72" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-138" value="E4M3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
-          <mxGeometry x="248.92" y="218.75" width="38.3" height="16.85" as="geometry" />
+          <mxGeometry x="248.92" y="223.75" width="38.3" height="16.85" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-139" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;labelBackgroundColor=#ffffff;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="microscaling-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="268.07" y="218.75" as="sourcePoint" />
+            <mxPoint x="268.07" y="223.75" as="sourcePoint" />
             <mxPoint x="268.07" y="211.09" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -11259,11 +11259,11 @@
           <mxGeometry x="523.91" y="200.37" width="10.72" height="10.72" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-156" value="E4M3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
-          <mxGeometry x="429.69" y="218.75" width="38.3" height="16.85" as="geometry" />
+          <mxGeometry x="429.69" y="223.75" width="38.3" height="16.85" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-157" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;labelBackgroundColor=#ffffff;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="microscaling-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="448.84" y="218.75" as="sourcePoint" />
+            <mxPoint x="448.84" y="223.75" as="sourcePoint" />
             <mxPoint x="448.84" y="211.09" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -11316,11 +11316,11 @@
           <mxGeometry x="704.69" y="200.37" width="10.72" height="10.72" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-outline-1" value="" edge="1" parent="microscaling-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="1.5" y="108.45" as="sourcePoint" /><mxPoint x="344.66" y="108.45" as="targetPoint" /><Array as="points"><mxPoint x="344.66" y="108.45" /><mxPoint x="344.66" y="119.17" /><mxPoint x="1.5" y="119.17" /><mxPoint x="1.5" y="108.45" /></Array></mxGeometry></mxCell><mxCell id="microscaling-outline-2" value="" edge="1" parent="microscaling-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="353.86" y="108.45" as="sourcePoint" /><mxPoint x="697.02" y="108.45" as="targetPoint" /><Array as="points"><mxPoint x="697.02" y="108.45" /><mxPoint x="697.02" y="119.17" /><mxPoint x="353.86" y="119.17" /><mxPoint x="353.86" y="108.45" /></Array></mxGeometry></mxCell><mxCell id="microscaling-outline-3" value="" edge="1" parent="microscaling-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="1.5" y="200.37" as="sourcePoint" /><mxPoint x="173.08" y="200.37" as="targetPoint" /><Array as="points"><mxPoint x="173.08" y="200.37" /><mxPoint x="173.08" y="211.09" /><mxPoint x="1.5" y="211.09" /><mxPoint x="1.5" y="200.37" /></Array></mxGeometry></mxCell><mxCell id="microscaling-outline-4" value="" edge="1" parent="microscaling-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="182.28" y="200.37" as="sourcePoint" /><mxPoint x="353.86" y="200.37" as="targetPoint" /><Array as="points"><mxPoint x="353.86" y="200.37" /><mxPoint x="353.86" y="211.09" /><mxPoint x="182.28" y="211.09" /><mxPoint x="182.28" y="200.37" /></Array></mxGeometry></mxCell><mxCell id="microscaling-outline-5" value="" edge="1" parent="microscaling-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="363.05" y="200.37" as="sourcePoint" /><mxPoint x="534.63" y="200.37" as="targetPoint" /><Array as="points"><mxPoint x="534.63" y="200.37" /><mxPoint x="534.63" y="211.09" /><mxPoint x="363.05" y="211.09" /><mxPoint x="363.05" y="200.37" /></Array></mxGeometry></mxCell><mxCell id="microscaling-outline-6" value="" edge="1" parent="microscaling-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="543.83" y="200.37" as="sourcePoint" /><mxPoint x="715.41" y="200.37" as="targetPoint" /><Array as="points"><mxPoint x="715.41" y="200.37" /><mxPoint x="715.41" y="211.09" /><mxPoint x="543.83" y="211.09" /><mxPoint x="543.83" y="200.37" /></Array></mxGeometry></mxCell><mxCell id="microscaling-174" value="E4M3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
-          <mxGeometry x="610.47" y="218.75" width="38.3" height="16.85" as="geometry" />
+          <mxGeometry x="610.47" y="223.75" width="38.3" height="16.85" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-175" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;labelBackgroundColor=#ffffff;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="microscaling-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="629.62" y="218.75" as="sourcePoint" />
+            <mxPoint x="629.62" y="223.75" as="sourcePoint" />
             <mxPoint x="629.62" y="211.09" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -11331,7 +11331,7 @@
           <mxGeometry x="781.32" y="196.54" width="93.97" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-178" value="4.50 bits per value" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;fontFamily=Source Sans 3;" vertex="1" parent="microscaling-figure">
-          <mxGeometry x="730.76" y="217.98" width="95.65" height="18.4" as="geometry" />
+          <mxGeometry x="730.76" y="222.98" width="95.65" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="kivi-label" value="kivi.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="5462.03" width="600" height="30" as="geometry" />
