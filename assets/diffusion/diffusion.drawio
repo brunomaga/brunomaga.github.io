@@ -7089,7 +7089,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="anymate_anyone-10" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="anymate_anyone-figure">
+        <mxCell id="anymate_anyone-10" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" edge="1" parent="anymate_anyone-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="131.21" y="314.17" as="sourcePoint" />
             <mxPoint x="157.08" y="354.96" as="targetPoint" />
@@ -7100,7 +7100,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="anymate_anyone-11" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="anymate_anyone-figure">
+        <mxCell id="anymate_anyone-11" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" edge="1" parent="anymate_anyone-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="127.23" y="317.65" as="sourcePoint" />
             <mxPoint x="152.11" y="357.95" as="targetPoint" />
@@ -7111,7 +7111,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="anymate_anyone-12" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="anymate_anyone-figure">
+        <mxCell id="anymate_anyone-12" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" edge="1" parent="anymate_anyone-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="122.26" y="321.13" as="sourcePoint" />
             <mxPoint x="147.88" y="361.43" as="targetPoint" />
@@ -7122,7 +7122,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="anymate_anyone-13" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="anymate_anyone-figure">
+        <mxCell id="anymate_anyone-13" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" edge="1" parent="anymate_anyone-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="117.78" y="324.62" as="sourcePoint" />
             <mxPoint x="144.15" y="364.91" as="targetPoint" />
@@ -7133,7 +7133,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="anymate_anyone-14" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="anymate_anyone-figure">
+        <mxCell id="anymate_anyone-14" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" edge="1" parent="anymate_anyone-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="114.3" y="324.62" as="sourcePoint" />
             <mxPoint x="114.3" y="324.62" as="targetPoint" />
