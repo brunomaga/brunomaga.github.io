@@ -32,7 +32,7 @@ Each rank holds $$n/p$$ consecutive rows of $$A$$, and the matching entries of $
 2. each rank multiplies its rows of $$A$$ by $$x$$.
 
 {: .picture}
-<img width="93.8%" height="93.8%" src="{{ site.assets }}/distributed-matmul-dbs/matvec_row1d.svg">
+<img width="93.2%" height="93.2%" src="{{ site.assets }}/distributed-matmul-dbs/matvec_row1d.svg">
 
 {: .caption}
 Matrix-vector product on 4 ranks, colored by rank. **Left:** the initial layout. **Right:** rank 1 after the all-gather, ready to compute $$y_2$$ and $$y_3$$.
