@@ -91,7 +91,7 @@ where $$i_a$$ is the axial current [mA] flowing through the compartment's region
 <img width="22.7%" height="22.7%" src="{{ site.assets }}/neuron-electrical-activity/net_current_conservation.svg">
 
 {: .caption}
-The net current entering a region is zero: the axial currents $$i_a$$ balance the membrane current $$i_m$$. Adapted from: [Hines and Carnevale (1997), The NEURON simulation environment, Fig. 3.1](https://neuron.yale.edu/neuron/static/papers/nc97/nc3p1.htm)
+The net current entering a region, bounded by the membrane (blue) and the thin black lines, is zero: the axial currents $$i_a$$ balance the membrane current $$i_m$$. Adapted from: [Hines and Carnevale (1997), The NEURON simulation environment, Fig. 3.1](https://neuron.yale.edu/neuron/static/papers/nc97/nc3p1.htm)
 
 A common assumption is that a neuron is spatially divided into small compartments, at most $$40 \, \mu m$$ long in the cell models of the [Blue Brain Project](https://en.wikipedia.org/wiki/Blue_Brain_Project). The spatially varying $$i_m$$ in any compartment $$j$$ is then well approximated by its value at the center, therefore
 

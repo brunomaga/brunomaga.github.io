@@ -10,7 +10,7 @@
         <mxCell id="net_current_conservation-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="40" width="198.87" height="200.35" as="geometry" />
         </mxCell>
-        <mxCell id="net_current_conservation-1" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=3.6;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="net_current_conservation-figure">
+        <mxCell id="net_current_conservation-1" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=3.6;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="net_current_conservation-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="0.5" y="79.05" as="sourcePoint" />
             <mxPoint x="100.14" y="0" as="targetPoint" />
@@ -117,7 +117,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="net_current_conservation-2" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=3.6;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="net_current_conservation-figure">
+        <mxCell id="net_current_conservation-2" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=3.6;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="net_current_conservation-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="198.87" y="103.82" as="sourcePoint" />
             <mxPoint x="125.62" y="0" as="targetPoint" />
@@ -264,7 +264,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="net_current_conservation-3" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=3.6;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="net_current_conservation-figure">
+        <mxCell id="net_current_conservation-3" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=3.6;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="net_current_conservation-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="0.5" y="104.67" as="sourcePoint" />
             <mxPoint x="122.51" y="200.35" as="targetPoint" />
@@ -401,7 +401,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="net_current_conservation-4" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=3.6;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="net_current_conservation-figure">
+        <mxCell id="net_current_conservation-4" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=3.6;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="net_current_conservation-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="198.87" y="129.73" as="sourcePoint" />
             <mxPoint x="147.25" y="200.35" as="targetPoint" />
@@ -600,26 +600,26 @@
             <mxPoint x="67.97" y="132.68" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="net_current_conservation-16" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.439em;line-height:0;padding-left:4.8px;&quot;&gt;a&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
-          <mxGeometry x="98.83" y="0.39" width="17.1" height="20.8" as="geometry" />
+        <mxCell id="net_current_conservation-16" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.439em;line-height:0;&quot;&gt;a&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
+          <mxGeometry x="101.68" y="-5.11" width="10.4" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="net_current_conservation-17" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.439em;line-height:0;padding-left:4.8px;&quot;&gt;a&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
-          <mxGeometry x="0" y="79.39" width="17.1" height="20.8" as="geometry" />
+        <mxCell id="net_current_conservation-17" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.439em;line-height:0;&quot;&gt;a&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
+          <mxGeometry x="3.35" y="79.39" width="10.4" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="net_current_conservation-18" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.439em;line-height:0;padding-left:4.8px;&quot;&gt;a&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
-          <mxGeometry x="179.17" y="102.39" width="17.1" height="20.8" as="geometry" />
+        <mxCell id="net_current_conservation-18" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.439em;line-height:0;&quot;&gt;a&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
+          <mxGeometry x="182.52" y="102.39" width="10.4" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="net_current_conservation-19" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.439em;line-height:0;padding-left:4.8px;&quot;&gt;a&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
-          <mxGeometry x="119" y="169.06" width="17.1" height="20.8" as="geometry" />
+        <mxCell id="net_current_conservation-19" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.439em;line-height:0;&quot;&gt;a&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
+          <mxGeometry x="122.35" y="169.06" width="10.4" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="net_current_conservation-20" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.505em;line-height:0;padding-left:4px;&quot;&gt;m&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
-          <mxGeometry x="78.02" y="44.39" width="21.78" height="20.8" as="geometry" />
+        <mxCell id="net_current_conservation-20" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.505em;line-height:0;&quot;&gt;m&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
+          <mxGeometry x="81.99" y="44.39" width="13.84" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="net_current_conservation-21" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.505em;line-height:0;padding-left:4px;&quot;&gt;m&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
-          <mxGeometry x="91.85" y="75.73" width="21.78" height="20.8" as="geometry" />
+        <mxCell id="net_current_conservation-21" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.505em;line-height:0;&quot;&gt;m&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
+          <mxGeometry x="95.82" y="75.73" width="13.84" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="net_current_conservation-22" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.505em;line-height:0;padding-left:4px;&quot;&gt;m&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
-          <mxGeometry x="74.35" y="94.06" width="21.78" height="20.8" as="geometry" />
+        <mxCell id="net_current_conservation-22" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.505em;line-height:0;&quot;&gt;m&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
+          <mxGeometry x="78.32" y="94.06" width="13.84" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="solver_compartment_neuron-label" value="solver_compartment_neuron.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="300.35" width="600" height="30" as="geometry" />
