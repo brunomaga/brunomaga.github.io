@@ -170,6 +170,13 @@
 
 .pub-notes > :last-child { margin-bottom: 0; }
 
+// an open entry ends with a thin grey line, with space around it, to separate its notes from the next title
+.pub-table details[open] {
+  padding-bottom: 0.8em;
+  margin-bottom: 0.6em;
+  border-bottom: 1px solid #e4e4e4;
+}
+
 // The 404 page (404.html)
 
 .not-found {
