@@ -68,6 +68,12 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
   or remove the argument.
 - Optional, `assets/slicing/slicing.tar.gz`, `Slicing.cxx` line 54: the Windows branch calls `qsort_s(*base, ...)`,
   which dereferences a `void*` and does not compile. Fix: `qsort_s(base, ...)`.
+- `assets/slicing/slicing.tar.gz`, `SortBalanceSplit.cxx` (`getSubSlicesDetails`): every slice gets `(int)(p / S_k)`
+  ranks, with only a warning when $$S_k$$ does not divide $$p$$. For $$p = 8$$ and $$S_k = 3$$, the case that
+  `slicing/split.svg` shows, the slices are ranks 0-1, 2-3 and 4-5: ranks 6 and 7 belong to no slice and never call
+  `MPI_Comm_split`, so the other ranks wait in that collective. Fix: give slice $$s$$ the ranks
+  `ceil(s * p / S_k)` to `ceil((s + 1) * p / S_k) - 1` (3, 3 and 2 ranks for $$p = 8$$ and $$S_k = 3$$, as the
+  picture; no slice is empty, as $$p \ge S_k$$), with `numberOfCPUs` the size of that range.
 
 ### The Leaky Integrate-and-Fire Neuron and the Brunel Network (2016-02-08-lif-brunel.md)
 
@@ -481,6 +487,9 @@ that is not wrong.
   the origin of the render is known.
 - `slicing/mini-*.svg`: the four layouts have 10 (single axis), 35 (NUG, 5 x 7), 16 (ORB) and 35 (STR, 5 x 7)
   slices. Optional fix: 16 slices in all four (4 x 4 for NUG and STR), so that they compare on equal terms.
+- Optional, `slicing/sbs.svg`: in step 1.1, the top side of the red emphasis frame around the first row (x) lies
+  where the arms of the rank brackets end, so the arms touch the frame. Fix: move the rank brackets, the rank
+  numbers and the "rank" label of step 1.1 up by 3 px.
 
 ### The Leaky Integrate-and-Fire Neuron and the Brunel Network (2016-02-08-lif-brunel.md)
 
@@ -594,6 +603,10 @@ that is not wrong.
   output as $$x^{(1)}$$, as `dnn.svg` does. Fix: inputs x₁⁽⁰⁾ to x₅⁽⁰⁾ and outputs x₁⁽¹⁾ to x₅⁽¹⁾ in both rows, and
   the caption "... where the input $$x_3^{(0)}$$ affects only the outputs $$x_2^{(1)}$$, $$x_3^{(1)}$$ and
   $$x_4^{(1)}$$. Bottom: a fully connected layer, where $$x_3^{(0)}$$ affects every output."
+- Optional, `deep-neural-networks/fully_sparse_connectivity.svg`, dense panel: the arrows from the far inputs reach
+  s1 and s5 only 6 to 11 degrees apart, so 2 to 3 heads overlap into one dark mark (less at s2 and s4). CLAUDE.md
+  lets heads that converge on one node of a dense network touch. Fix: end the five arrows into each output at points
+  about 7 px apart along the lower half of its circle.
 - `deep-neural-networks/densenet.svg`: the curved arrows into the fourth BN-ReLU-Conv box and into the Transition
   Layer arrive horizontally on their slanted (24 degree) top edges, and the lower barb of each head touches the edge.
   Fix: end each curve perpendicular to the edge (its last control point on the normal of the edge), with the whole
@@ -715,7 +728,8 @@ that is not wrong.
 - Optional, `distributed-training/imgs/vdnn2.svg` and `vdnn3.svg` color the weights W purple and the gradients dX and
   dY green, while `deepspeed_stages.svg` colors the parameters blue, the gradients orange and the optimizer states
   green. Fix, for one color per meaning in the post: in vdnn2 and vdnn3, W blue, dX and dY orange, X and Y purple,
-  and the color words of their captions to match.
+  and the color words of their captions to match. The layers are light blue #dae8fc, at the user's request: with W
+  blue, check that the W arrows still stand out from them.
 - Optional, the caption of `distributed-training/imgs/benchmark_gptlite.svg` does not say how the memory is averaged.
   Fix: "GPTlite on one node with 8 GPUs, in fp32, with micro-batches of 1 sample: average and peak allocated memory
   per GPU, and throughput over all GPUs".

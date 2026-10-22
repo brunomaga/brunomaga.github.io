@@ -362,7 +362,8 @@ sections 6 and 7, and the font section 4.
   white    fill #ffffff
   ```
   Masked and padding elements (the masked cells of an attention mask, padding tokens and padding cells) are
-  white, with the solid outline of their cell or token (section 7). NULL or inactive elements are grey, in
+  white, with the solid outline of their cell or token (section 7). The pad tokens of longvilla stay grey, as in the
+  paper's figure, whose white cells are empty positions. NULL or inactive elements are grey, in
   the grey that stands out from the data next to them: dark grey #b3b3b3 next to white or pastel data, light
   grey #f5f5f5 next to data filled with an accent color. The accent colors may also fill small marks (dots of
   a scatter plot, nodes of a graph, heat map cells, filled tokens) where pastel fills are too faint.
@@ -453,7 +454,9 @@ sections 6 and 7, and the font section 4.
     odd_even_sort, balance, split, sbs): a 1.8 px black outline, at the user's request;
   - the lines between the samples (rows) of the token tables of variable_batch_lr and
     variable_batch_lr_pipeline: 1.2 px black, at the user's request, so that each sample stands apart;
-  - the grey backgrounds of kohonen_1, kohonen_2 and kohonen_3: no outline, at the user's request.
+  - the grey backgrounds of kohonen_1, kohonen_2 and kohonen_3: no outline, at the user's request;
+  - the outlines of the Generator and Discriminator trapezoids of gan: 1.8 px, at the user's request, as in the
+    original figure.
 - Thin arrows: black #000000, 1.4 px, endArrow=classic, endFill=1, endSize=5: a head 6.4 px long and wide,
   endSize plus the line weight, with its notch at 3/4 of its length. Dashed arrows use the same head. An
   arrow at the emphasis weight has endSize=2.8, so that its head has the size of the others. Grey #666666 only
