@@ -834,30 +834,30 @@
           <mxGeometry x="6.96" y="0" width="115.32" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-2" value="0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="52" y="23.5" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="50.56" y="23.5" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-3" value="1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="76.48" y="23.5" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="75.06" y="23.5" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-4" value="2" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="100.95" y="23.5" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="99.46" y="23.5" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-5" value="3" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="125.42" y="23.5" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="123.96" y="23.5" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-6" value="4" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="149.91" y="23.5" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="148.46" y="23.5" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-7" value="5" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="174.38" y="23.5" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="172.96" y="23.5" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-8" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="42.3" y="42.41" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-9" value="A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.8;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-9" value="A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="66.77" y="42.41" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-10" value="B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.58;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-10" value="B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="91.25" y="42.41" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-11" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
@@ -866,11 +866,11 @@
         <mxCell id="layouts-12" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="140.19" y="42.41" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-13" value="D" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.1;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-13" value="D" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="164.67" y="42.41" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-14" value="0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="26.59" y="45.45" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="27.3" y="46.27" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-15" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="42.3" y="66.89" width="24.52" height="24.52" as="geometry" />
@@ -884,182 +884,182 @@
         <mxCell id="layouts-18" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="115.72" y="66.89" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-19" value="C" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.1;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-19" value="C" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="140.19" y="66.89" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-20" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="164.67" y="66.89" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-21" value="1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="26.59" y="69.93" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="27.3" y="70.75" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-22" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="20.35" y="42.45" as="sourcePoint" />
-            <mxPoint x="20.35" y="91.47" as="targetPoint" />
+            <mxPoint x="20.35" y="42.41" as="sourcePoint" />
+            <mxPoint x="20.35" y="91.41" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-23" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="16.2" y="42.45" as="sourcePoint" />
-            <mxPoint x="24.49" y="42.45" as="targetPoint" />
+            <mxPoint x="16.2" y="42.41" as="sourcePoint" />
+            <mxPoint x="24.49" y="42.41" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-24" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="16.2" y="91.47" as="sourcePoint" />
-            <mxPoint x="24.49" y="91.47" as="targetPoint" />
+            <mxPoint x="16.2" y="91.41" as="sourcePoint" />
+            <mxPoint x="24.49" y="91.41" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-25" value="rank 0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;horizontal=0;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="2.71" y="53.11" width="14.4" height="34.67" as="geometry" />
+          <mxGeometry x="2.71" y="49.57" width="14.4" height="34.67" as="geometry" />
         </mxCell>
         <mxCell id="layouts-26" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="42.3" y="100.17" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="42.3" y="101.66" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-27" value="G" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=0.87;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="66.77" y="100.17" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-27" value="G" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="66.77" y="101.66" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-28" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="91.25" y="100.17" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="91.25" y="101.66" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-29" value="H" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.1;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="115.72" y="100.17" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-29" value="H" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="115.72" y="101.66" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-30" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="140.19" y="100.17" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="140.19" y="101.66" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-31" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="164.67" y="100.17" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="164.67" y="101.66" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-32" value="2" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="27.68" y="103.64" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="27.3" y="105.52" width="8" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-33" value="J" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=3.44;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="42.3" y="124.65" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-33" value="J" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="42.3" y="126.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-34" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="66.77" y="124.65" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="66.77" y="126.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-35" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="91.25" y="124.65" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="91.25" y="126.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-36" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="115.72" y="124.65" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="115.72" y="126.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-37" value="L" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=2.97;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="140.19" y="124.65" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-37" value="L" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="140.19" y="126.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-38" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="164.67" y="124.65" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="164.67" y="126.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-39" value="3" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="27.68" y="128.12" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="27.3" y="130" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-40" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="20.35" y="99.99" as="sourcePoint" />
-            <mxPoint x="20.35" y="149.01" as="targetPoint" />
+            <mxPoint x="20.35" y="101.66" as="sourcePoint" />
+            <mxPoint x="20.35" y="150.66" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-41" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="16.2" y="99.99" as="sourcePoint" />
-            <mxPoint x="24.49" y="99.99" as="targetPoint" />
+            <mxPoint x="16.2" y="101.66" as="sourcePoint" />
+            <mxPoint x="24.49" y="101.66" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-42" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="16.2" y="149.01" as="sourcePoint" />
-            <mxPoint x="24.49" y="149.01" as="targetPoint" />
+            <mxPoint x="16.2" y="150.66" as="sourcePoint" />
+            <mxPoint x="24.49" y="150.66" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-43" value="rank 1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;horizontal=0;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="2.52" y="105.65" width="14.4" height="34.67" as="geometry" />
+          <mxGeometry x="2.71" y="108.82" width="14.4" height="34.67" as="geometry" />
         </mxCell>
         <mxCell id="layouts-44" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="41.48" y="160.91" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="42.3" y="160.91" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-45" value="O" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=0.64;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="65.96" y="160.91" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-45" value="O" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="66.78" y="160.91" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-46" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="90.43" y="160.91" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="91.25" y="160.91" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-47" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="114.9" y="160.91" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="115.72" y="160.91" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-48" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="139.38" y="160.91" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="140.2" y="160.91" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-49" value="P" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=2.03;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="163.84" y="160.91" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-49" value="P" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="164.66" y="160.91" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-50" value="4" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="27.93" y="166.59" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="27.3" y="164.77" width="8" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-51" value="R" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.35;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="41.48" y="185.39" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-51" value="R" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="42.3" y="185.39" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-52" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="65.96" y="185.39" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="66.78" y="185.39" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-53" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="90.43" y="185.39" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="91.25" y="185.39" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-54" value="T" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=2.74;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="114.9" y="185.39" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-54" value="T" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="115.72" y="185.39" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-55" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="139.38" y="185.39" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="140.2" y="185.39" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-56" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="163.84" y="185.39" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="164.66" y="185.39" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-57" value="5" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="27.93" y="191.04" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="27.3" y="189.25" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-58" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="20.35" y="160.68" as="sourcePoint" />
-            <mxPoint x="20.35" y="209.7" as="targetPoint" />
+            <mxPoint x="20.35" y="160.91" as="sourcePoint" />
+            <mxPoint x="20.35" y="209.91" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-59" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="16.2" y="160.68" as="sourcePoint" />
-            <mxPoint x="24.49" y="160.68" as="targetPoint" />
+            <mxPoint x="16.2" y="160.91" as="sourcePoint" />
+            <mxPoint x="24.49" y="160.91" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-60" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="16.2" y="209.7" as="sourcePoint" />
-            <mxPoint x="24.49" y="209.7" as="targetPoint" />
+            <mxPoint x="16.2" y="209.91" as="sourcePoint" />
+            <mxPoint x="24.49" y="209.91" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-61" value="rank 2" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;horizontal=0;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="2.71" y="166.76" width="14.4" height="34.67" as="geometry" />
+          <mxGeometry x="2.71" y="168.07" width="14.4" height="34.67" as="geometry" />
         </mxCell>
         <mxCell id="layouts-62" value="b) Local Transpose" style="text;html=1;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="220.71" y="0" width="114.83" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-63" value="0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="248.72" y="25.62" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="250.06" y="25.62" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-64" value="1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="273.19" y="25.62" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="274.56" y="25.62" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-65" value="2" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="306.16" y="25.62" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="307.46" y="25.62" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-66" value="3" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="330.62" y="25.62" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="331.96" y="25.62" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-67" value="4" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="362.28" y="25.62" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="364.86" y="25.62" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-68" value="5" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="386.76" y="25.62" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="389.36" y="25.62" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-69" value="0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="221.63" y="51.2" width="8" height="16.8" as="geometry" />
@@ -1071,33 +1071,33 @@
           <mxGeometry x="266.26" y="46.78" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-72" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="298.78" y="46.78" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="299.22" y="46.78" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-73" value="J" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=3.44;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="323.25" y="46.78" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-73" value="J" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="323.69" y="46.78" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-74" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="356.65" y="46.78" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-75" value="R" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.35;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-75" value="R" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="381.12" y="46.78" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-76" value="1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="221.63" y="75.67" width="8" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-77" value="A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.8;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-77" value="A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="241.82" y="71.3" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-78" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="266.26" y="71.25" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-79" value="G" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=0.87;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="298.78" y="71.25" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-79" value="G" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="299.22" y="71.25" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-80" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="323.25" y="71.25" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="323.69" y="71.25" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-81" value="O" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=0.64;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-81" value="O" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="356.65" y="71.25" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-82" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
@@ -1106,17 +1106,17 @@
         <mxCell id="layouts-83" value="2" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="221.63" y="100.14" width="8" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-84" value="B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.58;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-84" value="B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="241.79" y="95.73" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-85" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="266.26" y="95.73" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-86" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="298.78" y="95.73" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="299.22" y="95.73" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-87" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="323.25" y="95.73" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="323.69" y="95.73" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-88" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="356.65" y="95.73" width="24.52" height="24.52" as="geometry" />
@@ -1133,16 +1133,16 @@
         <mxCell id="layouts-92" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="266.26" y="120.2" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-93" value="H" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.1;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="298.78" y="120.2" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-93" value="H" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="299.22" y="120.2" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-94" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="323.25" y="120.2" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="323.69" y="120.2" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-95" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="356.65" y="120.2" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-96" value="T" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=2.74;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-96" value="T" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="381.12" y="120.2" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-97" value="4" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
@@ -1151,14 +1151,14 @@
         <mxCell id="layouts-98" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="241.79" y="144.67" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-99" value="C" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.1;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-99" value="C" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="266.26" y="144.67" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-100" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="298.78" y="144.67" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="299.22" y="144.67" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-101" value="L" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=2.97;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="323.25" y="144.67" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-101" value="L" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="323.69" y="144.67" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-102" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="356.65" y="144.67" width="24.52" height="24.52" as="geometry" />
@@ -1169,19 +1169,19 @@
         <mxCell id="layouts-104" value="5" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="221.63" y="173.56" width="8" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-105" value="D" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.1;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-105" value="D" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="241.79" y="169.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-106" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="266.26" y="169.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-107" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="298.78" y="169.14" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="299.22" y="169.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-108" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="323.25" y="169.14" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="323.69" y="169.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-109" value="P" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=2.03;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-109" value="P" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="356.65" y="169.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-110" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
@@ -1189,87 +1189,87 @@
         </mxCell>
         <mxCell id="layouts-111" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="244.18" y="205.6" as="sourcePoint" />
-            <mxPoint x="288.47" y="205.6" as="targetPoint" />
+            <mxPoint x="244.19" y="205.6" as="sourcePoint" />
+            <mxPoint x="288.38" y="205.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-112" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="244.18" y="201.45" as="sourcePoint" />
-            <mxPoint x="244.18" y="209.75" as="targetPoint" />
+            <mxPoint x="244.19" y="201.45" as="sourcePoint" />
+            <mxPoint x="244.19" y="209.75" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-113" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="288.47" y="201.45" as="sourcePoint" />
-            <mxPoint x="288.47" y="209.75" as="targetPoint" />
+            <mxPoint x="288.38" y="201.45" as="sourcePoint" />
+            <mxPoint x="288.38" y="209.75" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-114" value="rank 0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="250.18" y="210.97" width="34.67" height="14.4" as="geometry" />
+          <mxGeometry x="248.95" y="210.97" width="34.67" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="layouts-115" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="300.93" y="205.6" as="sourcePoint" />
-            <mxPoint x="345.22" y="205.6" as="targetPoint" />
+            <mxPoint x="301.62" y="205.6" as="sourcePoint" />
+            <mxPoint x="345.81" y="205.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-116" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="300.93" y="201.45" as="sourcePoint" />
-            <mxPoint x="300.93" y="209.75" as="targetPoint" />
+            <mxPoint x="301.62" y="201.45" as="sourcePoint" />
+            <mxPoint x="301.62" y="209.75" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-117" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="345.22" y="201.45" as="sourcePoint" />
-            <mxPoint x="345.22" y="209.75" as="targetPoint" />
+            <mxPoint x="345.81" y="201.45" as="sourcePoint" />
+            <mxPoint x="345.81" y="209.75" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-118" value="rank 1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="308.04" y="210.03" width="34.67" height="14.4" as="geometry" />
+          <mxGeometry x="306.38" y="210.97" width="34.67" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="layouts-119" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="358.86" y="205.6" as="sourcePoint" />
-            <mxPoint x="403.15" y="205.6" as="targetPoint" />
+            <mxPoint x="359.05" y="205.6" as="sourcePoint" />
+            <mxPoint x="403.24" y="205.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-120" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="358.86" y="201.45" as="sourcePoint" />
-            <mxPoint x="358.86" y="209.75" as="targetPoint" />
+            <mxPoint x="359.05" y="201.45" as="sourcePoint" />
+            <mxPoint x="359.05" y="209.75" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-121" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="403.15" y="201.45" as="sourcePoint" />
-            <mxPoint x="403.15" y="209.75" as="targetPoint" />
+            <mxPoint x="403.24" y="201.45" as="sourcePoint" />
+            <mxPoint x="403.24" y="209.75" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-122" value="rank 2" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="365.04" y="208.45" width="34.67" height="14.4" as="geometry" />
+          <mxGeometry x="363.81" y="210.97" width="34.67" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="layouts-123" value="c) View Swap" style="text;html=1;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="442.29" y="0" width="81.11" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-124" value="0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="471.39" y="25.62" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="472.66" y="25.62" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-125" value="1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="495.86" y="25.62" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="497.16" y="25.62" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-126" value="2" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="528.81" y="25.62" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="530.16" y="25.62" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-127" value="3" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="553.29" y="25.62" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="554.66" y="25.62" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-128" value="4" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="584.94" y="25.62" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="587.56" y="25.62" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-129" value="5" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="609.41" y="25.62" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="612.06" y="25.62" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-130" value="0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="444.3" y="51.2" width="8" height="16.8" as="geometry" />
@@ -1277,19 +1277,19 @@
         <mxCell id="layouts-131" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="464.47" y="46.79" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-132" value="A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.8;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-132" value="A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="488.92" y="46.78" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-133" value="B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.58;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="521.44" y="46.78" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-133" value="B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="521.88" y="46.78" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-134" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="545.92" y="46.78" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="546.36" y="46.78" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-135" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="579.31" y="46.78" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-136" value="D" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.1;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-136" value="D" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="603.78" y="46.78" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-137" value="1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
@@ -1302,12 +1302,12 @@
           <mxGeometry x="488.92" y="71.25" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-140" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="521.44" y="71.25" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="521.88" y="71.25" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-141" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="545.92" y="71.25" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="546.36" y="71.25" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-142" value="C" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.1;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-142" value="C" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="579.31" y="71.25" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-143" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
@@ -1319,14 +1319,14 @@
         <mxCell id="layouts-145" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="464.45" y="95.73" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-146" value="G" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=0.87;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-146" value="G" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="488.92" y="95.73" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-147" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="521.44" y="95.73" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="521.88" y="95.73" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-148" value="H" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.1;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="545.92" y="95.73" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-148" value="H" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="546.36" y="95.73" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-149" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="579.31" y="95.73" width="24.52" height="24.52" as="geometry" />
@@ -1337,19 +1337,19 @@
         <mxCell id="layouts-151" value="3" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="444.3" y="124.6" width="8" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-152" value="J" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=3.44;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-152" value="J" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="464.45" y="120.2" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-153" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="488.92" y="120.2" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-154" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="521.44" y="120.2" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="521.88" y="120.2" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-155" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="545.92" y="120.2" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="546.36" y="120.2" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-156" value="L" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=2.97;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-156" value="L" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="579.31" y="120.2" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-157" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
@@ -1361,35 +1361,35 @@
         <mxCell id="layouts-159" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="464.45" y="144.67" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-160" value="O" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=0.64;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-160" value="O" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="488.92" y="144.67" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-161" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="521.44" y="144.67" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="521.88" y="144.67" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-162" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="545.92" y="144.67" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="546.36" y="144.67" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-163" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="579.31" y="144.67" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-164" value="P" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=2.03;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-164" value="P" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="603.78" y="144.67" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-165" value="5" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="444.3" y="173.56" width="8" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-166" value="R" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.35;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-166" value="R" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="464.45" y="169.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-167" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="488.92" y="169.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-168" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="521.44" y="169.14" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="521.88" y="169.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-169" value="T" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=2.74;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="545.92" y="169.14" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-169" value="T" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="546.36" y="169.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-170" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="579.31" y="169.14" width="24.52" height="24.52" as="geometry" />
@@ -1399,87 +1399,87 @@
         </mxCell>
         <mxCell id="layouts-172" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="466.83" y="205.6" as="sourcePoint" />
-            <mxPoint x="511.12" y="205.6" as="targetPoint" />
+            <mxPoint x="466.85" y="205.6" as="sourcePoint" />
+            <mxPoint x="511.04" y="205.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-173" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="466.83" y="201.45" as="sourcePoint" />
-            <mxPoint x="466.83" y="209.75" as="targetPoint" />
+            <mxPoint x="466.85" y="201.45" as="sourcePoint" />
+            <mxPoint x="466.85" y="209.75" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-174" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="511.12" y="201.45" as="sourcePoint" />
-            <mxPoint x="511.12" y="209.75" as="targetPoint" />
+            <mxPoint x="511.04" y="201.45" as="sourcePoint" />
+            <mxPoint x="511.04" y="209.75" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-175" value="rank 0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="472.84" y="210.97" width="34.67" height="14.4" as="geometry" />
+          <mxGeometry x="471.61" y="210.97" width="34.67" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="layouts-176" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="523.58" y="205.6" as="sourcePoint" />
-            <mxPoint x="567.87" y="205.6" as="targetPoint" />
+            <mxPoint x="524.28" y="205.6" as="sourcePoint" />
+            <mxPoint x="568.47" y="205.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-177" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="523.58" y="201.45" as="sourcePoint" />
-            <mxPoint x="523.58" y="209.75" as="targetPoint" />
+            <mxPoint x="524.28" y="201.45" as="sourcePoint" />
+            <mxPoint x="524.28" y="209.75" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-178" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="567.87" y="201.45" as="sourcePoint" />
-            <mxPoint x="567.87" y="209.75" as="targetPoint" />
+            <mxPoint x="568.47" y="201.45" as="sourcePoint" />
+            <mxPoint x="568.47" y="209.75" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-179" value="rank 1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="530.7" y="210.03" width="34.67" height="14.4" as="geometry" />
+          <mxGeometry x="529.04" y="210.97" width="34.67" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="layouts-180" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="581.51" y="205.6" as="sourcePoint" />
-            <mxPoint x="625.8" y="205.6" as="targetPoint" />
+            <mxPoint x="581.71" y="205.6" as="sourcePoint" />
+            <mxPoint x="625.9" y="205.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-181" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="581.51" y="201.45" as="sourcePoint" />
-            <mxPoint x="581.51" y="209.75" as="targetPoint" />
+            <mxPoint x="581.71" y="201.45" as="sourcePoint" />
+            <mxPoint x="581.71" y="209.75" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-182" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="625.8" y="201.45" as="sourcePoint" />
-            <mxPoint x="625.8" y="209.75" as="targetPoint" />
+            <mxPoint x="625.9" y="201.45" as="sourcePoint" />
+            <mxPoint x="625.9" y="209.75" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-183" value="rank 2" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="587.7" y="208.45" width="34.67" height="14.4" as="geometry" />
+          <mxGeometry x="586.47" y="210.97" width="34.67" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="layouts-184" value="d) Distributed Transpose" style="text;html=1;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="659.3" y="0" width="152.4" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-185" value="0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="712.06" y="23.5" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="710.66" y="23.5" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-186" value="1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="736.53" y="23.5" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="735.06" y="23.5" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-187" value="2" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="761" y="23.5" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="759.56" y="23.5" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-188" value="3" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="785.49" y="23.5" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="784.06" y="23.5" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-189" value="4" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="809.95" y="23.5" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="808.46" y="23.5" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-190" value="5" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="834.43" y="23.5" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="832.96" y="23.5" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-191" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="702.35" y="42.41" width="24.52" height="24.52" as="geometry" />
@@ -1490,185 +1490,185 @@
         <mxCell id="layouts-193" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="751.3" y="42.41" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-194" value="J" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=3.44;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-194" value="J" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="775.78" y="42.41" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-195" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="800.25" y="42.41" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-196" value="R" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.35;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-196" value="R" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="824.71" y="42.41" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-197" value="0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="686.64" y="45.45" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="687.35" y="46.27" width="8" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-198" value="A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.8;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-198" value="A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="702.35" y="66.89" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-199" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="726.83" y="66.89" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-200" value="G" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=0.87;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-200" value="G" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="751.3" y="66.89" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-201" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="775.78" y="66.89" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-202" value="O" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=0.64;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+        <mxCell id="layouts-202" value="O" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="800.25" y="66.89" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-203" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
           <mxGeometry x="824.71" y="66.89" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-204" value="1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="686.64" y="69.93" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="687.35" y="70.75" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-205" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="680.42" y="42.45" as="sourcePoint" />
-            <mxPoint x="680.42" y="91.47" as="targetPoint" />
+            <mxPoint x="680.4" y="42.41" as="sourcePoint" />
+            <mxPoint x="680.4" y="91.41" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-206" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="676.27" y="42.45" as="sourcePoint" />
-            <mxPoint x="684.57" y="42.45" as="targetPoint" />
+            <mxPoint x="676.25" y="42.41" as="sourcePoint" />
+            <mxPoint x="684.54" y="42.41" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-207" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="676.27" y="91.47" as="sourcePoint" />
-            <mxPoint x="684.57" y="91.47" as="targetPoint" />
+            <mxPoint x="676.25" y="91.41" as="sourcePoint" />
+            <mxPoint x="684.54" y="91.41" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-208" value="rank 0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;horizontal=0;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="661.02" y="53.11" width="14.4" height="34.67" as="geometry" />
+          <mxGeometry x="662.76" y="49.57" width="14.4" height="34.67" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-209" value="B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.58;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="702.35" y="100.17" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-209" value="B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="702.35" y="101.66" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-210" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="726.83" y="100.17" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="726.83" y="101.66" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-211" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="751.3" y="100.17" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="751.3" y="101.66" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-212" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="775.78" y="100.17" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="775.78" y="101.66" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-213" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="800.25" y="100.17" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="800.25" y="101.66" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-214" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="824.71" y="100.17" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="824.71" y="101.66" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-215" value="2" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="687.74" y="103.64" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="687.35" y="105.52" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-216" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="702.35" y="124.65" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="702.35" y="126.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-217" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="726.83" y="124.65" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="726.83" y="126.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-218" value="H" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.1;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="751.3" y="124.65" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-218" value="H" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="751.3" y="126.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-219" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="775.78" y="124.65" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="775.78" y="126.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-220" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="800.25" y="124.65" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="800.25" y="126.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-221" value="T" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=2.74;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="824.71" y="124.65" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-221" value="T" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="824.71" y="126.14" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-222" value="3" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="687.74" y="128.12" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="687.35" y="130" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-223" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="680.42" y="99.99" as="sourcePoint" />
-            <mxPoint x="680.42" y="149.01" as="targetPoint" />
+            <mxPoint x="680.4" y="101.66" as="sourcePoint" />
+            <mxPoint x="680.4" y="150.66" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-224" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="676.27" y="99.99" as="sourcePoint" />
-            <mxPoint x="684.57" y="99.99" as="targetPoint" />
+            <mxPoint x="676.25" y="101.66" as="sourcePoint" />
+            <mxPoint x="684.54" y="101.66" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-225" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="676.27" y="149.01" as="sourcePoint" />
-            <mxPoint x="684.57" y="149.01" as="targetPoint" />
+            <mxPoint x="676.25" y="150.66" as="sourcePoint" />
+            <mxPoint x="684.54" y="150.66" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-226" value="rank 1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;horizontal=0;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="660.82" y="105.65" width="14.4" height="34.67" as="geometry" />
+          <mxGeometry x="662.76" y="108.82" width="14.4" height="34.67" as="geometry" />
         </mxCell>
         <mxCell id="layouts-227" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="701.53" y="160.91" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="702.35" y="160.91" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-228" value="C" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.1;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="726.01" y="160.91" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-228" value="C" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="726.83" y="160.91" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-229" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="750.48" y="160.91" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="751.3" y="160.91" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-230" value="L" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=2.97;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="774.96" y="160.91" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-230" value="L" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="775.78" y="160.91" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-231" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="799.43" y="160.91" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="800.25" y="160.91" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-232" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="823.89" y="160.91" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="824.71" y="160.91" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-233" value="4" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="688" y="166.59" width="8" height="16.8" as="geometry" />
+          <mxGeometry x="687.35" y="164.77" width="8" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-234" value="D" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=1.1;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="701.53" y="185.39" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-234" value="D" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="702.35" y="185.39" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-235" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="726.01" y="185.39" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="726.83" y="185.39" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-236" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="750.48" y="185.39" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="751.3" y="185.39" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-237" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="774.96" y="185.39" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="775.78" y="185.39" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-238" value="P" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=NewComputerModernSansMath;fontSize=12;fontStyle=1;spacingRight=2.03;spacingTop=0.75;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="799.43" y="185.39" width="24.52" height="24.52" as="geometry" />
+        <mxCell id="layouts-238" value="P" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="800.25" y="185.39" width="24.52" height="24.52" as="geometry" />
         </mxCell>
         <mxCell id="layouts-239" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="823.89" y="185.39" width="24.52" height="24.52" as="geometry" />
+          <mxGeometry x="824.71" y="185.39" width="24.52" height="24.52" as="geometry" />
         </mxCell>
-        <mxCell id="layouts-outline-1" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="42.3" y="42.41" as="sourcePoint" /><mxPoint x="189.19" y="42.41" as="targetPoint" /><Array as="points"><mxPoint x="189.19" y="42.41" /><mxPoint x="189.19" y="91.41" /><mxPoint x="42.3" y="91.41" /><mxPoint x="42.3" y="42.41" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-2" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="42.3" y="100.17" as="sourcePoint" /><mxPoint x="189.19" y="100.17" as="targetPoint" /><Array as="points"><mxPoint x="189.19" y="100.17" /><mxPoint x="189.19" y="149.17" /><mxPoint x="42.3" y="149.17" /><mxPoint x="42.3" y="100.17" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-3" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="41.48" y="160.91" as="sourcePoint" /><mxPoint x="188.36" y="160.91" as="targetPoint" /><Array as="points"><mxPoint x="188.36" y="160.91" /><mxPoint x="188.36" y="209.91" /><mxPoint x="41.48" y="209.91" /><mxPoint x="41.48" y="160.91" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-4" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="241.79" y="46.78" as="sourcePoint" /><mxPoint x="290.78" y="46.78" as="targetPoint" /><Array as="points"><mxPoint x="290.78" y="46.78" /><mxPoint x="290.78" y="193.66" /><mxPoint x="241.79" y="193.66" /><mxPoint x="241.79" y="46.78" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-5" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="298.78" y="46.78" as="sourcePoint" /><mxPoint x="347.77" y="46.78" as="targetPoint" /><Array as="points"><mxPoint x="347.77" y="46.78" /><mxPoint x="347.77" y="193.66" /><mxPoint x="298.78" y="193.66" /><mxPoint x="298.78" y="46.78" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-6" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="356.65" y="46.78" as="sourcePoint" /><mxPoint x="405.64" y="46.78" as="targetPoint" /><Array as="points"><mxPoint x="405.64" y="46.78" /><mxPoint x="405.64" y="193.66" /><mxPoint x="356.65" y="193.66" /><mxPoint x="356.65" y="46.78" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-7" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="464.45" y="46.78" as="sourcePoint" /><mxPoint x="513.44" y="46.78" as="targetPoint" /><Array as="points"><mxPoint x="513.44" y="46.78" /><mxPoint x="513.44" y="193.66" /><mxPoint x="464.45" y="193.66" /><mxPoint x="464.45" y="46.78" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-8" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="521.44" y="46.78" as="sourcePoint" /><mxPoint x="570.44" y="46.78" as="targetPoint" /><Array as="points"><mxPoint x="570.44" y="46.78" /><mxPoint x="570.44" y="193.66" /><mxPoint x="521.44" y="193.66" /><mxPoint x="521.44" y="46.78" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-9" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="579.31" y="46.78" as="sourcePoint" /><mxPoint x="628.3" y="46.78" as="targetPoint" /><Array as="points"><mxPoint x="628.3" y="46.78" /><mxPoint x="628.3" y="193.66" /><mxPoint x="579.31" y="193.66" /><mxPoint x="579.31" y="46.78" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-10" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="702.35" y="42.41" as="sourcePoint" /><mxPoint x="849.23" y="42.41" as="targetPoint" /><Array as="points"><mxPoint x="849.23" y="42.41" /><mxPoint x="849.23" y="91.41" /><mxPoint x="702.35" y="91.41" /><mxPoint x="702.35" y="42.41" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-11" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="702.35" y="100.17" as="sourcePoint" /><mxPoint x="849.23" y="100.17" as="targetPoint" /><Array as="points"><mxPoint x="849.23" y="100.17" /><mxPoint x="849.23" y="149.17" /><mxPoint x="702.35" y="149.17" /><mxPoint x="702.35" y="100.17" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-12" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="701.53" y="160.91" as="sourcePoint" /><mxPoint x="848.41" y="160.91" as="targetPoint" /><Array as="points"><mxPoint x="848.41" y="160.91" /><mxPoint x="848.41" y="209.91" /><mxPoint x="701.53" y="209.91" /><mxPoint x="701.53" y="160.91" /></Array></mxGeometry></mxCell><mxCell id="layouts-240" value="5" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="688" y="191.04" width="8" height="16.8" as="geometry" />
+        <mxCell id="layouts-outline-1" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="42.3" y="42.41" as="sourcePoint" /><mxPoint x="189.19" y="42.41" as="targetPoint" /><Array as="points"><mxPoint x="189.19" y="42.41" /><mxPoint x="189.19" y="91.41" /><mxPoint x="42.3" y="91.41" /><mxPoint x="42.3" y="42.41" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-2" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="42.3" y="101.66" as="sourcePoint" /><mxPoint x="189.19" y="101.66" as="targetPoint" /><Array as="points"><mxPoint x="189.19" y="101.66" /><mxPoint x="189.19" y="150.66" /><mxPoint x="42.3" y="150.66" /><mxPoint x="42.3" y="101.66" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-3" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="42.3" y="160.91" as="sourcePoint" /><mxPoint x="189.18" y="160.91" as="targetPoint" /><Array as="points"><mxPoint x="189.18" y="160.91" /><mxPoint x="189.18" y="209.91" /><mxPoint x="42.3" y="209.91" /><mxPoint x="42.3" y="160.91" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-4" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="241.79" y="46.78" as="sourcePoint" /><mxPoint x="290.78" y="46.78" as="targetPoint" /><Array as="points"><mxPoint x="290.78" y="46.78" /><mxPoint x="290.78" y="193.66" /><mxPoint x="241.79" y="193.66" /><mxPoint x="241.79" y="46.78" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-5" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="299.22" y="46.78" as="sourcePoint" /><mxPoint x="348.21" y="46.78" as="targetPoint" /><Array as="points"><mxPoint x="348.21" y="46.78" /><mxPoint x="348.21" y="193.66" /><mxPoint x="299.22" y="193.66" /><mxPoint x="299.22" y="46.78" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-6" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="356.65" y="46.78" as="sourcePoint" /><mxPoint x="405.64" y="46.78" as="targetPoint" /><Array as="points"><mxPoint x="405.64" y="46.78" /><mxPoint x="405.64" y="193.66" /><mxPoint x="356.65" y="193.66" /><mxPoint x="356.65" y="46.78" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-7" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="464.45" y="46.78" as="sourcePoint" /><mxPoint x="513.44" y="46.78" as="targetPoint" /><Array as="points"><mxPoint x="513.44" y="46.78" /><mxPoint x="513.44" y="193.66" /><mxPoint x="464.45" y="193.66" /><mxPoint x="464.45" y="46.78" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-8" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="521.88" y="46.78" as="sourcePoint" /><mxPoint x="570.88" y="46.78" as="targetPoint" /><Array as="points"><mxPoint x="570.88" y="46.78" /><mxPoint x="570.88" y="193.66" /><mxPoint x="521.88" y="193.66" /><mxPoint x="521.88" y="46.78" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-9" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="579.31" y="46.78" as="sourcePoint" /><mxPoint x="628.3" y="46.78" as="targetPoint" /><Array as="points"><mxPoint x="628.3" y="46.78" /><mxPoint x="628.3" y="193.66" /><mxPoint x="579.31" y="193.66" /><mxPoint x="579.31" y="46.78" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-10" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="702.35" y="42.41" as="sourcePoint" /><mxPoint x="849.23" y="42.41" as="targetPoint" /><Array as="points"><mxPoint x="849.23" y="42.41" /><mxPoint x="849.23" y="91.41" /><mxPoint x="702.35" y="91.41" /><mxPoint x="702.35" y="42.41" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-11" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="702.35" y="101.66" as="sourcePoint" /><mxPoint x="849.23" y="101.66" as="targetPoint" /><Array as="points"><mxPoint x="849.23" y="101.66" /><mxPoint x="849.23" y="150.66" /><mxPoint x="702.35" y="150.66" /><mxPoint x="702.35" y="101.66" /></Array></mxGeometry></mxCell><mxCell id="layouts-outline-12" value="" edge="1" parent="layouts-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="702.35" y="160.91" as="sourcePoint" /><mxPoint x="849.23" y="160.91" as="targetPoint" /><Array as="points"><mxPoint x="849.23" y="160.91" /><mxPoint x="849.23" y="209.91" /><mxPoint x="702.35" y="209.91" /><mxPoint x="702.35" y="160.91" /></Array></mxGeometry></mxCell><mxCell id="layouts-240" value="5" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="layouts-figure">
+          <mxGeometry x="687.35" y="189.25" width="8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="layouts-241" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="680.42" y="160.68" as="sourcePoint" />
-            <mxPoint x="680.42" y="209.7" as="targetPoint" />
+            <mxPoint x="680.4" y="160.91" as="sourcePoint" />
+            <mxPoint x="680.4" y="209.91" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-242" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="676.27" y="160.68" as="sourcePoint" />
-            <mxPoint x="684.57" y="160.68" as="targetPoint" />
+            <mxPoint x="676.25" y="160.91" as="sourcePoint" />
+            <mxPoint x="684.54" y="160.91" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-243" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="layouts-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="676.27" y="209.7" as="sourcePoint" />
-            <mxPoint x="684.57" y="209.7" as="targetPoint" />
+            <mxPoint x="676.25" y="209.91" as="sourcePoint" />
+            <mxPoint x="684.54" y="209.91" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="layouts-244" value="rank 2" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;horizontal=0;fontColor=#000000;" vertex="1" parent="layouts-figure">
-          <mxGeometry x="661.02" y="166.76" width="14.4" height="34.67" as="geometry" />
+          <mxGeometry x="662.76" y="168.07" width="14.4" height="34.67" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-label" value="matrix-transposition-crs.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="996.08" width="600" height="30" as="geometry" />
