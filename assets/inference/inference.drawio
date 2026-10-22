@@ -1920,7 +1920,7 @@
         <mxCell id="chunked_prefill-24" value="50" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
           <mxGeometry x="414.78" y="257.94" width="62.98" height="29.52" as="geometry" />
         </mxCell>
-        <mxCell id="chunked_prefill-25" value="…" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="chunked_prefill-figure">
+        <mxCell id="chunked_prefill-25" value="…" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="chunked_prefill-figure">
           <mxGeometry x="491.83" y="239.44" width="23" height="23.2" as="geometry" />
         </mxCell>
         <mxCell id="chunked_prefill-26" value="146" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
