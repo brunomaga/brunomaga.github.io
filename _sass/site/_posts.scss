@@ -1,4 +1,10 @@
-// The content of posts: on narrow screens, tables, inline code and equations stay within the page
+// The content of posts: the size of code blocks, and the tables, inline code and equations that stay within the page
+// on narrow screens
+
+// code blocks are 14px, smaller than the 15px of minima, as the monospace font looks larger than the body font at the
+// same size; inline code keeps minima's size
+pre,
+pre > code { font-size: 14px; }
 
 // post tables, wrapped by _layouts/post.html, scroll sideways when wider than the page. The space below a table is
 // outside its box, so that at the end of a post it is the same as below a paragraph

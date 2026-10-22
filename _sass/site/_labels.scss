@@ -25,6 +25,13 @@
 a.post-label--link,
 a.post-label--link:visited { color: $brand-color; }
 
+// on hover, only the word is underlined: not the arrow, nor the space after it
+a.post-label--link:hover,
+a.post-label--link:focus-visible { text-decoration: none; }
+
+a.post-label--link:hover span,
+a.post-label--link:focus-visible span { text-decoration: underline; }
+
 // Label tables: the blog posts and resources on the home page, and the publications. No borders or stripes, and
 // rows spaced like a list. The child selectors leave out the tables inside the notes of the publications
 .label-table { border: none; }
