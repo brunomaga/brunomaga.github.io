@@ -1329,7 +1329,7 @@ The finetuning was performed with supervised fine-tuning (Section 3.1), initial 
 In GAtt, a system instruction (e.g., "act as ...") is synthetically concatenated to all user messages of a multi-turn dialogue, and responses are sampled with the latest RLHF model. For fine-tuning, the instruction is dropped from all but the first turn and the loss is set to zero on the tokens of previous turns, so the model learns to keep following the instruction across turns (Figure 9, below, right).
 
 {: .picture}
-<img loading="lazy" width="77.1%" height="77.1%" src="{{ site.assets }}/publications/llama2_gatt.svg"/>
+<img loading="lazy" width="79.4%" height="79.4%" src="{{ site.assets }}/publications/llama2_gatt.svg"/>
 
 {: .caption}
 <b>Issues with multi-turn memory (<i>left</i>) can be improved with GAtt (<i>right</i>).</b> Both dialogues start with the instruction “Always answer with emojis”. Adapted from: [Llama 2: Open Foundation and Fine-Tuned Chat Models](https://arxiv.org/abs/2307.09288)
