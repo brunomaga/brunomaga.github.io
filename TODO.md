@@ -404,32 +404,30 @@ that is not wrong.
 
 ### All pictures
 
-- Style details that the restyle left, from an automated check of the 230 draw.io figures: 178 boxes in 15 figures
-  keep the rounded corners of the original with a corner radius of 2 to 4.5 px instead of 5 px (for example the
-  GPT-lite pictures, `diffusion/playground_v3.svg` and `publications/visual_transformer.svg`), and the 12 chat
-  bubbles of `publications/llama2_gatt.svg` 15 px; 147 arrows in 19 figures are curved but are neither pointers nor
-  loops (for example in `deep-neural-networks/densenet.svg`, `lif-brunel/diagram_class.svg` and
+- Style details that the restyle left, from an automated check of the 230 draw.io figures before the picture round
+  of 2026-10-22, which fixed some of them: 178 boxes in 15 figures keep the rounded corners of the original with a
+  corner radius of 2 to 4.5 px instead of 5 px (for example the GPT-lite pictures and
+  `publications/visual_transformer.svg`); 147 arrows in 19 figures are curved but are neither pointers nor loops (for
+  example in `deep-neural-networks/densenet.svg`, `lif-brunel/diagram_class.svg` and
   `publications/graphconvnets.svg`); 176 filled cells of `distributed-training/imgs/mixture_of_depths.svg`, and a few
-  in other figures, have no outline; `learning-from-sequences/transformer_attention.svg` (#97afd2, a heat map shade)
-  and `diffusion/sora_vae.svg` (#333333) use colors outside the palette; 3 figures have lines thinner than 0.4 px.
-  Fix: set them to the values of CLAUDE.md, then run the check again.
-- The arrow check of the restyle (CLAUDE.md, Pictures, section 6) still reports 487 findings in 71 draw.io figures:
-  199 arrows with less than 6 px of line before the head (48 of them with 4.6 to 5.9 px, as the 6 px heads take more
-  of short arrows, for example in `gptlite-cpp/torch_compile.svg`, `diffusion/omnigen.svg` and the three
-  `distributed-training/imgs/dnn_multiproc*.svg`), 197 lines through the text box of a label, 55 labels that run
-  into a box, 28 heads on text and 8 overlapping boxes. Most are in dense pictures from papers:
-  `matrix-transpose/xcrs_format.svg` (48), `deep-neural-networks/densenet.svg` (42), `publications/helix.svg` (21)
-  and `publications/performers.svg` (21); some are text boxes larger than their text. Fix: check each picture at its
-  page size, move the labels and arrows that touch, and lengthen the short arrows (move their bend, or the boxes they
-  join).
-- The charts drawn from data (the plots, benchmarks and histograms without a draw.io source, for example
-  `gptlite-cpp/benchmark_*.svg` and the charts of `neuron-variable-timestep` and `bayesian-linear-regression`) keep
-  the line weights of their scripts or of their earlier export, not the weights of CLAUDE.md, Pictures, section 6.
-  Fix: axes and plot lines 1.4 px, bar outlines 1.0 px, as in `inference/imgs/tp_results.py` and `ep_results.py`, in
-  each chart's script, or in the SVG of a chart without a script.
+  in other figures, have no outline; `learning-from-sequences/transformer_attention.svg` uses a color outside the
+  palette (#97afd2, a heat map shade); 3 figures have lines thinner than 0.4 px. Fix: set them to the values of
+  CLAUDE.md, then run the check again.
+- The arrow check of the restyle (CLAUDE.md, Pictures, section 6) reported 487 findings in 71 draw.io figures before
+  the picture round of 2026-10-22, which fixed some of them: 199 arrows with less than 6 px of line before the head
+  (48 of them with 4.6 to 5.9 px, as the 6 px heads take more of short arrows, for example in
+  `gptlite-cpp/torch_compile.svg` and the three `distributed-training/imgs/dnn_multiproc*.svg`), 197 lines through
+  the text box of a label, 55 labels that run into a box, 28 heads on text and 8 overlapping boxes. Most are in dense
+  pictures from papers: `matrix-transpose/xcrs_format.svg` (48), `deep-neural-networks/densenet.svg` (42) and
+  `publications/performers.svg` (21); some are text boxes larger than their text. Fix: run the check again, check
+  each picture at its page size, move the labels and arrows that touch, and lengthen the short arrows (move their
+  bend, or the boxes they join).
+- The log charts write the exponents of their tick labels at 8.4 px, under the 10 px of the smallest text size
+  (CLAUDE.md, Pictures, section 4): `publications/llama3_scaling_laws.svg`, `scaling_laws.svg`, `scaling_laws_2.svg`,
+  `training_compute_optimal_large_language_models.svg` and `training_compute_optimal_large_language_models_2.svg`,
+  and `neuron-variable-timestep/cvode_dependency_on_variation_solution.svg` and
+  `cvode_dependency_on_events_arrival.svg`. Fix: exponents of 10 px.
 - Pictures to redraw, from the user's review of the four line weights (the next step of the restyle):
-  - `inference/imgs/continuous_chunked_batching.svg` differs from its original. Fix: redraw it from the original, and
-    add continuous batching with chunked prefill.
   - `distributed-training/imgs/workflow_data_parallelism.svg` and `workflow_sharding.svg` changed too much. Fix: the
     layout of the originals in this style, with square inputs, outputs and activations, and round layers and
     parameters.
@@ -439,16 +437,20 @@ that is not wrong.
     arrows of CLAUDE.md.
   - `inference/imgs/medusa.svg`, `eagle.svg` and the other pictures of the speculative decoding draft show a 4 x 1
     matrix after the target model, where the originals show a row of 3D cubes. Fix: the row of cubes again.
-  - `neuron-variable-timestep/lvardt_exec_time_comparison.svg`. Fix: thick axes and color-coded lines.
-  - `inference/imgs/prefill_decode.svg`, `publications/helix.svg` and `distributed-training/imgs/moe_megablocks.svg`
-    are crowded. Fix: draw them 880 px wide (100%), with more space between their parts.
-  - `distributed-training/imgs/dnn_model_parallelism.svg` is hard to read at its width. Fix: draw it larger.
+  - `inference/imgs/prefill_decode.svg` is crowded. Fix: draw it 880 px wide (100%), with more space between its
+    parts.
+  - `distributed-training/imgs/dnn_model_parallelism.svg` is hard to read at its width, and its 64 links are lines
+    without heads, while CLAUDE.md, Pictures, section 6, draws the links of a dense network as thin arrows with heads.
+    Neither the picture nor the text says which layer is the input. Fix: draw it larger, and add the heads in the
+    direction of the forward pass, once the user picks the input layer.
 
-### Distributed Sorting Algorithms (2014-06-21-distributed-sort.md)
+### Distributed Matrix Multiplication and Database Joins (2014-04-02-distributed-matmul-dbs.md)
 
-- `distributed-sort/sample_sort.svg`: in step 5, the label "rank 1" is bold (`<b>rank 1</b>` in
-  `distributed-sort.drawio`), while "rank 0" and "rank 2" are regular. Fix: the regular weight for the three labels
-  (CLAUDE.md, Pictures, section 4), and export the SVG again.
+- `distributed-matmul-dbs/spmv.svg`: the panel titles "data layout on 3 ranks" and "entries of x on each rank" sit
+  about 7 px right of the centres of their panels (at 160.96 and 487.06 px instead of 154.24 and 479.51 px). Fix: x
+  = 84.69 for `spmv-1` and x = 403.26 for `spmv-52` in the draw.io file.
+- `distributed-matmul-dbs/csr_format.svg`: the array names "values", "col_idx" and "row_ptr" are 16 px regular, while
+  `matvec_row1d.svg` and `spmv.svg` name their matrices at 14 px bold. Fix: 14 px bold.
 
 ### Distributed Matrix Transpose Algorithms (2015-04-21-matrix-transpose.md)
 
@@ -456,14 +458,18 @@ that is not wrong.
   block $$i$$", while the post calls the processes ranks, numbers them $$r$$ and $$s$$, and uses $$i$$ and $$j$$ for
   vertices. Fix: "`MPI_Alltoall` on 6 ranks: block $$s$$ of rank $$r$$ goes to rank $$s$$, as its block $$r$$. The
   blocks of the first rank, A0 to A5 (red frame), become the first block of every rank." The label "processes" of the
-  picture can stay, since the mixture-of-experts post shows the same picture and says processes.
-- `matrix-transpose/matrix-transposition-crs.svg`: the labels "Metadata counts (MPI_Alltoall)" and "Metadata sparse
-  matrix (MPI_Alltoallv)", and the group label "Metadata" over "Row id", "Column id" and "Element", copy the XCSR
-  wording. The CSR transpose sends the element counts, then the elements with their row and column indices, and the
-  post uses "metadata" only for XCSR. Fix: "Element counts (MPI_Alltoall)" and "Elements with their indices
-  (MPI_Alltoallv)", without the group label. Optional: "Row index" and "Column index", as in the text.
-- `matrix-transpose/crs_format.svg`, `xcrs_format.svg`: the array of column indices is labeled `disps`, MPI's name
-  for displacements, which reads as offsets. Optional fix: `col_idx`, as in the matmul post.
+  picture can stay, as it is the word of the MPI tutorial that the picture follows, and the mixture-of-experts post
+  shows the same picture and says processes.
+- Optional, `matrix-transpose/matrix-transposition-crs.svg`: the labels "Metadata counts (MPI_Alltoall)" and
+  "Metadata sparse matrix (MPI_Alltoallv)", and the group label "Metadata" over "Row id", "Column id" and "Element",
+  are the paper's own words, which a picture from a source keeps (CLAUDE.md, Pictures, section 1). They copy the XCSR
+  wording, while the CSR transpose sends the element counts, then the elements with their row and column indices,
+  and the post uses "metadata" only for XCSR. Fix, if the user wants the words of the post: "Element counts
+  (MPI_Alltoall)" and "Elements with their indices (MPI_Alltoallv)", without the group label, and "Row index" and
+  "Column index", as in the text.
+- Optional, `matrix-transpose/crs_format.svg` and `xcrs_format.svg`: the array of column indices is labeled `disps`,
+  the paper's own label and MPI's name for displacements, which reads as offsets. Fix: `col_idx`, as in the matmul
+  post.
 - Optional, `matrix-transpose/xcrs_transpose_3.svg`: the labels "Objects to be sent" and "Objects to be received"
   name the values of the view swap, which the post calls values. Fix: "Values to be sent" and "Values to be
   received".
@@ -471,7 +477,8 @@ that is not wrong.
 ### Distributed Load Balancing and Spatial Slicing (2015-12-01-slicing.md)
 
 - `slicing/n_body_slicing.svg` has no caption, and does not name the source of its N-body render. Fix: a caption,
-  with a credit if the render comes from a source.
+  such as "Slicing of an N-body simulation (left) and of a small network of neurons (right).", and "Source: ..." once
+  the origin of the render is known.
 - `slicing/mini-*.svg`: the four layouts have 10 (single axis), 35 (NUG, 5 x 7), 16 (ORB) and 35 (STR, 5 x 7)
   slices. Optional fix: 16 slices in all four (4 x 4 for NUG and STR), so that they compare on equal terms.
 
@@ -481,8 +488,7 @@ that is not wrong.
   their state. The post used to call them "slow", "regular" and "fast" dynamics, but their parameters are those of
   Brunel's states SI slow (g = 4.5, eta = 0.9), AI (g = 5, eta = 2) and SR (g = 3, eta = 2); the text now uses these
   names. Fix: a caption under each plot, e.g. "SI slow (g = 4.5, eta = 0.9)", since CLAUDE.md puts titles in captions.
-- Same three plots: the label "time interval (ms)" overlaps the bars at the right end of the lower panel, and
-  "spikes count" reads better as "spike count (per ms)". Fix: move the label below the axis.
+- Same three plots: the axis label "spikes count" reads better as "spike count (per ms)". Fix: relabel it.
 - `lif-brunel` table captions: "source: Marc-Oliver Gewaltig, ResearchGate" and "source: Brunel 2000" are lower case
   and have no link, and the parameter table is Table 2 of NEST by Example (Gewaltig et al., 2012), not a ResearchGate
   page. Fix: "Source: [NEST by Example, Table
@@ -492,10 +498,9 @@ that is not wrong.
 
 ### Numerical Simulation of Detailed Neuron Models (2016-08-15-neuron-electrical-activity.md)
 
-- `neuron-electrical-activity/brain_scales.svg`: the LadyofHats drawing is not restyled and not at page scale. It is
-  716 px wide and shows at 50%, so its sans-serif panel letters (a to d) and ion labels show at 61% of their size.
-  Fix: keep the drawing, scale it to about 440 px, redraw the letters and labels in Source Sans 3 (14 px and 12 px),
-  and set P = W/880.
+- `neuron-electrical-activity/brain_scales.svg`: the labels are restyled, but the SVG has no width (its viewBox is
+  716 x 1096 px) and the post shows it at 50%, so P does not follow W/880. Fix: width="440" and the matching
+  height="673.5" on the svg element, with the viewBox unchanged, so that P = 50 = W/880.
 - Caption of `neuron-electrical-activity/brain_scales.svg`: the first credit, "Mariana Villarreal (LadyofHats),
   Wikimedia Commons", has no title and no link, and the author's name is Mariana Ruiz Villarreal. Panel (b) is her
   public-domain drawing "Complete neuron cell diagram en.svg". Fix: "Adapted from: [Complete neuron cell diagram,
@@ -504,6 +509,13 @@ that is not wrong.
   after a check of the sources of panels (c) and (d).
 - Caption of `neuron-electrical-activity/neuron_model_scales.svg`: the credit "J. M. Eppler, Introduction to NEST,
   First community workshop on NESTML, 2015" has no link. Fix: a link to the slides, if they are online.
+- `neuron-electrical-activity/neuron_model_scales.svg`: the lower zoom line from E crosses the vertical segment of the
+  arrow from I to E. Fix: route the arrow from I to E on the left, next to the arrow from E to I, about 8 px apart.
+- `neuron-electrical-activity/neuron_model_scales.svg`: the label "Compartmental membrane" is centred about 8 px right
+  of its drawing. Fix: move it 8 px left.
+- `neuron-electrical-activity/neuron_model_scales.svg`: Ca²⁺ is in the math font, while CaM and the other names of
+  the reaction-diffusion part are in Source Sans 3 (the post writes $$Ca^{2+}$$). Fix: Source Sans 3, if Ca²⁺ counts
+  as a name.
 - Caption of `neuron-electrical-activity/net_current_conservation.svg`: "the axial currents $$i_a$$ balance the
   membrane current $$i_m$$", but the text defines $$i_m$$ as a current density (mA/cm²), and the axial currents
   balance its integral over the membrane. Fix: "the axial currents $$i_a$$ balance the membrane current density
@@ -530,7 +542,8 @@ that is not wrong.
   pyramidal cell model is of the order of 0.1 to 1 nA, so 0.206 mA is likely 0.206 nA. The text gives no current
   values. Fix, after a check of the simulation scripts: mA to nA and µA to pA in the labels.
 - Optional, `benchmark_two_rows_2.svg`: the orange "region of similar runtime growth" does not follow from the plotted
-  runtimes. Fix: check it against the benchmark data, or remove it.
+  runtimes, and it is hatched. Fix: check it against the benchmark data, or remove it; if it stays, a flat #ffe6cc
+  fill with a #d79b00 outline.
 - `neuron_203076.svg`, `neuron_138083.svg`, `neuron_208223.svg` and `neuron_87784.svg`: the last 10 ms bar of each
   event histogram leaves out the events after 7.5 s, and the burst bars near 0 s are cut at the top of the plot (198,
   203, 44 and 47 events) without a mark. Fix: redraw the histograms from the event data of the simulations, with the
@@ -550,6 +563,12 @@ that is not wrong.
 - `benchmark_two_rows_2.svg`: the legend entry "(2a) BSP Deriv. Implicit†" has no key for the dagger. The preprint's
   caption defines it: Newton iterations solve each mechanism implicitly, but the coupling between mechanisms stays
   explicit. Fix: a key line in the legend, "† implicit per mechanism, explicit across mechanisms".
+- `neuron-variable-timestep/l5_neuron_pulse1_3ma_100ms_cvode_vs_backward_euler.svg` (the 100 ms chart): the grey
+  spike of atol 10⁻¹ touches the tick label 25. Fix: the tick labels and t (ms) under the traces, as in the 1000 ms
+  chart.
+- `neuron-variable-timestep/l5_neuron_pulse_1000ms_results.svg`: a grey bar is left in the inset (the magnified
+  −50 mV line). Fix: remove it, as in the 100 ms chart.
+- `neuron-variable-timestep/neuron_132412.svg`: the tick labels 0.1, 10 and 1,000 are missing. Fix: restore them.
 
 ### Linear Regression, Matrix Factorization and Loss Functions (2017-08-17-linear-regression-matrix-factorization.md)
 
@@ -561,10 +580,8 @@ that is not wrong.
 - `unsupervised-learning/gaussianscatterpca.svg`: the arrow heads end past the scaled eigenvectors, at 3.75 and 1.75
   instead of 3 and 1, the lengths in the Wikipedia figure it follows. Fix: arrow heads that end at the tips of the
   vectors.
-- `unsupervised-learning/kohonen2.svg` and its caption name the input $$x_i$$, while the SOM text names it $$x_u$$
-  (since iteration 2, the text names the winner $$j^*$$, as the picture does). The picture keeps the labels of Ritter,
-  Martinetz and Schulten (1992). Fix: say in the caption that $$x_i$$ is the input $$x_u$$ of the text, e.g. "The
-  input $$x_i$$ (the $$x_u$$ of the text) in the input space $$V$$ selects the winner neuron $$j^*$$ ...".
+- `unsupervised-learning/kohonen2.svg`: the outline of the input-space sheet is 1.4 px, a weight that no rule of
+  CLAUDE.md gives this shape. Fix: leave it, or 1.8 px, as the frame of a 2D domain.
 - Optional: `unsupervised-learning/kohonen_1.svg`, `kohonen_2.svg` and `kohonen_3.svg` have no caption; the list
   before them describes the three maps. Fix: one caption under the three pictures, e.g. "The weights of the 6x6
   neurons of the SOM, each drawn as a 28x28 image, for the digits 0 to 3: a tuned SOM (left), a high learning rate
@@ -577,6 +594,14 @@ that is not wrong.
   output as $$x^{(1)}$$, as `dnn.svg` does. Fix: inputs x₁⁽⁰⁾ to x₅⁽⁰⁾ and outputs x₁⁽¹⁾ to x₅⁽¹⁾ in both rows, and
   the caption "... where the input $$x_3^{(0)}$$ affects only the outputs $$x_2^{(1)}$$, $$x_3^{(1)}$$ and
   $$x_4^{(1)}$$. Bottom: a fully connected layer, where $$x_3^{(0)}$$ affects every output."
+- `deep-neural-networks/densenet.svg`: the curved arrows into the fourth BN-ReLU-Conv box and into the Transition
+  Layer arrive horizontally on their slanted (24 degree) top edges, and the lower barb of each head touches the edge.
+  Fix: end each curve perpendicular to the edge (its last control point on the normal of the edge), with the whole
+  head outside the shape.
+- `deep-neural-networks/cnn.svg`: the fully connected layers read "Nx[512]" and "Nx[2]" under one title "Fully
+  Connected", while the original picture (cnn.png at commit c1a083b4) has "1024x[512]" and "512x[2]", the shapes of
+  the weights (4·4·64 = 1,024 inputs), under two titles. Fix: keep the activation shapes, which match the other
+  labels, or restore the labels and the two titles of the original.
 
 ### Mathematics for ML (2018-04-20-algebra-for-ml.md)
 
@@ -595,10 +620,9 @@ that is not wrong.
 - `statistics-for-ml/bivariate_gaussian.svg`: the picture labels the marginals p(X) and p(Y), while the text and the
   caption write p(x) and p(y), and the caption calls a conditional distribution "a slice" of the joint density. Fix:
   p(x) and p(y) in the picture, and "a normalized slice" in the caption.
-- `statistics-for-ml/confidence_interval.svg`: the drawing has no source, and the label "0.95" is crossed by the
-  center line. Fix: name the source of the drawing, or redraw it, and move the label. Optional: the curve is centered
-  at X̄, as in many textbooks, but the sampling distribution of X̄ is centered at μ; a curve centered at μ, with the
-  interval drawn around one sample mean X̄, is exact.
+- `statistics-for-ml/confidence_interval.svg`: the drawing has no source. Fix: name the source of the drawing, or
+  redraw it. Optional: the curve is centered at X̄, as in many textbooks, but the sampling distribution of X̄ is
+  centered at μ; a curve centered at μ, with the interval drawn around one sample mean X̄, is exact.
 
 ### Bayesian Linear Regression, Maximum Likelihood and Maximum a Posteriori (2018-08-20-bayesian-linear-regression.md)
 
@@ -671,16 +695,27 @@ that is not wrong.
   for GPTlite, with a batch of one sequence, both units are the same). Fix: label the DNN throughput axes and the
   spreadsheet columns "iterations/sec", or multiply the DNN values by 2048 to keep samples/sec, after checking how the
   spreadsheet values were entered.
+- Optional, `gptlite-cpp/benchmark_wide.svg` and `benchmark_deep.svg`, which the post links but does not show, are
+  the only charts that the chart restyle of 2026-10-22 left out: their bar outlines and grid lines keep the 0.8 px of
+  their earlier export. Fix: restyle them as `gptlite-cpp/benchmark_gptlite.svg` (bar outlines 1.0 px, CLAUDE.md,
+  Pictures, section 6).
 
 ### Data parallelism, sharding and CPU offloading (2023-08-18-data-parallelism.md)
 
-- Optional, `distributed-training/workflow_sharding.svg` shows ZeRO-3 as the ZeRO paper describes it: each process
-  owns whole layers, broadcasts their parameters and reduces their gradients. DeepSpeed ZeRO-3 and PyTorch FSDP split
-  every layer into one shard per process, with an all-gather of the parameters and a reduce-scatter of the
+- Optional, `distributed-training/imgs/workflow_sharding.svg` shows ZeRO-3 as the ZeRO paper describes it: each
+  process owns whole layers, broadcasts their parameters and reduces their gradients. DeepSpeed ZeRO-3 and PyTorch
+  FSDP split every layer into one shard per process, with an all-gather of the parameters and a reduce-scatter of the
   gradients. The text explains both. Fix: redraw each layer as four shards, with all-gathers and reduce-scatters.
-- Optional, `distributed-training/deepspeed_stages.svg`: the number of processes is N_d (and gpu_N-1), while
-  `data_parallelism.svg` and the text use P; the text states that N_d = P. The caption calls the stages
-  "ZeRO FSDP". Fix: write P in the figure, and "the three stages of ZeRO" in the caption.
+- Optional, `distributed-training/imgs/deepspeed_stages.svg`: the number of processes is N_d (and gpu_N−1), the
+  symbol of the ZeRO paper, while `data_parallelism.svg` and the text use P; the caption defines N_d as the
+  data-parallel degree. Fix: keep the paper's N_d and add "(N_d = P)" to the caption, or write P in the figure.
+- Optional, `distributed-training/imgs/deepspeed_stages.svg`: the formulas write their products without a sign (KΨ,
+  (2 + K) Ψ), while the figure of the ZeRO paper writes K*Ψ. Fix: restore the "*", if the notation of the source is
+  wanted.
+- Optional, `distributed-training/imgs/vdnn2.svg` and `vdnn3.svg` color the weights W purple and the gradients dX and
+  dY green, while `deepspeed_stages.svg` colors the parameters blue, the gradients orange and the optimizer states
+  green. Fix, for one color per meaning in the post: in vdnn2 and vdnn3, W blue, dX and dY orange, X and Y purple,
+  and the color words of their captions to match.
 - Optional, the caption of `distributed-training/imgs/benchmark_gptlite.svg` does not say how the memory is averaged.
   Fix: "GPTlite on one node with 8 GPUs, in fp32, with micro-batches of 1 sample: average and peak allocated memory
   per GPU, and throughput over all GPUs".
@@ -703,11 +738,14 @@ that is not wrong.
 
 ### Tensor parallelism (2023-09-02-tensor-parallelism.md)
 
-- Picture markup of the option 1 and option 2 pictures: the `{: .picture}`, `<img>` and `{: .caption}` lines are
-  indented by 2 spaces, less than the 3 of the list item "1. ", so they end the ordered list, and kramdown renders the
-  second option as a new list numbered "1." (also on master). Fix: indent these lines by 3 spaces, so that each
-  picture and caption stays inside its list item and the second option is numbered "2." (checked with kramdown on a
-  copy).
+- `distributed-training/imgs/tp_megatron_lm.svg`, moved here from the kernel fusion post, labels the reduction
+  "sum-reduce", as its caption and the text of the post do ("[*sum-reduce*]" in the quote of option 1, and "the
+  sum-reduce is added after the matmul"). The result is replicated on both GPUs, which is the all-reduce of $$g$$ in
+  Megatron-LM, as the caption of `megatron-lm.svg` and the rest of the text say. Fix, in one change of the picture,
+  its caption and the text: "all-reduce" in all three, or "sum-reduce" kept in all three; the user decides.
+- `distributed-training/imgs/argonne_parallel_2.svg`: the panel letters are swapped relative to the paper, which
+  names the spatial parallelism (b) and the sample parallelism (a). Fix: keep them, or swap them back, together with
+  the caption and the paragraph after the picture ("the sample (data) parallelism shown in (b)").
 
 ### Mixture-of-Experts and Expert Parallelism (2024-01-19-mixture-of-experts.md)
 
@@ -722,6 +760,11 @@ that is not wrong.
   the third person as pass 2 wrote it (73b4f6a): "For each expert $$i$$, the inputs of a training batch are sorted in
   decreasing order of $$G(x)_i$$, and the table shows the words around the corresponding positions in the input
   sentences."
+- `distributed-training/imgs/moe_2014_ilya.svg`: the left panel writes g(x), f_i(x) and z without the superscript 1
+  of the paper (g¹(x), f¹_i(x), z¹), to match the text ("$$f_i(x)$$ in the picture", $$g(x)$$, $$z$$). Fix: keep it,
+  or restore the superscripts and change the text.
+- `distributed-training/imgs/mixture_of_depths.svg`: the faded column uses opacity, which darkens the arrowheads where
+  they overlap. Fix: grey #666666 lines and light fills instead of the opacity.
 
 ### Variable sequence lengths, curriculum learning, adaptive batch size and LR (2024-05-10-training-variable-length-curriculum.md)
 
@@ -745,24 +788,24 @@ that is not wrong.
 
 ### Sequence and context parallelism with Ulysses and Ring attention (2024-08-30-sequence-context-parallelism.md)
 
-- `distributed-training/imgs/ulysses_sequence_parallelism.svg`: the label "Local attention shape: B x H/P x S x E"
+- `distributed-training/imgs/ulysses_sequence_parallelism.svg`: the label "local attention shape: B x H/P x S x E"
   and the axis E of the middle cube give the head size as E, the embedding size. An all-to-all keeps the number of
   elements per process, B·(S/P)·E before it and B·(H/P)·S·d after it, with Hd = E, so the label is H times too large.
-  Fix: "Local attention shape: B x H/P x S x d", and the axis d on the middle cube.
+  Fix: "local attention shape: B x H/P x S x d", and the axis d on the middle cube.
 - Optional, `distributed-training/imgs/context_parallelism.svg` writes the head size as E. Fix: write the head size as
   d (see the content item on E).
 - `distributed-training/imgs/ulysses_sequence_parallelism.svg`, `ring_attention.svg` and `ring_attention_qkv.svg`
-  color the sequence chunks blue, yellow, red and green (and the ring in this order), while `spdistributedsampler.svg`
-  gives the chunks of a sample to process 1 (blue), 2 (green), 3 (red) and 4 (yellow), the colors that
-  `sequence_and_data_parallelism.svg` and its caption also use. So the second chunk belongs to process 2 in one
-  picture and to process 4 in the others. Fix: swap yellow and green in the three pictures (chunks and ring blue,
-  green, red, yellow); the red process of `ring_attention_qkv.svg` then sees red, green, blue and yellow blocks, and
-  the text ("the third (red) process") stays as it is.
+  color the sequence chunks blue, yellow, red and green (and the ring in this order), while
+  `sequence_and_data_parallelism.svg` and its caption put the blue and green processes in one sequence-parallel group
+  and the red and yellow processes in the other, i.e. processes 1 (blue), 2 (green), 3 (red) and 4 (yellow). So the
+  second process is green in one picture and yellow in the others. Fix: swap yellow and green in the three pictures
+  (chunks and ring blue, green, red, yellow); the red process of `ring_attention_qkv.svg` then sees red, green, blue
+  and yellow blocks, and the text ("the third (red) process") stays as it is.
+- `distributed-training/imgs/ring_attention_qkv.svg`: the original picture has a "+" between the local Q and the
+  steps, which the restyle dropped. Fix: restore the "+" signs, if the user wants them.
 
 ### Diffusion models, from DDPMs to DiTs (2025-02-25-diffusion.md)
 
-- `diffusion/masked_autoencoders_cropped.svg` and `masked_autoencoders.svg` are now the same picture, shown twice in
-  the post. Fix: keep one file and link both places to it, or show the picture once.
 - Optional, `diffusion/dit_moe.svg`: the dashed residual connections start after the first AdaLN, while the code of
   the post adds the input of the block, and three experts are gated, while the code routes each token to 2 experts.
   The picture follows the figure of the paper, which draws both this way. Fix: check both against the code, and say in
@@ -770,6 +813,20 @@ that is not wrong.
 - Optional, caption of `diffusion/diffusion.svg`: "A diffusion model is a $$T$$-step Markov chain", while the text
   counts two Markov chains. Fix: "A diffusion model has two Markov chains of $$T$$ steps: a forward process $$q$$
   that adds noise, and a trainable reverse process $$p_\theta$$ that removes it."
+- Optional, `diffusion/diffusion.svg`: the dashed arrow q(x_t | x_t−1) is curved, as in Fig. 2 of DDPM, but it is
+  neither a pointer nor a loop. Fix: an orthogonal dashed arrow under the nodes, with its label under it, or keep the
+  curve of the paper.
+- Optional, `diffusion/latte.svg`: the additions of (c) and (d) are 9.2 px wide, below the 20 px of an operator
+  (CLAUDE.md, Pictures, section 7), as there is no room between the boxes. Fix: about 11 px more space around each
+  addition (taller (c) and (d) frames), then draw them 20 px wide.
+- Optional, `diffusion/playground_v3.svg`: the legend is one column between the panels, as in the paper's figure; a
+  row is about 470 px wide and does not fit. Fix: a row under the T2i model forward panel (about 25 px taller), or
+  keep the column.
+- Optional, `diffusion/tora.svg`: the legend (Add, Noise patch, Motion patch) is one column, as in the paper; a row is
+  about 270 px wide, and about 205 px are free beside the Trajectory Extractor box. Fix: a row under the output frames
+  (about 30 px taller), or keep the column.
+- Optional, `diffusion/longvilla.svg`: the GPU numbers of grid (3) are 14 px bold in 18 px cells, as in the paper.
+  Fix: keep them (they name the GPUs in their colors), or 12 px regular.
 
 ### Prefill vs decode, roofline, KV cache, batching and disaggregation (2025-06-07-inference-prefill-decode-roofline-cache.md)
 
@@ -784,7 +841,6 @@ that is not wrong.
   "Left of the ridge point ... right of it" in the caption.
 - Optional, `inference/imgs/semantic_caching.svg`: the label d names the size of the query embedding, while d is the
   width of the LLM in the post. Fix: "dim", as in the code, or no label.
-- `inference/imgs/prefill_decode.svg` writes "(n - 1)" with a hyphen. Fix: a true minus sign, "(n − 1)".
 - `inference/imgs/roofline.svg`: the ❌ sits at an arithmetic intensity of 512, right of the ridge point, where the
   roof is flat. There, moving right does not raise the attainable performance. Yet the picture draws a "move right"
   arrow from the ❌, while the text says "Computation to the right is compute-bound: only faster math, or less of it,
@@ -792,6 +848,18 @@ that is not wrong.
   labels, left of the ridge point and below the slanted roof, for example to an intensity of 1 and a performance of
   1/4. There, moving right and moving up both raise the attainable performance, as the two lists of the text describe.
   Another fix is to keep the ❌ and drop the right arrow and its label.
+- Optional, `inference/imgs/roofline.svg` keeps the axis titles of the author's original, "Operational Intensity
+  [FLOPs / byte]" and "Performance [GFLOPs / sec 10⁹]", as the user decided on 2026-10-22, while its note says
+  "increase Arithmetic Intensity" (the original said Operational), and the list above the picture and the plotting
+  code of the post name the axes "Arithmetic Intensity" and "Attainable Performance". Fix: "X-Axis (Arithmetic
+  Intensity, or Operational Intensity)" in the text, as Step 3 does, and "Operational Intensity" again in the note,
+  so that the picture uses one term; the axis titles stay.
+- `inference/imgs/disaggregation.svg`: the "requests" box is data but has the 5 px corners of an operation, and the
+  five GPU boxes, which are devices, have 5 px corners instead of the 10 px corners of a frame. Fix: square corners
+  for "requests", and 10 px corners for the GPU boxes.
+- Optional, `inference/imgs/prefix_caching.svg`: the labels "h₁ = hash(∅, block 1)" to "h₃ = hash(h₂, block 3)" are
+  set entirely in the math font, words included. Fix: "hash" and "block 1" to "block 3" in Source Sans 3, and h₁ to
+  h₃ and ∅ in the math font (section 4 of CLAUDE.md).
 
 ### Faster attention (GQA, FlashAttention, sparse, linear and latent attention) (2025-12-30-inference-attention.md)
 
@@ -801,15 +869,15 @@ that is not wrong.
 
 ### Kernel Fusion for Megatron-LM Tensor Parallelism and MoE Expert Sharding (2026-08-18-kernel-fusion-tensor-parallelism.md)
 
-- `inference/imgs/tp_megatron_lm.svg` and `tp_expert_sharding.svg` label the reduction "sum-reduce", and the caption
-  of `tp_expert_sharding.svg` says "a sum-reduce adds their partial outputs", while the text says all-reduce. The sum
-  ends on every GPU ("Y_A = Y_B", "replicated"), which is an all-reduce, as in Megatron-LM. Fix: "all-reduce" in both
-  pictures and in the caption.
+- `inference/imgs/tp_expert_sharding.svg` labels the reduction "sum-reduce", and its caption says "a sum-reduce adds
+  their partial outputs", while the text calls the sum of the partial outputs of all GPUs an all-reduce, as in
+  Megatron-LM, and says that each sharded expert is an FFN with Megatron-LM tensor parallelism. Fix: "all-reduce" in
+  the picture and in the caption.
 - Caption of `inference/imgs/tp_expert_sharding.svg`: the credit "Inspired by Figure 2 of [...]." does not follow the
   credit form of CLAUDE.md. Fix: "Inspired by: [Accelerating MoE Model Inference with Expert
   Sharding](https://arxiv.org/abs/2503.08467)".
-- The captions of `tp_megatron_lm.svg`, `tp_timeline.svg`, `tp_matmuls.svg` and `tp_block_specialization.svg`,
-  redrawn from the figures of the post's paper, and of `tp_results.svg`, drawn from its data, have no credit. The
+- The captions of `tp_timeline.svg`, `tp_matmuls.svg` and `tp_block_specialization.svg`, redrawn from the figures of
+  the post's paper, and of `tp_results.svg`, drawn from its data, have no credit. The
   paper is the author's own and not public yet. Fix: "Adapted from: [Towards Efficient LLM Inference via Full-Stack
   Fusion of Computation, Communication, and In-Network Computing](link)" once the paper has a public link; the user
   decides.
@@ -817,10 +885,11 @@ that is not wrong.
   and the tokens and outputs as x, y, y_A and y_B, while the rest of the post writes the same matrices as W_1, W_2, X
   and Y. The text names the mapping of the weights. Fix: relabel the figure and the caption to W_1, W_2, X, Y, Y_A
   and Y_B, and drop "(the W_1 and W_2 above)" from the text.
-- Optional, `inference/imgs/tp_megatron_lm.svg` names the GPUs A and B and writes their slices with subscripts (H_A,
-  (W_1)_A), while the text numbers the GPUs g = 1 to G, writes their slices with a superscript, $$H^{(g)}$$, and uses
-  subscripts for tiles. Fix: "GPU 1" and "GPU 2", H⁽¹⁾, W₁⁽¹⁾, W₂⁽¹⁾ and so on, "(GPU 1 in green, GPU 2 in blue)" in
-  the caption, and the same GPU names in `tp_expert_sharding.svg`.
+- Optional, `inference/imgs/tp_expert_sharding.svg` and its caption name the GPUs A and B and the partial outputs y_A
+  and y_B, while the text numbers the GPUs g = 1 to G and writes their slices with a superscript, $$H^{(g)}$$, and
+  `distributed-training/imgs/tp_megatron_lm.svg`, the picture of the tensor parallelism post that the text points to,
+  names them GPU 1 and GPU 2. Fix: "GPU 1" and "GPU 2" in the picture and the caption, with the partial outputs
+  named after them (y⁽¹⁾ and y⁽²⁾, or Y⁽¹⁾ and Y⁽²⁾ with the item above), or drop the item.
 - Optional, `inference/imgs/tp_timeline.svg`: the fused row applies the bias and the activation once, after all the
   reduce steps, while the text and `tp_block_specialization.svg` apply them to each band, right after the all-reduce
   of that band. The figure of the paper has the same simplification. Fix: a small bias and activation step after
@@ -844,10 +913,26 @@ that is not wrong.
 - Optional, `inference/imgs/mtp_parallel.svg` writes the tokens as x_t, as Gloeckle et al. do, while eagle, layerskip
   and mtp_sequential write them as t_i. The text follows each figure. Fix: keep the paper notations, or write t_i in
   mtp_parallel and in the formulas of the parallel heads.
+- Optional, `inference/imgs/mtp_parallel.svg`: the vector z has no size label, while the author's original labeled it
+  E, and `medusa.svg` and `eagle.svg` label the same size E, 12 px in the math font; the code gives z the shape
+  [B, S, E]. Fix: an E label beside z, as in medusa and eagle.
 - `inference/imgs/layerskip.svg` names the predictions of the full model p_1 to p_3 ("predictions that verify the
   drafts"), while $$p$$ is the distribution of the draft model and of the student in the text, in spec_sampling and in
   the `accept_sampling` code. Fix: label these cells v_1 to v_3, or leave them without a symbol; not y_1 to y_3, as
   $$y_i$$ is the softened output of the distillation section.
+- `inference/imgs/layerskip.svg` and the text write the exit layer of the draft as E ("drafts of the first E = 4
+  layers", "the first $$E$$ layers"), while E is the embedding size in the code of the post ([B, S, E]) and in
+  `medusa.svg` and `eagle.svg`. Fix: $$\ell$$ for the exit layer, in the picture and in the text.
+- `inference/imgs/layerskip.svg`: the arrows from the two output heads to p_1 and d_1 slant by 1 px, as the token
+  rows sit 1 px above the centres of the heads (48.4 and 240.4 instead of 49.4 and 241.4), and the dashed input frame
+  is 0.5 px left of the centre of the layer column, so the arrow from it to layer 1 slants too. Fix: move the rows p_1
+  to p_3 and d_1 to d_3 down 1 px, and centre the frame on the column.
+- `inference/imgs/mtp_sequential.svg`: the six dashed token frames leave 4 px around their tokens, so their 10 px
+  corners touch the corners of the first and last token of each row, while `mtp_parallel.svg` leaves 6 px. Fix: make
+  the frames 4 px wider and 4 px taller.
+- Optional, `inference/imgs/mtp_sequential.svg`: the dashed frames of the output tokens are blue #6c8ebf, while those
+  of the input tokens are black, and neither the caption nor the text gives the blue a meaning. Fix: black frames, or
+  a caption that names the blue frames as the targets of each loss.
 
 ### Pruning and quantization (_drafts/2026-04-22-inference-pruning-quantization.md)
 
@@ -860,22 +945,27 @@ that is not wrong.
 - `inference/imgs/pruning_structures.svg` writes the number of heads as H ("H·d_head × E", "E × H·d_head"), while H is
   the Hessian of GPTQ in the same post; the code names it `n_heads`. Fix: "n_heads·d_head × E" and "E ×
   n_heads·d_head".
-- `inference/imgs/gptq.svg`: the labels "err = W[:, i] − q" and "H = 2 X XT, from the calibration inputs X" take the
+- `inference/imgs/gptq.svg`: the labels "err = W[:, i] − q" and "H = 2XXᵀ, from the calibration inputs X" take the
   columns of X as the inputs, and q as the rounded column. The text, the code and `llm_int8.svg` take the rows of X as
   the inputs, the text writes the rounded column as Ŵ[:, i], and `int4_packing.svg` uses q for the integers. Fix: "err
-  = W[:, i] − Ŵ[:, i]" and "H = 2 XT X".
+  = W[:, i] − Ŵ[:, i]" and "H = 2XᵀX".
 
 ### Publications bookmark (publications.md)
 
 - Optional, `publications/llama_3_multi_modal.svg`: the connectors "Every 4th layer" and "Every ~3rd layer" have arrow
   heads at both ends, as in Fig. 28 of the paper, while the forward pass sends data one way. Fix: one arrow head,
   toward the cross-attention layers.
+- `publications/llama_3_multi_modal.svg`: the legend is one column of six entries, right of the picture, as in Fig. 28
+  of the paper, while section 7 of CLAUDE.md asks for a row. Fix: two rows of three entries centred under the picture
+  (about 50 px taller), or keep the column of the source and note the exception in CLAUDE.md; the user decides.
+- Optional, `publications/llama_3_multi_modal.svg`: the three "Image patches" boxes and the two "Image patch
+  representation" boxes are data, as the square "Image representation" box, but have 5 px corners. Fix: square
+  corners.
 - `publications/comet_2.svg`: GEMM #0 and #1 mix the rows of two experts after a global sort by source rank. The
   picture follows Fig. 5 of the paper, whose text does not say whether the sort is global or per expert. Fix: check
   the code of Comet, and sort per expert if the code does.
-- Caption of `publications/performers2.gif`: no credit. Fix: "Source: [Rethinking Attention with
-  Performers](https://research.google/blog/rethinking-attention-with-performers/)". Optional: a static SVG of the
-  prefix sums instead of the animation.
+- Optional, `publications/performers2.gif` is an animation from the Google Research blog, shown as it is. Fix: a static
+  SVG of the prefix sums, redrawn in the style of the other pictures, with "Adapted from:" in its caption.
 - Caption of `publications/latentmoe.svg`: the tokens are projected into the latent dimension $$\ell$$ "for expert
   routing and computation", while the router scores the full $$d$$-dimensional token (the notes, panel (b) of the
   picture and the paper). Fix: "for the all-to-all dispatch, the routed experts and the combine (the router still
@@ -891,13 +981,36 @@ that is not wrong.
   q = round(255 (x − zp) / 9.07) − 128). The text of the paper calls qwZ symmetric, with one scaling coefficient per
   block, while its figure uses a zero point. Fix: rename the label to "range", or add "(the scale is the range of
   the block)" to the caption.
-- Optional, caption of `publications/flashattention.svg`: "(dotted box)", but the box is dashed. Fix: "(dashed box)".
 - Optional, caption of `publications/comet.svg` (Comet): "the number of SMs on Hopper(132)" lacks a space. Fix:
   "Hopper (132)".
+- Optional, `publications/efficiently_scaling_transformer_inference_multiquery.svg`: the green "1" on the top face of
+  the multi-query K / V slab sits about 0.5 px from the back edge of the face and 1.3 px from its front edge. Fix:
+  make the face about 3 px deeper, or put the "1" beside the slab.
+- `publications/attention_mech.svg`: the α of the four weights α_{t,1} to α_{t,T} is upright, while their t and T are
+  italic, and `siamese_networks_2.svg` sets α in italic. Fix: <i>α</i> in the four labels.
+- `publications/rqvae.svg`, `contrastive_deep_supervision.svg` and `mlp_mixer.svg` are 880.4, 880.9 and 880.8 px wide
+  (export margins), above the 880 px of section 3 of CLAUDE.md, so at 100% they show about 0.1% smaller than their
+  size. The base commit had the same widths. Fix: narrow each drawing by 1 px, or let the 880 px limit allow for the
+  export margins.
+- `publications/mutransfer.svg`: the grid lines run through the label "optimum shifts". Fix: a white box behind the
+  label.
+- `publications/training_compute_optimal_large_language_models_2.svg` lost the tick labels 2.5, 3.5, 4.5, 5.5, 250M, 1B
+  and 5B. Fix: restore them.
+- `publications/training_compute_optimal_large_language_models_2.svg`: the projection lines are green, as in the paper
+  and as the caption says ("Green: the projected optimal model size ..."), while section 6 of CLAUDE.md draws the
+  projections on an axis as grey dashed guide lines. Fix: keep the green lines, or grey dashed guides with a reworded
+  caption; the user decides.
 
 ## Content issues
 
 Content problems that need the author's decision, such as overlap between posts.
+
+### Distributed Sorting Algorithms (2014-06-21-distributed-sort.md)
+
+- The text lists five steps of the sample sort, and `distributed-sort/sample_sort.svg` four, grouped as in the
+  author's original picture (1. local sort; 2. samples sent to rank 0; 3. splitters picked and broadcast; 4. elements
+  exchanged and sorted). The step numbers of the caption fit both. Fix: leave as is, or renumber the text list into
+  the four steps of the picture.
 
 ### Distributed Matrix Transpose Algorithms (2015-04-21-matrix-transpose.md)
 
@@ -942,6 +1055,14 @@ Content problems that need the author's decision, such as overlap between posts.
   pixels, while the multi-class formula of the post is the unweighted mean over the classes. Proposed fix: add after
   the multi-class formula "The Generalised Dice Loss of Sudre et al. also weights each class by the inverse of the
   square of its number of ground truth pixels, so that small structures count as much as large ones."
+
+### Unsupervised Learning basics and Principal Component Analysis (2017-11-01-unsupervised-learning.md)
+
+- Kohonen maps: `unsupervised-learning/kohonen.svg` and `kohonen2.svg` write the input as v, the winner as s and its
+  weights as w_s, as their source (Ritter, Martinetz and Schulten, 1992) does, while the algorithm in the text writes
+  them as $$x_u$$, $$j^*$$ and $$w_{j^*}$$. The caption bridges the two ("In the algorithm below, $$v$$ is the input
+  $$x_u$$ and $$s$$ is the winner $$j^*$$"). Fix, in a text task: keep the bridge, or write the algorithm with the
+  source's v, s and w_s.
 
 ### Statistics for ML (2018-06-15-statistics-for-ml.md)
 
@@ -1052,6 +1173,10 @@ Content problems that need the author's decision, such as overlap between posts.
   variable-shaped inputs" "makes no more sense anymore". Fix: remove that subsection of "Kernels compilation",
   with its picture (torch_compile_dataset.svg and its draw.io group), and check that the rest of "Kernels
   compilation" still reads well without it.
+- `distributed-training/imgs/dnn_multiproc.svg`, `dnn_multiproc_compiled.svg` and `dnn_multiproc_optimized.svg` label
+  their rows Node 1 and Node 2, the words of their source (TorchDynamo Update 9), while the text ("a 2-GPU DDP run")
+  and the three captions ("on 2 GPUs") say GPUs. Fix: "a 2-node DDP run" and "on 2 nodes" in the text and the
+  captions, or GPU labels in the pictures.
 
 ### Sequence and context parallelism with Ulysses and Ring attention (2024-08-30-sequence-context-parallelism.md)
 
@@ -1071,6 +1196,9 @@ Content problems that need the author's decision, such as overlap between posts.
   that converts an input $$B \times T \times H \times W \times C$$ into ..."). Fix: shorten it to "Spatio-temporal
   attention is achieved by a spatial attention followed by a temporal attention, the first approach of the section
   Video diffusion and 3D attention.", or keep it so that the entry reads on its own.
+- Optional: `diffusion/masked_autoencoders_cropped.svg` is shown twice, with two different captions, in the section
+  "Video diffusion and 3D attention" and in the further reading entry on masked autoencoders. Fix: show it once, and
+  refer to it from the other place, or keep both.
 
 ### Prefill vs decode, roofline, KV cache, batching and disaggregation (2025-06-07-inference-prefill-decode-roofline-cache.md)
 
