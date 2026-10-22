@@ -109,7 +109,7 @@ This information is required to match each column/row id to its target rank in t
 The first step performs a dense matrix transpose (`MPI_Alltoall`) to send/receive the number of elements to/from other ranks. The second step performs a selective scatter-gather (`MPI_Alltoallv`) that delivers the elements to the final rank. The following picture illustrates both steps on the sample matrix above: the transpose of the element counts (left), and the exchange of the elements with their row and column ids (right):
 
 {: .picture}
-<img width="98.1%" height="98.1%" src="{{ site.assets }}/matrix-transpose/matrix-transposition-crs.svg">
+<img width="98%" height="98%" src="{{ site.assets }}/matrix-transpose/matrix-transposition-crs.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)

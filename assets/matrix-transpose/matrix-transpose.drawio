@@ -1688,88 +1688,88 @@
         <mxCell id="matrix-transposition-crs-3" value="Incoming" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="145.74" y="37.22" width="57.79" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-4" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=0.77;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-4" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="48.81" y="58.82" width="20.7" height="19.82" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-5" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=0.77;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-5" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="69.47" y="58.82" width="20.7" height="19.82" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-6" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=0.77;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-6" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="90.13" y="58.82" width="20.7" height="19.82" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-7" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=0.77;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-7" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="48.81" y="78.57" width="20.7" height="19.82" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-8" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=0.77;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-8" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="69.47" y="78.57" width="20.7" height="19.82" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-9" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=0.77;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-9" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="90.13" y="78.57" width="20.7" height="19.82" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-10" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=0.77;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-10" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="48.81" y="98.33" width="20.7" height="19.82" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-11" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=0.77;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-11" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="69.47" y="98.33" width="20.7" height="19.82" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-12" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=0.77;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-12" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="90.13" y="98.33" width="20.7" height="19.82" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-13" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=0.77;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-13" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="141.19" y="58.82" width="20.7" height="19.82" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-14" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=0.77;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-14" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="161.86" y="58.82" width="20.7" height="19.82" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-15" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=0.77;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-15" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="182.51" y="58.82" width="20.7" height="19.82" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-16" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=0.77;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-16" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="141.19" y="78.57" width="20.7" height="19.82" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-17" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=0.77;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-17" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="161.86" y="78.57" width="20.7" height="19.82" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-18" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=0.77;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-18" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="182.51" y="78.57" width="20.7" height="19.82" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-19" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=0.77;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-19" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="141.19" y="98.33" width="20.7" height="19.82" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-20" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=0.77;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-20" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="161.86" y="98.33" width="20.7" height="19.82" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-21" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=0.77;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-21" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="182.51" y="98.33" width="20.7" height="19.82" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-22" value="rank 0" style="text;html=1;align=right;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="7.34" y="63" width="34.67" height="14.4" as="geometry" />
+          <mxGeometry x="8.33" y="61.53" width="34.67" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-23" value="rank 0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;horizontal=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="52.52" y="125.73" width="14.4" height="34.67" as="geometry" />
+          <mxGeometry x="51.96" y="125.73" width="14.4" height="34.67" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-24" value="rank 0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;horizontal=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="146.13" y="125.73" width="14.4" height="34.67" as="geometry" />
+          <mxGeometry x="144.34" y="125.73" width="14.4" height="34.67" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-25" value="rank 1" style="text;html=1;align=right;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="8.33" y="82.86" width="34.67" height="14.4" as="geometry" />
+          <mxGeometry x="8.33" y="81.28" width="34.67" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-26" value="rank 1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;horizontal=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="73.08" y="125.73" width="14.4" height="34.67" as="geometry" />
+          <mxGeometry x="72.62" y="125.73" width="14.4" height="34.67" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-27" value="rank 1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;horizontal=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="166.7" y="125.73" width="14.4" height="34.67" as="geometry" />
+          <mxGeometry x="165.01" y="125.73" width="14.4" height="34.67" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-28" value="rank 2" style="text;html=1;align=right;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="8.52" y="102.94" width="34.67" height="14.4" as="geometry" />
+          <mxGeometry x="8.33" y="101.04" width="34.67" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-29" value="rank 2" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;horizontal=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="94.37" y="125.73" width="14.4" height="34.67" as="geometry" />
+          <mxGeometry x="93.28" y="125.73" width="14.4" height="34.67" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-30" value="rank 2" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;horizontal=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="187.98" y="125.73" width="14.4" height="34.67" as="geometry" />
+          <mxGeometry x="185.66" y="125.73" width="14.4" height="34.67" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-31" value="" style="curved=1;endArrow=classic;html=1;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-31" value="" style="curved=1;endArrow=classic;html=1;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="110.81" y="85.02" as="sourcePoint" />
             <mxPoint x="141.79" y="81.71" as="targetPoint" />
@@ -1783,7 +1783,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="matrix-transposition-crs-32" value="" style="curved=1;endArrow=classic;html=1;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-32" value="" style="curved=1;endArrow=classic;html=1;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="142.58" y="96.04" as="sourcePoint" />
             <mxPoint x="112.86" y="97.66" as="targetPoint" />
@@ -1831,46 +1831,46 @@
           <mxGeometry x="291.23" y="108.44" width="49.8" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-42" value="&lt;b&gt;Metadata sparse matrix&lt;/b&gt; (MPI_Alltoallv)" style="text;html=1;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="492.85" y="9.43" width="226.11" height="16.8" as="geometry" />
+          <mxGeometry x="492.85" y="6.74" width="226.11" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-43" value="rank 0" style="text;html=1;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="375.98" y="45.25" width="40.29" height="16.8" as="geometry" />
+          <mxGeometry x="371.99" y="45.25" width="40.29" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-44" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.27;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="371.99" y="64.99" width="18.08" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-44" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="371.99" y="65.2" width="18.08" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-45" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.29;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="390.14" y="64.99" width="18.08" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-45" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="390.14" y="65.2" width="18.08" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-46" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.29;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="408.28" y="64.99" width="18.08" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-46" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="408.28" y="65.2" width="18.08" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-47" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.29;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="426.42" y="64.99" width="18.08" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-47" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="426.42" y="65.2" width="18.08" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-48" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.27;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="371.99" y="84.91" width="18.08" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-48" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="371.99" y="84.92" width="18.08" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-49" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.29;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="390.14" y="84.91" width="18.08" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-49" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="390.14" y="84.92" width="18.08" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-50" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.29;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="408.28" y="84.91" width="18.08" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-50" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="408.28" y="84.92" width="18.08" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-51" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.29;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="426.42" y="84.91" width="18.08" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-51" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="426.42" y="84.92" width="18.08" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-52" value="A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=3.27;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="371.99" y="104.83" width="18.08" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-52" value="A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="371.99" y="104.64" width="18.08" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-53" value="B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=3.29;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="390.14" y="104.83" width="18.08" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-53" value="B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="390.14" y="104.64" width="18.08" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-54" value="C" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=3.29;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="408.28" y="104.83" width="18.08" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-54" value="C" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="408.28" y="104.64" width="18.08" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-55" value="D" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=3.29;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="426.42" y="104.83" width="18.08" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-55" value="D" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="426.42" y="104.64" width="18.08" height="19.72" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-56" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
@@ -1891,7 +1891,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-transposition-crs-59" value="0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="375.36" y="138.3" width="7" height="14.4" as="geometry" />
+          <mxGeometry x="377.39" y="139.32" width="7" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-60" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
@@ -1912,7 +1912,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-transposition-crs-63" value="1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="393.8" y="138.3" width="7" height="14.4" as="geometry" />
+          <mxGeometry x="395.48" y="139.32" width="7" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-64" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
@@ -1933,46 +1933,46 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-transposition-crs-67" value="rank 2" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="409.54" y="138.3" width="34.67" height="14.4" as="geometry" />
+          <mxGeometry x="408.77" y="139.32" width="34.67" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-68" value="rank 1" style="text;html=1;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="458.59" y="45.25" width="40.29" height="16.8" as="geometry" />
+          <mxGeometry x="454.84" y="45.25" width="40.29" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-69" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="454.84" y="65.4" width="18.91" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-69" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="454.84" y="65.2" width="18.91" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-70" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="473.68" y="65.4" width="18.91" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-70" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="473.68" y="65.2" width="18.91" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-71" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="492.51" y="65.4" width="18.91" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-71" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="492.51" y="65.2" width="18.91" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-72" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="511.34" y="65.4" width="18.91" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-72" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="511.34" y="65.2" width="18.91" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-73" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="454.84" y="85.16" width="18.91" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-73" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="454.84" y="84.92" width="18.91" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-74" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="473.68" y="85.16" width="18.91" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-74" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="473.68" y="84.92" width="18.91" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-75" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="492.51" y="85.16" width="18.91" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-75" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="492.51" y="84.92" width="18.91" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-76" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="511.34" y="85.16" width="18.91" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-76" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="511.34" y="84.92" width="18.91" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-77" value="J" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="454.84" y="104.9" width="18.91" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-77" value="J" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="454.84" y="104.64" width="18.91" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-78" value="G" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="473.68" y="104.9" width="18.91" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-78" value="G" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="473.68" y="104.64" width="18.91" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-79" value="H" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="492.51" y="104.9" width="18.91" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-79" value="H" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="492.51" y="104.64" width="18.91" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-80" value="L" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="511.34" y="104.9" width="18.91" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-80" value="L" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="511.34" y="104.64" width="18.91" height="19.72" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-81" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
@@ -1993,7 +1993,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-transposition-crs-84" value="rank 0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="456.51" y="137.39" width="34.67" height="14.4" as="geometry" />
+          <mxGeometry x="456.33" y="139.32" width="34.67" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-85" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
@@ -2014,7 +2014,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-transposition-crs-88" value="1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="498.39" y="137.39" width="7" height="14.4" as="geometry" />
+          <mxGeometry x="498.53" y="139.32" width="7" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-89" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
@@ -2035,46 +2035,46 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-transposition-crs-92" value="2" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="516.84" y="137.39" width="7" height="14.4" as="geometry" />
+          <mxGeometry x="517.44" y="139.32" width="7" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-93" value="rank 2" style="text;html=1;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="539.82" y="45.25" width="40.29" height="16.8" as="geometry" />
+          <mxGeometry x="539.07" y="45.25" width="40.29" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-94" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="539.07" y="65.4" width="18.66" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-94" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="539.07" y="65.2" width="18.66" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-95" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="557.9" y="65.4" width="18.66" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-95" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="557.9" y="65.2" width="18.66" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-96" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="576.73" y="65.4" width="18.66" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-96" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="576.73" y="65.2" width="18.66" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-97" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="595.56" y="65.4" width="18.66" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-97" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="595.56" y="65.2" width="18.66" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-98" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="539.07" y="85.16" width="18.66" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-98" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="539.07" y="84.92" width="18.66" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-99" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="557.9" y="85.16" width="18.66" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-99" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="557.9" y="84.92" width="18.66" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-100" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="576.73" y="85.16" width="18.66" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-100" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="576.73" y="84.92" width="18.66" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-101" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="595.56" y="85.16" width="18.66" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-101" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="595.56" y="84.92" width="18.66" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-102" value="R" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="539.07" y="104.9" width="18.66" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-102" value="R" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="539.07" y="104.64" width="18.66" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-103" value="O" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="557.9" y="104.9" width="18.66" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-103" value="O" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="557.9" y="104.64" width="18.66" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-104" value="T" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="576.73" y="104.9" width="18.66" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-104" value="T" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="576.73" y="104.64" width="18.66" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-105" value="P" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=2.6;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="595.56" y="104.9" width="18.66" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-105" value="P" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="595.56" y="104.64" width="18.66" height="19.72" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-106" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
@@ -2095,7 +2095,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-transposition-crs-109" value="rank 0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="540.55" y="137.39" width="34.67" height="14.4" as="geometry" />
+          <mxGeometry x="540.63" y="139.32" width="34.67" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-110" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
@@ -2116,7 +2116,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-transposition-crs-113" value="1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="582.43" y="137.39" width="7" height="14.4" as="geometry" />
+          <mxGeometry x="582.46" y="139.32" width="7" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-114" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
@@ -2137,55 +2137,55 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-transposition-crs-117" value="2" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="600.87" y="137.39" width="7" height="14.4" as="geometry" />
+          <mxGeometry x="601.12" y="139.32" width="7" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-118" value="rank 0" style="text;html=1;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="644.22" y="42.27" width="40.29" height="16.8" as="geometry" />
+          <mxGeometry x="645.72" y="45.25" width="40.29" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-119" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.66;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="645.72" y="63.88" width="17.78" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-119" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="645.72" y="65.2" width="17.78" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-120" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.66;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="663.5" y="63.88" width="17.78" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-120" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="663.5" y="65.2" width="17.78" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-121" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.66;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="681.27" y="63.88" width="17.78" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-121" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="681.27" y="65.2" width="17.78" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-122" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.66;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="699.05" y="63.88" width="17.76" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-122" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="699.05" y="65.2" width="17.76" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-123" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.66;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="716.81" y="63.88" width="17.78" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-123" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="716.81" y="65.2" width="17.78" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-124" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.66;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="645.72" y="83.64" width="17.78" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-124" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="645.72" y="84.92" width="17.78" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-125" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.66;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="663.5" y="83.64" width="17.78" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-125" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="663.5" y="84.92" width="17.78" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-126" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.66;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="681.27" y="83.64" width="17.78" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-126" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="681.27" y="84.92" width="17.78" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-127" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.66;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="699.05" y="83.64" width="17.76" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-127" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="699.05" y="84.92" width="17.76" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-128" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.66;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="716.81" y="83.64" width="17.78" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-128" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="716.81" y="84.92" width="17.78" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-129" value="A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=3.66;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="645.72" y="103.39" width="17.78" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-129" value="A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="645.72" y="104.64" width="17.78" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-130" value="J" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=3.66;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="663.5" y="103.39" width="17.78" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-130" value="J" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="663.5" y="104.64" width="17.78" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-131" value="G" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=3.66;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="681.27" y="103.39" width="17.78" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-131" value="G" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="681.27" y="104.64" width="17.78" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-132" value="R" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=3.66;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="699.05" y="103.39" width="17.76" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-132" value="R" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="699.05" y="104.64" width="17.76" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-133" value="O" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=3.66;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="716.81" y="103.39" width="17.78" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-133" value="O" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="716.81" y="104.64" width="17.78" height="19.72" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-134" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
@@ -2206,7 +2206,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-transposition-crs-137" value="0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="649.51" y="139.32" width="7" height="14.4" as="geometry" />
+          <mxGeometry x="651.11" y="139.32" width="7" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-138" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
@@ -2227,7 +2227,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-transposition-crs-141" value="rank 1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="664.16" y="139.32" width="34.67" height="14.4" as="geometry" />
+          <mxGeometry x="662.43" y="139.32" width="34.67" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-142" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
@@ -2248,37 +2248,37 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-transposition-crs-145" value="rank 2" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="703.26" y="139.32" width="34.67" height="14.4" as="geometry" />
+          <mxGeometry x="701.97" y="139.32" width="34.67" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-146" value="rank 1" style="text;html=1;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="744.12" y="43.17" width="40.29" height="16.8" as="geometry" />
+          <mxGeometry x="743.68" y="45.25" width="40.29" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-147" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.8;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="743.68" y="63.87" width="17.63" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-147" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="743.68" y="65.2" width="17.63" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-148" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.8;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="761.32" y="63.87" width="17.63" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-148" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="761.32" y="65.2" width="17.63" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-149" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.8;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="778.95" y="63.87" width="17.62" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-149" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="778.95" y="65.2" width="17.62" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-150" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.8;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="743.68" y="83.63" width="17.63" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-150" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="743.68" y="84.92" width="17.63" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-151" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.8;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="761.32" y="83.63" width="17.63" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-151" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="761.32" y="84.92" width="17.63" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-152" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=3.8;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="778.95" y="83.63" width="17.62" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-152" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="778.95" y="84.92" width="17.62" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-153" value="B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=3.8;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="743.68" y="103.38" width="17.63" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-153" value="B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="743.68" y="104.64" width="17.63" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-154" value="H" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=3.8;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="761.32" y="103.38" width="17.63" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-154" value="H" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="761.32" y="104.64" width="17.63" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-155" value="T" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=3.8;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="778.95" y="103.38" width="17.62" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-155" value="T" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="778.95" y="104.64" width="17.62" height="19.72" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-156" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
@@ -2299,7 +2299,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-transposition-crs-159" value="0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="746.93" y="139.32" width="7" height="14.4" as="geometry" />
+          <mxGeometry x="749" y="139.32" width="7" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-160" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
@@ -2320,7 +2320,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-transposition-crs-163" value="1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="765.37" y="139.32" width="7" height="14.4" as="geometry" />
+          <mxGeometry x="766.62" y="139.32" width="7" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-164" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
@@ -2341,48 +2341,48 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-transposition-crs-167" value="2" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="784.11" y="139.32" width="7" height="14.4" as="geometry" />
+          <mxGeometry x="784.26" y="139.32" width="7" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-168" value="rank 2" style="text;html=1;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="803.22" y="44.06" width="40.29" height="16.8" as="geometry" />
+          <mxGeometry x="804.72" y="45.25" width="40.29" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-169" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=4.59;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="804.72" y="64.1" width="16.83" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-169" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="804.72" y="65.2" width="16.83" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-170" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=4.59;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="821.55" y="64.1" width="16.84" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-170" value="0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="821.55" y="65.2" width="16.84" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-171" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=4.59;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="838.39" y="64.1" width="16.83" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-171" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="838.39" y="65.2" width="16.83" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-172" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=4.59;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="855.23" y="64.1" width="16.83" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-172" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="855.23" y="65.2" width="16.83" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-173" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=4.59;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="804.72" y="83.84" width="16.83" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-173" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="804.72" y="84.92" width="16.83" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-174" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=4.59;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="821.55" y="83.84" width="16.84" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-174" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="821.55" y="84.92" width="16.84" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-175" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=4.59;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="838.39" y="83.84" width="16.83" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-175" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="838.39" y="84.92" width="16.83" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-176" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingLeft=4.59;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="855.23" y="83.84" width="16.83" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-176" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="855.23" y="84.92" width="16.83" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-177" value="C" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=4.59;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="804.72" y="103.6" width="16.83" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-177" value="C" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="804.72" y="104.64" width="16.83" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-178" value="D" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=4.59;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="821.55" y="103.6" width="16.84" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-178" value="D" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="821.55" y="104.64" width="16.84" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-179" value="L" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=4.59;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="838.39" y="103.6" width="16.83" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-179" value="L" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="838.39" y="104.64" width="16.83" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-180" value="P" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=NewComputerModernSansMath;fontSize=14;spacingLeft=4.59;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="855.23" y="103.6" width="16.83" height="19.49" as="geometry" />
+        <mxCell id="matrix-transposition-crs-180" value="P" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Source Sans 3;fontSize=14;spacingTop=1.12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
+          <mxGeometry x="855.23" y="104.64" width="16.83" height="19.72" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-outline-1" value="" edge="1" parent="matrix-transposition-crs-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="48.81" y="58.82" as="sourcePoint" /><mxPoint x="110.83" y="58.82" as="targetPoint" /><Array as="points"><mxPoint x="110.83" y="58.82" /><mxPoint x="110.83" y="118.15" /><mxPoint x="48.81" y="118.15" /><mxPoint x="48.81" y="58.82" /></Array></mxGeometry></mxCell><mxCell id="matrix-transposition-crs-outline-2" value="" edge="1" parent="matrix-transposition-crs-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="141.19" y="58.82" as="sourcePoint" /><mxPoint x="203.21" y="58.82" as="targetPoint" /><Array as="points"><mxPoint x="203.21" y="58.82" /><mxPoint x="203.21" y="118.15" /><mxPoint x="141.19" y="118.15" /><mxPoint x="141.19" y="58.82" /></Array></mxGeometry></mxCell><mxCell id="matrix-transposition-crs-outline-3" value="" edge="1" parent="matrix-transposition-crs-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="371.99" y="64.99" as="sourcePoint" /><mxPoint x="444.5" y="64.99" as="targetPoint" /><Array as="points"><mxPoint x="444.5" y="64.99" /><mxPoint x="444.5" y="124.32" /><mxPoint x="371.99" y="124.32" /><mxPoint x="371.99" y="64.99" /></Array></mxGeometry></mxCell><mxCell id="matrix-transposition-crs-outline-4" value="" edge="1" parent="matrix-transposition-crs-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="454.84" y="65.4" as="sourcePoint" /><mxPoint x="530.25" y="65.4" as="targetPoint" /><Array as="points"><mxPoint x="530.25" y="65.4" /><mxPoint x="530.25" y="124.39" /><mxPoint x="454.84" y="124.39" /><mxPoint x="454.84" y="65.4" /></Array></mxGeometry></mxCell><mxCell id="matrix-transposition-crs-outline-5" value="" edge="1" parent="matrix-transposition-crs-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="539.07" y="65.4" as="sourcePoint" /><mxPoint x="614.22" y="65.4" as="targetPoint" /><Array as="points"><mxPoint x="614.22" y="65.4" /><mxPoint x="614.22" y="124.39" /><mxPoint x="539.07" y="124.39" /><mxPoint x="539.07" y="65.4" /></Array></mxGeometry></mxCell><mxCell id="matrix-transposition-crs-outline-6" value="" edge="1" parent="matrix-transposition-crs-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="645.72" y="63.88" as="sourcePoint" /><mxPoint x="734.59" y="63.88" as="targetPoint" /><Array as="points"><mxPoint x="734.59" y="63.88" /><mxPoint x="734.59" y="122.88" /><mxPoint x="645.72" y="122.88" /><mxPoint x="645.72" y="63.88" /></Array></mxGeometry></mxCell><mxCell id="matrix-transposition-crs-outline-7" value="" edge="1" parent="matrix-transposition-crs-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="743.68" y="63.87" as="sourcePoint" /><mxPoint x="796.57" y="63.87" as="targetPoint" /><Array as="points"><mxPoint x="796.57" y="63.87" /><mxPoint x="796.57" y="122.87" /><mxPoint x="743.68" y="122.87" /><mxPoint x="743.68" y="63.87" /></Array></mxGeometry></mxCell><mxCell id="matrix-transposition-crs-outline-8" value="" edge="1" parent="matrix-transposition-crs-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="804.72" y="64.1" as="sourcePoint" /><mxPoint x="872.06" y="64.1" as="targetPoint" /><Array as="points"><mxPoint x="872.06" y="64.1" /><mxPoint x="872.06" y="123.09" /><mxPoint x="804.72" y="123.09" /><mxPoint x="804.72" y="64.1" /></Array></mxGeometry></mxCell><mxCell id="matrix-transposition-crs-181" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-outline-1" value="" edge="1" parent="matrix-transposition-crs-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="48.81" y="58.82" as="sourcePoint" /><mxPoint x="110.83" y="58.82" as="targetPoint" /><Array as="points"><mxPoint x="110.83" y="58.82" /><mxPoint x="110.83" y="118.15" /><mxPoint x="48.81" y="118.15" /><mxPoint x="48.81" y="58.82" /></Array></mxGeometry></mxCell><mxCell id="matrix-transposition-crs-outline-2" value="" edge="1" parent="matrix-transposition-crs-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="141.19" y="58.82" as="sourcePoint" /><mxPoint x="203.21" y="58.82" as="targetPoint" /><Array as="points"><mxPoint x="203.21" y="58.82" /><mxPoint x="203.21" y="118.15" /><mxPoint x="141.19" y="118.15" /><mxPoint x="141.19" y="58.82" /></Array></mxGeometry></mxCell><mxCell id="matrix-transposition-crs-outline-3" value="" edge="1" parent="matrix-transposition-crs-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="371.99" y="65.2" as="sourcePoint" /><mxPoint x="444.5" y="65.2" as="targetPoint" /><Array as="points"><mxPoint x="444.5" y="65.2" /><mxPoint x="444.5" y="124.36" /><mxPoint x="371.99" y="124.36" /><mxPoint x="371.99" y="65.2" /></Array></mxGeometry></mxCell><mxCell id="matrix-transposition-crs-outline-4" value="" edge="1" parent="matrix-transposition-crs-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="454.84" y="65.2" as="sourcePoint" /><mxPoint x="530.25" y="65.2" as="targetPoint" /><Array as="points"><mxPoint x="530.25" y="65.2" /><mxPoint x="530.25" y="124.36" /><mxPoint x="454.84" y="124.36" /><mxPoint x="454.84" y="65.2" /></Array></mxGeometry></mxCell><mxCell id="matrix-transposition-crs-outline-5" value="" edge="1" parent="matrix-transposition-crs-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="539.07" y="65.2" as="sourcePoint" /><mxPoint x="614.22" y="65.2" as="targetPoint" /><Array as="points"><mxPoint x="614.22" y="65.2" /><mxPoint x="614.22" y="124.36" /><mxPoint x="539.07" y="124.36" /><mxPoint x="539.07" y="65.2" /></Array></mxGeometry></mxCell><mxCell id="matrix-transposition-crs-outline-6" value="" edge="1" parent="matrix-transposition-crs-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="645.72" y="65.2" as="sourcePoint" /><mxPoint x="734.59" y="65.2" as="targetPoint" /><Array as="points"><mxPoint x="734.59" y="65.2" /><mxPoint x="734.59" y="124.36" /><mxPoint x="645.72" y="124.36" /><mxPoint x="645.72" y="65.2" /></Array></mxGeometry></mxCell><mxCell id="matrix-transposition-crs-outline-7" value="" edge="1" parent="matrix-transposition-crs-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="743.68" y="65.2" as="sourcePoint" /><mxPoint x="796.57" y="65.2" as="targetPoint" /><Array as="points"><mxPoint x="796.57" y="65.2" /><mxPoint x="796.57" y="124.36" /><mxPoint x="743.68" y="124.36" /><mxPoint x="743.68" y="65.2" /></Array></mxGeometry></mxCell><mxCell id="matrix-transposition-crs-outline-8" value="" edge="1" parent="matrix-transposition-crs-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="804.72" y="65.2" as="sourcePoint" /><mxPoint x="872.06" y="65.2" as="targetPoint" /><Array as="points"><mxPoint x="872.06" y="65.2" /><mxPoint x="872.06" y="124.36" /><mxPoint x="804.72" y="124.36" /><mxPoint x="804.72" y="65.2" /></Array></mxGeometry></mxCell><mxCell id="matrix-transposition-crs-181" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="805.71" y="134.63" as="sourcePoint" />
             <mxPoint x="837.41" y="134.63" as="targetPoint" />
@@ -2401,7 +2401,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-transposition-crs-184" value="rank 0" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="803.61" y="139.32" width="34.67" height="14.4" as="geometry" />
+          <mxGeometry x="804.22" y="139.32" width="34.67" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-185" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
@@ -2422,7 +2422,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-transposition-crs-188" value="1" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="843.57" y="139.32" width="7" height="14.4" as="geometry" />
+          <mxGeometry x="843.32" y="139.32" width="7" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-189" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
@@ -2443,12 +2443,12 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-transposition-crs-192" value="2" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="matrix-transposition-crs-figure">
-          <mxGeometry x="861.11" y="139.32" width="7" height="14.4" as="geometry" />
+          <mxGeometry x="860.15" y="139.32" width="7" height="14.4" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-193" value="" style="curved=1;endArrow=classic;html=1;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-193" value="" style="curved=1;endArrow=classic;html=1;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="613.64" y="93.78" as="sourcePoint" />
-            <mxPoint x="644.63" y="90.47" as="targetPoint" />
+            <mxPoint x="644.63" y="91.79" as="targetPoint" />
             <Array as="points">
               <mxPoint x="618.78" y="88.85" />
               <mxPoint x="623.41" y="85.37" />
@@ -2459,9 +2459,9 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="matrix-transposition-crs-194" value="" style="curved=1;endArrow=classic;html=1;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-194" value="" style="curved=1;endArrow=classic;html=1;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="matrix-transposition-crs-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="645.41" y="104.8" as="sourcePoint" />
+            <mxPoint x="645.41" y="106.12" as="sourcePoint" />
             <mxPoint x="615.69" y="106.43" as="targetPoint" />
             <Array as="points">
               <mxPoint x="644.97" y="106.05" />
