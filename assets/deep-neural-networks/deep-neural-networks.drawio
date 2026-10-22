@@ -937,20 +937,20 @@
         <mxCell id="densenet-41" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.4;fontSize=12;curved=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="87.5" y="96" as="sourcePoint" />
-            <mxPoint x="495.22" y="394.63" as="targetPoint" />
+            <mxPoint x="498.24" y="393.28" as="targetPoint" />
             <Array as="points">
               <mxPoint x="87.5" y="218.46" />
-              <mxPoint x="330.17" y="394.63" />
+              <mxPoint x="330.17" y="393.28" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="densenet-42" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.4;fontSize=12;curved=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="87.5" y="96" as="sourcePoint" />
-            <mxPoint x="616.1" y="491.51" as="targetPoint" />
+            <mxPoint x="628.36" y="486.03" as="targetPoint" />
             <Array as="points">
               <mxPoint x="87.5" y="258.17" />
-              <mxPoint x="402.24" y="491.51" />
+              <mxPoint x="402.24" y="486.03" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -973,20 +973,20 @@
         <mxCell id="densenet-45" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#82b366;strokeWidth=1.4;fontSize=12;curved=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="222.12" y="181.75" as="sourcePoint" />
-            <mxPoint x="507.47" y="389.18" as="targetPoint" />
+            <mxPoint x="510.59" y="387.77" as="targetPoint" />
             <Array as="points">
               <mxPoint x="222.12" y="267.39" />
-              <mxPoint x="390.09" y="389.18" />
+              <mxPoint x="390.09" y="387.77" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="densenet-46" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#82b366;strokeWidth=1.4;fontSize=12;curved=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="222.12" y="181.75" as="sourcePoint" />
-            <mxPoint x="628.36" y="486.04" as="targetPoint" />
+            <mxPoint x="640.71" y="480.52" as="targetPoint" />
             <Array as="points">
               <mxPoint x="222.12" y="307.11" />
-              <mxPoint x="462.16" y="486.04" />
+              <mxPoint x="462.16" y="480.52" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -999,43 +999,43 @@
         <mxCell id="densenet-48" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;strokeWidth=1.4;fontSize=12;curved=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="356.75" y="267.5" as="sourcePoint" />
-            <mxPoint x="519.82" y="383.67" as="targetPoint" />
+            <mxPoint x="522.94" y="382.26" as="targetPoint" />
             <Array as="points">
               <mxPoint x="356.75" y="316.32" />
-              <mxPoint x="450.01" y="383.67" />
+              <mxPoint x="450.01" y="382.26" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="densenet-49" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;strokeWidth=1.4;fontSize=12;curved=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="356.75" y="267.5" as="sourcePoint" />
-            <mxPoint x="640.71" y="480.55" as="targetPoint" />
+            <mxPoint x="653.06" y="475.01" as="targetPoint" />
             <Array as="points">
               <mxPoint x="356.75" y="356.04" />
-              <mxPoint x="522.08" y="480.55" />
+              <mxPoint x="522.08" y="475.01" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="densenet-50" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#d6b656;strokeWidth=1.4;fontSize=12;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="491.38" y="353.25" as="sourcePoint" />
-            <mxPoint x="532.22" y="378.14" as="targetPoint" />
+            <mxPoint x="535.29" y="376.75" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="densenet-51" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#d6b656;strokeWidth=1.4;fontSize=12;curved=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="491.38" y="353.25" as="sourcePoint" />
-            <mxPoint x="653.06" y="475.04" as="targetPoint" />
+            <mxPoint x="665.41" y="469.5" as="targetPoint" />
             <Array as="points">
               <mxPoint x="491.38" y="404.97" />
-              <mxPoint x="582" y="475.04" />
+              <mxPoint x="582" y="469.5" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="densenet-52" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#d79b00;strokeWidth=1.4;fontSize=12;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="626" y="439" as="sourcePoint" />
-            <mxPoint x="665.4" y="469.52" as="targetPoint" />
+            <mxPoint x="677.76" y="464" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="densenet-53" value="Input" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=2;rotation=-24.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="densenet-figure">
