@@ -584,7 +584,7 @@
         <mxCell id="transformer_attention_lbdl-48" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry x="136.06" y="69.21" width="8.26" height="8.26" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention_lbdl-49" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
+        <mxCell id="transformer_attention_lbdl-49" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.8;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="59.48" y="32.04" as="sourcePoint" />
             <mxPoint x="109.64" y="32.04" as="targetPoint" />
@@ -594,7 +594,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="transformer_attention_lbdl-50" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=0.58;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
+        <mxCell id="transformer_attention_lbdl-50" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.0;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="59.48" y="40.3" as="sourcePoint" />
             <mxPoint x="109.64" y="32.04" as="targetPoint" />
@@ -604,7 +604,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="transformer_attention_lbdl-51" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=0.35;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
+        <mxCell id="transformer_attention_lbdl-51" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=0.4;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="59.48" y="48.56" as="sourcePoint" />
             <mxPoint x="109.64" y="32.04" as="targetPoint" />
@@ -624,7 +624,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="transformer_attention_lbdl-53" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=0.58;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
+        <mxCell id="transformer_attention_lbdl-53" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.0;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="59.48" y="65.08" as="sourcePoint" />
             <mxPoint x="109.64" y="32.04" as="targetPoint" />
@@ -742,7 +742,7 @@
         <mxCell id="transformer_attention_lbdl-89" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry x="293.93" y="69.21" width="8.26" height="8.26" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention_lbdl-outline-1" value="" edge="1" parent="transformer_attention_lbdl-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="24.48" y="27.91" as="sourcePoint" /><mxPoint x="57.52" y="27.91" as="targetPoint" /><Array as="points"><mxPoint x="57.52" y="27.91" /><mxPoint x="57.52" y="69.21" /><mxPoint x="24.48" y="69.21" /><mxPoint x="24.48" y="27.91" /></Array></mxGeometry></mxCell><mxCell id="transformer_attention_lbdl-outline-2" value="" edge="1" parent="transformer_attention_lbdl-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="111.28" y="19.65" as="sourcePoint" /><mxPoint x="144.32" y="19.65" as="targetPoint" /><Array as="points"><mxPoint x="144.32" y="19.65" /><mxPoint x="144.32" y="77.47" /><mxPoint x="111.28" y="77.47" /><mxPoint x="111.28" y="19.65" /></Array></mxGeometry></mxCell><mxCell id="transformer_attention_lbdl-outline-3" value="" edge="1" parent="transformer_attention_lbdl-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="198.78" y="27.91" as="sourcePoint" /><mxPoint x="223.56" y="27.91" as="targetPoint" /><Array as="points"><mxPoint x="223.56" y="27.91" /><mxPoint x="223.56" y="69.21" /><mxPoint x="198.78" y="69.21" /><mxPoint x="198.78" y="27.91" /></Array></mxGeometry></mxCell><mxCell id="transformer_attention_lbdl-outline-4" value="" edge="1" parent="transformer_attention_lbdl-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="277.41" y="19.65" as="sourcePoint" /><mxPoint x="302.19" y="19.65" as="targetPoint" /><Array as="points"><mxPoint x="302.19" y="19.65" /><mxPoint x="302.19" y="77.47" /><mxPoint x="277.41" y="77.47" /><mxPoint x="277.41" y="19.65" /></Array></mxGeometry></mxCell><mxCell id="transformer_attention_lbdl-90" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
+        <mxCell id="transformer_attention_lbdl-outline-1" value="" edge="1" parent="transformer_attention_lbdl-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="24.48" y="27.91" as="sourcePoint" /><mxPoint x="57.52" y="27.91" as="targetPoint" /><Array as="points"><mxPoint x="57.52" y="27.91" /><mxPoint x="57.52" y="69.21" /><mxPoint x="24.48" y="69.21" /><mxPoint x="24.48" y="27.91" /></Array></mxGeometry></mxCell><mxCell id="transformer_attention_lbdl-outline-2" value="" edge="1" parent="transformer_attention_lbdl-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="111.28" y="19.65" as="sourcePoint" /><mxPoint x="144.32" y="19.65" as="targetPoint" /><Array as="points"><mxPoint x="144.32" y="19.65" /><mxPoint x="144.32" y="77.47" /><mxPoint x="111.28" y="77.47" /><mxPoint x="111.28" y="19.65" /></Array></mxGeometry></mxCell><mxCell id="transformer_attention_lbdl-outline-3" value="" edge="1" parent="transformer_attention_lbdl-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="198.78" y="27.91" as="sourcePoint" /><mxPoint x="223.56" y="27.91" as="targetPoint" /><Array as="points"><mxPoint x="223.56" y="27.91" /><mxPoint x="223.56" y="69.21" /><mxPoint x="198.78" y="69.21" /><mxPoint x="198.78" y="27.91" /></Array></mxGeometry></mxCell><mxCell id="transformer_attention_lbdl-outline-4" value="" edge="1" parent="transformer_attention_lbdl-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="277.41" y="19.65" as="sourcePoint" /><mxPoint x="302.19" y="19.65" as="targetPoint" /><Array as="points"><mxPoint x="302.19" y="19.65" /><mxPoint x="302.19" y="77.47" /><mxPoint x="277.41" y="77.47" /><mxPoint x="277.41" y="19.65" /></Array></mxGeometry></mxCell><mxCell id="transformer_attention_lbdl-90" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.8;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="225.61" y="32.04" as="sourcePoint" />
             <mxPoint x="275.78" y="32.04" as="targetPoint" />
@@ -752,7 +752,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="transformer_attention_lbdl-91" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=0.58;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
+        <mxCell id="transformer_attention_lbdl-91" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.0;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="225.61" y="40.3" as="sourcePoint" />
             <mxPoint x="275.78" y="32.04" as="targetPoint" />
@@ -762,7 +762,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="transformer_attention_lbdl-92" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=0.35;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
+        <mxCell id="transformer_attention_lbdl-92" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=0.4;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="225.61" y="48.56" as="sourcePoint" />
             <mxPoint x="275.78" y="32.04" as="targetPoint" />
@@ -782,7 +782,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="transformer_attention_lbdl-94" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=0.58;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
+        <mxCell id="transformer_attention_lbdl-94" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.0;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="225.61" y="65.08" as="sourcePoint" />
             <mxPoint x="275.78" y="32.04" as="targetPoint" />
