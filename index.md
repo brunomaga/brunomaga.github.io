@@ -45,7 +45,7 @@ In this space, I write about my projects and topics related to my fields of inte
 
 <!-- resources -->
 <p class="home-text">
-I also keep a curated list of related books and other resources available online:
+I also keep a list of <a href="{{ site.publications_permalink }}">relevant publications</a>, and a curated list of books and other resources:
 </p>
 
 <table id="resources-table" class="label-table home-table">
@@ -142,5 +142,5 @@ I also keep a curated list of related books and other resources available online
 </table>
 
 <p class="home-text">
-And finally, I maintain a list of <a href="{{ site.publications_permalink }}">relevant publications</a>. Enjoy, and feel free to reach out with feedback, fixes, and questions 🚀!
+Enjoy, and feel free to reach out with feedback, fixes, and questions 🚀!
 </p>
