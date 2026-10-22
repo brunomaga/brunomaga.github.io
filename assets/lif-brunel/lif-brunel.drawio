@@ -25,10 +25,10 @@
         <mxCell id="rc-3" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="rc-figure">
           <mxGeometry x="0" y="165.05" width="196.04" height="129.22" as="geometry" />
         </mxCell>
-        <mxCell id="rc-4" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;mask=1;fontFamily=Source Sans 3;strokeWidth=1.0;" vertex="1" parent="rc-figure">
+        <mxCell id="rc-4" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;mask=1;fontFamily=Source Sans 3;strokeWidth=1.0;" vertex="1" parent="rc-figure">
           <mxGeometry x="44.41" y="20.9" width="97.08" height="99.36" as="geometry" />
         </mxCell>
-        <mxCell id="rc-5" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;mask=1;fontFamily=Source Sans 3;strokeWidth=1.0;" vertex="1" parent="rc-figure">
+        <mxCell id="rc-5" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=none;mask=1;fontFamily=Source Sans 3;strokeWidth=1.0;" vertex="1" parent="rc-figure">
           <mxGeometry x="48.41" y="24.41" width="89.08" height="92.34" as="geometry" />
         </mxCell>
         <mxCell id="rc-6" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="rc-figure">
@@ -399,7 +399,7 @@
             <mxPoint x="116.15" y="49.16" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rc-10" value="&lt;i&gt;I&lt;/i&gt;(&lt;i&gt;t&lt;/i&gt;)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rc-figure">
+        <mxCell id="rc-10" value="&lt;i&gt;I&lt;/i&gt; (&lt;i&gt;t&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rc-figure">
           <mxGeometry x="149.14" y="0" width="27.43" height="23.2" as="geometry" />
         </mxCell>
         <mxCell id="rc-11" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="rc-figure">
@@ -785,19 +785,13 @@
             <mxPoint x="97.85" y="205.46" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rc-87" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;fontSize=12;endFill=0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="rc-figure">
+        <mxCell id="rc-87" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;endFill=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endSize=5;startFill=1;startSize=5;" edge="1" parent="rc-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="130.85" y="211.56" as="sourcePoint" />
-            <mxPoint x="130.85" y="269.56" as="targetPoint" />
+            <mxPoint x="130.85" y="206.6" as="sourcePoint" />
+            <mxPoint x="130.85" y="275.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rc-88" value="" style="triangle;whiteSpace=wrap;html=1;fillColor=#000000;direction=north;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;rounded=0;" vertex="1" parent="rc-figure">
-          <mxGeometry x="127.45" y="206.96" width="6.8" height="5.2" as="geometry" />
-        </mxCell>
-        <mxCell id="rc-89" value="" style="triangle;whiteSpace=wrap;html=1;fillColor=#000000;direction=south;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;rounded=0;" vertex="1" parent="rc-figure">
-          <mxGeometry x="127.45" y="269.56" width="6.8" height="5.2" as="geometry" />
-        </mxCell>
-        <mxCell id="rc-90" value="&lt;i&gt;I&lt;/i&gt;(&lt;i&gt;t&lt;/i&gt;)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rc-figure">
+        <mxCell id="rc-90" value="&lt;i&gt;I&lt;/i&gt; (&lt;i&gt;t&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rc-figure">
           <mxGeometry x="88.63" y="168.52" width="27.43" height="23.2" as="geometry" />
         </mxCell>
         <mxCell id="rc-91" value="&lt;i&gt;R&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rc-figure">
