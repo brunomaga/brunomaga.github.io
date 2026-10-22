@@ -387,7 +387,7 @@ In practice, the first term comes from the uncertainty on the weights, which dec
 <img width="34.2%" height="34.2%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_3.svg"/>
 
 {: .caption}
-Bayesian linear regression of synthetic sinusoidal data with 9 Gaussian basis functions, after 1, 2, 4 and 25 data points. Each plot shows the ground truth $$\sin(2 \pi x)$$ in blue, the predictive mean in orange, and the predictive mean plus and minus one predictive standard deviation as a light-orange area. The model has a prior precision $$\alpha = 10^{-3}$$ and a noise precision $$\beta = 2$$. Inspired by: [Pattern Recognition and Machine Learning, C. Bishop, Figure 3.8](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)
+Bayesian linear regression of synthetic sinusoidal data with 9 Gaussian basis functions, after 1, 2, 4 and 25 data points. Each plot shows the data points as grey circles, the ground truth $$\sin(2 \pi x)$$ in blue, the predictive mean in orange, and the predictive mean plus and minus one predictive standard deviation as a light-orange area. The model has a prior precision $$\alpha = 10^{-3}$$ and a noise precision $$\beta = 2$$. Inspired by: [Pattern Recognition and Machine Learning, C. Bishop, Figure 3.8](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)
 
 Looking at the pictures above, the predictive standard deviation is smallest near the observed data points, where the first term $$X^T S_N X$$ is small, and grows away from them. As more points are added, this term decreases, and the band tends to the width set by the noise variance $$\sigma^2$$.
 

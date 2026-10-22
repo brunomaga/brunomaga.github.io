@@ -348,10 +348,10 @@ As Transformers became a key building block of sequence-based ML, the 2022 paper
 ViTs have also been shown to have better scaling properties and accuracy than [convolutional neural networks](https://en.wikipedia.org/wiki/Convolutional_neural_network) when trained on large datasets. Moreover, regarding DiT scaling, it was shown that (1) DiT Gflops are strongly correlated with FID (more Gflops, lower FID), (2) DiT Gflops are critical to improving performance, and (3) larger DiT models use large compute more efficiently. The DiT architecture is illustrated in the following picture:
 
 {: .picture}
-<img width="82.5%" height="82.5%" src="{{ site.assets }}/diffusion/dit.svg"/> 
+<img width="79.7%" height="79.7%" src="{{ site.assets }}/diffusion/dit.svg"/> 
 
 {: .caption}
-<b>The Diffusion Transformer (DiT) architecture.</b> <i>Top left:</i> a conditional latent DiT; the input latent is decomposed into patches and processed by several DiT blocks. <i>Top right and bottom:</i> variants of the DiT block that add the conditioning by adaptive layer norm (adaLN-Zero), cross-attention or extra input tokens (in-context conditioning); adaptive layer norm works best. Adapted from: [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748).
+<b>The Diffusion Transformer (DiT) architecture.</b> <i>Left:</i> a conditional latent DiT; the input latent is decomposed into patches and processed by several DiT blocks. <i>Right:</i> the DiT block that adds the conditioning by adaptive layer norm (adaLN-Zero). The paper also tested in-context conditioning, cross-attention and adaLN blocks, and adaLN-Zero worked best. Adapted from: [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748).
 
 In the adaLN-Zero architecture shown in the diagram, **adaptive layer normalization** conditions the model dynamically. Instead of learning the scale $$\gamma$$ and shift $$\beta$$ parameters of each layer norm directly, these are regressed by an MLP from the sum of the embeddings of the timestep $$t$$ and the class label $$y$$ (the conditioning inputs). adaLN-Zero additionally regresses dimension-wise scaling parameters $$\alpha$$ that are applied right before each residual connection, and initializes them to zero, so that each DiT block starts as the identity function. Note that these $$\alpha$$ and $$\beta$$ are unrelated to the $$\alpha_t$$ and $$\beta_t$$ of the noise schedule.
 
@@ -633,7 +633,7 @@ As an example, it tests four variants of the 3D transformer block:
 Variant 1 performs the best with increasing training iterations. The four variants are illustrated in the following picture:
 
 {: .picture}
-<img width="78%" height="78%" src="{{ site.assets }}/diffusion/latte.svg"/> 
+<img width="77.9%" height="77.9%" src="{{ site.assets }}/diffusion/latte.svg"/> 
 
 {: .caption}
 <b>The pipeline of Latte for video generation</b>. Four model variants of Latte are proposed to efficiently capture spatio-temporal information in videos. Each block depicted in light orange represents a Transformer block. The standard Transformer blocks are used in (a) and (b), while (c) and (d) use Latte's own block variants. For the sake of simplicity, encoding and decoding processes for VAE are not shown in the diagram. Adapted from: [Latte: Latent Diffusion Transformer for Video Generation](https://arxiv.org/abs/2401.03048).
@@ -687,7 +687,7 @@ or even more.
 The following picture illustrates the method:
 
 {: .picture}
-<img width="90.7%" height="90.7%" src="{{ site.assets }}/diffusion/masked_autoencoders.svg"/> 
+<img width="90.7%" height="90.7%" src="{{ site.assets }}/diffusion/masked_autoencoders_cropped.svg"/> 
 
 {: .caption}
 <b>Masked Autoencoders as spatiotemporal learners</b>. A large subset (<i>e.g.</i>, 90%) of random patches in spacetime is masked. An encoder operates on the set of visible patches. A small decoder then processes the full set of encoded patches and mask tokens to reconstruct the input. Except for patch and positional embeddings, <i>neither the encoder, the decoder, nor the masking strategy, has any spatiotemporal inductive bias</i>. Adapted from: [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113).
@@ -720,7 +720,7 @@ LongVILA details a 5-stage pipeline for training long-context visual-language mo
 In Stage 5, the model is fine-tuned for long video understanding with Multi-Modal Sequence Parallelism (MM-SP) based on [LoongTrain: Efficient Training of Long-Sequence LLMs with Head-Context Parallelism](https://arxiv.org/abs/2406.18485). The workflow of MM-SP is illustrated in the following picture:
 
 {: .picture}
-<img width="99.2%" height="99.2%" src="{{ site.assets }}/diffusion/longvilla.svg"/> 
+<img width="100%" height="100%" src="{{ site.assets }}/diffusion/longvilla.svg"/> 
 
 {: .caption}
 Workflow of Multi-Modal Sequence Parallelism (MM-SP) with a Batch Size (bs) of 4 and a Sequence Parallel Size (SP\_Size) of 3. To support sequence parallelism for multi-modal inputs, MM-SP uses a custom sharding strategy that balances the workload and is compatible with SP communication. Adapted from: [LongVILA: Scaling Long-Context Visual Language Models for Long Videos](https://arxiv.org/abs/2408.10188).

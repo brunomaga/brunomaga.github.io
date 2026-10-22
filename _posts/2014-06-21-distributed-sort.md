@@ -44,10 +44,10 @@ The first one is the **[Odd-Even sort](https://en.wikipedia.org/wiki/Odd%E2%80%9
 The algorithm is illustrated with a sample dataset in the following workflow: 
 
 {: .picture}
-<img width="65.8%" height="65.8%" src="{{ site.assets }}/distributed-sort/odd_even_sort.svg">
+<img width="62.1%" height="62.1%" src="{{ site.assets }}/distributed-sort/odd_even_sort.svg">
 
 {: .caption}
-Odd-even sort of 20 elements on $$p = 5$$ ranks, colored by rank. Every rank holds 4 elements, so the list is sorted after $$p$$ phases. Step 2.2 shows the compare-split of ranks 0 and 1 in phase 0.
+Odd-even sort of 20 elements on $$p = 5$$ ranks, colored by rank. Every rank holds 4 elements, so the list is sorted after $$p$$ phases. Step 2.2 shows the compare-split of ranks 0 and 1 in phase 0. In an MPI implementation, each exchange of step 2.1 is one `MPI_Sendrecv` between the two ranks of a pair.
 
 The algorithm has the advantage of being very *memory-stable*, i.e. one can predict the worst-case memory consumption in advance. Moreover, each compute node ends up with the same number of elements it started with, so the initial load balancing across nodes is preserved. However, it is inefficient for a very large network of nodes, as it requires a high number of phases, and each phase sends all the elements of a node to its neighbor.
 
@@ -66,7 +66,7 @@ Here is an illustrative workflow:
 <img width="57%" height="57%" src="{{ site.assets }}/distributed-sort/sample_sort.svg">
 
 {: .caption}
-Sample sort of 21 elements on $$p = 3$$ ranks, colored by rank. Each rank sends $$p-1 = 2$$ samples to rank 0, which sorts them and picks every $$p$$-th one as a splitter (yellow): 4 and 10. The last interval is open: rank 2 receives every element from 10 upwards.
+Sample sort of 21 elements on $$p = 3$$ ranks, colored by rank. Each rank sends $$p-1 = 2$$ samples to rank 0, which sorts them and picks every $$p$$-th one as a splitter (yellow): 4 and 10. The last interval is open: rank 2 receives every element from 10 upwards. In an MPI implementation, step 2 is one `MPI_Gather` of the samples, step 3 one `MPI_Bcast` of the splitters, and step 4 one `MPI_Alltoall` of the counts followed by one `MPI_Alltoallv` of the elements.
 
 This method is computationally very efficient, as the number of communication operations is constant, regardless of the input size or network size, and each element is sent at most once. However, it may lead to a highly heterogeneous number of elements across nodes (from 4 to 9 in the example above), which leads to a computational and memory imbalance. If necessary, a network balancing operation may follow the sorting to balance the dataset across the network. In brief, the sample sort is preferred on large networks, and the odd-even sort on small networks or when each node must keep its number of elements.
 

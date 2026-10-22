@@ -12,7 +12,7 @@ Deep Neural Networks (also known as [Multi-Layer Perceptrons](https://en.wikiped
 The structure of a basic NN is the following: one input layer of size $$D$$, $$L$$ hidden layers of size $$K$$, and one output layer. It is a **[feedforward network](https://en.wikipedia.org/wiki/Feedforward_neural_network)**: the computation performed by the network starts with the input from the left and flows to the right, with no feedback loop. It can be used for regression (when the output is a real value) and for classification (when the output is the class). The following picture illustrates a network with one hidden layer, where each node is connected to every node of the next layer, i.e. a **fully connected** network:
 
 {: .picture}
-<img width="41%" height="41%" src="{{ site.assets }}/deep-neural-networks/dnn.svg">
+<img width="41.1%" height="41.1%" src="{{ site.assets }}/deep-neural-networks/dnn.svg">
 
 {: .caption}
 A fully connected feedforward network with an input layer of size $$D = 4$$, one hidden layer of size $$K = 5$$ and one output $$\hat{y}$$. Adapted from: [Machine Learning course CS-433 lecture notes, M. Jaggi, EPFL](https://github.com/epfml/ML_course)

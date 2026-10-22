@@ -118,7 +118,7 @@ In brief, the works above favor linear scaling for SGD, and square-root scaling 
 Assume a limit of $$30$$ tokens per batch, a reference LR of $$10^{-3}$$, and a reference batch size of $$2$$. Early in curriculum learning (short sequences), batches will contain more samples than later (long sequences), as shown below:
 
 {: .picture}
-<img width="74.7%" height="74.7%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr.svg"/>
+<img width="89.7%" height="89.7%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr.svg"/>
 
 {: .caption}
 Batches of at most 30 tokens, of shape BxSxE (batch size x sequence length x embedding size), with a reference batch size of 2 and a reference learning rate (LR) of 1e-3. Short sentences (left) give a larger batch, and thus a larger LR, than long sentences (right). Grey cells are padding tokens.
@@ -139,7 +139,7 @@ In the pipeline case (right), all micro-batches in the batch have the same `B x 
 [Attention](https://en.wikipedia.org/wiki/Attention_(machine_learning)) is a particular challenge in variable-length training. With fixed shapes, an input of shape `B x S x E` often uses a 2D attention mask of shape `S x S`, broadcast over the batch dimension. With variable lengths, a *per-sample* mask is needed, which is naturally represented as a `B x S x S` tensor. For example, for the non-pipeline micro-batch 1 above (top-left; 4 sentences), the mask can be illustrated as:
 
 {: .picture}
-<img width="99%" height="99%" src="{{ site.assets }}/distributed-training/imgs/variable_attn_matrix.svg"/>
+<img width="88.9%" height="88.9%" src="{{ site.assets }}/distributed-training/imgs/variable_attn_matrix.svg"/>
 
 {: .caption}
 3D attention mask (BxSxS) of the non-pipeline micro-batch 1 above: its 4 samples of lengths 9, 7, 8 and 6 give a mask of size 4x9x9, with one causal mask per sample, padded to the length of the longest sample.
@@ -249,7 +249,7 @@ Compilation via [`torch.compile`](https://pytorch.org/docs/stable/generated/torc
 Consider a [feed-forward network](https://en.wikipedia.org/wiki/Feedforward_neural_network) with 3 linear layers and 3 activations on a single GPU. The data loading, forward pass, backward pass, and optimizer step can be illustrated as:
 
 {: .picture}
-<img width="59.6%" height="59.6%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial.svg"/> 
+<img width="77%" height="77%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial.svg"/> 
 
 {: .caption}
 Workflow of a single-GPU training iteration. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)
@@ -257,7 +257,7 @@ Workflow of a single-GPU training iteration. Adapted from: [TorchDynamo Update 9
 In this example, the GPU executes many separate kernels in the forward and backward passes. If captured as a CUDA graph, those kernels can be replayed with fewer launches, which often improves throughput. The following picture illustrates the same iteration with a compiled model, where the forward and the backward passes each run as one compiled graph:
 
 {: .picture}
-<img width="59.6%" height="59.6%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial_compiled.svg"/>
+<img width="77%" height="77%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial_compiled.svg"/>
 
 {: .caption}
 Workflow of a single-GPU training iteration with a compiled model. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)
@@ -265,7 +265,7 @@ Workflow of a single-GPU training iteration with a compiled model. Adapted from:
 Now consider a 2-GPU DDP run. During [backpropagation](https://en.wikipedia.org/wiki/Backpropagation), DDP performs [`all_reduce`](https://en.wikipedia.org/wiki/Collective_operation#All-Reduce) operations to synchronize gradients across ranks. These collectives can overlap with gradient computation because `loss.backward()` accumulates into `w.grad` and `optimizer.step()` applies updates later. Thus, the gradients of the last layers, which are computed first, can be reduced while the gradients of the earlier layers are still being computed, as illustrated below:
 
 {: .picture}
-<img width="61.9%" height="61.9%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc.svg"/>
+<img width="79.3%" height="79.3%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc.svg"/>
 
 {: .caption}
 DDP execution workflow on 2 GPUs. The optimizer waits for all asynchronous `all_reduce`s of gradients to finish. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)
@@ -273,7 +273,7 @@ DDP execution workflow on 2 GPUs. The optimizer waits for all asynchronous `all_
 In a compiled setting, intermediate communication steps can introduce **graph breaks**, i.e., points where the compiler splits the model into several graphs. One naïve option is to compile a large graph and run the `all_reduce`s only at the end, but that reduces overlap and increases the time the optimizer waits:
 
 {: .picture}
-<img width="65.1%" height="65.1%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_compiled.svg"/>
+<img width="82.7%" height="82.7%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_compiled.svg"/>
 
 {: .caption}
 DDP workflow on 2 GPUs with compiled models. The `all_reduce` runs only at the end, which increases the waiting time of the optimizer. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)
@@ -281,7 +281,7 @@ DDP workflow on 2 GPUs with compiled models. The `all_reduce` runs only at the e
 PyTorch’s `DDPOptimizer` (explained [here](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)) addresses this by compiling around graph breaks into subgraphs and triggering asynchronous synchronization at subgraph boundaries:
 
 {: .picture}
-<img width="61.9%" height="61.9%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_optimized.svg"/>
+<img width="79.3%" height="79.3%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_optimized.svg"/>
 
 {: .caption}
 DDP workflow on 2 GPUs with compiled subgraphs and `DDPOptimizer`. Synchronization runs asynchronously between subgraphs. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)

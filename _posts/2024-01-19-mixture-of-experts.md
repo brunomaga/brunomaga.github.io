@@ -17,7 +17,7 @@ In 1991, the papers [Adaptive Mixtures of Local Experts](https://www.cs.toronto.
 <img width="88.7%" height="88.7%" src="{{ site.assets }}/distributed-training/imgs/moe_2014_ilya.svg" alt="MoE paper 2014"/>
 
 {: .caption}
-**Left:** a Mixture of Experts. **Right:** a Deep Mixture of Experts (with 2 layers). <br/>Adapted from: [Learning Factored Representations in a Deep Mixture of Experts](https://arxiv.org/abs/1312.4314)
+**Left:** a Mixture of Experts. **Right:** a Deep Mixture of Experts (with 2 layers). Adapted from: [Learning Factored Representations in a Deep Mixture of Experts](https://arxiv.org/abs/1312.4314)
 
 The MoE was defined as a set of independent **experts** ([feed-forward networks](https://en.wikipedia.org/wiki/Feedforward_neural_network), $$f_i(x)$$ in the picture) alongside a **gating network** (also a feed-forward network, $$g(x)$$). All the experts and the gating network receive the same input $$x$$. The gating network outputs a distribution of each expert's relevance/importance for the given input and can be defined in its simplest form with a [softmax](https://en.wikipedia.org/wiki/Softmax_function), as $$g(x) = \mathrm{Softmax}(x \cdot W_g)$$, where $$W_g$$ is a learnable transformation. Finally, the output of the system ($$z$$) is the sum of the outputs of all experts weighted by the output of the gating network.
 
@@ -330,7 +330,7 @@ In practice, softmax gating over all experts suits only a few experts, since its
 The MoE workflow is a four-step algorithm, best illustrated in the [MegaBlocks paper](https://arxiv.org/abs/2211.15841) (detailed later): 
 
 {: .picture}
-<img width="94.8%" height="94.8%" src="{{ site.assets }}/distributed-training/imgs/moe_megablocks.svg"/>
+<img width="97.3%" height="97.3%" src="{{ site.assets }}/distributed-training/imgs/moe_megablocks.svg"/>
 
 {: .caption}
 <b>A Mixture-of-Experts Layer.</b> Shown for <i>num\_experts=3</i>, <i>top\_k=1</i> and <i>capacity\_factor=1</i> with the prevalent, token dropping formulation. <b>First (1)</b>, tokens are mapped to experts by the router. Along with expert assignments, the router produces probabilities that reflect the confidence of the assignments. <b>Second (2)</b>, the feature vectors are permuted to group tokens by expert assignment. If the number of tokens assigned to an expert exceeds its capacity, extra tokens are dropped. <b>Third (3)</b>, the expert layers are computed for the set of tokens they were assigned as well as any padding needed for unused capacity. <b>Lastly (4)</b>, the results of the expert computation are un-permuted and weighted by the router probabilities. The outputs for dropped tokens are shown here set to zero. Adapted from: [MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](https://arxiv.org/abs/2211.15841)
@@ -645,7 +645,7 @@ For every token, the model decides to either apply computation (as in the standa
 In practice, during training, for every input, the router produces a scalar weight (importance) per token, and the gating picks the top-$$k$$ tokens per sentence per block to participate in the transformer block computation. $$k$$ is a hyper-parameter that defines the maximum number of tokens passed to a block, so the computation graph and tensor sizes remain static throughout the execution. Setting $$k$$ allows one to trade off between performance and speed, for a given compute budget. The MoD Transformer and the routing decisions of a trained model are illustrated below:
 
 {: .picture}
-<img width="95.4%" height="95.4%" src="{{ site.assets }}/distributed-training/imgs/mixture_of_depths.svg"/>
+<img width="95.3%" height="95.3%" src="{{ site.assets }}/distributed-training/imgs/mixture_of_depths.svg"/>
 
 {: .caption}
 <b>Mixture-of-Depths Transformer.</b> As in mixture-of-experts (MoE) transformers, a router chooses among potential computational paths. But unlike in MoE transformers the possible choices are a standard block’s computation (i.e., self-attention and MLP) or a residual connection. Since some tokens take this second route, Mixture-of-Depths (MoD) transformers have a smaller total FLOP footprint compared to vanilla or MoE transformers. On the top right is depicted a trained model’s routing decisions for a short sequence truncated to 64 tokens for visualization purposes. When examining the choices one can find tokens processed by later blocks’ layers, despite passing through relatively few total blocks throughout the model’s depth. This is a unique feature of MoD compared to conventional halting-based, or "early-exit" conditional computation, which instead engage blocks serially, or vanilla transformers, which engage every block. Adapted from: [Mixture-of-Depths: Dynamically allocating compute in transformer-based language models](https://arxiv.org/abs/2404.02258)

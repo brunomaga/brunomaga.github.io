@@ -35,13 +35,7 @@ $$
 Y = \text{activation} \left( \sum_{g=1}^{G} H^{(g)} W_2^{(g)} + b_2 \right)
 $$
 
-where the sum of the partial outputs $$H^{(g)} W_2^{(g)} \in \mathbb{R}^{M \times P}$$ of all GPUs is an all-reduce. Note that the all-reduce must finish before $$b_2$$ and the second activation are applied: the bias is added once, and the activation is not linear, so it cannot be applied to the partial outputs. Thus, this layout needs only one communication step per pair of layers. The following picture illustrates this execution on 2 GPUs, A and B:
-
-{: .picture}
-<img width="96.9%" height="96.9%" src="{{ site.assets }}/inference/imgs/tp_megatron_lm.svg"/>
-
-{: .caption}
-Megatron-LM tensor parallelism of an FFN on 2 GPUs (A in green, B in blue). The bias and activation are omitted.
+where the sum of the partial outputs $$H^{(g)} W_2^{(g)} \in \mathbb{R}^{M \times P}$$ of all GPUs is an all-reduce. Note that the all-reduce must finish before $$b_2$$ and the second activation are applied: the bias is added once, and the activation is not linear, so it cannot be applied to the partial outputs. Thus, this layout needs only one communication step per pair of layers. The [tensor parallelism post]({{ site.baseurl }}{% post_url 2023-09-02-tensor-parallelism %}#megatron-lm-tensor-parallelism) illustrates this layout on 2 GPUs, with the names of the Megatron-LM paper: $$A$$ and $$B$$ for $$W_1$$ and $$W_2$$, $$Y$$ for $$H$$, and $$YB$$ for the sum of the partial outputs.
 
 A regular implementation of this FFN launches 7 kernels: a matrix multiplication, a bias addition and an activation for each layer, plus the all-reduce. Each kernel loads its inputs from global memory and stores its outputs there, as displayed at the top of the timeline below. The kernel of this post runs the whole FFN as one kernel, with a single load and a single store to global memory (bottom), and with many small all-reduce steps that overlap the computation:
 
@@ -74,7 +68,7 @@ $$
 When all tiles of $$H$$ are processed, $$Y$$ holds the full product $$H W_2$$, and $$H$$ was never stored in global memory, as illustrated below:
 
 {: .picture}
-<img width="98%" height="98%" src="{{ site.assets }}/inference/imgs/tp_matmuls.svg"/>
+<img width="98.7%" height="98.7%" src="{{ site.assets }}/inference/imgs/tp_matmuls.svg"/>
 
 {: .caption}
 **Left:** the regular execution computes all tiles of $$H$$, stores $$H$$ in global memory, and a second kernel computes $$Y$$. **Right:** the fused kernel multiplies each tile of $$H$$ by a row of tiles of $$W_2$$ and accumulates the results in a row of tiles of $$Y$$.
@@ -135,7 +129,7 @@ The fused kernel was compared to a baseline, a tuned implementation of the same 
 The fused kernel reduces the latency by 22% to 62%, roughly halves the memory of the activations, and shrinks the communication buffer from gigabytes to 32 KiB. Seven of these FFNs are compared below:
 
 {: .picture}
-<img width="55.2%" height="55.2%" src="{{ site.assets }}/inference/imgs/tp_results.svg"/>
+<img width="72.2%" height="72.2%" src="{{ site.assets }}/inference/imgs/tp_results.svg"/>
 
 {: .caption}
 Latency of the regular (baseline) and fused FFNs, sorted by improvement.
