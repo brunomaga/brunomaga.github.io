@@ -314,7 +314,7 @@ Comet works in two parts. (1) Dependency resolving: it maps out which pieces of 
 The authors note that the division point between computation and communication SMs depends on the model layer, input shape and level of parallelism. As the following picture illustrates, the number of [thread blocks](https://en.wikipedia.org/wiki/Thread_block_(CUDA_programming)) for communication that gives the shortest kernel duration (the dots) changes with the input size and with the mix of tensor and expert parallelism:
 
 {: .picture}
-<img loading="lazy" width="90%" height="90%" src="{{ site.assets }}/publications/comet.svg"/>
+<img loading="lazy" width="99.8%" height="99.8%" src="{{ site.assets }}/publications/comet.svg"/>
 
 {: .caption}
 Duration of the MoE layer1 kernel with varying number of thread blocks assigned for communication ($$n_c$$). The total number of thread blocks is identical to the number of SMs on Hopper(132). The figure shows four cases with different parallelisms. Adapted from: [Comet: Fine-grained Computation-communication Overlapping for Mixture-of-Experts](https://arxiv.org/abs/2502.19811)
