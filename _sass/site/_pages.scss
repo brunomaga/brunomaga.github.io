@@ -63,7 +63,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  font-size: 22px;
+  font-size: 20px;
 
   @include media-query($on-palm) { margin-top: 0.6em; }
 }
@@ -71,7 +71,7 @@
 .home-links a,
 .home-links a:visited { color: $brand-color; }
 
-// a padding that the negative margin cancels: a tap area of about 36px around each icon, with no change in the layout
+// a padding that the negative margin cancels: a tap area of about 34px around each icon, with no change in the layout
 .home-links a {
   padding: 7px;
   margin: -7px;
