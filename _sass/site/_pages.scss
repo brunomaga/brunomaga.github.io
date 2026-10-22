@@ -62,7 +62,7 @@
   grid-area: links;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   font-size: 20px;
 
   @include media-query($on-palm) { margin-top: 0.6em; }
@@ -71,10 +71,10 @@
 .home-links a,
 .home-links a:visited { color: $brand-color; }
 
-// a padding that the negative margin cancels: a tap area of about 34px around each icon, with no change in the layout
+// a padding that the negative margin cancels: a tap area of about 32px around each icon, with no change in the layout
 .home-links a {
-  padding: 7px;
-  margin: -7px;
+  padding: 6px;
+  margin: -6px;
 }
 
 .home-links a:hover,
