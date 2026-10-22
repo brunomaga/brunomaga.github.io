@@ -1830,7 +1830,7 @@ The main conclusion is that current large language models are significantly unde
 To be compute optimal (i.e., lowest loss for a given compute budget), [Kaplan et al. (2020)](https://arxiv.org/abs/2001.08361) claim that models should not be trained to their lowest possible loss. In their analysis, for a 10× increase in computational budget, the model should increase by 5.5× and the training tokens by 1.8×. In this paper, the authors defend that model size and training tokens should be scaled in equal proportions. The following pictures illustrate the predictions of the three approaches, compared with Kaplan et al. and with current large models, and the training curves of the first approach:
 
 {: .picture}
-<img loading="lazy" width="60.2%" height="60.2%" src="{{ site.assets }}/publications/training_compute_optimal_large_language_models.svg"/>
+<img loading="lazy" width="60.6%" height="60.6%" src="{{ site.assets }}/publications/training_compute_optimal_large_language_models.svg"/>
 
 {: .caption}
 <b>Overlaid predictions.</b> Predictions of the paper's three approaches, overlaid with the projections of Kaplan et al. (2020). All three approaches predict that current large models should be substantially smaller and therefore trained much longer than is currently done. <b><i>Chinchilla</i> outperforms <i>Gopher</i> and the other large models (Section 4.2 of the paper).</b> Adapted from: [Training Compute-Optimal Large Language Models](https://arxiv.org/abs/2203.15556)
