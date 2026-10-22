@@ -14248,84 +14248,81 @@
           <mxGeometry x="0" y="1999.12" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="2039.12" width="878.3" height="177.52" as="geometry" />
+          <mxGeometry x="0" y="2039.12" width="873.62" height="177.52" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-17" value="" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#9673a6;strokeWidth=1.8;absoluteArcSize=1;fontFamily=Source Sans 3;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="109.34" y="32.02" width="215.56" height="29.68" as="geometry" />
+          <mxGeometry x="110.11" y="29.15" width="214.01" height="35.43" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-16" value="" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#d79b00;strokeWidth=1.8;absoluteArcSize=1;fontFamily=Source Sans 3;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="546.7" y="32.02" width="106.22" height="29.68" as="geometry" />
+          <mxGeometry x="547.47" y="29.15" width="104.67" height="35.43" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-15" value="" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#d79b00;strokeWidth=1.8;absoluteArcSize=1;fontFamily=Source Sans 3;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="0" y="32.02" width="106.22" height="29.68" as="geometry" />
+          <mxGeometry x="0.77" y="29.15" width="104.67" height="35.43" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-3" value="the" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="3.12" y="35.15" width="45.3" height="23.43" as="geometry" />
+          <mxGeometry x="6.77" y="35.15" width="38" height="23.43" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-4" value="cat" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="57.79" y="35.15" width="45.3" height="23.43" as="geometry" />
+          <mxGeometry x="61.44" y="35.15" width="38" height="23.43" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-5" value="sat" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="112.46" y="35.15" width="45.3" height="23.43" as="geometry" />
+          <mxGeometry x="116.11" y="35.15" width="38" height="23.43" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-6" value="on" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="167.13" y="35.15" width="45.3" height="23.43" as="geometry" />
+          <mxGeometry x="170.78" y="35.15" width="38" height="23.43" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-7" value="the" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="221.8" y="35.15" width="45.3" height="23.43" as="geometry" />
+          <mxGeometry x="225.45" y="35.15" width="38" height="23.43" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-8" value="mat" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="276.47" y="35.15" width="45.3" height="23.43" as="geometry" />
+          <mxGeometry x="280.12" y="35.15" width="38" height="23.43" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-9" value="." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="331.14" y="35.15" width="45.3" height="23.43" as="geometry" />
+          <mxGeometry x="334.79" y="35.15" width="38" height="23.43" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-10" value="the" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="385.81" y="35.15" width="45.3" height="23.43" as="geometry" />
+          <mxGeometry x="389.46" y="35.15" width="38" height="23.43" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-11" value="dog" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="440.48" y="35.15" width="45.3" height="23.43" as="geometry" />
+          <mxGeometry x="444.13" y="35.15" width="38" height="23.43" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-12" value="saw" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="495.15" y="35.15" width="45.3" height="23.43" as="geometry" />
+          <mxGeometry x="498.8" y="35.15" width="38" height="23.43" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-13" value="the" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="549.82" y="35.15" width="45.3" height="23.43" as="geometry" />
+          <mxGeometry x="553.47" y="35.15" width="38" height="23.43" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-14" value="cat" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="604.49" y="35.15" width="45.3" height="23.43" as="geometry" />
+          <mxGeometry x="608.14" y="35.15" width="38" height="23.43" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-18" value="earlier occurrence" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#885e10;fontFamily=Source Sans 3;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="0.86" y="65.35" width="107.64" height="20.8" as="geometry" />
+          <mxGeometry x="-0.72" y="68.22" width="107.64" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-19" value="last n-gram" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#885e10;fontFamily=Source Sans 3;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="566.19" y="65.35" width="70.37" height="20.8" as="geometry" />
+          <mxGeometry x="564.62" y="68.22" width="70.37" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-20" value="search for the last n-gram" style="endArrow=classic;html=1;rounded=0;strokeColor=#d79b00;fontColor=#885e10;fontSize=13;labelBackgroundColor=none;strokeWidth=1.4;exitX=0.5;exitY=0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;edgeStyle=orthogonalEdgeStyle;sourcePortConstraint=north;targetPortConstraint=north;fontStyle=0;fontFamily=Source Sans 3;endFill=1;endSize=5;" edge="1" parent="prompt_lookup-figure" source="prompt_lookup-16" target="prompt_lookup-15">
           <mxGeometry x="0" relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="599.81" y="0" />
-              <mxPoint x="53.11" y="0" />
-            </Array>
+            <Array as="points"><mxPoint x="599.81" y="0" /><mxPoint x="53.1" y="0" /></Array>
           <mxPoint as="offset" x="0" y="-10.5" /></mxGeometry>
         </mxCell>
         <mxCell id="prompt_lookup-21" value="sat" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="659.16" y="128.87" width="45.3" height="23.43" as="geometry" />
+          <mxGeometry x="662.81" y="128.87" width="38" height="23.43" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-22" value="on" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="713.83" y="128.87" width="45.3" height="23.43" as="geometry" />
+          <mxGeometry x="717.48" y="128.87" width="38" height="23.43" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-23" value="the" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="768.5" y="128.87" width="45.3" height="23.43" as="geometry" />
+          <mxGeometry x="772.15" y="128.87" width="38" height="23.43" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-24" value="mat" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="823.17" y="128.87" width="45.3" height="23.43" as="geometry" />
+          <mxGeometry x="826.82" y="128.87" width="38" height="23.43" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-25" value="copy the tokens that followed it" style="endArrow=classic;html=1;rounded=0;strokeColor=#9673a6;fontColor=#6b4a80;fontSize=13;labelBackgroundColor=none;strokeWidth=1.4;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;edgeStyle=orthogonalEdgeStyle;sourcePortConstraint=south;targetPortConstraint=west;fontStyle=0;fontFamily=Source Sans 3;endFill=1;endSize=5;" edge="1" parent="prompt_lookup-figure" source="prompt_lookup-17" target="prompt_lookup-21">
           <mxGeometry x="0.15" relative="1" as="geometry"><mxPoint as="offset" x="0" y="-10.5" /></mxGeometry>
         </mxCell>
         <mxCell id="prompt_lookup-26" value="drafts, verified by the target as before" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="prompt_lookup-figure">
-          <mxGeometry x="658.7" y="156.72" width="219.6" height="20.8" as="geometry" />
+          <mxGeometry x="654.02" y="156.72" width="219.6" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="medusa-label" value="medusa.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="2276.64" width="600" height="30" as="geometry" />
