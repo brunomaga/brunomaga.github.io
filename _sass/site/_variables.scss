@@ -4,5 +4,8 @@
 // the text size of the labels, in small capitals
 $label-font-size: 12px;
 
+// the width of the first column of the label tables, which fits a label of four capitals (a year, book, univ)
+$label-column-width: 3.5 * $label-font-size;
+
 // the grey line on the left of each group of rows in the label tables
 $side-line: 2px solid #e4e4e4;
