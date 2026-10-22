@@ -9478,25 +9478,25 @@
         <mxCell id="latte-16" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.8;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="160.6" y="0" as="sourcePoint" />
-            <mxPoint x="160.6" y="344.8" as="targetPoint" />
+            <mxPoint x="160.6" y="350.8" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="latte-17" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.8;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="296.2" y="0" as="sourcePoint" />
-            <mxPoint x="296.2" y="344.8" as="targetPoint" />
+            <mxPoint x="296.2" y="350.8" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="latte-18" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.8;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="428" y="0" as="sourcePoint" />
-            <mxPoint x="428" y="344.8" as="targetPoint" />
+            <mxPoint x="428" y="350.8" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="latte-19" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.8;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="559.8" y="0" as="sourcePoint" />
-            <mxPoint x="559.8" y="344.8" as="targetPoint" />
+            <mxPoint x="559.8" y="350.8" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="latte-21" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=20;" vertex="1" parent="latte-figure">
@@ -9588,95 +9588,95 @@
         </mxCell>
         <mxCell id="latte-34" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="228.2" y="296.4" as="sourcePoint" />
+            <mxPoint x="228.2" y="304.8" as="sourcePoint" />
             <mxPoint x="228.2" y="275.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-47" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-47" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="359.8" y="48.4" as="sourcePoint" />
             <mxPoint x="359.8" y="21.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-48" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-48" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="359.8" y="89.2" as="sourcePoint" />
             <mxPoint x="359.8" y="72" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-49" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-49" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="359.8" y="130" as="sourcePoint" />
             <mxPoint x="359.8" y="112.8" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-50" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-50" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="359.8" y="170.8" as="sourcePoint" />
             <mxPoint x="359.8" y="153.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-51" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-51" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="359.8" y="211.6" as="sourcePoint" />
             <mxPoint x="359.8" y="194.4" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-52" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-52" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="359.8" y="252.4" as="sourcePoint" />
             <mxPoint x="359.8" y="235.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-53" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-53" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="359.8" y="296.4" as="sourcePoint" />
+            <mxPoint x="359.8" y="305.2" as="sourcePoint" />
             <mxPoint x="359.8" y="276" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-66" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-66" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="489" y="53.6" as="sourcePoint" />
             <mxPoint x="489" y="21.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-67" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-67" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="489" y="90.4" as="sourcePoint" />
             <mxPoint x="489" y="75.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-68" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-68" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="489" y="135.2" as="sourcePoint" />
             <mxPoint x="489" y="112.4" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-69" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-69" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="489" y="171.2" as="sourcePoint" />
             <mxPoint x="489" y="157.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-70" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-70" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="489" y="217.2" as="sourcePoint" />
             <mxPoint x="489" y="193.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-71" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-71" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="489" y="253.2" as="sourcePoint" />
             <mxPoint x="489" y="239.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-72" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-72" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="489" y="296.4" as="sourcePoint" />
+            <mxPoint x="489" y="305.2" as="sourcePoint" />
             <mxPoint x="489" y="275.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-73" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-73" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="489" y="284" as="sourcePoint" />
             <mxPoint x="493.6" y="208.2" as="targetPoint" />
@@ -9686,7 +9686,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-74" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-74" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="489" y="201.6" as="sourcePoint" />
             <mxPoint x="493.6" y="127" as="targetPoint" />
@@ -9696,7 +9696,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-75" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-75" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="489" y="120.4" as="sourcePoint" />
             <mxPoint x="493.6" y="42.6" as="targetPoint" />
@@ -9706,55 +9706,55 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-92" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-92" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="624" y="69.6" as="sourcePoint" />
             <mxPoint x="624" y="22" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-93" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-93" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="624" y="106.4" as="sourcePoint" />
             <mxPoint x="624" y="91.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-94" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-94" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="624" y="154.4" as="sourcePoint" />
             <mxPoint x="624" y="128.4" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-95" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-95" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="602.4" y="193.2" as="sourcePoint" />
             <mxPoint x="602.4" y="176.4" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-96" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-96" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="651.2" y="193.2" as="sourcePoint" />
             <mxPoint x="651.2" y="176.4" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-97" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-97" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="602.6" y="233.2" as="sourcePoint" />
             <mxPoint x="602.6" y="215.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-98" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-98" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="651.6" y="233.2" as="sourcePoint" />
             <mxPoint x="651.6" y="215.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-99" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-99" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="624" y="298.4" as="sourcePoint" />
+            <mxPoint x="624" y="305.2" as="sourcePoint" />
             <mxPoint x="624" y="255.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-100" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-100" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="624" y="273.8" as="sourcePoint" />
             <mxPoint x="628.6" y="143.8" as="targetPoint" />
@@ -9764,7 +9764,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte-101" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;opacity=50;textOpacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
+        <mxCell id="latte-101" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;endFill=1;endSize=5;startSize=4.25;fontFamily=Source Sans 3;" edge="1" parent="latte-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="624" y="136" as="sourcePoint" />
             <mxPoint x="628.6" y="54" as="targetPoint" />
@@ -9810,8 +9810,8 @@
         <mxCell id="latte-27" value="Spatial" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
           <mxGeometry x="186.4" y="251.6" width="88" height="23.6" as="geometry" />
         </mxCell>
-        <mxCell id="latte-37" value="Embedding" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
-          <mxGeometry x="191.6" y="298.8" width="76.4" height="25.6" as="geometry" />
+        <mxCell id="latte-37" value="Embedding" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
+          <mxGeometry x="191.6" y="304.8" width="76.4" height="25.6" as="geometry" />
         </mxCell>
         <mxCell id="latte-41" value="Temporal" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
           <mxGeometry x="318" y="48.4" width="88" height="23.6" as="geometry" />
@@ -9831,50 +9831,50 @@
         <mxCell id="latte-46" value="Spatial" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
           <mxGeometry x="318" y="252.4" width="88" height="23.6" as="geometry" />
         </mxCell>
-        <mxCell id="latte-56" value="Embedding" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
-          <mxGeometry x="323.2" y="299.2" width="76.4" height="25.6" as="geometry" />
+        <mxCell id="latte-56" value="Embedding" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
+          <mxGeometry x="323.2" y="305.2" width="76.4" height="25.6" as="geometry" />
         </mxCell>
-        <mxCell id="latte-60" value="MLP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
+        <mxCell id="latte-60" value="MLP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
           <mxGeometry x="450" y="53.6" width="81.6" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="latte-61" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
+        <mxCell id="latte-61" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;strokeOpacity=50;" vertex="1" parent="latte-figure">
           <mxGeometry x="450" y="90.4" width="81.6" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="latte-62" value="MHA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=12;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
+        <mxCell id="latte-62" value="MHA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
           <mxGeometry x="449.6" y="135.2" width="82" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="latte-63" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
+        <mxCell id="latte-63" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
           <mxGeometry x="449.6" y="171.2" width="82" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="latte-64" value="MHA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=12;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
+        <mxCell id="latte-64" value="MHA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
           <mxGeometry x="450" y="217.2" width="81.6" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="latte-65" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
+        <mxCell id="latte-65" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
           <mxGeometry x="450" y="253.2" width="81.6" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="latte-82" value="Embedding" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
-          <mxGeometry x="454" y="299.2" width="76.4" height="25.6" as="geometry" />
+        <mxCell id="latte-82" value="Embedding" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
+          <mxGeometry x="454" y="305.2" width="76.4" height="25.6" as="geometry" />
         </mxCell>
-        <mxCell id="latte-86" value="MLP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
+        <mxCell id="latte-86" value="MLP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
           <mxGeometry x="585.2" y="69.6" width="82" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="latte-87" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
+        <mxCell id="latte-87" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
           <mxGeometry x="585.2" y="106.4" width="82" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="latte-88" value="Fusion" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=12;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
+        <mxCell id="latte-88" value="Fusion" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
           <mxGeometry x="585.6" y="154.4" width="81.6" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="latte-89" value="MHA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=12;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
+        <mxCell id="latte-89" value="MHA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
           <mxGeometry x="576.8" y="193.2" width="46.4" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="latte-90" value="MHA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=12;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
+        <mxCell id="latte-90" value="MHA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
           <mxGeometry x="628" y="193.2" width="46.4" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="latte-91" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
+        <mxCell id="latte-91" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
           <mxGeometry x="585.2" y="233.2" width="82" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="latte-107" value="Embedding" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
-          <mxGeometry x="589.2" y="299.2" width="76.4" height="25.6" as="geometry" />
+        <mxCell id="latte-107" value="Embedding" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;opacity=50;textOpacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="latte-figure">
+          <mxGeometry x="589.2" y="305.2" width="76.4" height="25.6" as="geometry" />
         </mxCell>
         <mxCell id="latte-14" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="latte-figure">
           <mxGeometry x="0" y="246.4" width="149.6" height="70.8" as="geometry" />
@@ -9889,10 +9889,10 @@
           <mxGeometry x="206.45" y="233" width="17.1" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="latte-36" value="&lt;i&gt;z&lt;/i&gt;&lt;sub&gt;&lt;i&gt;s&lt;/i&gt;&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="latte-figure">
-          <mxGeometry x="205.47" y="278" width="18.66" height="20.8" as="geometry" />
+          <mxGeometry x="205.47" y="284" width="18.66" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="latte-38" value="(a)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="latte-figure">
-          <mxGeometry x="219.13" y="326.8" width="22.54" height="20.8" as="geometry" />
+          <mxGeometry x="219.13" y="332.8" width="22.54" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="latte-39" value="Variant 2" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;opacity=50;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="latte-figure">
           <mxGeometry x="331.84" y="1" width="57.93" height="20.8" as="geometry" />
@@ -9901,10 +9901,10 @@
           <mxGeometry x="337.85" y="152.4" width="17.1" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="latte-55" value="&lt;i&gt;z&lt;/i&gt;&lt;sub&gt;&lt;i&gt;s&lt;/i&gt;&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;opacity=50;textOpacity=50;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="latte-figure">
-          <mxGeometry x="336.87" y="278.4" width="18.66" height="20.8" as="geometry" />
+          <mxGeometry x="336.87" y="284.4" width="18.66" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="latte-57" value="(b)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;opacity=50;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="latte-figure">
-          <mxGeometry x="349.34" y="326.8" width="23.33" height="20.8" as="geometry" />
+          <mxGeometry x="349.34" y="332.8" width="23.33" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="latte-58" value="Variant 3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;opacity=50;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="latte-figure">
           <mxGeometry x="458.64" y="1" width="57.93" height="20.8" as="geometry" />
@@ -9925,10 +9925,10 @@
           <mxGeometry x="465.65" y="195.6" width="17.1" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="latte-81" value="&lt;i&gt;z&lt;/i&gt;&lt;sub&gt;&lt;i&gt;s&lt;/i&gt;&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;opacity=50;textOpacity=50;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="latte-figure">
-          <mxGeometry x="457.27" y="278.4" width="18.66" height="20.8" as="geometry" />
+          <mxGeometry x="457.27" y="284.4" width="18.66" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="latte-83" value="(c)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;opacity=50;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="latte-figure">
-          <mxGeometry x="479.13" y="326.8" width="22.54" height="20.8" as="geometry" />
+          <mxGeometry x="479.13" y="332.8" width="22.54" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="latte-84" value="Variant 4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;opacity=50;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="latte-figure">
           <mxGeometry x="594.24" y="1" width="57.93" height="20.8" as="geometry" />
@@ -9949,7 +9949,7 @@
           <mxGeometry x="634.25" y="213.6" width="17.1" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="latte-108" value="(d)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;opacity=50;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="latte-figure">
-          <mxGeometry x="616.54" y="326.8" width="23.33" height="20.8" as="geometry" />
+          <mxGeometry x="616.54" y="332.8" width="23.33" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="latte2-label" value="latte2.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="5763.67" width="600" height="30" as="geometry" />
