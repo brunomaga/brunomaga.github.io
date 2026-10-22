@@ -1570,10 +1570,10 @@ during training. Using Tensor Programs, we can recursively calculate such coordi
 With that in mind, the authors propose a hyper-parameter tuning paradigm called **muTransfer**: "parametrize the target model in muP, tune the HP indirectly on a smaller model, and zero-shot transfer them to the full-sized model". By transferring from a 40M-parameter proxy, they outperform the published numbers of the 6.7B GPT-3 with a tuning cost of only 7% of the total pretraining cost; transferring from a 13M-parameter model beats the published BERT-large (350M) numbers. The following picture shows how the optimal learning rate depends on the width:
 
 {: .picture}
-<img loading="lazy" width="77.6%" height="77.6%" src="{{ site.assets }}/publications/mutransfer.svg"/>
+<img loading="lazy" width="88.5%" height="88.5%" src="{{ site.assets }}/publications/mutransfer.svg"/>
 
 {: .caption}
-Training loss against learning rate on Transformers of varying $$d_{model}$$ trained with Adam, in the standard parametrization (left) and in µP (right). In the standard parametrization, unlike in µP, different widths do not share the same optimal hyperparameter; wider networks do not always perform better than narrower ones; in fact they underperform the same-width networks in µP even after tuning learning rate (see dotted line). Adapted from: [Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer](https://arxiv.org/abs/2203.03466)
+Training loss against learning rate on Transformers of varying $$d_{model}$$ trained with Adam, in the standard parametrization (left) and in µP (right). In the standard parametrization, unlike in µP, different widths do not share the same optimal hyperparameter; wider networks do not always perform better than narrower ones; in fact they underperform the same-width networks in µP even after tuning learning rate (see dashed line). Adapted from: [Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer](https://arxiv.org/abs/2203.03466)
 
 Hyperparameters that can be µTransferred, that cannot, and the dimensions µTransfer works across, with a few caveats discussed in Section 6.1. * means empirically validated only on Transformers, while all others additionally have theoretical justification.
 - µTransferable: optimization related (learning rate, momentum, Adam beta, LR schedule, etc.), init (per-layer init variance), parameter multipliers (multiplicative constants after weight/biases, etc.), etc.
