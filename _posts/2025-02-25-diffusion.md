@@ -498,7 +498,7 @@ Another interesting feature that improves quality is [classifier-free guidance](
 Running diffusion directly on pixels is already expensive for high-resolution images. This led to the creation of the **[latent diffusion model](https://arxiv.org/abs/2112.10752)**, where diffusion is applied in the latent space of a pretrained [autoencoder](https://en.wikipedia.org/wiki/Autoencoder) (e.g. a VAE) instead of on the image directly. This reduces the cost of training on high-resolution images by working on their compressed representation. As diffusion moved towards the domain of video, the large amount of data per sample made this compression even more important, and video models now compress their input in both the spatial and temporal dimensions:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/diffusion/sora_vae.svg"/> 
+<img width="98.6%" height="98.6%" src="{{ site.assets }}/diffusion/sora_vae.svg"/> 
 
 {: .caption}
 An overview of the latent space compression in Sora. The pre-processing step "turns videos into [visual] patches by first compressing videos into a lower-dimensional latent space and subsequently decomposing the representation into spacetime patches". Adapted from: [Video generation models as world simulators (OpenAI)](https://openai.com/index/video-generation-models-as-world-simulators/)
