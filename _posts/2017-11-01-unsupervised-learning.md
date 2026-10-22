@@ -90,7 +90,7 @@ For $$n$$ data points $$x_1, ..., x_n$$, the algorithm is the following:
 A visual example is displayed below, where PCA rotates the data towards the new axes of the cluster of data points:
 
 {: .picture}
-<img width="26.4%" height="26.4%" src="{{ site.assets }}/unsupervised-learning/gaussianscatterpca.svg">
+<img width="26.7%" height="26.7%" src="{{ site.assets }}/unsupervised-learning/gaussianscatterpca.svg">
 
 {: .caption}
 PCA of a 2D Gaussian centred at $$(1, 3)$$, with a standard deviation of 3 roughly along the direction $$(0.866, 0.5)$$ and of 1 in the orthogonal direction. The arrows are the eigenvectors of the covariance matrix, scaled by the square roots of their eigenvalues, with their tails at the mean. Adapted from: [Principal component analysis](https://en.wikipedia.org/wiki/Principal_component_analysis)
@@ -154,9 +154,9 @@ $$
 where $$U$$ is an orthogonal matrix. **Whitening simplifies ICA**, as it is then only necessary to estimate $$U$$: the whitened signals are already uncorrelated, like the principal components of PCA, and $$U$$ is the rotation that makes them independent. An illustration of the source, observed and whitened data is displayed below, where the mixing turns the square of the sources into a parallelogram, and whitening turns it back into a square, rotated:
 
 {: .picture}
-<img width="20.1%" height="20.1%" src="{{ site.assets }}/unsupervised-learning/ica_source.svg">
-<img width="19.1%" height="19.1%" src="{{ site.assets }}/unsupervised-learning/ica_observed.svg"> 
-<img width="17.9%" height="17.9%" src="{{ site.assets }}/unsupervised-learning/ica_whitening.svg">
+<img width="19.2%" height="19.2%" src="{{ site.assets }}/unsupervised-learning/ica_source.svg">
+<img width="19.2%" height="19.2%" src="{{ site.assets }}/unsupervised-learning/ica_observed.svg"> 
+<img width="18.2%" height="18.2%" src="{{ site.assets }}/unsupervised-learning/ica_whitening.svg">
 
 {: .caption}
 Independent component analysis of two mixed signals: (a) the sources $$s_1$$, $$s_2$$, independent and uniformly distributed; (b) the observed signals $$x_1$$, $$x_2$$, mixed as $$x = As$$; (c) the whitened signals $$z_1$$, $$z_2$$, $$z = Vx$$, with zero mean and identity covariance, from which only the orthogonal matrix $$U$$ remains to be found. Adapted from: [T. Yokota, Independent Component Analysis for Blind Source Separation, Tokyo Institute of Technology, 2012](https://www.slideshare.net/slideshow/independent-component-analysis-11359849/11359849)
