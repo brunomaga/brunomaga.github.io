@@ -315,7 +315,7 @@ The kernel was evaluated on [OLMoE-1B-7B](https://arxiv.org/abs/2409.02060), an 
 A forward pass was timed at 4,096 to 65,536 tokens per compute rank, which covers the chunks of chunked prefill and large prefill batches, and the time reported is the mean of five iterations after warm-up. Each iteration is a single forward pass over the whole batch that emits one token, i.e. the prefill step. Here, the MoE layer takes 87% to 96% of the time of an iteration, and this is the regime where the all-to-all of expert parallelism is the known bottleneck. The runtime per iteration of the three implementations is displayed below:
 
 {: .picture}
-<img width="93.8%" height="93.8%" src="{{ site.assets }}/inference/imgs/ep_results.svg"/>
+<img width="99.4%" height="99.4%" src="{{ site.assets }}/inference/imgs/ep_results.svg"/>
 
 {: .caption}
 Runtime with the all-to-all backend, on $$\log_2$$ axes. **Left:** prefill time per iteration against the batch size. **Right:** decode time per output token against the number of concurrent sequences, with placeholder values that are not measured yet.
