@@ -1048,6 +1048,10 @@ Content problems that need the author's decision, such as overlap between posts.
   micro-batch of the batch, so 4 micro-batches need 4 accumulation steps, or 2 data-parallel pipelines of several GPUs
   each. Fix: "for 2 data-parallel ranks (each a whole pipeline in the right panel) and 2 gradient accumulation steps
   (4 micro-batches total)", or "for a batch of 4 micro-batches" without the processes.
+- Bruno, in the picture review of 2026-10-22, on torch_compile_dataset: the section "Static compilation of
+  variable-shaped inputs" "makes no more sense anymore". Fix: remove that subsection of "Kernels compilation",
+  with its picture (torch_compile_dataset.svg and its draw.io group), and check that the rest of "Kernels
+  compilation" still reads well without it.
 
 ### Sequence and context parallelism with Ulysses and Ring attention (2024-08-30-sequence-context-parallelism.md)
 
