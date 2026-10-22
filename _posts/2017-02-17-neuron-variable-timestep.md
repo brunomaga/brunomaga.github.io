@@ -181,7 +181,7 @@ The picture above shows that Backward Euler performs the same number of steps fo
 After a second of simulation, the spike time phase-shifting is substantial (about 2 ms for $$\Delta t = 5 \mu s$$ and 6.5 ms for $$\Delta t = 25 \mu s$$), demonstrating the gain in using variable step methods for this use case. The voltage trajectories over one second are displayed below, with a zoom on the last spike:
 
 {: .picture}
-<img width="95.2%" height="95.2%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_pulse_1000ms_results.svg">
+<img width="98.7%" height="98.7%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_pulse_1000ms_results.svg">
 
 To study whether these advantages hold in practice, the simulation runtime of both methods is measured. The first test measures the impact of the stiffness in terms of simulation steps and time to solution on an Intel i5 at 1.6 GHz. The different current values are injected as a proportion of the *action potential threshold* current, i.e. the minimum current that must be continuously injected for the neuron to spike. The results are displayed below, with the step count (left) and the runtime (middle) of both methods, for a current injected during the whole second of simulation (right):
 
