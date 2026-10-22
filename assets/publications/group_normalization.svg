@@ -195,6 +195,18 @@
 <clipPath id="clip-34">
 <path clip-rule="nonzero" d="M 391 95 L 500.925781 95 L 500.925781 131.644531 L 391 131.644531 Z M 391 95 "/>
 </clipPath>
+<clipPath id="clip-35">
+<path clip-rule="nonzero" d="M 40 25 L 131 25 L 131 131.644531 L 40 131.644531 Z M 40 25 "/>
+</clipPath>
+<clipPath id="clip-36">
+<path clip-rule="nonzero" d="M 130 20 L 209 20 L 209 131.644531 L 130 131.644531 Z M 130 20 "/>
+</clipPath>
+<clipPath id="clip-37">
+<path clip-rule="nonzero" d="M 294 44 L 336 44 L 336 131.644531 L 294 131.644531 Z M 294 44 "/>
+</clipPath>
+<clipPath id="clip-38">
+<path clip-rule="nonzero" d="M 406 34 L 463 34 L 463 131.644531 L 406 131.644531 Z M 406 34 "/>
+</clipPath>
 </defs>
 <g clip-path="url(#clip-0)">
 
@@ -664,5 +676,17 @@
 </g>
 <g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
 <use xlink:href="#glyph-2-1" x="471.312305" y="127.423763"/>
+</g>
+<g clip-path="url(#clip-35)">
+<path fill="none" stroke-width="1.2" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 72.620287 82.952154 L 153.867794 51.678032 L 164.209176 58.378465 L 164.209176 146.902436 L 82.961669 178.160255 L 72.620287 171.459822 L 72.620287 82.952154 L 153.867794 51.678032 " transform="matrix(0.71882, 0, 0, 0.71882, 0.451419, 0.552009)"/>
+</g>
+<g clip-path="url(#clip-36)">
+<path fill="none" stroke-width="1.2" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 197.428761 49.449988 L 210.970918 44.23854 L 272.959434 84.441139 L 272.959434 172.948807 L 259.422711 178.160255 L 197.428761 137.952222 L 197.428761 49.449988 L 210.970918 44.23854 " transform="matrix(0.71882, 0, 0, 0.71882, 0.451419, 0.552009)"/>
+</g>
+<g clip-path="url(#clip-37)">
+<path fill="none" stroke-width="1.2" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 425.547806 82.952154 L 439.089963 77.740706 L 449.420476 84.441139 L 449.420476 172.948807 L 435.878319 178.160255 L 425.547806 171.459822 L 425.547806 82.952154 L 439.089963 77.740706 " transform="matrix(0.71882, 0, 0, 0.71882, 0.451419, 0.552009)"/>
+</g>
+<g clip-path="url(#clip-38)">
+<path fill="none" stroke-width="1.2" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 581.347821 69.551288 L 594.889977 64.33984 L 625.881518 84.441139 L 625.881518 172.948807 L 612.35023 178.160255 L 581.347821 158.058956 L 581.347821 69.551288 L 594.889977 64.33984 " transform="matrix(0.71882, 0, 0, 0.71882, 0.451419, 0.552009)"/>
 </g>
 </svg>
