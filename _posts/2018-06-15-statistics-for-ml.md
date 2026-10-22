@@ -356,7 +356,7 @@ The **[quantile](https://en.wikipedia.org/wiki/Quantile_function)** is the inver
 The **[confidence interval](https://en.wikipedia.org/wiki/Confidence_interval)** refers to a set of values, computed from the data, that contains the population parameter for a certain proportion of times when the experiment is repeated. For example, for a $$95\%$$ **confidence level**:
 
 {: .picture}
-<img width="29.6%" height="29.6%" src="{{ site.assets }}/statistics-for-ml/confidence_interval.svg"/>
+<img width="29.7%" height="29.7%" src="{{ site.assets }}/statistics-for-ml/confidence_interval.svg"/>
 
 {: .caption}
 A 95% confidence interval for a normally distributed estimate centred at $$\bar{X}$$: the lower and upper limits lie 1.96 standard errors either side of $$\bar{X}$$, so the interval holds a probability of 0.95, and each tail 0.025.
@@ -486,7 +486,7 @@ $$
 where $$K$$ is the kernel, a non-negative function that integrates to 1, and $$h \gt 0$$ is the smoothing parameter (*bandwidth*). $$h$$ regulates the bias-variance trade-off: a large vs. small $$h$$ yields a flat vs. wiggly estimator. An example of $$K$$ is the standard normal pdf, as in the following picture:
 
 {: .picture}
-<img width="60.4%" height="60.4%" src="{{ site.assets }}/statistics-for-ml/kde.svg"/>
+<img width="61.4%" height="61.4%" src="{{ site.assets }}/statistics-for-ml/kde.svg"/>
 
 {: .caption}
 Histogram with bins of width 2 (left) and Gaussian kernel density estimate with bandwidth $$h = 1.5$$ (right) of the same six data points. The estimate is the sum of six kernels centred at the points, each divided by $$n$$. Adapted from: [Kernel density estimation](https://en.wikipedia.org/wiki/Kernel_density_estimation)

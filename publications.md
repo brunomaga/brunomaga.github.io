@@ -293,7 +293,7 @@ The design philosophy is a balance of three layer types: MoE for sparse paramete
 <b>Nemotron-3-Nano-30B-A3B.</b> Nemotron 3 models (e.g., Nemotron 3 Nano) leverage a hybrid Mamba-Transformer MoE architecture consisting predominantly of interleaved Mamba-2 and MoE layers, with a select few self attention layers. Adapted from: [NVIDIA Nemotron 3: Efficient and Open Intelligence](https://arxiv.org/abs/2512.20856)
 
 {: .picture}
-<img loading="lazy" width="98.7%" height="98.7%" src="{{ site.assets }}/publications/nemotron3_2.svg"/>
+<img loading="lazy" width="99.3%" height="99.3%" src="{{ site.assets }}/publications/nemotron3_2.svg"/>
 
 {: .caption}
 Relative difference in train loss (left) and validation loss (right) between models trained with NVFP4 and BF16 (higher is better), shown at two model scales: Nemotron 3 Nano (A3B) and the larger MoE model (A8B). Loss gaps decrease as model size increases (A3B → A8B). Recipe ablation on Nemotron 3 Nano started from Nemotron 3 NVFP4 checkpoint at 500B tokens, then quantizes sensitive layers (Mamba Output, QKV, and Attention projections) to NVFP4, highlighting the importance of keeping these layers in high precision. Adapted from: [NVIDIA Nemotron 3: Efficient and Open Intelligence](https://arxiv.org/abs/2512.20856)
@@ -316,7 +316,7 @@ Comet works in two parts. (1) Dependency resolving: it maps out which pieces of 
 The authors note that the division point between computation and communication SMs depends on the model layer, input shape and level of parallelism. As the following picture illustrates, the number of [thread blocks](https://en.wikipedia.org/wiki/Thread_block_(CUDA_programming)) for communication that gives the shortest kernel duration (the dots) changes with the input size and with the mix of tensor and expert parallelism:
 
 {: .picture}
-<img loading="lazy" width="90%" height="90%" src="{{ site.assets }}/publications/comet.svg"/>
+<img loading="lazy" width="99.8%" height="99.8%" src="{{ site.assets }}/publications/comet.svg"/>
 
 {: .caption}
 Duration of the MoE layer1 kernel with varying number of thread blocks assigned for communication ($$n_c$$). The total number of thread blocks is identical to the number of SMs on Hopper(132). The figure shows four cases with different parallelisms. Adapted from: [Comet: Fine-grained Computation-communication Overlapping for Mixture-of-Experts](https://arxiv.org/abs/2502.19811)
@@ -1060,7 +1060,7 @@ The authors used scaling laws ([Hoffmann et al., 2022](https://arxiv.org/abs/220
 The compute-optimal models are the minima of the IsoFLOPs curves (the validation loss against the number of training tokens, for a fixed compute budget), and their number of training tokens follows a power law of the compute budget. Extrapolated to the budget of the flagship model, this law suggests a 402B-parameter model trained on 16.55T tokens. The following picture illustrates the IsoFLOPs curves and the power law (figures 2 and 3 of the paper):
 
 {: .picture}
-<img loading="lazy" width="74.9%" height="74.9%" src="{{ site.assets }}/publications/llama3_scaling_laws.svg"/>
+<img loading="lazy" width="99.7%" height="99.7%" src="{{ site.assets }}/publications/llama3_scaling_laws.svg"/>
 
 {: .caption}
 <b>Left:</b> <b>Scaling law IsoFLOPs curves</b> between $$6 \times 10^{18}$$ and $$10^{22}$$ FLOPs. The loss is the negative log-likelihood on a held-out validation set. Measurements at each compute scale are approximated by a second-degree polynomial. <b>Right:</b> <b>Number of training tokens in identified compute-optimal models as a function of pre-training compute budget.</b> The line is the fitted scaling-law prediction. The compute-optimal models correspond to the parabola minima of the left plot. Adapted from: [The Llama 3 Herd of Models](https://arxiv.org/abs/2407.21783)
@@ -1539,10 +1539,10 @@ during training. Using Tensor Programs, we can recursively calculate such coordi
 With that in mind, the authors propose a hyper-parameter tuning paradigm called **muTransfer**: "parametrize the target model in muP, tune the HP indirectly on a smaller model, and zero-shot transfer them to the full-sized model". By transferring from a 40M-parameter proxy, they outperform the published numbers of the 6.7B GPT-3 with a tuning cost of only 7% of the total pretraining cost; transferring from a 13M-parameter model beats the published BERT-large (350M) numbers. The following picture shows how the optimal learning rate depends on the width:
 
 {: .picture}
-<img loading="lazy" width="77.6%" height="77.6%" src="{{ site.assets }}/publications/mutransfer.svg"/>
+<img loading="lazy" width="88.5%" height="88.5%" src="{{ site.assets }}/publications/mutransfer.svg"/>
 
 {: .caption}
-Training loss against learning rate on Transformers of varying $$d_{model}$$ trained with Adam, in the standard parametrization (left) and in µP (right). In the standard parametrization, unlike in µP, different widths do not share the same optimal hyperparameter; wider networks do not always perform better than narrower ones; in fact they underperform the same-width networks in µP even after tuning learning rate (see dotted line). Adapted from: [Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer](https://arxiv.org/abs/2203.03466)
+Training loss against learning rate on Transformers of varying $$d_{model}$$ trained with Adam, in the standard parametrization (left) and in µP (right). In the standard parametrization, unlike in µP, different widths do not share the same optimal hyperparameter; wider networks do not always perform better than narrower ones; in fact they underperform the same-width networks in µP even after tuning learning rate (see dashed line). Adapted from: [Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer](https://arxiv.org/abs/2203.03466)
 
 Hyperparameters that can be µTransferred, that cannot, and the dimensions µTransfer works across, with a few caveats discussed in Section 6.1. * means empirically validated only on Transformers, while all others additionally have theoretical justification.
 - µTransferable: optimization related (learning rate, momentum, Adam beta, LR schedule, etc.), init (per-layer init variance), parameter multipliers (multiplicative constants after weight/biases, etc.), etc.
@@ -1762,13 +1762,13 @@ The main conclusion is that current large language models are significantly unde
 To be compute optimal (i.e., lowest loss for a given compute budget), [Kaplan et al. (2020)](https://arxiv.org/abs/2001.08361) claim that models should not be trained to their lowest possible loss. In their analysis, for a 10× increase in computational budget, the model should increase by 5.5× and the training tokens by 1.8×. In this paper, the authors defend that model size and training tokens should be scaled in equal proportions. The following pictures illustrate the predictions of the three approaches, compared with Kaplan et al. and with current large models, and the training curves of the first approach:
 
 {: .picture}
-<img loading="lazy" width="60.2%" height="60.2%" src="{{ site.assets }}/publications/training_compute_optimal_large_language_models.svg"/>
+<img loading="lazy" width="60.6%" height="60.6%" src="{{ site.assets }}/publications/training_compute_optimal_large_language_models.svg"/>
 
 {: .caption}
 <b>Overlaid predictions.</b> Predictions of the paper's three approaches, overlaid with the projections of Kaplan et al. (2020). All three approaches predict that current large models should be substantially smaller and therefore trained much longer than is currently done. <b><i>Chinchilla</i> outperforms <i>Gopher</i> and the other large models (Section 4.2 of the paper).</b> Adapted from: [Training Compute-Optimal Large Language Models](https://arxiv.org/abs/2203.15556)
 
 {: .picture}
-<img loading="lazy" width="77.4%" height="77.4%" src="{{ site.assets }}/publications/training_compute_optimal_large_language_models_2.svg"/>
+<img loading="lazy" width="80.1%" height="80.1%" src="{{ site.assets }}/publications/training_compute_optimal_large_language_models_2.svg"/>
 
 {: .caption}
 <b>Training curve envelope.</b> The <b>left</b> panel shows all the training runs: model sizes from 70M to 10B parameters, each trained with four different cosine cycle lengths. The envelope of minimal loss per FLOP, taken from these curves, gives the optimal model size (<b>center</b>) and the optimal number of training tokens (<b>right</b>) for a given compute budget. Green: the projected optimal model size and number of training tokens for the FLOPs used to train <i>Gopher</i> ($$5.76 \times 10^{23}$$). Adapted from: [Training Compute-Optimal Large Language Models](https://arxiv.org/abs/2203.15556)
@@ -1858,7 +1858,7 @@ A clearer explanation can be found on this [Google Research post](https://resear
 <img loading="lazy" width="75%" height="75%" src="{{ site.assets }}/publications/performers2.gif"/> 
 
 {: .caption}
-**Left:** Standard unidirectional attention requires masking the attention matrix to obtain its lower-triangular part. **Right:** Unbiased approximation on the LHS can be obtained via a prefix-sum mechanism, where the prefix-sum of the outer-products of random feature maps for keys and value vectors is built on the fly and left-multiplied by query random feature vector to obtain the new row in the resulting matrix.
+**Left:** Standard unidirectional attention requires masking the attention matrix to obtain its lower-triangular part. **Right:** Unbiased approximation on the LHS can be obtained via a prefix-sum mechanism, where the prefix-sum of the outer-products of random feature maps for keys and value vectors is built on the fly and left-multiplied by query random feature vector to obtain the new row in the resulting matrix. Source: [Rethinking Attention with Performers](https://research.google/blog/rethinking-attention-with-performers/)
 
 </div>
 </details>
@@ -2068,7 +2068,7 @@ on a relatively modest amount of data and stopping significantly before converge
 The following picture illustrates the test loss as a function of the compute, the dataset size and the number of parameters:
 
 {: .picture}
-<img loading="lazy" width="74%" height="74%" src="{{ site.assets }}/publications/scaling_laws.svg"/>
+<img loading="lazy" width="99.9%" height="99.9%" src="{{ site.assets }}/publications/scaling_laws.svg"/>
 
 {: .caption}
 Language modeling performance improves smoothly as the model size, dataset size, and amount of compute used for training increase. For optimal performance all three factors must be scaled up in tandem. Empirical performance has a power-law relationship with each individual factor when not bottlenecked by the other two. Adapted from: [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361)

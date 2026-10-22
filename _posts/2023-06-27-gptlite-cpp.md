@@ -541,7 +541,7 @@ As an important remark, both the Python and C++ implementations of Torch keep me
 The results for the GPTlite model are the following: 
 
 {: .picture}
-<img width="88.1%" height="88.1%" src="{{ site.assets }}/gptlite-cpp/benchmark_gptlite.svg"/>
+<img width="88.2%" height="88.2%" src="{{ site.assets }}/gptlite-cpp/benchmark_gptlite.svg"/>
 
 {: .caption}
 Memory usage and throughput of GPTlite Small in PyTorch 1.13.1, PyTorch 2.1, C++ LibTorch 2.1 and TorchScript 2.1 (inference only).

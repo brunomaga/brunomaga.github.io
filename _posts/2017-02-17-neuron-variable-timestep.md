@@ -166,22 +166,22 @@ To find more about the topic, chapter 4 of [The NEURON Book][neuron-book] by Car
 One can notice the difference in performance of the Backward Euler (left) and Variable Timestep (right) interpolators during a stiff trajectory of an Action Potential of a layer 5 [pyramidal cell](https://en.wikipedia.org/wiki/Pyramidal_cell) in the following picture (one dot per step):
 
 {: .picture}
-<img width="97%" height="97%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_soma_voltage_per_step_6ms.svg">
+<img width="99.4%" height="99.4%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_soma_voltage_per_step_6ms.svg">
 
 Note the difference in interpolation instants: placed at equidistant intervals in the Backward Euler use case, and adapting to the solution gradient in the variable step counterpart. A current injection at the soma forces the neuron to spike at a rate that increases with the injected current. A simple test consists in enforcing different levels of stiffness and measuring the number of interpolation steps of both methods:
 
 {: .picture}
-<img width="60.3%" height="60.3%" src="{{ site.assets }}/neuron-variable-timestep/cvode_pulse_currents_table.svg">
+<img width="60.6%" height="60.6%" src="{{ site.assets }}/neuron-variable-timestep/cvode_pulse_currents_table.svg">
 
 The picture above shows that Backward Euler performs the same number of steps for every current, while the step count of CVODE is much lower and grows with the spiking rate. The slow dynamics of the fixed step method, which account for the events at discrete intervals instead of at the event delivery times of its variable step counterpart, lead to a shift in the voltage trajectory that propagates over time. This shift is displayed below over 100 ms of simulation, for Backward Euler with three step sizes (top) and CVODE with four tolerances (bottom). Backward Euler with $$\Delta t=1 \mu s$$ and CVODE with $$\text{atol}=10^{-4}$$ are taken as reference solutions:
 
 {: .picture}
-<img width="93.6%" height="93.6%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_pulse1_3ma_100ms_cvode_vs_backward_euler.svg">
+<img width="98.6%" height="98.6%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_pulse1_3ma_100ms_cvode_vs_backward_euler.svg">
 
 After a second of simulation, the spike time phase-shifting is substantial (about 2 ms for $$\Delta t = 5 \mu s$$ and 6.5 ms for $$\Delta t = 25 \mu s$$), demonstrating the gain in using variable step methods for this use case. The voltage trajectories over one second are displayed below, with a zoom on the last spike:
 
 {: .picture}
-<img width="95.2%" height="95.2%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_pulse_1000ms_results.svg">
+<img width="98.8%" height="98.8%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_pulse_1000ms_results.svg">
 
 To study whether these advantages hold in practice, the simulation runtime of both methods is measured. The first test measures the impact of the stiffness in terms of simulation steps and time to solution on an Intel i5 at 1.6 GHz. The different current values are injected as a proportion of the *action potential threshold* current, i.e. the minimum current that must be continuously injected for the neuron to spike. The results are displayed below, with the step count (left) and the runtime (middle) of both methods, for a current injected during the whole second of simulation (right):
 
@@ -191,9 +191,9 @@ To study whether these advantages hold in practice, the simulation runtime of bo
 Results look promising: even at an extremely high current value, the speed-up is significant (CVODE runs more than twice as fast as Backward Euler at 500% of the threshold current, and about 11 times faster at the threshold current itself). A second test enforces discontinuities and resets of the IVP by artificially injecting current pulses of $$1 \mu s$$ at given frequencies. The picture below shows the same measures for pulse frequencies from 10 Hz to 10 kHz and five pulse amplitudes:
 
 {: .picture}
-<img width="97.9%" height="97.9%" src="{{ site.assets }}/neuron-variable-timestep/cvode_dependency_on_events_arrival.svg">
+<img width="97.2%" height="97.2%" src="{{ site.assets }}/neuron-variable-timestep/cvode_dependency_on_events_arrival.svg">
 
-In this scenario, the runtime shows a high dependency on the number of discontinuities, and a minor dependency on the discontinuity value (i.e. the amount of current injected). CVODE is faster than Backward Euler up to about 1,000 pulses per second for the strongest pulse, and 1,600 for the weakest. The holy grail is then: how does this apply to networks of neurons?
+In this scenario, the runtime shows a high dependency on the number of discontinuities, and a minor dependency on the discontinuity value (i.e. the amount of current injected). CVODE is faster than Backward Euler up to about 1,000 pulses per second for the strongest pulse, and 3,000 for the weakest. The holy grail is then: how does this apply to networks of neurons?
 
 ## Simulation of a network of homogeneous neurons
 
@@ -285,7 +285,7 @@ Even though results sound promising, different mammals, brain regions and mental
 The comparison tested several fixed- and variable-step interpolation methods, whose details are available <a href="{{ site.assets }}/neuron-variable-timestep/neurox-vardt-arxiv.pdf">in the original publication preprint</a>: the methods 1a to 1c solve simple neuron models, and the methods 2a to 2c complex ones. The benchmark results are displayed next, with the time to solution of each method for one second of simulation, on networks of 1,024 to 65,536 neurons, in each of the five regimes:
 
 {: .picture}
-<img width="87.6%" height="87.6%" src="{{ site.assets }}/neuron-variable-timestep/benchmark_two_rows_2.svg">
+<img width="87.5%" height="87.5%" src="{{ site.assets }}/neuron-variable-timestep/benchmark_two_rows_2.svg">
 
 Quoting the preprint:
 
