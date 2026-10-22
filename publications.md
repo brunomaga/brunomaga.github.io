@@ -2190,13 +2190,7 @@ language description of the task.
 - Zero-Shot (0S) is the same as one-shot except that no demonstrations are allowed, and the model is only given
 a natural language instruction describing the task.
 
-The following pictures illustrate the four settings on an English to French translation task, and the outer and inner loops of the meta-learning of a language model:
-
-{: .picture}
-<img loading="lazy" width="87.2%" height="87.2%" src="{{ site.assets }}/publications/gpt3_fig21.svg"/> 
-
-{: .caption}
-<b>Zero-shot, one-shot and few-shot, contrasted with traditional fine-tuning</b>. The panels above show four methods for performing a task with a language model – fine-tuning is the traditional method, whereas zero-, one-, and few-shot, the settings studied in the paper, require the model to perform the task with only forward passes at test time. In the few-shot setting the model is typically given a few dozen examples. Exact phrasings for all task descriptions, examples and prompts are in Appendix G of the paper. Adapted from: [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165)
+The following picture illustrates the outer and inner loops of the meta-learning of a language model:
 
 {: .picture}
 <img loading="lazy" width="97.3%" height="97.3%" src="{{ site.assets }}/publications/gpt3_fig11.svg"/> 
