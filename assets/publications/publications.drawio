@@ -15011,7 +15011,7 @@
           <mxGeometry x="598.35" y="12.07" width="275.99" height="326.6" as="geometry" />
         </mxCell>
         <mxCell id="tpla-6" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=20;" vertex="1" parent="tpla-figure">
-          <mxGeometry x="6.59" y="12.15" width="104.94" height="58.27" as="geometry" />
+          <mxGeometry x="0.74" y="12.15" width="160.86" height="36.72" as="geometry" />
         </mxCell>
         <mxCell id="tpla-7" value="" style="rounded=1;absoluteArcSize=1;arcSize=20;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;" vertex="1" parent="tpla-figure">
           <mxGeometry x="186.24" y="111.2" width="97.75" height="35.03" as="geometry" />
@@ -15280,10 +15280,10 @@
             <mxPoint x="749.69" y="303.68" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="tpla-11" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="tpla-figure">
+        <mxCell id="tpla-11" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="tpla-figure">
           <mxGeometry x="243.23" y="58.73" width="105.02" height="35.05" as="geometry" />
         </mxCell>
-        <mxCell id="tpla-12" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="tpla-figure">
+        <mxCell id="tpla-12" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="tpla-figure">
           <mxGeometry x="663.38" y="58.73" width="105.03" height="35.05" as="geometry" />
         </mxCell>
         <mxCell id="tpla-55" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="tpla-figure">
@@ -15389,16 +15389,16 @@
           <mxGeometry x="738.03" y="303.68" width="23.31" height="23.31" as="geometry" />
         </mxCell>
         <mxCell id="tpla-89" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="tpla-figure">
-          <mxGeometry x="87.68" y="23.22" width="11.62" height="11.62" as="geometry" />
+          <mxGeometry x="8.93" y="24.7" width="11.62" height="11.62" as="geometry" />
         </mxCell>
         <mxCell id="tpla-91" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="tpla-figure">
-          <mxGeometry x="87.68" y="46.54" width="11.62" height="11.62" as="geometry" />
+          <mxGeometry x="89.17" y="24.7" width="11.62" height="11.62" as="geometry" />
         </mxCell>
-        <mxCell id="tpla-90" value="Device 0" style="text;html=1;whiteSpace=nowrap;fontFamily=Source Sans 3;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=1;" vertex="1" parent="tpla-figure">
-          <mxGeometry x="14.78" y="22.11" width="51.14" height="16.8" as="geometry" />
+        <mxCell id="tpla-90" value="Device 0" style="text;html=1;whiteSpace=nowrap;fontFamily=Source Sans 3;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
+          <mxGeometry x="24.55" y="22.11" width="48.62" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="tpla-92" value="Device 1" style="text;html=1;whiteSpace=nowrap;fontFamily=Source Sans 3;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
-          <mxGeometry x="14.78" y="44.79" width="51.14" height="16.8" as="geometry" />
+          <mxGeometry x="104.79" y="22.11" width="48.62" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="tpla-93" value="AllReduce" style="text;html=1;whiteSpace=nowrap;fontFamily=Source Sans 3;fontColor=#000000;fontSize=14;align=center;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="265.83" y="68.25" width="60.87" height="16.8" as="geometry" />
@@ -15406,7 +15406,7 @@
         <mxCell id="tpla-94" value="AllReduce" style="text;html=1;whiteSpace=nowrap;fontFamily=Source Sans 3;fontColor=#000000;fontSize=14;align=center;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="685.68" y="68.25" width="60.87" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="tpla-95" value="Prefill" style="text;html=1;whiteSpace=nowrap;fontFamily=Source Sans 3;fontColor=#000000;fontSize=14;align=center;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
+        <mxCell id="tpla-95" value="Prefill" style="text;html=1;whiteSpace=nowrap;fontFamily=Source Sans 3;fontColor=#000000;fontSize=14;align=center;verticalAlign=middle;spacing=0;fontStyle=1;" vertex="1" parent="tpla-figure">
           <mxGeometry x="486.33" y="67.47" width="35.99" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="tpla-96" value="Decode" style="text;html=1;whiteSpace=nowrap;fontFamily=Source Sans 3;fontColor=#000000;fontSize=14;align=center;verticalAlign=middle;spacing=0;fontStyle=1;" vertex="1" parent="tpla-figure">
@@ -15421,7 +15421,7 @@
         <mxCell id="tpla-99" value="(c) TPLA" style="text;html=1;fontFamily=Source Sans 3;fontColor=#000000;fontSize=14;align=center;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="599.84" y="359.2" width="54.79" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="tpla-100" value="&lt;i&gt;Õ&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=Source Sans 3;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
+        <mxCell id="tpla-100" value="&lt;i&gt;Õ&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="15.56" y="133.16" width="11.11" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="tpla-101" value="&lt;i&gt;O&lt;/i&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:6.18px;line-height:0;&quot;&gt;&lt;i&gt;h&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.02px;line-height:0;&quot;&gt;0&lt;/sub&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
@@ -15433,7 +15433,7 @@
         <mxCell id="tpla-103" value="&lt;i&gt;ĉ&lt;/i&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:7.76px;line-height:0;&quot;&gt;&lt;i&gt;KV&lt;/i&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="9.48" y="320.09" width="27.44" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="tpla-104" value="&lt;i&gt;Õ&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=Source Sans 3;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
+        <mxCell id="tpla-104" value="&lt;i&gt;Õ&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="223.1" y="28.36" width="11.11" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="tpla-105" value="&lt;i&gt;Õ&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.84px;line-height:0;&quot;&gt;0&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
@@ -15442,19 +15442,19 @@
         <mxCell id="tpla-106" value="&lt;i&gt;Õ&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.97px;line-height:0;&quot;&gt;1&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="344.71" y="120.65" width="18.11" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="tpla-107" value="&lt;i&gt;O&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-6.37px;line-height:0;&quot;&gt;0&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:7.79px;line-height:0;margin-left:-8.53px;&quot;&gt;&lt;i&gt;h&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.02px;line-height:0;&quot;&gt;0&lt;/sub&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
+        <mxCell id="tpla-107" value="&lt;i&gt;O&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-6.37px;line-height:0;&quot;&gt;0&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:7.79px;line-height:0;margin-left:-6px;&quot;&gt;&lt;i&gt;h&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.02px;line-height:0;&quot;&gt;0&lt;/sub&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="213.99" y="213.72" width="32.11" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="tpla-108" value="&lt;i&gt;O&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-6.55px;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:7.56px;line-height:0;margin-left:-8.53px;&quot;&gt;&lt;i&gt;h&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.15px;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
+        <mxCell id="tpla-108" value="&lt;i&gt;O&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-6.55px;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:7.56px;line-height:0;margin-left:-6px;&quot;&gt;&lt;i&gt;h&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.15px;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="343.77" y="214.51" width="32.11" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="tpla-109" value="&lt;i&gt;ĉ&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.77px;line-height:0;&quot;&gt;0&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:10.11px;line-height:0;margin-left:2.48px;&quot;&gt;&lt;i&gt;KV&lt;/i&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
+        <mxCell id="tpla-109" value="&lt;i&gt;ĉ&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.77px;line-height:0;&quot;&gt;0&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:7.8px;line-height:0;margin-left:-6px;&quot;&gt;&lt;i&gt;KV&lt;/i&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="210.18" y="309.14" width="34.44" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="tpla-110" value="&lt;i&gt;ĉ&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.91px;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:10.14px;line-height:0;margin-left:3.81px;&quot;&gt;&lt;i&gt;KV&lt;/i&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
+        <mxCell id="tpla-110" value="&lt;i&gt;ĉ&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.91px;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:7.8px;line-height:0;margin-left:-6px;&quot;&gt;&lt;i&gt;KV&lt;/i&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="342.77" y="309.14" width="34.44" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="tpla-111" value="&lt;i&gt;Õ&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=Source Sans 3;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
+        <mxCell id="tpla-111" value="&lt;i&gt;Õ&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="433.75" y="121.43" width="11.11" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="tpla-112" value="&lt;i&gt;O&lt;/i&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:6.20px;line-height:0;&quot;&gt;&lt;i&gt;h&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.02px;line-height:0;&quot;&gt;0&lt;/sub&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
@@ -15466,7 +15466,7 @@
         <mxCell id="tpla-114" value="&lt;i&gt;ĉ&lt;/i&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:7.78px;line-height:0;&quot;&gt;&lt;i&gt;KV&lt;/i&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="427.7" y="308.36" width="27.44" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="tpla-115" value="&lt;i&gt;Õ&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=Source Sans 3;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
+        <mxCell id="tpla-115" value="&lt;i&gt;Õ&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="642.06" y="28.36" width="11.11" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="tpla-116" value="&lt;i&gt;Õ&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.84px;line-height:0;&quot;&gt;0&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
@@ -15475,22 +15475,22 @@
         <mxCell id="tpla-117" value="&lt;i&gt;Õ&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.97px;line-height:0;&quot;&gt;1&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="773.07" y="120.65" width="18.11" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="tpla-118" value="&lt;i&gt;O&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-6.37px;line-height:0;&quot;&gt;0&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:7.79px;line-height:0;margin-left:-8.53px;&quot;&gt;&lt;i&gt;h&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.02px;line-height:0;&quot;&gt;0&lt;/sub&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
+        <mxCell id="tpla-118" value="&lt;i&gt;O&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-6.37px;line-height:0;&quot;&gt;0&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:7.79px;line-height:0;margin-left:-6px;&quot;&gt;&lt;i&gt;h&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.02px;line-height:0;&quot;&gt;0&lt;/sub&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="636.74" y="213.72" width="32.11" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="tpla-119" value="&lt;i&gt;O&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-6.46px;line-height:0;&quot;&gt;0&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:7.50px;line-height:0;margin-left:-8.53px;&quot;&gt;&lt;i&gt;h&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.14px;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
+        <mxCell id="tpla-119" value="&lt;i&gt;O&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-6.46px;line-height:0;&quot;&gt;0&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:7.50px;line-height:0;margin-left:-6px;&quot;&gt;&lt;i&gt;h&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.14px;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="701.95" y="212.94" width="32.11" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="tpla-120" value="&lt;i&gt;O&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-6.50px;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:7.78px;line-height:0;margin-left:-8.53px;&quot;&gt;&lt;i&gt;h&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.02px;line-height:0;&quot;&gt;0&lt;/sub&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
+        <mxCell id="tpla-120" value="&lt;i&gt;O&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-6.50px;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:7.78px;line-height:0;margin-left:-6px;&quot;&gt;&lt;i&gt;h&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.02px;line-height:0;&quot;&gt;0&lt;/sub&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="772.07" y="213.72" width="32.11" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="tpla-121" value="&lt;i&gt;O&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-6.55px;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:7.56px;line-height:0;margin-left:-8.53px;&quot;&gt;&lt;i&gt;h&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.15px;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
+        <mxCell id="tpla-121" value="&lt;i&gt;O&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-6.55px;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:7.56px;line-height:0;margin-left:-6px;&quot;&gt;&lt;i&gt;h&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.15px;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="833.52" y="214.51" width="32.11" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="tpla-122" value="&lt;i&gt;ĉ&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.76px;line-height:0;&quot;&gt;0&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:10.23px;line-height:0;margin-left:3.01px;&quot;&gt;&lt;i&gt;KV&lt;/i&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
+        <mxCell id="tpla-122" value="&lt;i&gt;ĉ&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.76px;line-height:0;&quot;&gt;0&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:7.8px;line-height:0;margin-left:-6px;&quot;&gt;&lt;i&gt;KV&lt;/i&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="630.97" y="309.14" width="34.44" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="tpla-123" value="&lt;i&gt;ĉ&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.91px;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:10.14px;line-height:0;margin-left:3.80px;&quot;&gt;&lt;i&gt;KV&lt;/i&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
+        <mxCell id="tpla-123" value="&lt;i&gt;ĉ&lt;/i&gt;&lt;sub style=&quot;font-size: 12px;vertical-align:-3.91px;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;sup style=&quot;font-size: 12px;vertical-align:7.8px;line-height:0;margin-left:-6px;&quot;&gt;&lt;i&gt;KV&lt;/i&gt;&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;fontFamily=NewComputerModernSansMath;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="tpla-figure">
           <mxGeometry x="766.38" y="309.14" width="34.44" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="mamba-label" value="mamba.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
