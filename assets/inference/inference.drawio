@@ -8685,7 +8685,7 @@
         <mxCell id="pruning_structures-294" value="LayerNorm" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="pruning_structures-figure">
           <mxGeometry x="116.27" y="217.91" width="72.3" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="pruning_structures-295" value="E" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;fontFamily=NewComputerModernSansMath;" vertex="1" parent="pruning_structures-figure">
+        <mxCell id="pruning_structures-295" value="E" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;fontFamily=Source Sans 3;" vertex="1" parent="pruning_structures-figure">
           <mxGeometry x="145.26" y="250.68" width="14.33" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="pruning_structures-296" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontColor=#000000;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="pruning_structures-figure">
@@ -9319,56 +9319,56 @@
           <mxGeometry x="659.1" y="39.66" width="92.4" height="23.1" as="geometry" />
         </mxCell>
         <mxCell id="pruning_structures-506" value="Block 2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="pruning_structures-figure">
-          <mxGeometry x="659.1" y="75.08" width="92.4" height="23.1" as="geometry" />
+          <mxGeometry x="659.1" y="78.76" width="92.4" height="23.1" as="geometry" />
         </mxCell>
         <mxCell id="pruning_structures-507" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;labelBackgroundColor=#ffffff;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="pruning_structures-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="705.3" y="62.76" as="sourcePoint" />
-            <mxPoint x="705.3" y="75.08" as="targetPoint" />
+            <mxPoint x="705.3" y="78.76" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="pruning_structures-508" value="Block 3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;fontColor=#000000;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="pruning_structures-figure">
-          <mxGeometry x="659.1" y="110.5" width="92.4" height="23.1" as="geometry" />
+        <mxCell id="pruning_structures-508" value="Block 3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;fontColor=#000000;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="pruning_structures-figure">
+          <mxGeometry x="659.1" y="117.86" width="92.4" height="23.1" as="geometry" />
         </mxCell>
         <mxCell id="pruning_structures-509" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="pruning_structures-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="705.3" y="98.18" as="sourcePoint" />
-            <mxPoint x="705.3" y="110.5" as="targetPoint" />
+            <mxPoint x="705.3" y="101.86" as="sourcePoint" />
+            <mxPoint x="705.3" y="117.86" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="pruning_structures-510" value="Block 4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="pruning_structures-figure">
-          <mxGeometry x="659.1" y="145.92" width="92.4" height="23.1" as="geometry" />
+          <mxGeometry x="659.1" y="156.96" width="92.4" height="23.1" as="geometry" />
         </mxCell>
         <mxCell id="pruning_structures-511" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;fontSize=14;labelBackgroundColor=#ffffff;dashed=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="pruning_structures-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="705.3" y="133.6" as="sourcePoint" />
-            <mxPoint x="705.3" y="145.92" as="targetPoint" />
+            <mxPoint x="705.3" y="140.96" as="sourcePoint" />
+            <mxPoint x="705.3" y="156.96" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="pruning_structures-512" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#d79b00;strokeWidth=1.4;fontSize=14;labelBackgroundColor=#ffffff;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="pruning_structures-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="751.5" y="86.63" as="sourcePoint" />
-            <mxPoint x="751.5" y="157.47" as="targetPoint" />
+            <mxPoint x="751.5" y="90.31" as="sourcePoint" />
+            <mxPoint x="751.5" y="168.51" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="774.6" y="86.63" />
-              <mxPoint x="774.6" y="157.47" />
+              <mxPoint x="774.6" y="90.31" />
+              <mxPoint x="774.6" y="168.51" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="pruning_structures-513" value="same shape,&lt;br&gt;so block 4&lt;br&gt;reads it directly" style="text;html=1;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#885e10;fontFamily=Source Sans 3;" vertex="1" parent="pruning_structures-figure">
-          <mxGeometry x="779.5" y="98.45" width="79.64" height="47.2" as="geometry" />
+          <mxGeometry x="779.5" y="105.81" width="79.64" height="47.2" as="geometry" />
         </mxCell>
         <mxCell id="pruning_structures-514" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="pruning_structures-figure">
           <mxGeometry x="16.9" y="356.9" width="10.78" height="10.78" as="geometry" />
         </mxCell>
-        <mxCell id="pruning_structures-515" value="kept" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="pruning_structures-figure">
-          <mxGeometry x="30.8" y="353.09" width="27.66" height="18.4" as="geometry" />
+        <mxCell id="pruning_structures-515" value="kept" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;spacing=0;" vertex="1" parent="pruning_structures-figure">
+          <mxGeometry x="31.68" y="353.89" width="25.89" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="pruning_structures-516" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="pruning_structures-figure">
-          <mxGeometry x="70.8" y="356.9" width="10.78" height="10.78" as="geometry" />
+          <mxGeometry x="73.57" y="356.9" width="10.78" height="10.78" as="geometry" />
         </mxCell>
-        <mxCell id="pruning_structures-517" value="removed" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="pruning_structures-figure">
-          <mxGeometry x="84.7" y="353.09" width="48.98" height="18.4" as="geometry" />
+        <mxCell id="pruning_structures-517" value="removed" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;spacing=0;" vertex="1" parent="pruning_structures-figure">
+          <mxGeometry x="88.35" y="353.89" width="52" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="sparsity_2_4-label" value="sparsity_2_4.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="1103.49" width="600" height="30" as="geometry" />
