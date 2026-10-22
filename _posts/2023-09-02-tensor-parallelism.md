@@ -33,23 +33,16 @@ A better understanding can be gained by replicating the partitioning suggested b
 (a) The MLP block and (b) the self-attention block of Megatron-LM, split over two GPUs: the first weight matrix $$A$$ is split by columns ($$Q$$, $$K$$ and $$V$$ by attention heads), and the second one, $$B$$, by rows. $$f$$ and $$g$$ are conjugate operators: $$f$$ is an identity operator in the forward pass and an all-reduce in the backward pass, while $$g$$ is an all-reduce in the forward pass and an identity in the backward pass. Adapted from: [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053)
 
 The rationale is the following: the MLP is a sequence of (1) a MatMul $$XA$$, (2) a GeLU $$Y$$, (3) a MatMul $$YB$$ and (4) a dropout layer. Consider the first two operations:
-1. "One option to parallelize the GEMM is to split the weight matrix $$A$$ along its rows and input $$X$$ along its columns. [...] This partitioning will result in $$Y = GeLU(X_1 A_1 + X_2 A_2)$$. Since GeLU is a nonlinear function, $$GeLU (X_1 A_1 + X_2 A_2) \neq  GeLU( X_1 A_1 ) + GeLU (X_2 A_2)$$ and this approach will require a synchronization point [*sum-reduce*] before the GeLU function". This approach (pictured below) can be followed for each of the 2 MatMuls, yielding a total of two communication steps.
-
-  {: .picture}
-  <img width="85.2%" height="85.2%" src="{{ site.assets }}/distributed-training/imgs/megatron_model_parallel_1.svg">
-
-  {: .caption}
-  Option 1 on two GPUs: $$X$$ is split by columns and $$A$$ by rows. Each GPU computes a partial product of size $$M \times O$$, and a sum-reduce adds them into $$XA$$ on both GPUs before the GeLU, which then gives the same $$Y$$ on both GPUs. Inspired by: [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053)
-
+1. "One option to parallelize the GEMM is to split the weight matrix $$A$$ along its rows and input $$X$$ along its columns. [...] This partitioning will result in $$Y = GeLU(X_1 A_1 + X_2 A_2)$$. Since GeLU is a nonlinear function, $$GeLU (X_1 A_1 + X_2 A_2) \neq  GeLU( X_1 A_1 ) + GeLU (X_2 A_2)$$ and this approach will require a synchronization point [*sum-reduce*] before the GeLU function". This approach can be followed for each of the 2 MatMuls, yielding a total of two communication steps.
 
 2. Another option is to not split $$X$$ and to split $$A$$ along its columns, which "allows the GeLU nonlinearity to be independently applied to the output of each partitioned GEMM". The output of the GeLU $$Y$$ is then $$[Y_1, Y_2] = [GeLU (X A_1), GeLU(X A_2)]$$, and this removes a synchronization point.
 After the MatMul and GeLU are done, they are followed by another MatMul and a dropout. Note that with this approach (pictured below), the output $$Y$$ of the first MatMul and GeLU (which is the input for the second MatMul) is split column-wise. Therefore, Megatron uses the previous approach for the second MatMul, which requires 1 collective communication step. In total, 1 communication step is performed for 2 MatMuls.
 
-  {: .picture}
-  <img width="61%" height="61%" src="{{ site.assets }}/distributed-training/imgs/megatron_model_parallel_2.svg">
+{: .picture}
+<img width="96.9%" height="96.9%" src="{{ site.assets }}/distributed-training/imgs/tp_megatron_lm.svg"/>
 
-  {: .caption}
-  Option 2 on two GPUs: $$X$$ is replicated and $$A$$ is split by columns, so each GPU computes its own columns of $$XA$$ and applies the GeLU to them without any communication. Inspired by: [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053)
+{: .caption}
+The MLP block of Megatron-LM on two GPUs. The first MatMul follows option 2: $$X$$ is replicated and $$A$$ is split by columns, so each GPU computes its own columns of $$XA$$ and applies the GeLU to them without any communication. The second MatMul follows option 1: $$B$$ is split by rows, so each GPU computes a partial sum of $$YB$$, and a sum-reduce adds the partial sums on both GPUs. Inspired by: [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053)
 
 
 The algorithm of the attention mechanism is analogous, except that instead of a single MatMul $$XA$$ at the beginning of the workflow, there are three MatMuls $$XV$$, $$XQ$$ and $$XK$$ for the value, query and key matrices. Therefore, this algorithm requires one (not two) communication step per MLP and per attention block.
