@@ -55,7 +55,7 @@ Instead of a single all-reduce of the gradients, sharding uses two collective op
 The higher the stage, the less memory is consumed. Stages 1 and 2 communicate as much as regular data parallelism, and stage 3 communicates 1.5x as much, as it gathers the parameters in both the forward and the backward passes. These memory improvements are summarized in the [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/) as:
 
 {: .picture}
-<img width="87.7%" height="87.7%" src="{{ site.assets }}/distributed-training/imgs/deepspeed_stages.svg"/>
+<img width="94.5%" height="94.5%" src="{{ site.assets }}/distributed-training/imgs/deepspeed_stages.svg"/>
 
 {: .caption}
 Per-GPU memory of the model states (parameters, gradients and optimizer states) with plain data parallelism (baseline) and with the three ZeRO stages: $$P_{os}$$ partitions the optimizer states across the GPUs, $$P_{os+g}$$ also the gradients, and $$P_{os+g+p}$$ also the parameters. $$\Psi$$ is the number of parameters, $$K$$ the memory multiplier of the optimizer states and $$N_d$$ the data-parallel degree; the example uses $$K=12$$ (mixed-precision Adam), $$\Psi=7.5B$$ and $$N_d=64$$. The last column is the communication volume relative to the baseline. Adapted from: [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) and the [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
