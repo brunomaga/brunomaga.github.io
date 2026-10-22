@@ -250,11 +250,11 @@
         <mxCell id="gan-13" value="real data" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="gan-figure">
           <mxGeometry x="113.58" y="2.17" width="54.8" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="gan-14" value="&lt;i&gt;x&lt;/i&gt; ~ &lt;i&gt;p&lt;/i&gt;&lt;sub&gt;&lt;i&gt;data&lt;/i&gt;&lt;/sub&gt;(&lt;i&gt;x&lt;/i&gt;)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="gan-figure">
-          <mxGeometry x="107.45" y="20.93" width="84.96" height="23.2" as="geometry" />
+        <mxCell id="gan-14" value="&lt;i&gt;x&lt;/i&gt; ∼ &lt;i&gt;p&lt;/i&gt;&lt;sub&gt;&lt;i&gt;data&lt;/i&gt;&lt;/sub&gt;(&lt;i&gt;x&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="gan-figure">
+          <mxGeometry x="105.7" y="20.93" width="88.46" height="23.2" as="geometry" />
         </mxCell>
-        <mxCell id="gan-15" value="&lt;i&gt;z&lt;/i&gt; ~ &lt;i&gt;p&lt;/i&gt;&lt;sub&gt;&lt;i&gt;z&lt;/i&gt;&lt;/sub&gt;(&lt;i&gt;z&lt;/i&gt;)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="gan-figure">
-          <mxGeometry x="4.5" y="89.94" width="63.62" height="23.2" as="geometry" />
+        <mxCell id="gan-15" value="&lt;i&gt;z&lt;/i&gt; ∼ &lt;i&gt;p&lt;/i&gt;&lt;sub&gt;&lt;i&gt;z&lt;/i&gt;&lt;/sub&gt;(&lt;i&gt;z&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="gan-figure">
+          <mxGeometry x="2.75" y="89.94" width="67.12" height="23.2" as="geometry" />
         </mxCell>
         <mxCell id="gan-16" value="prior" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="gan-figure">
           <mxGeometry x="12.04" y="143.31" width="34.21" height="20.8" as="geometry" />
@@ -293,7 +293,7 @@
           <mxGeometry x="406.47" y="66.41" width="51.63" height="23.2" as="geometry" />
         </mxCell>
         <mxCell id="gan-28" value="0 (generated)" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="gan-figure">
-          <mxGeometry x="406.47" y="90.83" width="89.84" height="23.2" as="geometry" />
+          <mxGeometry x="409.38" y="90.83" width="89.84" height="23.2" as="geometry" />
         </mxCell>
         <mxCell id="vae-label" value="vae.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="750" width="600" height="30" as="geometry" />
