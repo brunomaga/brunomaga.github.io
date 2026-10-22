@@ -285,7 +285,7 @@ Even though results sound promising, different mammals, brain regions and mental
 The comparison tested several fixed- and variable-step interpolation methods, whose details are available <a href="{{ site.assets }}/neuron-variable-timestep/neurox-vardt-arxiv.pdf">in the original publication preprint</a>: the methods 1a to 1c solve simple neuron models, and the methods 2a to 2c complex ones. The benchmark results are displayed next, with the time to solution of each method for one second of simulation, on networks of 1,024 to 65,536 neurons, in each of the five regimes:
 
 {: .picture}
-<img width="87.6%" height="87.6%" src="{{ site.assets }}/neuron-variable-timestep/benchmark_two_rows_2.svg">
+<img width="87.5%" height="87.5%" src="{{ site.assets }}/neuron-variable-timestep/benchmark_two_rows_2.svg">
 
 Quoting the preprint:
 
