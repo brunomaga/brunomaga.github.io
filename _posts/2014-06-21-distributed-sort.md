@@ -66,7 +66,7 @@ Here is an illustrative workflow:
 <img width="57%" height="57%" src="{{ site.assets }}/distributed-sort/sample_sort.svg">
 
 {: .caption}
-Sample sort of 21 elements on $$p = 3$$ ranks, colored by rank. Each rank sends $$p-1 = 2$$ samples to rank 0, which sorts them and picks every $$p$$-th one as a splitter (yellow): 4 and 10. The last interval is open: rank 2 receives every element from 10 upwards.
+Sample sort of 21 elements on $$p = 3$$ ranks, colored by rank. Each rank sends $$p-1 = 2$$ samples to rank 0, which sorts them and picks every $$p$$-th one as a splitter (yellow): 4 and 10. The last interval is open: rank 2 receives every element from 10 upwards. In an MPI implementation, step 2 is one `MPI_Gather` of the samples, step 3 one `MPI_Bcast` of the splitters, and step 4 one `MPI_Alltoall` of the counts followed by one `MPI_Alltoallv` of the elements.
 
 This method is computationally very efficient, as the number of communication operations is constant, regardless of the input size or network size, and each element is sent at most once. However, it may lead to a highly heterogeneous number of elements across nodes (from 4 to 9 in the example above), which leads to a computational and memory imbalance. If necessary, a network balancing operation may follow the sorting to balance the dataset across the network. In brief, the sample sort is preferred on large networks, and the odd-even sort on small networks or when each node must keep its number of elements.
 
