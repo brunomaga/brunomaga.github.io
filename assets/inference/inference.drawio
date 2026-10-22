@@ -14475,7 +14475,7 @@
           <mxGeometry x="51.38" y="41.4" width="90" height="16" as="geometry" />
         </mxCell>
         <mxCell id="layerskip-45" value="layer dropout rate (training)" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#b85450;fontFamily=Source Sans 3;" vertex="1" parent="layerskip-figure">
-          <mxGeometry x="-2.32" y="0" width="165.2" height="20.8" as="geometry" />
+          <mxGeometry x="-1.32" y="0" width="165.2" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="mtp_parallel-label" value="mtp_parallel.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="4043.24" width="600" height="30" as="geometry" />
