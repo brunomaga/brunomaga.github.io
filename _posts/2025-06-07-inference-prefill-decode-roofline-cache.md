@@ -101,7 +101,7 @@ Therefore, the roofline point ❌ of this example is $$\mathbf{(0.083, 10)}$$.
 For the multiplication of two matrices of shapes **$$A \times B$$** and **$$B \times C$$**, which gives an output matrix of shape **$$A \times C$$**, here are the FLOPs and the memory traffic, for a data type of **$$dt$$** bytes per element. Each element of the output is the dot product of a row of matrix 1 and a column of matrix 2, as illustrated in the following picture:
 
 {: .picture}
-<img width="37.1%" height="37.1%" src="{{ site.assets }}/inference/imgs/matmul.svg"/>
+<img width="47.4%" height="47.4%" src="{{ site.assets }}/inference/imgs/matmul.svg"/>
 
 {: .caption}
 **FLOPs:** $$AC$$ outputs $$\times$$ $$B$$ multiply-adds $$\times$$ 2 FLOPs $$= 2ABC$$. **Memory traffic, naive:** matrix 1 read $$C$$ times and matrix 2 read $$A$$ times, $$2ABC\text{ }dt$$. **Memory traffic, with cache:** inputs read once and output written once, $$(AB + BC + AC)\text{ }dt$$. **Arithmetic intensity:** $$2ABC / ((AB + BC + AC)\text{ }dt)$$, about $$2N / (3\text{ }dt)$$ for $$A = B = C = N$$.
@@ -253,7 +253,7 @@ In the attention layer, the query of the new token attends to the keys and value
 Without a cache, each decode step recomputes the keys and values of the whole sequence, so generating $$n$$ tokens costs $$O(n^2)$$ work in the projections and MLPs and $$O(n^3)$$ in attention. With a cache, each step only computes the query, key and value of the new token, appends the new key and value to the cache, and attends over all cached ones: $$O(n)$$ and $$O(n^2)$$ in total. Queries do not need to be cached, because the query of a past token was only needed to compute the output at that past position. The following picture illustrates the attention of one head in a decode step, without and with the KV cache:
 
 {: .picture}
-<img width="81.9%" height="81.9%" src="{{ site.assets }}/inference/imgs/kv_cache.svg"/>
+<img width="96%" height="96%" src="{{ site.assets }}/inference/imgs/kv_cache.svg"/>
 
 {: .caption}
 **Without KV cache:** generating $$n$$ tokens costs $$O(n^2)$$ in the projections and the MLP, and $$O(n^3)$$ in attention. **With KV cache:** generating $$n$$ tokens costs $$O(n)$$ in the projections and the MLP, and $$O(n^2)$$ in attention.
@@ -392,7 +392,7 @@ def generate_kvcache(model, prompt, n_tokens, seqlen, kv_cache=None):
 The code above uses a dynamic cache. The following picture compares it with a static cache, for one new token:
 
 {: .picture}
-<img width="59.4%" height="59.4%" src="{{ site.assets }}/inference/imgs/static_cache.svg"/>
+<img width="60.5%" height="60.5%" src="{{ site.assets }}/inference/imgs/static_cache.svg"/>
 
 The following code implements a static cache of one layer, where the keys and values of the new tokens are written in place:
 
@@ -482,7 +482,7 @@ Serving many requests at once makes memory management hard, because the final le
 Almost no memory is wasted, so more sequences fit in a batch: vLLM reported 2-4 times higher throughput than previous systems. A block can also be shared by several sequences, and copied only when one of them writes to it ([copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write)), which is how prefix caching, parallel sampling and [beam search](https://en.wikipedia.org/wiki/Beam_search) share their common prefix. An illustration of the block tables of two sequences, with blocks of 4 tokens, is displayed below:
 
 {: .picture}
-<img width="99%" height="99%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
+<img width="98.8%" height="98.8%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
 
 {: .caption}
 The attention kernel reads the blocks of each sequence through its block table, and a sequence wastes at most 3 slots, in its last block. Inspired by: [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180)
@@ -553,7 +553,7 @@ Many requests start with the same tokens: a system prompt, tool definitions, a l
 The following picture illustrates the lookup for three requests whose prompts start with the same tokens:
 
 {: .picture}
-<img width="93%" height="93%" src="{{ site.assets }}/inference/imgs/prefix_caching.svg"/>
+<img width="99.2%" height="99.2%" src="{{ site.assets }}/inference/imgs/prefix_caching.svg"/>
 
 {: .caption}
 Automatic prefix caching, with blocks of 4 tokens (16 in vLLM). The hash of each block chains the hash of the previous block with the tokens of the block. Request 2 reuses the first two blocks of request 1 and prefills 4 tokens. Request 3 reuses only the first block: its last block holds the same tokens as that of request 1, but its hash differs because its second block differs, so request 3 prefills 8 tokens.
@@ -745,10 +745,10 @@ With continuous batching, a waiting request takes a free slot as soon as one is 
 **Chunked prefill**, introduced by [SARATHI](https://arxiv.org/abs/2308.16369), solves this by processing a long prompt in several smaller pieces (chunks), one per step, instead of in one forward pass. Every step then takes about the same time, and the other requests keep generating one token per step. The following picture compares chunked prefill with the batching schemes of the previous section:
 
 {: .picture}
-<img width="99.5%" height="99.5%" src="{{ site.assets }}/inference/imgs/continuous_chunked_batching.svg"/>
+<img width="91.3%" height="91.3%" src="{{ site.assets }}/inference/imgs/continuous_chunked_batching.svg"/>
 
 {: .caption}
-The same 6 requests (R1 to R6) on 3 slots, with static batching, continuous batching, and continuous batching with chunked prefill. The width of a step is its duration: a decode step and the prefill of a short prompt take one time unit, and the prefill of the long prompt of R4 takes three. Static batching runs the requests in groups of 3 until the longest request of each group finishes, and pads the prompts of a group to the longest one. Continuous batching gives a free slot to the next request at the next step, but the prefill of R4 stalls R1 and R3. With chunked prefill, R4 processes its prompt in 3 chunks of one time unit each, while R1 and R3 continue decoding.
+The same 7 requests (R1 to R7) on 4 slots, with static batching, continuous batching, and continuous batching with chunked prefill. The width of a step is its duration: a decode step and the prefill of a short prompt take one time unit, and the prefill of the long prompt of R5 takes three. Static batching runs the requests in groups of 4 until the longest request of each group finishes, and pads the prompts of a group to the longest one. Continuous batching gives a free slot to the next request at the next step, but the prefill of R5 stalls R1, R3 and R4. With chunked prefill, R5 processes its prompt in 3 chunks of one time unit each, while R1, R3 and R4 continue decoding.
 
 Each chunk attends to the KV cache of the earlier chunks. Suppose an 8,000-token prompt arrives while 50 other sequences are decoding:
 - Without chunking: one step must process all 8,000 prompt tokens plus the 50 decode tokens. That step takes far longer than a normal decode step, so all 50 users see their text pause.

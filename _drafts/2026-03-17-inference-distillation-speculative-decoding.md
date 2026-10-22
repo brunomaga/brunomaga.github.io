@@ -36,7 +36,7 @@ Details on the different methods are given in [Distilling the Knowledge in a Neu
 <img width="99.7%" height="99.7%" src="{{ site.assets }}/inference/imgs/kd_methods.svg"/>
 
 {: .caption}
-The categories of knowledge distillation methods, and the branches within each category. This section implements offline distillation using soft labels, underlined in red in the picture. Adapted from: [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/).
+The categories of knowledge distillation methods, and the branches within each category. This section implements offline distillation using soft labels, outlined in bold in the picture. Adapted from: [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/).
 
 ### Implementing offline distillation with soft labels
 
@@ -149,7 +149,7 @@ With **sampling** (*speculative sampling*), the draft model samples each token $
 The rule holds for any $$p$$, as long as it is the distribution the drafts were sampled from. Greedy drafts are the special case of a one-hot $$p$$: the target accepts the draft $$x$$ with probability $$q(x)$$, and on rejection samples from $$q$$ without $$x$$, which still yields tokens distributed as $$q$$. What breaks the guarantee is drafting greedily while using the draft model's softmax probabilities as $$p$$. An example of the rule on a vocabulary of five tokens is displayed below, with the distributions of the draft model and of the target (left), and the normalized residual (right):
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/spec_sampling.svg"/>
+<img width="99.5%" height="99.5%" src="{{ site.assets }}/inference/imgs/spec_sampling.svg"/>
 
 {: .caption}
 The draft b is accepted with probability $$\min(1, q(b) / p(b)) = 0.3 / 0.5 = 0.6$$; otherwise, it is replaced by a or c, sampled from the residual.
@@ -258,7 +258,7 @@ def accept_sampling(drafts, p, q):
 In the following example, the last two tokens, *the cat*, also occur at the start of the text, so the four tokens that follow them there become the drafts:
 
 {: .picture}
-<img width="99.8%" height="99.8%" src="{{ site.assets }}/inference/imgs/prompt_lookup.svg"/>
+<img width="99.2%" height="99.2%" src="{{ site.assets }}/inference/imgs/prompt_lookup.svg"/>
 
 The following code implements prompt lookup decoding. It reuses the verification loop of speculative decoding, with a different source of drafts:
 
@@ -476,7 +476,7 @@ Unlike multi-token prediction (below), which only helps models pre-trained with 
 At inference, the draft exits after the first $$E$$ layers, and the verification runs only the remaining layers, reusing the computation and the cache of the first $$E$$. There is no second model to store, and the reported speedups reach up to 2.16 times on summarization and 1.82 times on coding tasks. The following diagram illustrates a model of 8 layers that drafts with its first 4 layers, together with the layer dropout rate of each layer in training (left):
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/layerskip.svg"/>
+<img width="99.9%" height="99.9%" src="{{ site.assets }}/inference/imgs/layerskip.svg"/>
 
 {: .caption}
 Every layer also learns to predict through the shared head (early exit loss). The layer dropout rate grows linearly with depth, as in the code; in the paper, it grows exponentially. Inspired by: [LayerSkip: Enabling Early Exit Inference and Self-Speculative Decoding](https://arxiv.org/abs/2404.16710)
