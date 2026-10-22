@@ -12198,37 +12198,37 @@
             <mxPoint x="396.57" y="214.74" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="siamese_networks_2-23" value="&lt;i&gt;x&lt;/i&gt;&lt;sub&gt;1,1&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
+        <mxCell id="siamese_networks_2-23" value="&lt;i&gt;x&lt;/i&gt;&lt;sub&gt;1,1&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
           <mxGeometry x="0" y="47.77" width="52.5" height="52.5" as="geometry" />
         </mxCell>
-        <mxCell id="siamese_networks_2-24" value="&lt;i&gt;x&lt;/i&gt;&lt;sub&gt;1,&lt;i&gt;N&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
+        <mxCell id="siamese_networks_2-24" value="&lt;i&gt;x&lt;/i&gt;&lt;sub&gt;1,&lt;i&gt;N&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
           <mxGeometry x="0" y="146.35" width="52.5" height="52.5" as="geometry" />
         </mxCell>
-        <mxCell id="siamese_networks_2-25" value="&lt;i&gt;x&lt;/i&gt;&lt;sub&gt;2,1&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
+        <mxCell id="siamese_networks_2-25" value="&lt;i&gt;x&lt;/i&gt;&lt;sub&gt;2,1&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
           <mxGeometry x="0" y="212.27" width="52.5" height="52.5" as="geometry" />
         </mxCell>
-        <mxCell id="siamese_networks_2-26" value="&lt;i&gt;x&lt;/i&gt;&lt;sub&gt;2,&lt;i&gt;N&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
+        <mxCell id="siamese_networks_2-26" value="&lt;i&gt;x&lt;/i&gt;&lt;sub&gt;2,&lt;i&gt;N&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
           <mxGeometry x="0" y="310.85" width="52.5" height="52.5" as="geometry" />
         </mxCell>
-        <mxCell id="siamese_networks_2-27" value="&lt;i&gt;h&lt;/i&gt;&lt;sub&gt;1,1&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
+        <mxCell id="siamese_networks_2-27" value="&lt;i&gt;h&lt;/i&gt;&lt;sub&gt;1,1&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
           <mxGeometry x="131.83" y="47.77" width="52.5" height="52.5" as="geometry" />
         </mxCell>
-        <mxCell id="siamese_networks_2-28" value="&lt;i&gt;h&lt;/i&gt;&lt;sub&gt;1,&lt;i&gt;N&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
+        <mxCell id="siamese_networks_2-28" value="&lt;i&gt;h&lt;/i&gt;&lt;sub&gt;1,&lt;i&gt;N&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
           <mxGeometry x="131.83" y="146.35" width="52.5" height="52.5" as="geometry" />
         </mxCell>
-        <mxCell id="siamese_networks_2-29" value="&lt;i&gt;h&lt;/i&gt;&lt;sub&gt;2,1&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
+        <mxCell id="siamese_networks_2-29" value="&lt;i&gt;h&lt;/i&gt;&lt;sub&gt;2,1&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
           <mxGeometry x="131.83" y="212.27" width="52.5" height="52.5" as="geometry" />
         </mxCell>
-        <mxCell id="siamese_networks_2-30" value="&lt;i&gt;h&lt;/i&gt;&lt;sub&gt;2,&lt;i&gt;N&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
+        <mxCell id="siamese_networks_2-30" value="&lt;i&gt;h&lt;/i&gt;&lt;sub&gt;2,&lt;i&gt;N&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
           <mxGeometry x="131.83" y="310.85" width="52.5" height="52.5" as="geometry" />
         </mxCell>
-        <mxCell id="siamese_networks_2-31" value="&lt;i&gt;d&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
+        <mxCell id="siamese_networks_2-31" value="&lt;i&gt;d&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
           <mxGeometry x="263.67" y="130.02" width="52.5" height="52.5" as="geometry" />
         </mxCell>
-        <mxCell id="siamese_networks_2-32" value="&lt;i&gt;d&lt;/i&gt;&lt;sub&gt;&lt;i&gt;N&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
+        <mxCell id="siamese_networks_2-32" value="&lt;i&gt;d&lt;/i&gt;&lt;sub&gt;&lt;i&gt;N&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
           <mxGeometry x="263.67" y="228.31" width="52.5" height="52.5" as="geometry" />
         </mxCell>
-        <mxCell id="siamese_networks_2-33" value="&lt;i&gt;p&lt;/i&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
+        <mxCell id="siamese_networks_2-33" value="&lt;i&gt;p&lt;/i&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
           <mxGeometry x="394.92" y="179.31" width="52.5" height="52.5" as="geometry" />
         </mxCell>
         <mxCell id="siamese_networks_2-34" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
@@ -12310,7 +12310,7 @@
           <mxGeometry x="73.88" y="85.26" width="48.24" height="20.69" as="geometry" />
         </mxCell>
         <mxCell id="siamese_networks_2-52" value="&lt;i&gt;w&lt;/i&gt;&lt;sub style=&quot;vertical-align:-0.3em;line-height:0;&quot;&gt;1,&lt;i&gt;N&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/sub&gt;&lt;sup style=&quot;margin-left:-2.02em;margin-right:0.80em;vertical-align:0.75em;line-height:0;&quot;&gt;(1)&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;spacing=0;rotation=37;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
-          <mxGeometry x="97.98" y="122.3" width="56.63" height="20.69" as="geometry" />
+          <mxGeometry x="94.98" y="118.8" width="56.63" height="20.69" as="geometry" />
         </mxCell>
         <mxCell id="siamese_networks_2-53" value="&lt;i&gt;w&lt;/i&gt;&lt;sub style=&quot;vertical-align:-0.3em;line-height:0;&quot;&gt;1,1&lt;/sub&gt;&lt;sup style=&quot;margin-left:-1.39em;margin-right:0.17em;vertical-align:0.75em;line-height:0;&quot;&gt;(1)&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;spacing=0;spacingLeft=2.92;spacingRight=2.92;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
           <mxGeometry x="66.78" y="214.96" width="50.78" height="16.8" as="geometry" />
@@ -12322,7 +12322,7 @@
           <mxGeometry x="73.88" y="249.76" width="48.24" height="20.69" as="geometry" />
         </mxCell>
         <mxCell id="siamese_networks_2-56" value="&lt;i&gt;w&lt;/i&gt;&lt;sub style=&quot;vertical-align:-0.3em;line-height:0;&quot;&gt;1,&lt;i&gt;N&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;&lt;/sub&gt;&lt;sup style=&quot;margin-left:-2.02em;margin-right:0.80em;vertical-align:0.75em;line-height:0;&quot;&gt;(1)&lt;/sup&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;spacing=0;rotation=37;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
-          <mxGeometry x="97.98" y="286.8" width="56.63" height="20.69" as="geometry" />
+          <mxGeometry x="94.98" y="283.3" width="56.63" height="20.69" as="geometry" />
         </mxCell>
         <mxCell id="siamese_networks_2-57" value="&lt;i&gt;α&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;spacing=0;rotation=20.5;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="siamese_networks_2-figure">
           <mxGeometry x="337.84" y="158.17" width="48.24" height="20.69" as="geometry" />
