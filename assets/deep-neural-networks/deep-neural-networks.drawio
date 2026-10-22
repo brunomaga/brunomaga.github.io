@@ -419,7 +419,7 @@
         <mxCell id="dropout-73" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="339.98" y="229.69" width="29.12" height="29.12" as="geometry" />
         </mxCell>
-        <mxCell id="dropout-74" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
+        <mxCell id="dropout-74" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="398.22" y="229.69" width="29.12" height="29.12" as="geometry" />
         </mxCell>
         <mxCell id="dropout-75" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dropout-figure">
@@ -434,7 +434,7 @@
             <mxPoint x="421.81" y="235.23" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dropout-77" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
+        <mxCell id="dropout-77" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="456.06" y="229.69" width="29.12" height="29.12" as="geometry" />
         </mxCell>
         <mxCell id="dropout-78" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dropout-figure">
@@ -455,7 +455,7 @@
         <mxCell id="dropout-81" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="571.74" y="229.69" width="29.12" height="29.12" as="geometry" />
         </mxCell>
-        <mxCell id="dropout-82" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
+        <mxCell id="dropout-82" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="339.98" y="152.77" width="29.12" height="29.12" as="geometry" />
         </mxCell>
         <mxCell id="dropout-83" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dropout-figure">
@@ -473,7 +473,7 @@
         <mxCell id="dropout-85" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="398.22" y="152.77" width="29.12" height="29.12" as="geometry" />
         </mxCell>
-        <mxCell id="dropout-86" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
+        <mxCell id="dropout-86" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="456.06" y="152.77" width="29.12" height="29.12" as="geometry" />
         </mxCell>
         <mxCell id="dropout-87" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dropout-figure">
@@ -488,7 +488,7 @@
             <mxPoint x="479.64" y="158.3" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dropout-89" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
+        <mxCell id="dropout-89" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="513.9" y="152.77" width="29.12" height="29.12" as="geometry" />
         </mxCell>
         <mxCell id="dropout-90" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dropout-figure">
@@ -509,7 +509,7 @@
         <mxCell id="dropout-93" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="339.98" y="76.92" width="29.12" height="29.12" as="geometry" />
         </mxCell>
-        <mxCell id="dropout-94" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
+        <mxCell id="dropout-94" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="398.22" y="76.92" width="29.12" height="29.12" as="geometry" />
         </mxCell>
         <mxCell id="dropout-95" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dropout-figure">
@@ -527,7 +527,7 @@
         <mxCell id="dropout-97" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="456.06" y="76.92" width="29.12" height="29.12" as="geometry" />
         </mxCell>
-        <mxCell id="dropout-98" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
+        <mxCell id="dropout-98" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="513.9" y="76.92" width="29.12" height="29.12" as="geometry" />
         </mxCell>
         <mxCell id="dropout-99" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dropout-figure">
