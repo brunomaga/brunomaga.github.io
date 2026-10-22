@@ -1926,7 +1926,7 @@ A clearer explanation can be found on this [Google Research post](https://resear
 <img loading="lazy" width="75%" height="75%" src="{{ site.assets }}/publications/performers2.gif"/> 
 
 {: .caption}
-**Left:** Standard unidirectional attention requires masking the attention matrix to obtain its lower-triangular part. **Right:** Unbiased approximation on the LHS can be obtained via a prefix-sum mechanism, where the prefix-sum of the outer-products of random feature maps for keys and value vectors is built on the fly and left-multiplied by query random feature vector to obtain the new row in the resulting matrix.
+**Left:** Standard unidirectional attention requires masking the attention matrix to obtain its lower-triangular part. **Right:** Unbiased approximation on the LHS can be obtained via a prefix-sum mechanism, where the prefix-sum of the outer-products of random feature maps for keys and value vectors is built on the fly and left-multiplied by query random feature vector to obtain the new row in the resulting matrix. Source: [Rethinking Attention with Performers](https://research.google/blog/rethinking-attention-with-performers/)
 
 </div>
 </details>
