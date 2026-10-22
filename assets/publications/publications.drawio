@@ -286,8 +286,8 @@
         <mxCell id="zerooffloadplusplus-4" value="Yes" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="zerooffloadplusplus-figure">
           <mxGeometry x="140.31" y="58.61" width="27.37" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="zerooffloadplusplus-5" value="Ratio == &lt;font color=&quot;#885e10&quot;&gt;0.4&lt;/font&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="zerooffloadplusplus-figure">
-          <mxGeometry x="14.79" y="85.39" width="87.71" height="23.2" as="geometry" />
+        <mxCell id="zerooffloadplusplus-5" value="Ratio == &lt;font color=&quot;#885e10&quot;&gt;0.4&lt;/font&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="zerooffloadplusplus-figure">
+          <mxGeometry x="14.79" y="86.59" width="87.71" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="zerooffloadplusplus-9" value="CPU" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="zerooffloadplusplus-figure">
           <mxGeometry x="6" y="153" width="35.77" height="20.8" as="geometry" />
