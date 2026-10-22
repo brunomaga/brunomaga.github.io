@@ -103,7 +103,7 @@ The tiles of the next step do not depend on the current product, so a rank can r
 The following picture compares the timelines with and without this overlap:
 
 {: .picture}
-<img width="91.6%" height="91.6%" src="{{ site.assets }}/distributed-matmul-dbs/overlap.svg">
+<img width="90%" height="90%" src="{{ site.assets }}/distributed-matmul-dbs/overlap.svg">
 
 {: .caption}
 Timeline of one rank in Cannon's algorithm on a $$3 \times 3$$ grid. **Top:** shifts and multiplications take turns. **Bottom:** each shift runs during a multiplication.
