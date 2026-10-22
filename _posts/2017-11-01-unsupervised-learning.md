@@ -248,7 +248,7 @@ which is the definition of the center of mass of cluster $$i$$. The error decrea
 
 
 {: .picture}
-<img width="78.6%" height="78.6%" src="{{ site.assets }}/unsupervised-learning/k-means.svg">
+<img width="78.7%" height="78.7%" src="{{ site.assets }}/unsupervised-learning/k-means.svg">
 
 {: .caption}
 **1.** $$k = 3$$ initial means (colored circles) are chosen at random within the data domain. **2.** Assignment step: each point joins the cluster of the closest mean; the colored regions are the Voronoi cells of the means. **3.** Update step: each mean moves to the centroid of its cluster (dashed circles: the previous means; lines: the points of each cluster). **4.** Assignment step with the new means and their Voronoi cells: two points move from the green to the red cluster. The two steps repeat until the assignments no longer change. Adapted from: [k-means clustering](https://en.wikipedia.org/wiki/K-means_clustering)
