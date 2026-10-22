@@ -31,7 +31,7 @@ The other big announcement of PyTorch 2.x was `torch.compile`, which "makes PyTo
 The following diagram illustrates the three steps on a function that applies a convolution, a batch normalization and a ReLU:
 
 {: .picture}
-<img width="80.4%" height="80.4%" src="{{ site.assets }}/gptlite-cpp/torch_compile.svg"/>
+<img width="74.5%" height="74.5%" src="{{ site.assets }}/gptlite-cpp/torch_compile.svg"/>
 
 {: .caption}
 A diagram of the three steps of `torch.compile`. Adapted from: [PyTorch 2.0 technology overview](https://pytorch.org/get-started/pytorch-2.0/#technology-overview)

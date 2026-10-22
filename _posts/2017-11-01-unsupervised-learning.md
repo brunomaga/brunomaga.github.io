@@ -343,8 +343,8 @@ For more details, [A Tutorial on Spectral Clustering](https://arxiv.org/abs/0711
 A **self-organizing map** (SOM) is an unsupervised artificial neural network, typically a 2D grid of neurons, that represents a discretization of the input space (or of the training set). It was introduced by Teuvo Kohonen in the paper [Self-organized formation of topologically correct feature maps](https://link.springer.com/article/10.1007/BF00337288) (1982), hence its other name, the Kohonen map. Its main purpose is to represent the training data by localized regions (neurons) that represent agglomerates of inputs, with neighbouring neurons of the grid representing nearby regions of the input space. The following picture illustrates Kohonen's model (top) and one step of its learning algorithm (bottom):
 
 {: .picture}
-<img width="46%" height="46%" src="{{ site.assets }}/unsupervised-learning/kohonen.svg">
-<img width="60%" height="60%" src="{{ site.assets }}/unsupervised-learning/kohonen2.svg">
+<img width="46%" height="46%" src="{{ site.assets }}/unsupervised-learning/kohonen.svg"><br>
+<img width="37%" height="37%" src="{{ site.assets }}/unsupervised-learning/kohonen2.svg">
 
 {: .caption}
 **Top:** the neuron layer of Kohonen's model. The input fibres running horizontally carry the input signal (the stimulus) and excite the neurons of the layer through synaptic connections. Lateral interactions between the neurons confine the response to a spatially bounded local excitation zone. The layer acts as a topographic feature map if the position $$s$$ of the excitation zone varies continuously with the stimulus features of interest. **Bottom:** the adaptation step. The input $$v$$ in the input space $$V$$ selects the winner neuron $$s$$ in the lattice of neurons $$A$$ ($$\phi$$ is the map from $$V$$ to $$A$$). The winner and its neighbours shift their weight vectors towards $$v$$, by an amount that decreases with the distance from $$s$$, shown by the sizes and gray levels of the neurons. Only the shift $$\Delta w_s$$ of the winner's weights $$w_s$$ is drawn. In the algorithm below, $$v$$ is the input $$x_u$$ and $$s$$ is the winner $$j^*$$. Adapted from: [Neural Computation and Self-Organizing Maps, H. Ritter, T. Martinetz and K. Schulten, 1992, Figures 4.1 and 4.2](https://tcbg.illinois.edu/Services/Class/PHYS498TBP/spring2002/neuro_4.pdf)
@@ -382,11 +382,11 @@ The input dataset and the `python` implementation are available in <a href="{{ s
 
 
 {: .picture}
-<img width="29.6%" height="29.6%" src="{{ site.assets }}/unsupervised-learning/kohonen_1.svg">
+<img width="29.4%" height="29.4%" src="{{ site.assets }}/unsupervised-learning/kohonen_1.svg">
 <span style="display:inline-block; width:1cm;"></span>
-<img width="29.8%" height="29.8%" src="{{ site.assets }}/unsupervised-learning/kohonen_2.svg">
+<img width="29.6%" height="29.6%" src="{{ site.assets }}/unsupervised-learning/kohonen_2.svg">
 <span style="display:inline-block; width:1cm;"></span>
-<img width="29.4%" height="29.4%" src="{{ site.assets }}/unsupervised-learning/kohonen_3.svg">
+<img width="29.2%" height="29.2%" src="{{ site.assets }}/unsupervised-learning/kohonen_3.svg">
  
  
 More examples can be found in the [Wikipedia entry for self-organizing maps](https://en.wikipedia.org/wiki/Self-organizing_map#Examples).

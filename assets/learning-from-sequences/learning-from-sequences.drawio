@@ -822,6 +822,12 @@
         <mxCell id="transformer_attention_lbdl-104" value="&lt;i&gt;Computes &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;Y&lt;/span&gt;&lt;sub&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;q&lt;/span&gt;&lt;/sub&gt;&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry x="210.42" y="101.05" width="80.32" height="20.8" as="geometry" />
         </mxCell>
+        <mxCell id="transformer_attention_lbdl-105" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=3.6;fontFamily=Source Sans 3;" vertex="1" parent="transformer_attention_lbdl-figure">
+          <mxGeometry x="111.28" y="27.91" width="33.04" height="8.26" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_lbdl-106" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=3.6;fontFamily=Source Sans 3;" vertex="1" parent="transformer_attention_lbdl-figure">
+          <mxGeometry x="277.41" y="27.91" width="24.78" height="8.26" as="geometry" />
+        </mxCell>
         <mxCell id="transformer_attention_masked-label" value="transformer_attention_masked.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="1181.11" width="600" height="30" as="geometry" />
         </mxCell>
