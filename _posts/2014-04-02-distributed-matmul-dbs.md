@@ -32,7 +32,7 @@ Each rank holds $$n/p$$ consecutive rows of $$A$$, and the matching entries of $
 2. each rank multiplies its rows of $$A$$ by $$x$$.
 
 {: .picture}
-<img width="93.8%" height="93.8%" src="{{ site.assets }}/distributed-matmul-dbs/matvec_row1d.svg">
+<img width="93.2%" height="93.2%" src="{{ site.assets }}/distributed-matmul-dbs/matvec_row1d.svg">
 
 {: .caption}
 Matrix-vector product on 4 ranks, colored by rank. **Left:** the initial layout. **Right:** rank 1 after the all-gather, ready to compute $$y_2$$ and $$y_3$$.
@@ -103,7 +103,7 @@ The tiles of the next step do not depend on the current product, so a rank can r
 The following picture compares the timelines with and without this overlap:
 
 {: .picture}
-<img width="91.6%" height="91.6%" src="{{ site.assets }}/distributed-matmul-dbs/overlap.svg">
+<img width="90%" height="90%" src="{{ site.assets }}/distributed-matmul-dbs/overlap.svg">
 
 {: .caption}
 Timeline of one rank in Cannon's algorithm on a $$3 \times 3$$ grid. **Top:** shifts and multiplications take turns. **Bottom:** each shift runs during a multiplication.
@@ -129,7 +129,7 @@ The **compressed sparse row** format (CSR, also called the Yale format), in use 
 An example is displayed below:
 
 {: .picture}
-<img width="69.8%" height="69.8%" src="{{ site.assets }}/distributed-matmul-dbs/csr_format.svg">
+<img width="69.7%" height="69.7%" src="{{ site.assets }}/distributed-matmul-dbs/csr_format.svg">
 
 {: .caption}
 A sparse matrix (left) and its CSR arrays (right), colored by row. Row 3 is empty, so `row_ptr[3]` and `row_ptr[4]` are both 6.
@@ -154,7 +154,7 @@ As before, $$A$$ is split by rows. An all-gather of $$x$$ would work, but a rank
 The following picture illustrates the exchange on 3 ranks:
 
 {: .picture}
-<img width="64.4%" height="64.4%" src="{{ site.assets }}/distributed-matmul-dbs/spmv.svg">
+<img width="63.6%" height="63.6%" src="{{ site.assets }}/distributed-matmul-dbs/spmv.svg">
 
 {: .caption}
 Sparse matrix-vector product on 3 ranks. **Left:** nonzeros colored by rank. A dot marks a nonzero whose entry of $$x$$ is on another rank. **Right:** the entries of $$x$$ on each rank after the exchange. Dashed boxes are ghost entries.
@@ -217,7 +217,7 @@ The following picture shows the two tables and three of these joins:
 <img width="90.5%" height="90.5%" src="{{ site.assets }}/distributed-matmul-dbs/joins.svg">
 
 {: .caption}
-**Top:** the tables `Person` (blue) and `Messages` (green). **Bottom:** three joins on `id`. Dark gray cells are `NULL`.
+**Top:** the tables `Person` (blue) and `Messages` (green). **Bottom:** three joins on `id`. Dark grey cells are `NULL`.
 
 On one node, there are three classic algorithms to join tables of $$N$$ and $$M$$ rows (their costs exclude the size of the output):
 - **[nested loop][nlj]**: compares all pairs of rows, in $$O(N \cdot M)$$;

@@ -191,7 +191,7 @@
             <mxPoint x="330.21" y="154.15" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dnn-48" value="&lt;i&gt;ŷ&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=16;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn-figure">
+        <mxCell id="dnn-48" value="&lt;i&gt;ŷ&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=NewComputerModernSansMath;fontSize=16;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn-figure">
           <mxGeometry x="334.21" y="142.55" width="13" height="23.2" as="geometry" />
         </mxCell>
         <mxCell id="dropout-label" value="dropout.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
@@ -419,7 +419,7 @@
         <mxCell id="dropout-73" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="339.98" y="229.69" width="29.12" height="29.12" as="geometry" />
         </mxCell>
-        <mxCell id="dropout-74" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
+        <mxCell id="dropout-74" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="398.22" y="229.69" width="29.12" height="29.12" as="geometry" />
         </mxCell>
         <mxCell id="dropout-75" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dropout-figure">
@@ -434,7 +434,7 @@
             <mxPoint x="421.81" y="235.23" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dropout-77" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
+        <mxCell id="dropout-77" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="456.06" y="229.69" width="29.12" height="29.12" as="geometry" />
         </mxCell>
         <mxCell id="dropout-78" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dropout-figure">
@@ -455,7 +455,7 @@
         <mxCell id="dropout-81" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="571.74" y="229.69" width="29.12" height="29.12" as="geometry" />
         </mxCell>
-        <mxCell id="dropout-82" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
+        <mxCell id="dropout-82" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="339.98" y="152.77" width="29.12" height="29.12" as="geometry" />
         </mxCell>
         <mxCell id="dropout-83" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dropout-figure">
@@ -473,7 +473,7 @@
         <mxCell id="dropout-85" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="398.22" y="152.77" width="29.12" height="29.12" as="geometry" />
         </mxCell>
-        <mxCell id="dropout-86" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
+        <mxCell id="dropout-86" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="456.06" y="152.77" width="29.12" height="29.12" as="geometry" />
         </mxCell>
         <mxCell id="dropout-87" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dropout-figure">
@@ -488,7 +488,7 @@
             <mxPoint x="479.64" y="158.3" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dropout-89" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
+        <mxCell id="dropout-89" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="513.9" y="152.77" width="29.12" height="29.12" as="geometry" />
         </mxCell>
         <mxCell id="dropout-90" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dropout-figure">
@@ -509,7 +509,7 @@
         <mxCell id="dropout-93" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="339.98" y="76.92" width="29.12" height="29.12" as="geometry" />
         </mxCell>
-        <mxCell id="dropout-94" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
+        <mxCell id="dropout-94" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="398.22" y="76.92" width="29.12" height="29.12" as="geometry" />
         </mxCell>
         <mxCell id="dropout-95" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dropout-figure">
@@ -527,7 +527,7 @@
         <mxCell id="dropout-97" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="456.06" y="76.92" width="29.12" height="29.12" as="geometry" />
         </mxCell>
-        <mxCell id="dropout-98" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
+        <mxCell id="dropout-98" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=12;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dropout-figure">
           <mxGeometry x="513.9" y="76.92" width="29.12" height="29.12" as="geometry" />
         </mxCell>
         <mxCell id="dropout-99" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dropout-figure">
@@ -937,20 +937,20 @@
         <mxCell id="densenet-41" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.4;fontSize=12;curved=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="87.5" y="96" as="sourcePoint" />
-            <mxPoint x="495.22" y="394.63" as="targetPoint" />
+            <mxPoint x="498.24" y="393.28" as="targetPoint" />
             <Array as="points">
               <mxPoint x="87.5" y="218.46" />
-              <mxPoint x="330.17" y="394.63" />
+              <mxPoint x="330.17" y="393.28" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="densenet-42" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.4;fontSize=12;curved=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="87.5" y="96" as="sourcePoint" />
-            <mxPoint x="616.1" y="491.51" as="targetPoint" />
+            <mxPoint x="628.36" y="486.03" as="targetPoint" />
             <Array as="points">
               <mxPoint x="87.5" y="258.17" />
-              <mxPoint x="402.24" y="491.51" />
+              <mxPoint x="402.24" y="486.03" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -973,20 +973,20 @@
         <mxCell id="densenet-45" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#82b366;strokeWidth=1.4;fontSize=12;curved=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="222.12" y="181.75" as="sourcePoint" />
-            <mxPoint x="507.47" y="389.18" as="targetPoint" />
+            <mxPoint x="510.59" y="387.77" as="targetPoint" />
             <Array as="points">
               <mxPoint x="222.12" y="267.39" />
-              <mxPoint x="390.09" y="389.18" />
+              <mxPoint x="390.09" y="387.77" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="densenet-46" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#82b366;strokeWidth=1.4;fontSize=12;curved=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="222.12" y="181.75" as="sourcePoint" />
-            <mxPoint x="628.36" y="486.04" as="targetPoint" />
+            <mxPoint x="640.71" y="480.52" as="targetPoint" />
             <Array as="points">
               <mxPoint x="222.12" y="307.11" />
-              <mxPoint x="462.16" y="486.04" />
+              <mxPoint x="462.16" y="480.52" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -999,43 +999,43 @@
         <mxCell id="densenet-48" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;strokeWidth=1.4;fontSize=12;curved=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="356.75" y="267.5" as="sourcePoint" />
-            <mxPoint x="519.82" y="383.67" as="targetPoint" />
+            <mxPoint x="522.94" y="382.26" as="targetPoint" />
             <Array as="points">
               <mxPoint x="356.75" y="316.32" />
-              <mxPoint x="450.01" y="383.67" />
+              <mxPoint x="450.01" y="382.26" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="densenet-49" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;strokeWidth=1.4;fontSize=12;curved=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="356.75" y="267.5" as="sourcePoint" />
-            <mxPoint x="640.71" y="480.55" as="targetPoint" />
+            <mxPoint x="653.06" y="475.01" as="targetPoint" />
             <Array as="points">
               <mxPoint x="356.75" y="356.04" />
-              <mxPoint x="522.08" y="480.55" />
+              <mxPoint x="522.08" y="475.01" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="densenet-50" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#d6b656;strokeWidth=1.4;fontSize=12;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="491.38" y="353.25" as="sourcePoint" />
-            <mxPoint x="532.22" y="378.14" as="targetPoint" />
+            <mxPoint x="535.29" y="376.75" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="densenet-51" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#d6b656;strokeWidth=1.4;fontSize=12;curved=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="491.38" y="353.25" as="sourcePoint" />
-            <mxPoint x="653.06" y="475.04" as="targetPoint" />
+            <mxPoint x="665.41" y="469.5" as="targetPoint" />
             <Array as="points">
               <mxPoint x="491.38" y="404.97" />
-              <mxPoint x="582" y="475.04" />
+              <mxPoint x="582" y="469.5" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="densenet-52" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#d79b00;strokeWidth=1.4;fontSize=12;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="626" y="439" as="sourcePoint" />
-            <mxPoint x="665.4" y="469.52" as="targetPoint" />
+            <mxPoint x="677.76" y="464" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="densenet-53" value="Input" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=2;rotation=-24.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="densenet-figure">
@@ -1236,42 +1236,30 @@
         <mxCell id="cnn-67" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="cnn-figure">
           <mxGeometry x="759.18" y="117.11" width="12.93" height="14.4" as="geometry" />
         </mxCell>
-        <mxCell id="cnn-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="cnn-figure">
+        <mxCell id="cnn-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;strokeColor=#ffffff;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="cnn-figure">
           <mxGeometry x="74.92" y="146.39" width="34.9" height="33.68" as="geometry" />
         </mxCell>
-        <mxCell id="cnn-3" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#ffffff;strokeWidth=1;fontFamily=Source Sans 3;" edge="1" parent="cnn-figure">
+        <mxCell id="cnn-3" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#ffffff;strokeWidth=1.4;fontFamily=Source Sans 3;dashed=1;" edge="1" parent="cnn-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="114.21" y="152.35" as="sourcePoint" />
-            <mxPoint x="122.5" y="153.57" as="targetPoint" />
+            <mxPoint x="109.82" y="146.39" as="sourcePoint" />
+            <mxPoint x="142.03" y="152.45" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="cnn-4" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#ffffff;strokeWidth=1;fontFamily=Source Sans 3;" edge="1" parent="cnn-figure">
+        <mxCell id="cnn-5" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#ffffff;strokeWidth=1.4;fontFamily=Source Sans 3;dashed=1;" edge="1" parent="cnn-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="128.36" y="154.2" as="sourcePoint" />
-            <mxPoint x="135.68" y="155.13" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="cnn-5" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#ffffff;strokeWidth=1;fontFamily=Source Sans 3;" edge="1" parent="cnn-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="118.6" y="178.26" as="sourcePoint" />
-            <mxPoint x="125.92" y="178.26" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="cnn-6" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#ffffff;strokeWidth=1;fontFamily=Source Sans 3;" edge="1" parent="cnn-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="131.29" y="178.17" as="sourcePoint" />
-            <mxPoint x="136.17" y="178.07" as="targetPoint" />
+            <mxPoint x="109.82" y="180.07" as="sourcePoint" />
+            <mxPoint x="142.03" y="179.68" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="cnn-12" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="cnn-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="142.03" y="156.2" as="sourcePoint" />
+            <mxPoint x="142.03" y="152.45" as="sourcePoint" />
             <mxPoint x="211.09" y="165.43" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="cnn-13" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="cnn-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="142.03" y="178.21" as="sourcePoint" />
+            <mxPoint x="142.03" y="179.68" as="sourcePoint" />
             <mxPoint x="211.09" y="178.85" as="targetPoint" />
           </mxGeometry>
         </mxCell>

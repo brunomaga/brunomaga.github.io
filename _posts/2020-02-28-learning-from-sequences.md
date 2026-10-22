@@ -186,7 +186,7 @@ So, the encoder is trained efficiently and learns a *context*. The main question
 BERT is a stack of Transformer encoders that learns language contexts and performs interpretation tasks. As the encoder has no mask, the context of each word is learnt from the words before and after it (hence *Bidirectional*). The following picture illustrates the model, where each block is one encoder layer of the transformer (the grey region on the left of the transformer picture):
 
 {: .picture}
-<img width="95.3%" height="95.3%" src="{{ site.assets }}/learning-from-sequences/bert.svg"/>
+<img width="83.9%" height="83.9%" src="{{ site.assets }}/learning-from-sequences/bert.svg"/>
 
 {: .caption}
 The BERT model, as a stack of Transformer encoders. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
@@ -211,7 +211,7 @@ Output = [NotNext] the man went to the store [SEP] penguins like to jump [SEP]
 Note that the Yes/No flag related to the second task is passed as the first embedded word in the output. The layout of the input data is:
 
 {: .picture}
-<img width="90.8%" height="90.8%" src="{{ site.assets }}/learning-from-sequences/bert_input.svg"/>
+<img width="90.7%" height="90.7%" src="{{ site.assets }}/learning-from-sequences/bert_input.svg"/>
 
 {: .caption}
 Input of the BERT model. Position embeddings are learned, one vector per position (up to 512), unlike the fixed sine and cosine encoding of the transformer described above. Segment embeddings flag each word as part of the first or second sentence. Token embeddings are the text embeddings of the input data. The input to the model is the sum of these three embeddings. Adapted from: [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)
