@@ -504,14 +504,14 @@
         </mxCell>
         <mxCell id="retnet-2" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=8;fontFamily=Source Sans 3;" edge="1" parent="retnet-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="68.26" y="35.79" as="sourcePoint" />
+            <mxPoint x="68.26" y="37.08" as="sourcePoint" />
             <mxPoint x="68.26" y="18.29" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="retnet-4" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=8;fontFamily=Source Sans 3;" edge="1" parent="retnet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="68.26" y="73.87" as="sourcePoint" />
-            <mxPoint x="68.26" y="56.37" as="targetPoint" />
+            <mxPoint x="68.26" y="55.08" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="retnet-6" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=8;fontFamily=Source Sans 3;" edge="1" parent="retnet-figure">
@@ -608,12 +608,12 @@
         <mxCell id="retnet-32" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=8;fontFamily=Source Sans 3;" edge="1" parent="retnet-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="454.68" y="81.77" as="sourcePoint" />
-            <mxPoint x="488.6" y="81.77" as="targetPoint" />
+            <mxPoint x="488.52" y="81.77" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="retnet-34" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=8;fontFamily=Source Sans 3;" edge="1" parent="retnet-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="506.45" y="81.77" as="sourcePoint" />
+            <mxPoint x="506.52" y="81.77" as="sourcePoint" />
             <mxPoint x="530.81" y="81.77" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -641,8 +641,8 @@
             <mxPoint x="388.75" y="127.75" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="retnet-3" value="GN" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="retnet-figure">
-          <mxGeometry x="45.96" y="37.16" width="44.95" height="17.84" as="geometry" />
+        <mxCell id="retnet-3" value="GN" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="retnet-figure">
+          <mxGeometry x="45.76" y="37.08" width="45" height="18" as="geometry" />
         </mxCell>
         <mxCell id="retnet-22" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="retnet-figure">
           <mxGeometry x="378.75" y="35.22" width="20" height="20" as="geometry" />
@@ -653,13 +653,13 @@
         <mxCell id="retnet-28" value="" style="shape=sumEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="retnet-figure">
           <mxGeometry x="434.69" y="71.77" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="retnet-33" value="GN" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;rotation=90;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="retnet-figure">
-          <mxGeometry x="476.59" y="73.53" width="41.86" height="16.47" as="geometry" />
+        <mxCell id="retnet-33" value="GN" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;rotation=90;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="retnet-figure">
+          <mxGeometry x="475.02" y="72.77" width="45" height="18" as="geometry" />
         </mxCell>
         <mxCell id="retnet-1" value="&lt;i&gt;O&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="retnet-figure">
           <mxGeometry x="59.7" y="0" width="17.11" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="retnet-5" value="(&lt;i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;QK&lt;/span&gt;&lt;/i&gt;&lt;sup&gt;&lt;span style=&quot;&quot;&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;⊺&lt;/span&gt;&lt;/span&gt;&lt;/sup&gt; &lt;span style=&quot;&quot;&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;⊙&lt;/span&gt;&lt;/span&gt; &lt;i&gt;D&lt;/i&gt;)&lt;i&gt;V&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="retnet-figure">
+        <mxCell id="retnet-5" value="(&lt;i&gt;QK&lt;/i&gt;&lt;sup&gt;⊺&lt;/sup&gt; ⊙ &lt;i&gt;D&lt;/i&gt;)&lt;i&gt;V&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="retnet-figure">
           <mxGeometry x="25.83" y="75.49" width="85.55" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="retnet-8" value="&lt;i&gt;Q&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="retnet-figure">
@@ -708,7 +708,7 @@
           <mxGeometry x="372.58" y="188.89" width="32.33" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="retnet-46" value="(a)" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontColor=#000000;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="retnet-figure">
-          <mxGeometry x="72.97" y="214.62" width="20.54" height="20.8" as="geometry" />
+          <mxGeometry x="57.99" y="214.62" width="20.54" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="retnet-47" value="(b)" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontColor=#000000;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="retnet-figure">
           <mxGeometry x="392.17" y="214.62" width="21.33" height="20.8" as="geometry" />
