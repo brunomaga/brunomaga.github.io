@@ -191,9 +191,9 @@ To study whether these advantages hold in practice, the simulation runtime of bo
 Results look promising: even at an extremely high current value, the speed-up is significant (CVODE runs more than twice as fast as Backward Euler at 500% of the threshold current, and about 11 times faster at the threshold current itself). A second test enforces discontinuities and resets of the IVP by artificially injecting current pulses of $$1 \mu s$$ at given frequencies. The picture below shows the same measures for pulse frequencies from 10 Hz to 10 kHz and five pulse amplitudes:
 
 {: .picture}
-<img width="97.9%" height="97.9%" src="{{ site.assets }}/neuron-variable-timestep/cvode_dependency_on_events_arrival.svg">
+<img width="97.2%" height="97.2%" src="{{ site.assets }}/neuron-variable-timestep/cvode_dependency_on_events_arrival.svg">
 
-In this scenario, the runtime shows a high dependency on the number of discontinuities, and a minor dependency on the discontinuity value (i.e. the amount of current injected). CVODE is faster than Backward Euler up to about 1,000 pulses per second for the strongest pulse, and 1,600 for the weakest. The holy grail is then: how does this apply to networks of neurons?
+In this scenario, the runtime shows a high dependency on the number of discontinuities, and a minor dependency on the discontinuity value (i.e. the amount of current injected). CVODE is faster than Backward Euler up to about 1,000 pulses per second for the strongest pulse, and 3,000 for the weakest. The holy grail is then: how does this apply to networks of neurons?
 
 ## Simulation of a network of homogeneous neurons
 
