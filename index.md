@@ -76,7 +76,7 @@ I also keep <a href="{{ site.publications_permalink }}">summaries of relevant pu
 <tr>
 <td></td>
 <td>
-  <a href="https://neuronaldynamics.epfl.ch/">Neuronal Dynamics, Wulfram Gerstner et al.</a><a class="pub-link" href="https://neuronaldynamics.epfl.ch/" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a> (<a href="https://neuronaldynamics.epfl.ch/online/index.html">online</a>)
+  <a href="https://neuronaldynamics.epfl.ch/">Neuronal Dynamics, Wulfram Gerstner et al.</a><a class="pub-link" href="https://neuronaldynamics.epfl.ch/" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>
@@ -118,19 +118,19 @@ I also keep <a href="{{ site.publications_permalink }}">summaries of relevant pu
 <tr>
 <td><span class="post-label">univ</span></td>
 <td>
-  <a href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/files/backprop.pdf">Computing Gradients with Backpropagation - Automatic Differentiation (Princeton course COS-324)</a><a class="pub-link" href="{{ site.assets }}/resources/princeton_course_autodiff.pdf" target="_blank" rel="noopener" title="Download the PDF"><i class="fa-solid fa-download" aria-hidden="true"></i></a>
+  <a href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/">Introduction to Machine Learning (Princeton COS 324)</a><a class="pub-link" href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a> <span style="white-space: nowrap;">(<a href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/files/backprop.pdf">Computing Gradients with Backpropagation</a><a class="pub-link" href="{{ site.assets }}/resources/princeton_course_autodiff.pdf" target="_blank" rel="noopener" title="Download the PDF"><i class="fa-solid fa-download" aria-hidden="true"></i></a>)</span>
 </td>
 </tr>
 <tr>
 <td></td>
 <td>
-  <a href="{{ site.epfl_statistics }}/README.md">Statistics for Data Science (EPFL course MATH-413)</a><a class="pub-link" href="{{ site.epfl_statistics }}/README.md" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+  <a href="{{ site.epfl_statistics }}/README.md">Statistics for Data Science (EPFL MATH-413)</a><a class="pub-link" href="{{ site.epfl_statistics }}/README.md" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>
 <td></td>
 <td>
-  <a href="{{ site.epfl_machine_learning }}/README.md">Machine Learning (EPFL course CS-433)</a><a class="pub-link" href="{{ site.epfl_machine_learning }}/README.md" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+  <a href="{{ site.epfl_machine_learning }}/README.md">Machine Learning (EPFL CS-433)</a><a class="pub-link" href="{{ site.epfl_machine_learning }}/README.md" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>
