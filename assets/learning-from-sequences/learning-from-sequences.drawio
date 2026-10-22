@@ -846,7 +846,7 @@
         <mxCell id="transformer_attention_masked-6" value="0" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="transformer_attention_masked-figure">
           <mxGeometry x="15.01" y="56" width="12" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention_masked-7" value="Le" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="transformer_attention_masked-figure">
+        <mxCell id="transformer_attention_masked-7" value="Le" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="transformer_attention_masked-figure">
           <mxGeometry x="11.12" y="81.67" width="19.77" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="transformer_attention_masked-8" value="" style="shape=partialRectangle;html=1;fillColor=none;right=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="transformer_attention_masked-figure">
