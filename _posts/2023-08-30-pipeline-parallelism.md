@@ -14,7 +14,7 @@ Imagine a model that is too large to fit in the local memory of a single process
 Each process is responsible for a subset of layers and is called a **stage**, as in the stages of a [pipeline](https://en.wikipedia.org/wiki/Pipeline_(computing)). This type of parallelism is called **pipeline parallelism**. The following picture gives a simple illustration of the process:
 
 {: .picture}
-<img width="36.4%" height="36.4%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline.svg"/>
+<img width="36.5%" height="36.5%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline.svg"/>
 
 {: .caption}
 Training of a model split into 4 stages on 4 workers, without pipelining: the forward pass of a mini-batch goes from worker 1 to worker 4, and its backward pass, which takes twice as long, comes back, so only one worker computes at a time. The number in each cell is the mini-batch index. Adapted from: [PipeDream: Generalized Pipeline Parallelism for DNN Training](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/)
@@ -34,14 +34,14 @@ Setting a high micro-batching factor can lead to high memory usage, as activatio
 The other hyper-parameter to define is the number of stages. So far, the examples above used a number of stages equal to the number of workers, i.e. a single pipeline that spans all workers. However, it is possible to have multiple pipelines in parallel and to combine pipeline parallelism with other dimensions of parallelism. As an example, here are some combinations of pipeline and data parallelism on an 8-GPU network:
 
 {: .picture}
-<img width="32.5%" height="32.5%" src="{{ site.assets }}/distributed-training/imgs/pipeline_8_stages.svg"/>
+<img width="32.4%" height="32.4%" src="{{ site.assets }}/distributed-training/imgs/pipeline_8_stages.svg"/>
 &nbsp;
-<img width="32.5%" height="32.5%" src="{{ site.assets }}/distributed-training/imgs/pipeline_4_stages.svg"/>
+<img width="32.4%" height="32.4%" src="{{ site.assets }}/distributed-training/imgs/pipeline_4_stages.svg"/>
 &nbsp;
-<img width="32.5%" height="32.5%" src="{{ site.assets }}/distributed-training/imgs/pipeline_2_stages.svg"/>
+<img width="32.4%" height="32.4%" src="{{ site.assets }}/distributed-training/imgs/pipeline_2_stages.svg"/>
 
 {: .caption}
-Combinations of pipeline and data parallelism on 8 workers, for one micro-batch: forward passes in blue, backward passes in green, idle time hatched. Left: one pipeline of 8 stages. Center: 2 data-parallel groups of 4 pipeline stages. Right: 4 data-parallel groups of 2 pipeline stages.
+Combinations of pipeline and data parallelism on 8 workers, for one micro-batch: forward passes in blue, backward passes in green, idle time in dashed boxes. Left: one pipeline of 8 stages. Center: 2 data-parallel groups of 4 pipeline stages. Right: 4 data-parallel groups of 2 pipeline stages.
 
 In the pictures above, fewer stages lead to less idle time but to more layers per GPU, so the number of stages is usually the smallest one that fits the model in memory. However, no matter which pipeline configuration is used, there are periods of idleness that cannot be removed.
 
@@ -377,7 +377,7 @@ Even with 1F1B, every stage idles for $$(p-1)(F+B)$$ per iteration (the **pipeli
 
 The diagrams in this section, like the GPipe and 1F1B diagrams above, were generated from the reference implementation of each schedule, for 4 GPUs and 8 micro-batches (8 GPUs and 16 micro-batches for DualPipe). Time is normalized so that every GPU performs the same amount of compute in all diagrams on 4 GPUs, drawn on the same time scale.
 
-A forward pass takes 1 unit and a backward pass takes 2 units (1+1 when it is split into the gradients for inputs and for weights, as explained below). Schedules that place two model chunks on each GPU (interleaved 1F1B, ZB-V and DualPipeV) run each chunk in half the time. Communication time is not modeled. The number in each cell is the micro-batch id, and hatched cells are idle time.
+A forward pass takes 1 unit and a backward pass takes 2 units (1+1 when it is split into the gradients for inputs and for weights, as explained below). Schedules that place two model chunks on each GPU (interleaved 1F1B, ZB-V and DualPipeV) run each chunk in half the time. Communication time is not modeled. The number in each cell is the micro-batch id, and dashed cells are idle time.
 
 ### Interleaved 1F1B
 
@@ -386,7 +386,7 @@ A forward pass takes 1 unit and a backward pass takes 2 units (1+1 when it is sp
 Smaller chunks make the pipeline fill and drain faster, and the bubble shrinks by the number of chunks per GPU $$v$$, to $$(p-1)(F+B)/v$$. The price is $$v$$ times more point-to-point communication, and more activation memory, as the first GPU keeps more micro-batches in flight. The original implementation also requires the number of micro-batches to be a multiple of the number of GPUs. This schedule is available in Megatron-LM and as `ScheduleInterleaved1F1B` in PyTorch, and can be illustrated as:
 
 {: .picture}
-<img width="75.3%" height="75.3%" src="{{ site.assets }}/distributed-training/imgs/pipeline_interleaved_1f1b.svg"/>
+<img width="75.4%" height="75.4%" src="{{ site.assets }}/distributed-training/imgs/pipeline_interleaved_1f1b.svg"/>
 
 {: .caption}
 Interleaved 1F1B with 2 model chunks per GPU. Light and dark cells refer to the first and second chunk on each GPU. Interleaving halves the bubble of 1F1B. Adapted from: [Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM](https://arxiv.org/abs/2104.04473)
@@ -441,7 +441,7 @@ The bubble is given by $$(p/2-1)(F\&B+B-3W)$$, where $$F\&B$$ is the time of an 
 Note that the diagrams model only computation, so DualPipe's bubble looks comparable to ZB-H1's. Its main advantage is that, within each black-bordered pair, the all-to-all communication of expert parallelism is hidden behind useful computation. DualPipe on 8 GPUs is illustrated in the following picture:
 
 {: .picture}
-<img width="99.3%" height="99.3%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
+<img width="99.2%" height="99.2%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
 
 {: .caption}
 DualPipe on 8 GPUs: micro-batches 1 to 8 (light) enter at GPU 0, and micro-batches 9 to 16 (dark) enter at GPU 7. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other. Adapted from: [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437)
