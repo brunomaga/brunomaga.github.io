@@ -7097,7 +7097,7 @@
         <mxCell id="soft_moes-100" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="soft_moes-figure">
           <mxGeometry x="145.46" y="16.16" width="47.64" height="47.64" as="geometry" />
         </mxCell>
-        <mxCell id="soft_moes-101" value="" style="rounded=1;absoluteArcSize=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#9673a6;fontSize=14;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="soft_moes-figure">
+        <mxCell id="soft_moes-101" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#9673a6;fontSize=14;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="soft_moes-figure">
           <mxGeometry x="55.33" y="110.91" width="21.14" height="21.14" as="geometry" />
         </mxCell>
         <mxCell id="soft_moes-102" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="soft_moes-figure">
@@ -7127,7 +7127,7 @@
         <mxCell id="soft_moes-106" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="soft_moes-figure">
           <mxGeometry x="585.94" y="19.56" width="47.64" height="47.64" as="geometry" />
         </mxCell>
-        <mxCell id="soft_moes-107" value="" style="rounded=1;absoluteArcSize=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b85450;fontSize=14;strokeWidth=3.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="soft_moes-figure">
+        <mxCell id="soft_moes-107" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b85450;fontSize=14;strokeWidth=3.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="soft_moes-figure">
           <mxGeometry x="452.96" y="71.45" width="148.01" height="148.01" as="geometry" />
         </mxCell>
         <mxCell id="soft_moes-108" value="0.09" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=10;fontColor=#b85450;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="soft_moes-figure">
