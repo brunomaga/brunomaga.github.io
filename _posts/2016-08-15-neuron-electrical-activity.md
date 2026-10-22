@@ -28,10 +28,10 @@ Due to the very sophisticated anatomical structure and behaviour of neurons, num
 Brain simulators also work at different levels of detail, as displayed in the picture below, where each model zooms into a part of the model on its left:
 
 {: .picture}
-<img width="99.3%" height="99.3%" src="{{ site.assets }}/neuron-electrical-activity/neuron_model_scales.svg">
+<img width="98.6%" height="98.6%" src="{{ site.assets }}/neuron-electrical-activity/neuron_model_scales.svg">
 
 {: .caption}
-Levels of detail in brain simulation. Each dashed circle marks the part that the next model describes in more detail. This post covers the compartmental neuron model (in bold). In the reaction-diffusion model, the line with a flat head marks the breakdown of cAMP by PDE. Adapted from: J. M. Eppler, Introduction to NEST, First community workshop on NESTML, 2015
+Levels of detail in brain simulation. Each red outline marks the part that the next model describes in more detail. This post covers the compartmental neuron model (in bold). In the reaction-diffusion model, the line with a flat head marks the breakdown of cAMP by PDE. Adapted from: J. M. Eppler, Introduction to NEST, First community workshop on NESTML, 2015
 
 - **Population models** describe the average activity of large groups of neurons. A simple example is one excitatory population ($$E$$) and one inhibitory population ($$I$$) that drive each other, as in the [Wilson–Cowan model](https://en.wikipedia.org/wiki/Wilson%E2%80%93Cowan_model).
 - **Point neuron networks** model each neuron as a single point, with no shape. The simplest example is the [Leaky Integrate-and-Fire (LIF) model][lif-post] (1907), which has no ion channels: it treats the membrane as an [RC circuit](https://en.wikipedia.org/wiki/RC_circuit), and the neuron spikes when its voltage reaches a threshold.
