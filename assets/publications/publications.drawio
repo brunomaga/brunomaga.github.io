@@ -860,22 +860,22 @@
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-105" value="" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=2.72;fillColor=#b85450;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
           <mxGeometry x="428.1" y="251.13" width="12.6" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="efficiently_scaling_transformer_inference_multiquery-106" value="" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=2.72;fillColor=none;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
+        <mxCell id="efficiently_scaling_transformer_inference_multiquery-106" value="" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=2.72;fillColor=#ffffff;dashed=1;strokeColor=#000000;strokeWidth=1.2;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
           <mxGeometry x="430.82" y="253.85" width="12.6" height="25.2" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-107" value="" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=2.47;fillColor=#b85450;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
           <mxGeometry x="427.11" y="282.76" width="106.24" height="7.91" as="geometry" />
         </mxCell>
-        <mxCell id="efficiently_scaling_transformer_inference_multiquery-108" value="" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=2.47;fillColor=none;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
+        <mxCell id="efficiently_scaling_transformer_inference_multiquery-108" value="" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=2.47;fillColor=#ffffff;dashed=1;strokeColor=#000000;strokeWidth=1.2;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
           <mxGeometry x="429.58" y="285.23" width="106.24" height="7.91" as="geometry" />
         </mxCell>
-        <mxCell id="efficiently_scaling_transformer_inference_multiquery-109" value="" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=2.96;fillColor=none;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
+        <mxCell id="efficiently_scaling_transformer_inference_multiquery-109" value="" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=2.96;fillColor=none;dashed=1;strokeColor=#000000;strokeWidth=1.2;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
           <mxGeometry x="426.62" y="322.04" width="12.6" height="25.45" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-110" value="" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=2.96;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
           <mxGeometry x="429.58" y="325" width="12.6" height="25.45" as="geometry" />
         </mxCell>
-        <mxCell id="efficiently_scaling_transformer_inference_multiquery-111" value="" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=2.72;fillColor=none;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
+        <mxCell id="efficiently_scaling_transformer_inference_multiquery-111" value="" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=2.72;fillColor=none;dashed=1;strokeColor=#000000;strokeWidth=1.2;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
           <mxGeometry x="429.58" y="362.31" width="105.49" height="8.15" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-112" value="" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=2.72;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
@@ -887,10 +887,10 @@
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-2" value="Multi-query attention" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
           <mxGeometry x="299.54" y="0" width="137.27" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="efficiently_scaling_transformer_inference_multiquery-3" value="Q" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
+        <mxCell id="efficiently_scaling_transformer_inference_multiquery-3" value="Q" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
           <mxGeometry x="114.85" y="42.29" width="19.45" height="23.2" as="geometry" />
         </mxCell>
-        <mxCell id="efficiently_scaling_transformer_inference_multiquery-4" value="K / V" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
+        <mxCell id="efficiently_scaling_transformer_inference_multiquery-4" value="K / V" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
           <mxGeometry x="103" y="95.64" width="43.16" height="23.2" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-6" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
@@ -972,16 +972,16 @@
           <mxGeometry x="179.55" y="50.61" width="34.32" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-23" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#1e3a5f;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
-          <mxGeometry x="173.42" y="71.86" width="13" height="18.4" as="geometry" />
+          <mxGeometry x="173.42" y="74.96" width="13" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-24" value="batch" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#b85450;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
           <mxGeometry x="133" y="117.81" width="32.99" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="efficiently_scaling_transformer_inference_multiquery-25" value="heads" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;fontColor=#456e36;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
+        <mxCell id="efficiently_scaling_transformer_inference_multiquery-25" value="heads" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#456e36;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
           <mxGeometry x="175.59" y="106.94" width="34.32" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-26" value="time" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#1e3a5f;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
-          <mxGeometry x="207.25" y="128.19" width="28.33" height="18.4" as="geometry" />
+          <mxGeometry x="207.25" y="130.69" width="28.33" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-27" value="batch" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#b85450;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
           <mxGeometry x="283.04" y="63.46" width="32.99" height="18.4" as="geometry" />
@@ -990,7 +990,7 @@
           <mxGeometry x="328.78" y="49.62" width="34.32" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-29" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#1e3a5f;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
-          <mxGeometry x="322.15" y="71.37" width="13" height="18.4" as="geometry" />
+          <mxGeometry x="322.15" y="74.07" width="13" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-30" value="batch" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#b85450;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
           <mxGeometry x="283.04" y="119.29" width="32.99" height="18.4" as="geometry" />
@@ -999,34 +999,34 @@
           <mxGeometry x="326.59" y="109.41" width="13" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-32" value="time" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#1e3a5f;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
-          <mxGeometry x="337.7" y="126.71" width="28.33" height="18.4" as="geometry" />
+          <mxGeometry x="337.7" y="130.31" width="28.33" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-46" value="batch" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#b85450;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
           <mxGeometry x="4.3" y="199.32" width="32.99" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-47" value="heads" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#456e36;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
-          <mxGeometry x="48.12" y="193.88" width="34.32" height="18.4" as="geometry" />
+          <mxGeometry x="49.52" y="193.88" width="34.32" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-48" value="time" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#1e3a5f;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
-          <mxGeometry x="23.43" y="219.58" width="28.33" height="18.4" as="geometry" />
+          <mxGeometry x="23.43" y="222.68" width="28.33" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-49" value="batch" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#b85450;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
           <mxGeometry x="192.14" y="197.34" width="32.99" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-50" value="heads" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#456e36;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
-          <mxGeometry x="236.45" y="194.87" width="34.32" height="18.4" as="geometry" />
+          <mxGeometry x="238.7" y="194.87" width="34.32" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-51" value="time" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#1e3a5f;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
-          <mxGeometry x="211.77" y="217.11" width="28.33" height="18.4" as="geometry" />
+          <mxGeometry x="211.77" y="219.11" width="28.33" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-52" value="batch" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#b85450;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
           <mxGeometry x="370.09" y="199.32" width="32.99" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-53" value="heads" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#456e36;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
-          <mxGeometry x="414.4" y="196.85" width="34.32" height="18.4" as="geometry" />
+          <mxGeometry x="415.9" y="196.85" width="34.32" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-54" value="time" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#1e3a5f;fontFamily=Source Sans 3;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
-          <mxGeometry x="388.23" y="219.08" width="28.33" height="18.4" as="geometry" />
+          <mxGeometry x="388.23" y="221.08" width="28.33" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="efficiently_scaling_transformer_inference_multiquery-56" value="Device 1" style="text;html=1;align=right;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="efficiently_scaling_transformer_inference_multiquery-figure">
           <mxGeometry x="133.1" y="233.87" width="55.14" height="20.8" as="geometry" />
