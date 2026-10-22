@@ -2,8 +2,9 @@
 
 The data is the mean and standard deviation of the latency, in ms, on 8 GPUs, from the paper "Towards Efficient LLM
 Inference via Full-Stack Fusion of Computation, Communication, and In-Network Computing". The picture follows
-CLAUDE.md (Pictures): Source Sans 3 text at page size (1 unit = 1 px), drawn as glyph outlines, 1.8 px axes, a 1.0 px
-data line, and the legend in one column right of the plot.
+CLAUDE.md (Pictures): Source Sans 3 text at page size (1 unit = 1 px), drawn as glyph outlines, 1.8 px axes and data
+line (the weight of the measured results), the data drawn behind the axes, and the legend in one column right of the
+plot.
 
 usage: python3 tp_results.py   (needs matplotlib and the Source Sans 3 font)
 """
@@ -45,7 +46,7 @@ ax.yaxis.grid(True, color='#b3b3b3', linewidth=0.4)
 ax.set_axisbelow(True)
 
 ax2 = ax.twinx()
-ax2.plot(list(x), IMPROVEMENT, color='#000000', linewidth=1.0, marker='o', markersize=6, markerfacecolor='#f8cecc',
+ax2.plot(list(x), IMPROVEMENT, color='#000000', linewidth=1.8, marker='o', markersize=6, markerfacecolor='#f8cecc',
          markeredgecolor='#000000', markeredgewidth=1.0, label='Improvement (%)')
 for i, v in enumerate(IMPROVEMENT):
     ax2.annotate('%.1f' % v, (i, v), xytext=(4, 3), textcoords='offset points', ha='left', va='bottom', fontsize=12,
