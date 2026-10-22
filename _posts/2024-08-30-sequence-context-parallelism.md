@@ -20,13 +20,9 @@ Before continuing, it is important to emphasize the following:
 
 ## Data loader setup for sequence parallelism
 
-To implement sequence parallelism, the data loader first has to be adapted to load data at the token level, in a way that matches the hybrid data- and sequence-parallel setup. All that is needed is to configure a `DataLoader` and a `DistributedSampler` that allocate chunks of sequences (instead of full sequences) to the data loader workers. The following picture illustrates this allocation for three combinations of data and sequence parallelism:
+To implement sequence parallelism, the data loader first has to be adapted to load data at the token level, in a way that matches the hybrid data- and sequence-parallel setup. All that is needed is to configure a `DataLoader` and a `DistributedSampler` that allocate chunks of sequences (instead of full sequences) to the data loader workers.
 
-{: .picture}
-<img width="97.2%" height="97.2%" src="{{ site.assets }}/distributed-training/imgs/spdistributedsampler.svg"/>
-
-{: .caption}
-Data loading for hybrid data parallelism (DP) and sequence parallelism (SP) on 4 color-coded processes/GPUs and a dataset of 8 samples. First row: all 4 processes run distributed data parallelism. Second row: a custom `DistributedSampler` that yields chunks of sequences enables a hybrid data- and sequence-parallel execution with 2 groups of 2 sequence-parallel processes. Third row: no data parallelism; all 4 processes run sequence parallelism on the same sample.
+As an example, take 4 processes and a dataset of 8 samples. With data parallelism only, the sampler gives whole samples to the processes in turn: process 1 gets samples 1 and 5, process 2 gets samples 2 and 6, and so on. With 2 data-parallel groups of 2 sequence-parallel processes, a custom `DistributedSampler` gives the odd samples to the first group and the even samples to the second, and each process of a group gets one half of the tokens of each of its samples. With sequence parallelism only, all 4 processes read the same samples, and each process gets one quarter of the tokens of each sample.
 
 Once this is in place, most layers (like the feed-forward network) operate on the last (embedding) dimension of the input, and can therefore run sequence-parallel training/prefill without changes. The attention layer is an exception, and is covered next.
 
@@ -37,7 +33,7 @@ During training/inference, the model runtime can scale well with the sequence pa
 In practice, to compute attention, each process uses its own subset/chunk of queries, but **needs the keys and values for the full sequence**. The rationale is the following: take the attention head computation $$softmax \left(QK^T \right)V$$ (without the scaling of the scores, for simplicity), where all tensors are shaped `(B, S, E)`. If each process holds a subset of rows of $$Q$$ as $$Q_p$$ with shape `(B, S/P, E)`, it needs to access all elements of $$K^T$$ and $$V$$ to perform the dot-product $$Q_p K^T$$, the row-wise $$softmax$$, and the dot-product with $$V$$. The result is an attention output of shape `(B, S/P, E)` per process, as illustrated in the following picture, where the blue elements are the ones that one process uses or computes:
 
 {: .picture}
-<img width="77.3%" height="77.3%" src="{{ site.assets }}/distributed-training/imgs/context_parallelism.svg"/>
+<img width="87.7%" height="87.7%" src="{{ site.assets }}/distributed-training/imgs/context_parallelism.svg"/>
 
 Therefore, sequence parallelism requires some communication to make the relevant KV elements accessible across all GPUs. With that in mind, the following sections look into two alternative algorithms for sequence/context-parallel attention.
 
@@ -416,9 +412,9 @@ PyTorch does not have a notion of *partial sequences* in the same way that data 
 Moreover, when multi-dimensional parallelism (e.g., data + sequence) is performed, process groups must be defined for the data-parallel processes (the ones that load different samples) and for the sequence-parallel processes (the ones that load different chunks of the same sample). This can be done with PyTorch's [`DeviceMesh`](https://pytorch.org/tutorials/recipes/distributed_device_mesh.html) or by creating the process groups manually. For the sake of illustration, if $$2 \times 2$$ data and Ulysses sequence parallelism were implemented on 4 GPUs, this would be the memory layout before and during multi-head attention:
 
 {: .picture}
-<img width="65%" height="65%" src="{{ site.assets }}/distributed-training/imgs/sequence_and_data_parallelism.svg"/>
+<img width="60.4%" height="60.4%" src="{{ site.assets }}/distributed-training/imgs/sequence_and_data_parallelism.svg"/>
 
 {: .caption}
-Allocation of activations on 4 GPUs with 2-GPU data parallelism and 2-GPU Ulysses sequence parallelism. Left: the blue and green processes form one sequence-parallel group and share one sample; the red and yellow processes form the other group and share the other sample. Right: the first all-to-all in Ulysses parallelism converts token-level distributed storage into head-level distributed storage. All four processes then compute attention over full sequences.
+Allocation of activations on 4 GPUs with 2-GPU data parallelism and 2-GPU Ulysses sequence parallelism. Left: the blue and green processes form one sequence-parallel group and share half of the batch; the red and yellow processes form the other group and share the other half. Right: the first all-to-all in Ulysses parallelism converts token-level distributed storage into head-level distributed storage. All four processes then compute attention over full sequences.
 
 To find more about the topic, the DeepSpeed tutorial [Getting Started with DeepSpeed-Ulysses](https://www.deepspeed.ai/tutorials/ds-sequence/) shows how to replace the attention module of a model with the `DistributedAttention` of Ulysses. The [ring-flash-attention](https://github.com/zhuzilin/ring-flash-attention) repository implements ring attention and its zigzag and striped variants with FlashAttention, together with the context parallelism of Llama 3, and PyTorch provides ring attention in its [Context Parallel](https://docs.pytorch.org/tutorials/unstable/context_parallel.html) API.
