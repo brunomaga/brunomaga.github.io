@@ -14925,7 +14925,7 @@
         <mxCell id="attention_mech-29" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="attention_mech-figure">
           <mxGeometry x="185.48" y="232.4" width="26.85" height="44.9" as="geometry" />
         </mxCell>
-        <mxCell id="attention_mech-41" value="&lt;i&gt;s&lt;/i&gt;&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;-1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="attention_mech-figure">
+        <mxCell id="attention_mech-41" value="&lt;i&gt;s&lt;/i&gt;&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;−1&lt;/sub&gt;" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#f8cecc;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="attention_mech-figure">
           <mxGeometry x="59.06" y="27.22" width="26.36" height="44.9" as="geometry" />
         </mxCell>
         <mxCell id="attention_mech-43" value="&lt;i&gt;s&lt;/i&gt;&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="attention_mech-figure">
@@ -15018,7 +15018,7 @@
         <mxCell id="attention_mech-32" value="&lt;i&gt;x&lt;/i&gt;&lt;sub&gt;&lt;i&gt;T&lt;/i&gt;&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="attention_mech-figure">
           <mxGeometry x="187.5" y="286.69" width="24.77" height="23.2" as="geometry" />
         </mxCell>
-        <mxCell id="attention_mech-42" value="&lt;i&gt;y&lt;/i&gt;&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;-1&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="attention_mech-figure">
+        <mxCell id="attention_mech-42" value="&lt;i&gt;y&lt;/i&gt;&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;−1&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="attention_mech-figure">
           <mxGeometry x="59.5" y="0" width="32.77" height="23.2" as="geometry" />
         </mxCell>
         <mxCell id="attention_mech-44" value="&lt;i&gt;y&lt;/i&gt;&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="attention_mech-figure">
@@ -15042,17 +15042,17 @@
         <mxCell id="attention_mech-50" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="attention_mech-figure">
           <mxGeometry x="205.88" y="46.16" width="2.15" height="2.15" as="geometry" />
         </mxCell>
-        <mxCell id="attention_mech-60" value="α&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;,1&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="attention_mech-figure">
-          <mxGeometry x="29.74" y="129.48" width="25.62" height="18.4" as="geometry" />
+        <mxCell id="attention_mech-60" value="α&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;,1&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="attention_mech-figure">
+          <mxGeometry x="27.24" y="126.98" width="25.62" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="attention_mech-61" value="α&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;,2&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="attention_mech-figure">
+        <mxCell id="attention_mech-61" value="α&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;,2&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="attention_mech-figure">
           <mxGeometry x="44.38" y="148.52" width="25.62" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="attention_mech-62" value="α&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;,3&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="attention_mech-figure">
+        <mxCell id="attention_mech-62" value="α&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;,3&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="attention_mech-figure">
           <mxGeometry x="110.27" y="154.37" width="25.62" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="attention_mech-63" value="α&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;,&lt;i&gt;T&lt;/i&gt;&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="attention_mech-figure">
-          <mxGeometry x="138.58" y="128.51" width="26.95" height="18.4" as="geometry" />
+        <mxCell id="attention_mech-63" value="α&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;,&lt;i&gt;T&lt;/i&gt;&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="attention_mech-figure">
+          <mxGeometry x="138.58" y="127.51" width="26.95" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="llama2_gatt-label" value="llama2_gatt.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="15185.5" width="600" height="30" as="geometry" />
