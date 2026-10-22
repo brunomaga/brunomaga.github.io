@@ -211,7 +211,7 @@ Output = [NotNext] the man went to the store [SEP] penguins like to jump [SEP]
 Note that the Yes/No flag related to the second task is passed as the first embedded word in the output. The layout of the input data is:
 
 {: .picture}
-<img width="90.8%" height="90.8%" src="{{ site.assets }}/learning-from-sequences/bert_input.svg"/>
+<img width="90.7%" height="90.7%" src="{{ site.assets }}/learning-from-sequences/bert_input.svg"/>
 
 {: .caption}
 Input of the BERT model. Position embeddings are learned, one vector per position (up to 512), unlike the fixed sine and cosine encoding of the transformer described above. Segment embeddings flag each word as part of the first or second sentence. Token embeddings are the text embeddings of the input data. The input to the model is the sum of these three embeddings. Adapted from: [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)
