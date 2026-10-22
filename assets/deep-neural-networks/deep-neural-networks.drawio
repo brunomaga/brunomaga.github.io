@@ -191,7 +191,7 @@
             <mxPoint x="330.21" y="154.15" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dnn-48" value="&lt;i&gt;ŷ&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Source Sans 3;fontSize=16;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn-figure">
+        <mxCell id="dnn-48" value="&lt;i&gt;ŷ&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=NewComputerModernSansMath;fontSize=16;fontStyle=0;fontColor=#000000;" vertex="1" parent="dnn-figure">
           <mxGeometry x="334.21" y="142.55" width="13" height="23.2" as="geometry" />
         </mxCell>
         <mxCell id="dropout-label" value="dropout.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
