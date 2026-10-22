@@ -8443,7 +8443,7 @@
             <mxPoint x="279.84" y="132.28" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="omnigen-211" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;absoluteArcSize=1;arcSize=20;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="omnigen-figure">
+        <mxCell id="omnigen-211" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;absoluteArcSize=1;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="omnigen-figure">
           <mxGeometry x="275" y="68.16" width="592.32" height="65.14" as="geometry" />
         </mxCell>
         <mxCell id="omnigen-228" value="" style="rounded=1;absoluteArcSize=1;arcSize=20;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;" vertex="1" parent="omnigen-figure">
@@ -9265,7 +9265,7 @@
         <mxCell id="omnigen-274" value="VAE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;absoluteArcSize=1;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="omnigen-figure">
           <mxGeometry x="528.42" y="225.53" width="124.67" height="20.35" as="geometry" />
         </mxCell>
-        <mxCell id="omnigen-284" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="omnigen-figure">
+        <mxCell id="omnigen-284" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="omnigen-figure">
           <mxGeometry x="657.67" y="225.53" width="40.2" height="20.35" as="geometry" />
         </mxCell>
         <mxCell id="omnigen-2" value="Attention Mechanism" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="omnigen-figure">
@@ -9277,7 +9277,7 @@
         <mxCell id="omnigen-4" value="Image&lt;br&gt;Patch" style="text;html=1;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="omnigen-figure">
           <mxGeometry x="107.18" y="46.13" width="34.98" height="32.8" as="geometry" />
         </mxCell>
-        <mxCell id="omnigen-5" value="Timestep" style="text;html=1;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;horizontal=0;whiteSpace=nowrap;" vertex="1" parent="omnigen-figure">
+        <mxCell id="omnigen-5" value="Timestep" style="text;html=1;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;horizontal=0;whiteSpace=nowrap;" vertex="1" parent="omnigen-figure">
           <mxGeometry x="156.49" y="30.69" width="16" height="48.23" as="geometry" />
         </mxCell>
         <mxCell id="omnigen-6" value="Noise" style="text;html=1;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="omnigen-figure">
@@ -9290,7 +9290,7 @@
           <mxGeometry x="6.29" y="150.27" width="34.98" height="32.8" as="geometry" />
         </mxCell>
         <mxCell id="omnigen-9" value="Timestep" style="text;html=1;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="omnigen-figure">
-          <mxGeometry x="0.18" y="196.27" width="49.23" height="18.4" as="geometry" />
+          <mxGeometry x="1.68" y="196.27" width="49.23" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="omnigen-10" value="Noise" style="text;html=1;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="omnigen-figure">
           <mxGeometry x="8.27" y="234.06" width="33" height="18.4" as="geometry" />
