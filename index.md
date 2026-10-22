@@ -45,7 +45,7 @@ In this space, I write about my projects and topics related to my fields of inte
 
 <!-- resources -->
 <p class="home-text">
-I also bookmark <a href="{{ site.publications_permalink }}">relevant publications</a>, and keep a curated list of books and other resources:
+I also keep <a href="{{ site.publications_permalink }}">summaries of relevant publications</a>, and a list of books and other resources in the field:
 </p>
 
 <table id="resources-table" class="label-table home-table">
