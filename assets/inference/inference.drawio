@@ -14104,10 +14104,10 @@
           <mxGeometry x="0" y="1618.32" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="1658.32" width="878" height="280.8" as="geometry" />
+          <mxGeometry x="0" y="1658.32" width="876" height="280.8" as="geometry" />
         </mxCell>
-        <mxCell id="spec_sampling-34" value="" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=3.6;absoluteArcSize=1;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="87.5" y="51.4" width="70" height="208" as="geometry" />
+        <mxCell id="spec_sampling-34" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=3.6;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
+          <mxGeometry x="81.5" y="51.4" width="70" height="208" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
           <mxGeometry x="15.5" y="199.4" width="26" height="30" as="geometry" />
@@ -14121,128 +14121,128 @@
         <mxCell id="spec_sampling-6" value="0.2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
           <mxGeometry x="45.5" y="149.2" width="22" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="spec_sampling-7" value="a" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="35.89" y="235" width="13.21" height="20.8" as="geometry" />
+        <mxCell id="spec_sampling-7" value="a" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
+          <mxGeometry x="34.5" y="236.2" width="16" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-8" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="95.5" y="79.4" width="26" height="150" as="geometry" />
+          <mxGeometry x="89.5" y="79.4" width="26" height="150" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-9" value="0.5" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="97.5" y="59.2" width="22" height="18.4" as="geometry" />
+          <mxGeometry x="91.5" y="59.2" width="22" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-10" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="123.5" y="139.4" width="26" height="90" as="geometry" />
+          <mxGeometry x="117.5" y="139.4" width="26" height="90" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-11" value="0.3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="125.5" y="119.2" width="22" height="18.4" as="geometry" />
+          <mxGeometry x="119.5" y="119.2" width="22" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="spec_sampling-12" value="b" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="115.5" y="235" width="14" height="20.8" as="geometry" />
+        <mxCell id="spec_sampling-12" value="b" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
+          <mxGeometry x="108.5" y="236.2" width="16" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-13" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="175.5" y="169.4" width="26" height="60" as="geometry" />
+          <mxGeometry x="163.5" y="169.4" width="26" height="60" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-14" value="0.2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="177.5" y="149.2" width="22" height="18.4" as="geometry" />
+          <mxGeometry x="165.5" y="149.2" width="22" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-15" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="203.5" y="139.4" width="26" height="90" as="geometry" />
+          <mxGeometry x="191.5" y="139.4" width="26" height="90" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-16" value="0.3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="205.5" y="119.2" width="22" height="18.4" as="geometry" />
+          <mxGeometry x="193.5" y="119.2" width="22" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="spec_sampling-17" value="c" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="195.89" y="235" width="13.21" height="20.8" as="geometry" />
+        <mxCell id="spec_sampling-17" value="c" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
+          <mxGeometry x="182.5" y="236.2" width="16" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-18" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="249.23" y="199.4" width="26" height="30" as="geometry" />
+          <mxGeometry x="237.5" y="199.4" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-19" value="0.1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="251.23" y="179.2" width="22" height="18.4" as="geometry" />
+          <mxGeometry x="239.5" y="179.2" width="22" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-20" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="277.23" y="199.4" width="26" height="30" as="geometry" />
+          <mxGeometry x="265.5" y="199.4" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-21" value="0.1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="279.23" y="179.2" width="22" height="18.4" as="geometry" />
+          <mxGeometry x="267.5" y="179.2" width="22" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="spec_sampling-22" value="d" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="269.23" y="235" width="14" height="20.8" as="geometry" />
+        <mxCell id="spec_sampling-22" value="d" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
+          <mxGeometry x="256.5" y="236.2" width="16" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-23" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="322.95" y="199.4" width="26" height="30" as="geometry" />
+          <mxGeometry x="311.5" y="199.4" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-24" value="0.1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="324.95" y="179.2" width="22" height="18.4" as="geometry" />
+          <mxGeometry x="313.5" y="179.2" width="22" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-25" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="350.95" y="199.4" width="26" height="30" as="geometry" />
+          <mxGeometry x="339.5" y="199.4" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-26" value="0.1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="352.95" y="179.2" width="22" height="18.4" as="geometry" />
+          <mxGeometry x="341.5" y="179.2" width="22" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="spec_sampling-27" value="e" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="343.34" y="235" width="13.21" height="20.8" as="geometry" />
+        <mxCell id="spec_sampling-27" value="e" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
+          <mxGeometry x="330.5" y="236.2" width="16" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="spec_sampling-28" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="spec_sampling-figure">
+        <mxCell id="spec_sampling-28" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;" edge="1" parent="spec_sampling-figure">
           <mxGeometry x="0" relative="1" as="geometry">
             <mxPoint x="1.5" y="229.4" as="sourcePoint" />
-            <mxPoint x="387.58" y="229.4" as="targetPoint" />
+            <mxPoint x="379.5" y="229.4" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="spec_sampling-29" value="draft &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;p&lt;/span&gt; and target &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;q&lt;/span&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
           <mxGeometry x="0" y="0" width="125.22" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-30" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="0" y="31.4" width="20" height="12" as="geometry" />
+          <mxGeometry x="395.5" y="61.6" width="20" height="12" as="geometry" />
         </mxCell>
-        <mxCell id="spec_sampling-31" value="draft &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;p(x)&lt;/span&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="24" y="27" width="60.25" height="20.8" as="geometry" />
+        <mxCell id="spec_sampling-31" value="draft &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;p(x)&lt;/span&gt;" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;spacing=0;" vertex="1" parent="spec_sampling-figure">
+          <mxGeometry x="419.5" y="59.2" width="56.29" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-32" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="100.25" y="31.4" width="20" height="12" as="geometry" />
+          <mxGeometry x="395.5" y="84.4" width="20" height="12" as="geometry" />
         </mxCell>
-        <mxCell id="spec_sampling-33" value="target &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;q(x)&lt;/span&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="124.25" y="27" width="65.44" height="20.8" as="geometry" />
+        <mxCell id="spec_sampling-33" value="target &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;q(x)&lt;/span&gt;" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;spacing=0;" vertex="1" parent="spec_sampling-figure">
+          <mxGeometry x="419.5" y="82" width="63.16" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-35" value="draft &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;x = b&lt;/span&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#b85450;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="88.79" y="260" width="67.4" height="20.8" as="geometry" />
+          <mxGeometry x="82.8" y="260" width="67.4" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-36" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="528.34" y="79.4" width="40" height="150" as="geometry" />
+          <mxGeometry x="526" y="79.4" width="40" height="150" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-37" value="0.5" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="537.34" y="59.2" width="22" height="18.4" as="geometry" />
+          <mxGeometry x="535" y="59.2" width="22" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="spec_sampling-38" value="a" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="541.73" y="235" width="13.21" height="20.8" as="geometry" />
+        <mxCell id="spec_sampling-38" value="a" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
+          <mxGeometry x="538" y="236.2" width="16" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="spec_sampling-39" value="b" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="621.34" y="235" width="14" height="20.8" as="geometry" />
+        <mxCell id="spec_sampling-39" value="b" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
+          <mxGeometry x="612" y="236.2" width="16" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-40" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="688.34" y="79.4" width="40" height="150" as="geometry" />
+          <mxGeometry x="674" y="79.4" width="40" height="150" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-41" value="0.5" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="697.34" y="59.2" width="22" height="18.4" as="geometry" />
+          <mxGeometry x="683" y="59.2" width="22" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="spec_sampling-42" value="c" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="701.73" y="235" width="13.21" height="20.8" as="geometry" />
+        <mxCell id="spec_sampling-42" value="c" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
+          <mxGeometry x="686" y="236.2" width="16" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="spec_sampling-43" value="d" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="767.71" y="235" width="14" height="20.8" as="geometry" />
+        <mxCell id="spec_sampling-43" value="d" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
+          <mxGeometry x="760" y="236.2" width="16" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="spec_sampling-44" value="e" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="830.39" y="235" width="13.21" height="20.8" as="geometry" />
+        <mxCell id="spec_sampling-44" value="e" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
+          <mxGeometry x="834" y="236.2" width="16" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="spec_sampling-45" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="spec_sampling-figure">
+        <mxCell id="spec_sampling-45" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;" edge="1" parent="spec_sampling-figure">
           <mxGeometry x="0" relative="1" as="geometry">
-            <mxPoint x="507.46" y="229.4" as="sourcePoint" />
-            <mxPoint x="878" y="229.4" as="targetPoint" />
+            <mxPoint x="512" y="229.4" as="sourcePoint" />
+            <mxPoint x="876" y="229.4" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="spec_sampling-46" value="residual &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;max(0, q − p)&lt;/span&gt;, normalized" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
-          <mxGeometry x="505.84" y="0" width="218.5" height="20.8" as="geometry" />
+          <mxGeometry x="510.38" y="0" width="218.5" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="prompt_lookup-label" value="prompt_lookup.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="1999.12" width="600" height="30" as="geometry" />
