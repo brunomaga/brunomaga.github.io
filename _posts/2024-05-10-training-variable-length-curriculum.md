@@ -139,7 +139,7 @@ In the pipeline case (right), all micro-batches in the batch have the same `B x 
 [Attention](https://en.wikipedia.org/wiki/Attention_(machine_learning)) is a particular challenge in variable-length training. With fixed shapes, an input of shape `B x S x E` often uses a 2D attention mask of shape `S x S`, broadcast over the batch dimension. With variable lengths, a *per-sample* mask is needed, which is naturally represented as a `B x S x S` tensor. For example, for the non-pipeline micro-batch 1 above (top-left; 4 sentences), the mask can be illustrated as:
 
 {: .picture}
-<img width="99%" height="99%" src="{{ site.assets }}/distributed-training/imgs/variable_attn_matrix.svg"/>
+<img width="88.9%" height="88.9%" src="{{ site.assets }}/distributed-training/imgs/variable_attn_matrix.svg"/>
 
 {: .caption}
 3D attention mask (BxSxS) of the non-pipeline micro-batch 1 above: its 4 samples of lengths 9, 7, 8 and 6 give a mask of size 4x9x9, with one causal mask per sample, padded to the length of the longest sample.
