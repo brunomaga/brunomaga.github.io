@@ -166,7 +166,7 @@ To find more about the topic, chapter 4 of [The NEURON Book][neuron-book] by Car
 One can notice the difference in performance of the Backward Euler (left) and Variable Timestep (right) interpolators during a stiff trajectory of an Action Potential of a layer 5 [pyramidal cell](https://en.wikipedia.org/wiki/Pyramidal_cell) in the following picture (one dot per step):
 
 {: .picture}
-<img width="97%" height="97%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_soma_voltage_per_step_6ms.svg">
+<img width="99.4%" height="99.4%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_soma_voltage_per_step_6ms.svg">
 
 Note the difference in interpolation instants: placed at equidistant intervals in the Backward Euler use case, and adapting to the solution gradient in the variable step counterpart. A current injection at the soma forces the neuron to spike at a rate that increases with the injected current. A simple test consists in enforcing different levels of stiffness and measuring the number of interpolation steps of both methods:
 
