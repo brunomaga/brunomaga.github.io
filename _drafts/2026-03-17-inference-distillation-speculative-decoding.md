@@ -36,7 +36,7 @@ Details on the different methods are given in [Distilling the Knowledge in a Neu
 <img width="99.7%" height="99.7%" src="{{ site.assets }}/inference/imgs/kd_methods.svg"/>
 
 {: .caption}
-The categories of knowledge distillation methods, and the branches within each category. This section implements offline distillation using soft labels, underlined in red in the picture. Adapted from: [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/).
+The categories of knowledge distillation methods, and the branches within each category. This section implements offline distillation using soft labels, outlined in bold in the picture. Adapted from: [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/).
 
 ### Implementing offline distillation with soft labels
 
