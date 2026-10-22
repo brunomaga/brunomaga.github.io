@@ -52,11 +52,13 @@ The final model supports up to 1M tokens of context and reaches accuracy compara
 <summary markdown="span"><span class="pub-title">FlashAttention-4: Algorithm and Kernel Pipelining Co-Design for Asymmetric Hardware Scaling</span><span class="pub-meta">, Zadouri, ..., Tri Dao (Princeton et al.) (MLSys 2026)</span><a class="pub-link" href="https://arxiv.org/abs/2603.05451" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
 <div class="pub-notes" markdown="block">
 
+[FlashAttention-3](https://arxiv.org/abs/2407.08608) (2024) sped up attention on Hopper (H100) GPUs by 1.5–2.0× over FlashAttention-2. It uses the asynchronous tensor cores and memory copies (TMA) of Hopper, with warp specialization, to overlap the softmax and the data movement with the matmuls.
+
 FlashAttention-4 (FA4) re-designs the attention kernel for NVIDIA Blackwell (B200/GB200) to confront what the authors call **asymmetric hardware scaling**. From Hopper to Blackwell, dense BF16 tensor-core (matmul) throughput jumped from ~1 to ~2.25 petaFLOPS, but the units that do everything else (the exponential unit for softmax, shared-memory bandwidth) did not speed up proportionally. The consequence is a bottleneck flip from earlier FlashAttention versions: since the exponential unit (MUFU.EX2) did not get much faster, softmax is no longer "just the thing between the two matmuls" but the bottleneck that must be carefully pipelined. FA4's whole job is to keep those over-provisioned tensor cores busy by overlapping the matmuls with the now-relatively-slow softmax and memory work.
 
-The co-design has a few moving parts. New forward and backward [software pipelines](https://en.wikipedia.org/wiki/Software_pipelining) exploit Blackwell's fully asynchronous MMA and larger tile sizes to overlap tensor cores, the softmax exponential, and memory operations. To beat the exponential bottleneck specifically, the forward pass emulates part of the exponentials (10–25% of the entries of each softmax row) in software via a polynomial approximation on the [FMA](https://en.wikipedia.org/wiki/Multiply%E2%80%93accumulate_operation) units. It also uses conditional (selective) online-softmax rescaling, which only rescales when a new max shifts the result enough to matter.
+The co-design has a few moving parts. As in FlashAttention-3, new forward and backward [software pipelines](https://en.wikipedia.org/wiki/Software_pipelining) overlap the tensor cores, the softmax exponential and the memory operations, but they exploit Blackwell's fully asynchronous MMA, which writes its results to the new tensor memory (TMEM) instead of registers, and its larger tile sizes. To beat the exponential bottleneck specifically, the forward pass emulates part of the exponentials (10–25% of the entries of each softmax row) in software via a polynomial approximation on the [FMA](https://en.wikipedia.org/wiki/Multiply%E2%80%93accumulate_operation) units. It also uses conditional (selective) online-softmax rescaling, which only rescales when a new max shifts the result enough to matter.
 
-On the backward pass, where shared-memory traffic dominates, FA4 stores intermediate results in Blackwell's new tensor memory (TMEM), and uses the new 2-CTA MMA mode to cut shared-memory traffic further and halve the number of global atomic adds. It is also written entirely in **CuTe-DSL** (Python), giving 20–30× faster compile times than C++ template approaches while keeping full expressivity, which lowers the barrier to prototyping new attention variants.
+On the backward pass, where shared-memory traffic dominates, FA4 stores intermediate results in TMEM, and uses the new 2-CTA MMA mode to cut shared-memory traffic further and halve the number of global atomic adds. It is also written entirely in **CuTe-DSL** (Python), giving 20–30× faster compile times than C++ template approaches while keeping full expressivity, which lowers the barrier to prototyping new attention variants.
 
 Results: up to 1613 TFLOPs/s on B200 BF16 (71% utilization; the accompanying blog post quotes 1605). In the forward pass, FA4 is up to 1.3× faster than cuDNN 9.13 and 2.7× faster than Triton, and in the backward pass it is faster than all baselines at long sequence lengths. FlashAttention-3 is Hopper-only, so it is not a baseline here; several FA4 techniques were also upstreamed into cuDNN (9.13/9.14 onwards). This is the kernel-level companion to the systems papers below: where they reshape *what* runs where, FA4 squeezes the attention primitive itself to the hardware's asymmetric limits.
 
@@ -347,43 +349,6 @@ Results: a single MoE layer runs 1.96× faster and end-to-end execution 1.71× f
 <td></td>
 <td markdown="block">
 <details>
-<summary markdown="span"><span class="pub-title">Helix Parallelism: Rethinking Sharding Strategies for Interactive Multi-Million-Token LLM Decoding</span><span class="pub-meta">, NVIDIA</span><a class="pub-link" href="https://arxiv.org/abs/2507.07120" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
-<div class="pub-notes" markdown="block">
-
-Helix Parallelism targets real-time decoding when the KV history reaches *multi-million tokens* under a tight token-to-token latency (TTL) budget. Two bottlenecks dominate this regime: reading the **FFN weights** every step, and streaming the enormous **KV cache** from DRAM. The problem is that the standard fix for one hurts the other.
-
-Tensor Parallelism (TP) handles FFN weight reads well, but it scales poorly for attention. Once the TP width exceeds the number of KV heads, the KV cache has to be *duplicated* across GPUs, which wastes memory bandwidth, caps parallelism, and limits batch size. Meanwhile, KV DRAM reads grow linearly with batch size. No single uniform sharding strategy relieves both pressures at once, and one is forced to trade KV duplication against FFN load.
-
-Helix Parallelism overcomes this with a hybrid execution strategy that applies KV parallelism during attention to shard KV caches across GPUs. It then reuses the same GPUs for TP in dense LLMs, or TP×Expert Parallel (EP) in MoEs, during FFN computation.
-
-Helix changes the parallelism layout between the attention phase and the FFN phase, within a single decode step, reusing the same GPUs.
-
-- Phase 1: Attention, laid out as KV Parallelism (KVP), combined with tensor parallelism over the KV heads (TPA ≤ number of KV heads), so the pool has N = KVP × TPA GPUs. The KV cache is sharded along the sequence/token dimension. No GPU stores a duplicate of the KV cache. The algorithm is:
-  - Every KVP rank computes the full QKV projection for the new token locally (duplicating this small projection is cheaper than gathering the query across GPUs).
-  - Each GPU computes attention between that query and only its local slice of the KV cache, producing a partial attention output plus a [log-sum-exp](https://en.wikipedia.org/wiki/LogSumExp) (softmax normalizer) per token, FlashDecoding-style.
-  - A single all-to-all over the query-head dimension exchanges these partial results, and each GPU rescales and sums them into the exact full attention output. The traffic scales with batch size and hidden size but not with the KV length (the huge KV cache never moves), so it stays constant as the context grows to millions of tokens.
-- Phase 2: FFN/MoE, re-laid-out as Tensor Parallel. Now the same N GPUs switch view (the all-to-all above already leaves the attention output in a TP layout for the output projection). The FFN runs as:
-  - TP for a dense model (each GPU holds a slice of the FFN weight matrices), or
-  - TP × Expert Parallel for an MoE (experts distributed across GPUs).
-
-To minimize the exposed communication cost, Helix introduces **HOP-B** (batch-wise overlap): the all-to-all of one request overlaps with the attention computation of the next.
-
-Compared to conventional parallelism approaches, Helix reduces TTL by up to 1.5× at fixed batch sizes and supports up to 32× larger batches under the same latency budget for DeepSeek-R1 on Blackwell. Unlike attention–FFN disaggregation (e.g., MegaScale-Infer), which splits the two phases *spatially* onto different GPUs, Helix splits them *temporally* on the same GPUs. The following diagram illustrates the workflow of one GPU in the attention phase (top) and in the FFN phase (bottom), for a dense FFN and for an MoE:
-
-{: .picture}
-<img loading="lazy" width="88.6%" height="88.6%" src="{{ site.assets }}/publications/helix.svg"/>
-
-{: .caption}
-<b>Helix's layout per-GPU workflow in attention and FFN stages.</b> Helix reuses the same pool of $$N$$ GPUs by configuring $$N = KVP \times TPA \quad (TPA \le K) \quad \longrightarrow \quad N = TPF \times EP$$ on a per-layer basis. <b>(Top)</b> During attention, each of the $$KVP$$ GPUs independently projects the full batch $$[B, H]$$ into QKV, runs FlashAttention on its KV shard to produce partial outputs and log-sum-exp scalars, and then participates in a single All-to-All over the query-head axis; each GPU rescales and sums the received fragments into the exact softmax-normalized tensor, followed by a TP All-Reduce to form the final $$[B, H]$$ attention output. <b>(Bottom)</b> For FFNs, Helix follows two modes depending on model type: for <i>Dense</i> FFNs $$EP = 1$$, it retains all $$N$$ GPUs in tensor-parallel $$TPF = N$$ to compute $$[B, H] \rightarrow [B, F/N] \rightarrow [B, H]$$ followed by a TP All-Reduce; for <i>MoE</i> FFNs $$EP > 1$$, it repartitions the $$N$$ GPUs into a $$TPF \times EP$$ grid, routes tokens to the appropriate experts, applies TP to FC layers within each expert group, performs an intra-expert All-Reduce followed by an inter-expert All-Gather, and concludes with a local reduction to yield $$[B, H]$$. Helix switches between these configurations seamlessly, enabling zero-downtime pipelining and better GPU utilization. Adapted from: [Helix Parallelism: Rethinking Sharding Strategies for Interactive Multi-Million-Token LLM Decoding](https://arxiv.org/abs/2507.07120)
-
-</div>
-</details>
-</td>
-</tr>
-<tr>
-<td></td>
-<td markdown="block">
-<details>
 <summary markdown="span"><span class="pub-title">TPLA: Tensor Parallel Latent Attention for Efficient Disaggregated Prefill & Decode Inference</span><span class="pub-meta">, Peking University & Tencent</span><a class="pub-link" href="https://arxiv.org/abs/2508.15881" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
 <div class="pub-notes" markdown="block">
 
@@ -580,7 +545,7 @@ How it differs from “kernel-level fusion” work (Flux / TileLink / Triton-dis
 
 MegaScale-Infer's answer to the memory-bound performance issue of MoE FFNs during decode is **Disaggregated Expert Parallelism (DEP)**: disaggregate the attention and expert modules, assigning them to separate GPUs, so each can scale independently with its own parallelism. Attention modules are replicated using data parallelism, while FFN modules are scaled with expert parallelism; by consolidating requests from multiple attention replicas, the GPU utilization of each expert increases significantly as the batch size per attention replica grows. In other words, many attention replicas funnel their tokens into the expert pool, restoring large per-expert batches and turning the FFNs back into efficient compute-bound work. Disaggregation also allows **heterogeneous deployment** (cheaper/different GPUs for attention vs. experts) to cut cost.
 
-Two systems pieces make disaggregation pay off rather than stall on communication. The first is **ping-pong pipeline parallelism**, which partitions a request batch into micro-batches and shuttles them between attention and FFNs so the two GPU pools stay busy and communication hides behind compute. The second is a **high-performance M2N communication library** that eliminates unnecessary GPU-to-CPU data copies, group initialization overhead, and GPU synchronization for the token dispatch/combine traffic. This is the MoE-serving flavor of attention–FFN disaggregation: the two modules are split *spatially* across GPU pools, whereas Helix splits them *temporally* by re-laying-out the same GPUs; prefill/decode disaggregation (as in TPLA) is a different, orthogonal split.
+Two systems pieces make disaggregation pay off rather than stall on communication. The first is **ping-pong pipeline parallelism**, which partitions a request batch into micro-batches and shuttles them between attention and FFNs so the two GPU pools stay busy and communication hides behind compute. The second is a **high-performance M2N communication library** that eliminates unnecessary GPU-to-CPU data copies, group initialization overhead, and GPU synchronization for the token dispatch/combine traffic. This is the MoE-serving flavor of attention–FFN disaggregation: the two modules are split *spatially* across GPU pools; prefill/decode disaggregation (as in TPLA) is a different, orthogonal split.
 
 **Results / takeaways (as reported):**
 - Up to **1.90×** higher per-GPU decoding throughput than state-of-the-art LLM serving systems on homogeneous clusters.
@@ -626,7 +591,7 @@ TransMLA is a **post-training conversion** method that turns existing Grouped-Qu
 
 TransMLA exploits this in two steps. First, it **equivalently converts** the model's GQA attention into MLA structure (reformulating the repeated KV heads of GQA as low-rank latent projections). This produces a model directly compatible with DeepSeek's codebase and its optimized serving stacks (vLLM, SGLang), plus features like FP8 quantization and Multi-Token Prediction.
 
-Second, since the conversion alone does not speed anything up, it **compresses** the latent KV below the original cache size and then **fine-tunes** briefly to recover quality. Only ~6B tokens are needed to regain performance on par with the original model across benchmarks. The payoff: compressing 93% of LLaMA-2-7B's KV cache yields a 10.6× inference speedup at 8K context while preserving meaningful output quality. It is the migration path that complements TPLA and Helix: rather than designing new MLA models or new sharding, TransMLA *retrofits* the large existing fleet of GQA models into the more efficient MLA family.
+Second, since the conversion alone does not speed anything up, it **compresses** the latent KV below the original cache size and then **fine-tunes** briefly to recover quality. Only ~6B tokens are needed to regain performance on par with the original model across benchmarks. The payoff: compressing 93% of LLaMA-2-7B's KV cache yields a 10.6× inference speedup at 8K context while preserving meaningful output quality. It is the migration path that complements TPLA: rather than designing new MLA models or new sharding, TransMLA *retrofits* the large existing fleet of GQA models into the more efficient MLA family.
 
 </div>
 </details>
@@ -1473,6 +1438,10 @@ The main trick is based on the **dilated attention**, which splits the sequence 
 
 "In particular, we (1) tweak the algorithm to reduce the number of non-matmul FLOPs (2) parallelize the attention computation, even for a single head, across different thread blocks to increase occupancy, and (3) within each thread block, distribute the work between warps to reduce communication through shared memory. These yield around 2× speedup compared to FlashAttention, reaching 50-73% of the theoretical maximum FLOPs/s on A100 and getting close to the efficiency of GEMM operations. We empirically validate that when used end-to-end to train GPT-style models, FlashAttention-2 reaches training speed of up to 225 TFLOPs/s per A100 GPU (72% model FLOPs utilization)."
 
+In practice, FlashAttention-2 swaps the two loops of FlashAttention: the outer loop goes over the blocks of $$Q$$ and the inner loop over the blocks of $$K$$ and $$V$$, so each block of the output stays on chip until it is complete and is written to HBM once. The blocks of $$Q$$ are independent and run on thread blocks that do not communicate, so the work is parallelized over the sequence length, and not only over the batch and the heads as in FlashAttention. This keeps the GPU busy for long sequences, which usually come with small batches or few heads.
+
+Inside a thread block, the warps split $$Q$$ instead of $$K$$ and $$V$$ (the *split-K* scheme of FlashAttention), so they no longer write partial results to shared memory to add them up. Finally, the output is divided by the sum of the exponentials only once, at the end of the inner loop, instead of at every step, which removes non-matmul FLOPs: on an A100, a non-matmul FLOP costs 16 times more than a matmul FLOP.
+
 </div>
 </details>
 </td>
@@ -1696,39 +1665,6 @@ Finally, section 3.5 discusses low-level optimization (overlapping communication
 <td></td>
 <td markdown="block">
 <details>
-<summary markdown="span"><span class="pub-title">Random-LTD: Random and Layerwise Token Dropping Brings Efficient Training for Large-scale Transformers</span><span class="pub-meta">, Microsoft</span><a class="pub-link" href="https://arxiv.org/abs/2211.11586" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
-<div class="pub-notes" markdown="block">
-
-Random-LTD (random and layerwise token dropping method) is a method to reduce the training costs of very large transformer models. It skips the computation of a subset of the input tokens at all middle layers (excluding the first and last layers). Tokens are dropped in a purely random manner, thus Random-LTD requires no scoring or manual design.
-
-Other alternatives for token dropping are:
-- attention score related metrics, where compute cost for LTD is too high since the metric has to be calculated for every layer; and
-- loss-/frequency-based metrics, where the accumulated loss or frequency does not change within the same iteration (forward pass). This makes the dropped tokens the same for different layers, so the token dependency is not captured by the multi-head attention (MHA) of the middle layers.
-
-Therefore, Random-LTD uses purely random dropping of tokens at every layer. To reduce the gradient variance introduced by random-LTD, for better training, the authors monotonically increase the kept sentence length throughout training, with a linear schedule. This method is called the **Monotonic Sequence Length Growth (MSLG)**.
-
-Related to the learning rate, note that random-LTD reduces the effective batch size of middle layers at the initial warmup phase. Also, MSLG does not reach the full length until more than 2/3 of the training iterations, for large compute saving. By then, the learning rate is already small, and it cannot provide efficient training "dynamics" for Random-LTD. In practice, it is necessary to increase the warmup iterations, to stabilize the initial training phase, and to slow down the LR decay, to keep a large enough learning rate in the later training phase.
-
-So the paper also introduces the **LayerToken learning rate** (appendix C), which scales the learning rate based on the sum of consumed tokens of each layer. The point of `LayerToken` is to reduce the tuning effort for Random-LTD.
-
-The results compare Random-LTD with the baseline, on GPT-3 models with 350M and 1.3B parameters, and a dataset of up to 300B tokens. Here, Random-LTD shows similar evaluation losses as the baseline with 1/3 less LayerToken consumption. However, an important claim is that "the LayerToken consumption saving ratio cannot directly transfer to GPU wall-clock training time saving ratio due to the implementation/hardware". Still, on GPT-3 1.3B, they report 33.3% theoretical compute savings and 25.6% wall-clock savings with similar zero-shot accuracy.
-
-On BERT pretraining and ViT finetuning, similar results are shown. When compared with [TokenBypass](https://arxiv.org/abs/2203.13240) (a different technique that skips the tokens of the middle layers), Random-LTD shows better train and validation perplexity. Also, MSLG shows better perplexity than a constant-drop rate (Section 5.4 and Table 6). The following picture compares the baseline with random-LTD training:
-
-{: .picture}
-<img loading="lazy" width="81.5%" height="81.5%" src="{{ site.assets }}/publications/random_ltd.svg"/>
-
-{: .caption}
-**Left:** Transformer layers for (a) baseline and (b) random-LTD training. The dotted box is repeated <i>l</i> − 2 times (Fig. B.1 of the paper). In random-LTD, the randomly assigned tokens go through the layer and the other tokens bypass it, which saves compute. **Right:** random-LTD only requires a few lines of code. Here hs, k<sub>hs</sub> and d<sub>hs</sub> are the full input, the kept input and the dropped input; “gather”, “Layer” and “combine” are the functions for random selection, transformer layer and token combination. Adapted from: [Random-LTD: Random and Layerwise Token Dropping Brings Efficient Training for Large-scale Transformers](https://arxiv.org/abs/2211.11586)
-
-</div>
-</details>
-</td>
-</tr>
-<tr>
-<td></td>
-<td markdown="block">
-<details>
 <summary markdown="span"><span class="pub-title">The Stability-Efficiency Dilemma: Investigating Sequence Length Warmup for Training GPT Models</span><span class="pub-meta">, Microsoft (NeurIPS 2022)</span><a class="pub-link" href="https://openreview.net/forum?id=JpZ5du_Kdh" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
 <div class="pub-notes" markdown="block">
 
@@ -1753,13 +1689,9 @@ Results on GPT-2 (117M and 1.5B) show stable training with 8x larger batch size 
 
 Transformers are slow and memory-hungry on long sequences, since the time and memory complexity of self-attention are quadratic in sequence length. The authors "argue that a missing principle is making attention algorithms IO-aware—accounting for reads and writes between levels of GPU memory". To overcome it, FlashAttention improves the attention mechanism with one that uses [tiling](https://en.wikipedia.org/wiki/Loop_nest_optimization) to reduce the number of memory reads/writes between GPU [high bandwidth memory](https://en.wikipedia.org/wiki/High_Bandwidth_Memory) (HBM) and GPU on-chip [SRAM](https://en.wikipedia.org/wiki/Static_random-access_memory).
 
-In practice, it tiles the square attention matrix into partial computations that can be computed in the on-chip SRAM (shared memory) instead of the GPU's global memory (HBM). It also trains Transformers faster than existing baselines (15% end-to-end on BERT-large vs. the MLPerf 1.1 record, 3× on GPT-2 and 2.4× on long-range arena). The following picture illustrates the memory hierarchy of a GPU and the loops of FlashAttention over the blocks of Q, K and V (left), and its speedup over the attention of PyTorch on GPT-2 (right):
+In practice, it tiles the square attention matrix into partial computations that can be computed in the on-chip SRAM (shared memory) instead of the GPU's global memory (HBM). It also trains Transformers faster than existing baselines (15% end-to-end on BERT-large vs. the MLPerf 1.1 record, 3× on GPT-2 and 2.4× on long-range arena).
 
-{: .picture}
-<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/flashattention.svg"/>
-
-{: .caption}
-<b>Left:</b> FlashAttention uses tiling to prevent materialization of the large <i>N</i> × <i>N</i> attention matrix (dotted box) on (relatively) slow GPU HBM. In the outer loop (red arrows), FlashAttention loops through blocks of the <b>K</b> and <b>V</b> matrices and loads them to fast on-chip SRAM. In each block, FlashAttention loops over blocks of <b>Q</b> matrix (blue arrows), loading them to SRAM, and writing the output of the attention computation back to HBM. <b>Right:</b> Speedup over the PyTorch implementation of attention on GPT-2. FlashAttention does not read and write the large <i>N</i> × <i>N</i> attention matrix to HBM, resulting in a 7.6× speedup on the attention computation. Adapted from: [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135)
+The tiling runs as two nested loops: the outer loop loads blocks of $$K$$ and $$V$$ from HBM into SRAM, and the inner loop loads the blocks of $$Q$$, computes their attention with these blocks and writes the updated blocks of the output back to HBM. The backward pass recomputes the $$N \times N$$ attention matrix ($$N$$ being the sequence length) block by block, from the output and the softmax statistics of the forward pass, instead of storing it. Since this matrix is never written to or read from HBM, the attention computation runs 7.6× faster than the PyTorch implementation on GPT-2.
 
 FlashAttention is the canonical example of *algorithmic* fusion in attention: it avoids materializing the full $$QK^\top$$ and the large intermediate softmax buffers, by using a numerically stable streaming formulation (the [online softmax](https://arxiv.org/abs/1805.02867)). Instead of computing attention as “GEMM → softmax → GEMM” with large intermediate tensors in HBM, it tiles the computation so that data is reused from SRAM/shared memory.
 
