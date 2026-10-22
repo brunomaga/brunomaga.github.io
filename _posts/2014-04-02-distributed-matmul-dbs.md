@@ -129,7 +129,7 @@ The **compressed sparse row** format (CSR, also called the Yale format), in use 
 An example is displayed below:
 
 {: .picture}
-<img width="69.8%" height="69.8%" src="{{ site.assets }}/distributed-matmul-dbs/csr_format.svg">
+<img width="69.7%" height="69.7%" src="{{ site.assets }}/distributed-matmul-dbs/csr_format.svg">
 
 {: .caption}
 A sparse matrix (left) and its CSR arrays (right), colored by row. Row 3 is empty, so `row_ptr[3]` and `row_ptr[4]` are both 6.
