@@ -327,6 +327,9 @@ sections 6 and 7, and the font section 4.
   Output Probabilities), axis titles, and the labels of boxes, operators, brackets and legends are not arrow
   text. An arrow label that is a dimension stays
   small, and one drawn larger than the regular text stays 16.
+  Exception, at the user's request: the operators of an equation of matrices drawn to scale are sized to the
+  matrices they join, larger than 16 (the "=" of mml_svd; softmax, the parentheses and "=" of
+  context_parallelism).
   A picture redrawn from an older one keeps the order of its text sizes: its most common size becomes 14,
   sizes at least 1.1 times larger become 16, sizes under 0.9 times smaller become 12.
   Italic is allowed for variables and for emphasis, bold only for titles, subtitles and names the post's
@@ -438,7 +441,11 @@ sections 6 and 7, and the font section 4.
   - white masks that hide parts of a drawing, faded elements and red cross marks;
   - the arrows of the matrix transpose post, which are grey #666666;
   - the memory bars of deepspeed_stages and their legend swatches: thin black outlines, as their strips are
-    4 px tall.
+    4 px tall;
+  - the dashed outlines of the tensor shards in efficiently_scaling_transformer_inference_multiquery: 1.2 px,
+    at the user's request, so that they show next to the filled shards;
+  - the grey #666666 1.4 px line on the left of the steps of a loop in an algorithm picture (odd_even_sort),
+    at the user's request.
 - Thin arrows: black #000000, 1.4 px, endArrow=classic, endFill=1, endSize=5: a head 6.4 px long and wide,
   endSize plus the line weight, with its notch at 3/4 of its length. Dashed arrows use the same head. An
   arrow at the emphasis weight has endSize=2.8, so that its head has the size of the others. Grey #666666 only
@@ -505,6 +512,11 @@ sections 6 and 7, and the font section 4.
   strokeColor=#666666;strokeWidth=1;dashed=1). A box at least 60 px wide holds its name ("idle", "masked",
   "padding") in grey #666666, 12 px, at its centre. Masked or padding cells of a block of cells stay grey
   cells (section 5).
+- A hatched mark that is not idle time (the new integration steps of local_variable_timestep_six_cell_example)
+  is a hachure: black lines 0.6 px wide every 4 px at 45 degrees, drawn as vector paths: fillColor=#000000;
+  strokeColor=none;fillStyle=hachure;sketch=1;jiggle=0;hachureAngle=45;hachureGap=4;fillWeight=0.6;
+  disableMultiStroke=1;disableMultiStrokeFill=1. draw.io's fillStyle=hatch turns into a bitmap in the PDF
+  export.
 - The pictures of one series in a post (the attention variants, the pipeline schedules...) use the same
   element sizes: the same cube, cell, row and box sizes in every picture of the series.
 - A legend is a row of entries, each a swatch with its label 4 px to its right, and 16 px between entries
