@@ -5350,8 +5350,8 @@
         </mxCell>
         <mxCell id="argonne_parallel_2-140" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=1.4;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="argonne_parallel_2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="321.44" y="146.58" as="sourcePoint" />
-            <mxPoint x="319.91" y="199.92" as="targetPoint" />
+            <mxPoint x="321.65" y="146.58" as="sourcePoint" />
+            <mxPoint x="321.65" y="199.92" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="argonne_parallel_2-141" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#82b366;strokeWidth=1.4;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="argonne_parallel_2-figure">
@@ -5404,8 +5404,8 @@
         </mxCell>
         <mxCell id="argonne_parallel_2-201" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=1.4;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="argonne_parallel_2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="629.09" y="146.76" as="sourcePoint" />
-            <mxPoint x="628.88" y="200.27" as="targetPoint" />
+            <mxPoint x="629.15" y="146.76" as="sourcePoint" />
+            <mxPoint x="629.15" y="200.27" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="argonne_parallel_2-202" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#82b366;strokeWidth=1.4;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="argonne_parallel_2-figure">
@@ -5458,14 +5458,14 @@
         </mxCell>
         <mxCell id="argonne_parallel_2-211" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#82b366;strokeWidth=1.4;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="argonne_parallel_2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="545.47" y="165.16" as="sourcePoint" />
-            <mxPoint x="471.91" y="165.16" as="targetPoint" />
+            <mxPoint x="546.17" y="165.16" as="sourcePoint" />
+            <mxPoint x="471.6" y="165.16" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="argonne_parallel_2-212" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#82b366;strokeWidth=1.4;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="argonne_parallel_2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="605.79" y="165.16" as="sourcePoint" />
-            <mxPoint x="680.53" y="165.16" as="targetPoint" />
+            <mxPoint x="605.07" y="165.16" as="sourcePoint" />
+            <mxPoint x="680.9" y="165.16" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="argonne_parallel_2-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="argonne_parallel_2-figure">
@@ -5990,26 +5990,26 @@
         <mxCell id="argonne_parallel_2-130" value="&lt;i&gt;w&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="argonne_parallel_2-figure">
           <mxGeometry x="412.55" y="82.2" width="15.11" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="argonne_parallel_2-131" value="&lt;i&gt;dL/dx&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="argonne_parallel_2-figure">
+        <mxCell id="argonne_parallel_2-131" value="&lt;i&gt;dL/dx&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="argonne_parallel_2-figure">
           <mxGeometry x="504.07" y="82.2" width="38.44" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="argonne_parallel_2-132" value="forward" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="argonne_parallel_2-figure">
-          <mxGeometry x="297" y="125.37" width="49.31" height="20.8" as="geometry" />
+        <mxCell id="argonne_parallel_2-132" value="forward (eq 1)" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="argonne_parallel_2-figure">
+          <mxGeometry x="279.71" y="125.37" width="83.89" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="argonne_parallel_2-133" value="backward" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="argonne_parallel_2-figure">
-          <mxGeometry x="493.6" y="125.37" width="59.42" height="20.8" as="geometry" />
+        <mxCell id="argonne_parallel_2-133" value="backward (eq 3)" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="argonne_parallel_2-figure">
+          <mxGeometry x="475.74" y="125.37" width="95.14" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="argonne_parallel_2-134" value="backward" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="argonne_parallel_2-figure">
-          <mxGeometry x="392.76" y="154.94" width="59.42" height="20.8" as="geometry" />
+        <mxCell id="argonne_parallel_2-134" value="backward (eq 2)" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="argonne_parallel_2-figure">
+          <mxGeometry x="374.9" y="154.94" width="95.14" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="argonne_parallel_2-135" value="&lt;i&gt;dL/dw&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="argonne_parallel_2-figure">
+        <mxCell id="argonne_parallel_2-135" value="&lt;i&gt;dL/dw&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="argonne_parallel_2-figure">
           <mxGeometry x="401.4" y="206.97" width="41.55" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="argonne_parallel_2-136" value="&lt;i&gt;dL/dy&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="argonne_parallel_2-figure">
+        <mxCell id="argonne_parallel_2-136" value="&lt;i&gt;dL/dy&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="argonne_parallel_2-figure">
           <mxGeometry x="504.66" y="201.06" width="38.44" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="argonne_parallel_2-137" value="&lt;i&gt;y&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="argonne_parallel_2-figure">
-          <mxGeometry x="312.28" y="202.24" width="14" height="20.8" as="geometry" />
+          <mxGeometry x="314.65" y="202.24" width="14" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="argonne_parallel_2-147" value="P&lt;sub style=&quot;line-height:0;&quot;&gt;1&lt;/sub&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="argonne_parallel_2-figure">
           <mxGeometry x="720.83" y="10.06" width="19.79" height="20.8" as="geometry" />
@@ -6026,29 +6026,29 @@
         <mxCell id="argonne_parallel_2-191" value="&lt;i&gt;w&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="argonne_parallel_2-figure">
           <mxGeometry x="720.04" y="82.2" width="15.11" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="argonne_parallel_2-192" value="&lt;i&gt;dL/dx&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="argonne_parallel_2-figure">
+        <mxCell id="argonne_parallel_2-192" value="&lt;i&gt;dL/dx&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="argonne_parallel_2-figure">
           <mxGeometry x="811.56" y="82.2" width="38.44" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="argonne_parallel_2-193" value="forward" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="argonne_parallel_2-figure">
-          <mxGeometry x="604.49" y="125.37" width="49.31" height="20.8" as="geometry" />
+        <mxCell id="argonne_parallel_2-193" value="forward (eq 1)" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="argonne_parallel_2-figure">
+          <mxGeometry x="587.2" y="125.37" width="83.89" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="argonne_parallel_2-194" value="backward" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="argonne_parallel_2-figure">
-          <mxGeometry x="800.32" y="125.37" width="59.42" height="20.8" as="geometry" />
+        <mxCell id="argonne_parallel_2-194" value="backward (eq 3)" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="argonne_parallel_2-figure">
+          <mxGeometry x="782.46" y="125.37" width="95.14" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="argonne_parallel_2-195" value="backward" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="argonne_parallel_2-figure">
-          <mxGeometry x="700.26" y="154.94" width="59.42" height="20.8" as="geometry" />
+        <mxCell id="argonne_parallel_2-195" value="backward (eq 2)" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="argonne_parallel_2-figure">
+          <mxGeometry x="682.4" y="154.94" width="95.14" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="argonne_parallel_2-196" value="&lt;i&gt;dL/dw&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="argonne_parallel_2-figure">
+        <mxCell id="argonne_parallel_2-196" value="&lt;i&gt;dL/dw&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="argonne_parallel_2-figure">
           <mxGeometry x="708.9" y="206.97" width="41.55" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="argonne_parallel_2-197" value="&lt;i&gt;dL/dy&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="argonne_parallel_2-figure">
+        <mxCell id="argonne_parallel_2-197" value="&lt;i&gt;dL/dy&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="argonne_parallel_2-figure">
           <mxGeometry x="812.15" y="201.06" width="38.44" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="argonne_parallel_2-198" value="&lt;i&gt;y&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="argonne_parallel_2-figure">
-          <mxGeometry x="621.55" y="202.24" width="14" height="20.8" as="geometry" />
+          <mxGeometry x="622.15" y="202.24" width="14" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="argonne_parallel_2-210" value="all-reduce" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="argonne_parallel_2-figure">
-          <mxGeometry x="545.14" y="154.94" width="60.96" height="20.8" as="geometry" />
+        <mxCell id="argonne_parallel_2-210" value="Allreduce" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="argonne_parallel_2-figure">
+          <mxGeometry x="549.17" y="154.94" width="52.91" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="argonne_parallel_2-213" value="(b)" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="argonne_parallel_2-figure">
           <mxGeometry x="566.65" y="275.34" width="22.11" height="20.8" as="geometry" />
