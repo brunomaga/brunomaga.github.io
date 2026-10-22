@@ -16282,151 +16282,151 @@
           <mxGeometry x="0" y="19757.8" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="19797.8" width="610.33" height="116.84" as="geometry" />
+          <mxGeometry x="0" y="19797.8" width="722.08" height="116.84" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;absoluteArcSize=1;arcSize=20;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="0" y="0" width="244.76" height="116.84" as="geometry" />
+          <mxGeometry x="0" y="0" width="312.7" height="116.84" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;absoluteArcSize=1;arcSize=20;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="266.77" y="0" width="89.02" height="116.84" as="geometry" />
+          <mxGeometry x="334.7" y="0" width="100.3" height="116.84" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-6" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;absoluteArcSize=1;arcSize=20;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="377.8" y="0" width="120.75" height="116.84" as="geometry" />
+          <mxGeometry x="457" y="0" width="142.78" height="116.84" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-8" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;absoluteArcSize=1;arcSize=20;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="521.35" y="0" width="88.98" height="116.84" as="geometry" />
+          <mxGeometry x="621.78" y="0" width="100.3" height="116.84" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-12" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=5.1;fontFamily=Source Sans 3;" edge="1" parent="nemotron3-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="40.15" y="58.43" as="sourcePoint" />
-            <mxPoint x="48.43" y="58.43" as="targetPoint" />
+            <mxPoint x="60.15" y="58.43" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="nemotron3-14" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=5.1;fontFamily=Source Sans 3;" edge="1" parent="nemotron3-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="70.91" y="58.43" as="sourcePoint" />
-            <mxPoint x="79.98" y="58.43" as="targetPoint" />
+            <mxPoint x="82.63" y="58.43" as="sourcePoint" />
+            <mxPoint x="102.63" y="58.43" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="nemotron3-16" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=5.1;fontFamily=Source Sans 3;" edge="1" parent="nemotron3-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="102.46" y="58.43" as="sourcePoint" />
-            <mxPoint x="111.14" y="58.43" as="targetPoint" />
+            <mxPoint x="125.11" y="58.43" as="sourcePoint" />
+            <mxPoint x="145.11" y="58.43" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="nemotron3-18" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=5.1;fontFamily=Source Sans 3;" edge="1" parent="nemotron3-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="133.62" y="58.43" as="sourcePoint" />
-            <mxPoint x="142.29" y="58.43" as="targetPoint" />
+            <mxPoint x="167.59" y="58.43" as="sourcePoint" />
+            <mxPoint x="187.59" y="58.43" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="nemotron3-20" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=5.1;fontFamily=Source Sans 3;" edge="1" parent="nemotron3-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="164.77" y="58.43" as="sourcePoint" />
-            <mxPoint x="173.05" y="58.43" as="targetPoint" />
+            <mxPoint x="210.07" y="58.43" as="sourcePoint" />
+            <mxPoint x="230.07" y="58.43" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="nemotron3-22" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=5.1;fontFamily=Source Sans 3;" edge="1" parent="nemotron3-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="195.53" y="58.43" as="sourcePoint" />
-            <mxPoint x="204.6" y="58.43" as="targetPoint" />
+            <mxPoint x="252.55" y="58.43" as="sourcePoint" />
+            <mxPoint x="272.55" y="58.43" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="nemotron3-25" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=5.1;fontFamily=Source Sans 3;" edge="1" parent="nemotron3-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="306.74" y="58.43" as="sourcePoint" />
-            <mxPoint x="315.42" y="58.43" as="targetPoint" />
+            <mxPoint x="374.85" y="58.43" as="sourcePoint" />
+            <mxPoint x="394.85" y="58.43" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="nemotron3-28" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=5.1;fontFamily=Source Sans 3;" edge="1" parent="nemotron3-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="418.35" y="58.43" as="sourcePoint" />
-            <mxPoint x="427.02" y="58.43" as="targetPoint" />
+            <mxPoint x="497.15" y="58.43" as="sourcePoint" />
+            <mxPoint x="517.15" y="58.43" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="nemotron3-30" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=5.1;fontFamily=Source Sans 3;" edge="1" parent="nemotron3-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="449.5" y="58.43" as="sourcePoint" />
-            <mxPoint x="458.18" y="58.43" as="targetPoint" />
+            <mxPoint x="539.63" y="58.43" as="sourcePoint" />
+            <mxPoint x="559.63" y="58.43" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="nemotron3-33" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=5.1;fontFamily=Source Sans 3;" edge="1" parent="nemotron3-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="561.5" y="58.43" as="sourcePoint" />
-            <mxPoint x="570.18" y="58.43" as="targetPoint" />
+            <mxPoint x="661.93" y="58.43" as="sourcePoint" />
+            <mxPoint x="681.93" y="58.43" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="nemotron3-34" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=5.1;fontFamily=Source Sans 3;" edge="1" parent="nemotron3-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="244.76" y="58.43" as="sourcePoint" />
-            <mxPoint x="266.77" y="58.43" as="targetPoint" />
+            <mxPoint x="312.7" y="58.43" as="sourcePoint" />
+            <mxPoint x="334.7" y="58.43" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="nemotron3-35" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=5.1;fontFamily=Source Sans 3;" edge="1" parent="nemotron3-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="355.79" y="58.43" as="sourcePoint" />
-            <mxPoint x="377.8" y="58.43" as="targetPoint" />
+            <mxPoint x="435" y="58.43" as="sourcePoint" />
+            <mxPoint x="457" y="58.43" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="nemotron3-36" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=5.1;fontFamily=Source Sans 3;" edge="1" parent="nemotron3-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="498.55" y="58.43" as="sourcePoint" />
-            <mxPoint x="521.35" y="58.43" as="targetPoint" />
+            <mxPoint x="599.78" y="58.43" as="sourcePoint" />
+            <mxPoint x="621.78" y="58.43" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="nemotron3-10" value="Mamba-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;horizontal=0;fontFamily=Source Sans 3;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;absoluteArcSize=1;arcSize=10;" vertex="1" parent="nemotron3-figure">
           <mxGeometry x="17.67" y="18.36" width="22.48" height="80.06" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-11" value="MoE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;horizontal=0;fontFamily=Source Sans 3;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;absoluteArcSize=1;arcSize=10;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="48.43" y="18.36" width="22.48" height="80.06" as="geometry" />
+          <mxGeometry x="60.15" y="18.36" width="22.48" height="80.06" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-13" value="Mamba-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;horizontal=0;fontFamily=Source Sans 3;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;absoluteArcSize=1;arcSize=10;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="79.98" y="18.36" width="22.48" height="80.06" as="geometry" />
+          <mxGeometry x="102.63" y="18.36" width="22.48" height="80.06" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-15" value="MoE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;horizontal=0;fontFamily=Source Sans 3;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;absoluteArcSize=1;arcSize=10;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="111.14" y="18.36" width="22.48" height="80.06" as="geometry" />
+          <mxGeometry x="145.11" y="18.36" width="22.48" height="80.06" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-17" value="Mamba-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;horizontal=0;fontFamily=Source Sans 3;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;absoluteArcSize=1;arcSize=10;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="142.29" y="18.36" width="22.48" height="80.06" as="geometry" />
+          <mxGeometry x="187.59" y="18.36" width="22.48" height="80.06" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-19" value="Attention" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;horizontal=0;fontFamily=Source Sans 3;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;absoluteArcSize=1;arcSize=10;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="173.05" y="18.36" width="22.48" height="80.06" as="geometry" />
+          <mxGeometry x="230.07" y="18.36" width="22.48" height="80.06" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-21" value="MoE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;horizontal=0;fontFamily=Source Sans 3;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;absoluteArcSize=1;arcSize=10;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="204.6" y="18.36" width="22.48" height="80.06" as="geometry" />
+          <mxGeometry x="272.55" y="18.36" width="22.48" height="80.06" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-23" value="Mamba-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;horizontal=0;fontFamily=Source Sans 3;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;absoluteArcSize=1;arcSize=10;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="284.26" y="18.36" width="22.48" height="80.06" as="geometry" />
+          <mxGeometry x="352.37" y="18.36" width="22.48" height="80.06" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-24" value="MoE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;horizontal=0;fontFamily=Source Sans 3;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;absoluteArcSize=1;arcSize=10;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="315.42" y="18.36" width="22.48" height="80.06" as="geometry" />
+          <mxGeometry x="394.85" y="18.36" width="22.48" height="80.06" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-26" value="Mamba-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;horizontal=0;fontFamily=Source Sans 3;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;absoluteArcSize=1;arcSize=10;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="395.87" y="18.36" width="22.48" height="80.06" as="geometry" />
+          <mxGeometry x="474.67" y="18.36" width="22.48" height="80.06" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-27" value="Attention" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;horizontal=0;fontFamily=Source Sans 3;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;absoluteArcSize=1;arcSize=10;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="427.02" y="18.36" width="22.48" height="80.06" as="geometry" />
+          <mxGeometry x="517.15" y="18.36" width="22.48" height="80.06" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-29" value="MoE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;horizontal=0;fontFamily=Source Sans 3;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;absoluteArcSize=1;arcSize=10;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="458.18" y="18.36" width="22.48" height="80.06" as="geometry" />
+          <mxGeometry x="559.63" y="18.36" width="22.48" height="80.06" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-31" value="Mamba-2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;horizontal=0;fontFamily=Source Sans 3;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;absoluteArcSize=1;arcSize=10;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="539.02" y="18.36" width="22.48" height="80.06" as="geometry" />
+          <mxGeometry x="639.45" y="18.36" width="22.48" height="80.06" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-32" value="MoE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;horizontal=0;fontFamily=Source Sans 3;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;absoluteArcSize=1;arcSize=10;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="570.18" y="18.36" width="22.48" height="80.06" as="geometry" />
+          <mxGeometry x="681.93" y="18.36" width="22.48" height="80.06" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-3" value="×5" style="text;html=1;whiteSpace=nowrap;fontFamily=Source Sans 3;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="225.62" y="98.19" width="15.9" height="16.8" as="geometry" />
+          <mxGeometry x="293.56" y="98.19" width="15.9" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-5" value="×3" style="text;html=1;whiteSpace=nowrap;fontFamily=Source Sans 3;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="336.65" y="98.19" width="15.9" height="16.8" as="geometry" />
+          <mxGeometry x="415.86" y="98.19" width="15.9" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-7" value="×1" style="text;html=1;whiteSpace=nowrap;fontFamily=Source Sans 3;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="479.41" y="98.19" width="15.9" height="16.8" as="geometry" />
+          <mxGeometry x="580.64" y="98.19" width="15.9" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-9" value="×4" style="text;html=1;whiteSpace=nowrap;fontFamily=Source Sans 3;fontColor=#000000;fontSize=14;align=left;verticalAlign=middle;spacing=0;fontStyle=0;" vertex="1" parent="nemotron3-figure">
-          <mxGeometry x="591.19" y="98.19" width="15.9" height="16.8" as="geometry" />
+          <mxGeometry x="702.94" y="98.19" width="15.9" height="16.8" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

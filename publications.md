@@ -287,7 +287,7 @@ The report stacks four efficiency techniques:
 The design philosophy is a balance of three layer types: MoE for sparse parameter scaling, a few attention layers for high-fidelity all-to-all information routing between tokens, and Mamba-2 for fixed-cost sequence modeling. Nemotron 3 Nano 30B-A3B achieves 3.3× higher throughput than Qwen3-30B-A3B (8K input / 16K output), while staying competitive on reasoning and long-context (RULER @ 1M) benchmarks. The following pictures illustrate the layer pattern of Nemotron 3 Nano, where a few attention layers sit among the interleaved Mamba-2 and MoE layers, and the loss gap between NVFP4 and BF16 training at two model scales:
 
 {: .picture}
-<img loading="lazy" width="69.7%" height="69.7%" src="{{ site.assets }}/publications/nemotron3.svg"/>
+<img loading="lazy" width="82.4%" height="82.4%" src="{{ site.assets }}/publications/nemotron3.svg"/>
 
 {: .caption}
 <b>Nemotron-3-Nano-30B-A3B.</b> Nemotron 3 models (e.g., Nemotron 3 Nano) leverage a hybrid Mamba-Transformer MoE architecture consisting predominantly of interleaved Mamba-2 and MoE layers, with a select few self attention layers. Adapted from: [NVIDIA Nemotron 3: Efficient and Open Intelligence](https://arxiv.org/abs/2512.20856)
