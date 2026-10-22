@@ -913,50 +913,48 @@
             <mxPoint x="514.54" y="146.07" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="pipedream_dnn_pipeline_parallel-109" value="" style="endArrow=none;startArrow=none;html=1;rounded=1;strokeColor=#000000;strokeWidth=1.4;endSize=0;startSize=0;fontFamily=Source Sans 3;" edge="1" parent="pipedream_dnn_pipeline_parallel-figure">
+        <mxCell id="pipedream_dnn_pipeline_parallel-109" value="" style="endArrow=classic;startArrow=none;html=1;rounded=1;strokeColor=#000000;strokeWidth=1.4;endSize=5;fontFamily=Source Sans 3;endFill=1;" edge="1" parent="pipedream_dnn_pipeline_parallel-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="56.02" y="27.78" as="sourcePoint" />
-            <mxPoint x="504.45" y="51.52" as="targetPoint" />
+            <mxPoint x="492.99" y="47.65" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="98.1" y="28.02" />
-              <mxPoint x="143.96" y="28.48" />
-              <mxPoint x="189.83" y="29.18" />
-              <mxPoint x="235.69" y="30.35" />
-              <mxPoint x="281.55" y="31.75" />
-              <mxPoint x="327.42" y="33.62" />
-              <mxPoint x="373.28" y="35.95" />
-              <mxPoint x="409.97" y="38.4" />
-              <mxPoint x="437.49" y="40.62" />
-              <mxPoint x="455.83" y="42.25" />
-              <mxPoint x="474.18" y="44.47" />
-              <mxPoint x="487.94" y="46.1" />
-              <mxPoint x="497.11" y="47.73" />
-              <mxPoint x="501.7" y="49.02" />
-              <mxPoint x="503.99" y="50.43" />
+              <mxPoint x="98.13" y="27.89" />
+              <mxPoint x="140.24" y="28.2" />
+              <mxPoint x="182.35" y="28.74" />
+              <mxPoint x="224.45" y="29.48" />
+              <mxPoint x="266.56" y="30.43" />
+              <mxPoint x="308.67" y="31.6" />
+              <mxPoint x="350.78" y="32.98" />
+              <mxPoint x="392.89" y="34.58" />
+              <mxPoint x="435" y="36.38" />
+              <mxPoint x="477.1" y="38.4" />
+              <mxPoint x="478.49" y="38.57" />
+              <mxPoint x="479.85" y="38.93" />
+              <mxPoint x="481.14" y="39.47" />
+              <mxPoint x="482.34" y="40.19" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="pipedream_dnn_pipeline_parallel-110" value="" style="endArrow=none;startArrow=none;html=1;rounded=1;strokeColor=#000000;strokeWidth=1.4;endSize=0;startSize=0;fontFamily=Source Sans 3;" edge="1" parent="pipedream_dnn_pipeline_parallel-figure">
+        <mxCell id="pipedream_dnn_pipeline_parallel-110" value="" style="endArrow=classic;startArrow=none;html=1;rounded=1;strokeColor=#000000;strokeWidth=1.4;endSize=5;fontFamily=Source Sans 3;endFill=1;" edge="1" parent="pipedream_dnn_pipeline_parallel-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="56.02" y="36.07" as="sourcePoint" />
-            <mxPoint x="133.18" y="51.37" as="targetPoint" />
+            <mxPoint x="133.02" y="47.65" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="70.58" y="36.42" />
-              <mxPoint x="82.05" y="37.12" />
-              <mxPoint x="93.52" y="38.52" />
-              <mxPoint x="104.98" y="40.38" />
-              <mxPoint x="114.16" y="42.48" />
-              <mxPoint x="121.04" y="44.7" />
-              <mxPoint x="126.77" y="46.33" />
-              <mxPoint x="130.43" y="48.08" />
-              <mxPoint x="132.49" y="49.49" />
+              <mxPoint x="71.36" y="36.22" />
+              <mxPoint x="86.71" y="36.66" />
+              <mxPoint x="102.05" y="37.39" />
+              <mxPoint x="117.4" y="38.41" />
+              <mxPoint x="118.72" y="38.6" />
+              <mxPoint x="120" y="38.97" />
+              <mxPoint x="121.23" y="39.5" />
+              <mxPoint x="122.37" y="40.19" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="pipedream_dnn_pipeline_parallel-111" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;fontFamily=Source Sans 3;" vertex="1" parent="pipedream_dnn_pipeline_parallel-figure">
+        <mxCell id="pipedream_dnn_pipeline_parallel-111" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" vertex="1" parent="pipedream_dnn_pipeline_parallel-figure">
           <mxGeometry x="51.35" y="22.88" width="9.33" height="9.33" as="geometry" />
         </mxCell>
-        <mxCell id="pipedream_dnn_pipeline_parallel-112" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;fontFamily=Source Sans 3;" vertex="1" parent="pipedream_dnn_pipeline_parallel-figure">
+        <mxCell id="pipedream_dnn_pipeline_parallel-112" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" vertex="1" parent="pipedream_dnn_pipeline_parallel-figure">
           <mxGeometry x="51.35" y="31.63" width="9.33" height="9.33" as="geometry" />
         </mxCell>
         <mxCell id="pipedream_dnn_pipeline_parallel-113" value="All inputs use weights from last flush" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="pipedream_dnn_pipeline_parallel-figure">
