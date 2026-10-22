@@ -633,7 +633,7 @@ As an example, it tests four variants of the 3D transformer block:
 Variant 1 performs the best with increasing training iterations. The four variants are illustrated in the following picture:
 
 {: .picture}
-<img width="78%" height="78%" src="{{ site.assets }}/diffusion/latte.svg"/> 
+<img width="77.9%" height="77.9%" src="{{ site.assets }}/diffusion/latte.svg"/> 
 
 {: .caption}
 <b>The pipeline of Latte for video generation</b>. Four model variants of Latte are proposed to efficiently capture spatio-temporal information in videos. Each block depicted in light orange represents a Transformer block. The standard Transformer blocks are used in (a) and (b), while (c) and (d) use Latte's own block variants. For the sake of simplicity, encoding and decoding processes for VAE are not shown in the diagram. Adapted from: [Latte: Latent Diffusion Transformer for Video Generation](https://arxiv.org/abs/2401.03048).
