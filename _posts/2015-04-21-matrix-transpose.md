@@ -157,7 +157,7 @@ The second step starts the **view swap** method. All ranks pack their triplets a
 More importantly, the matrix composed of all triplets across all ranks is a distributed matrix with a fixed element size per cell (a tuple of fixed size). Therefore, this exchange is performed by the same distributed transpose presented above in the section *How to transpose it?*. After the exchange, all ranks will hold the triplets of the metadata (*but not the data yet*) of the final matrix structure:   
 
 {: .picture}
-<img width="97.9%" height="97.9%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_2.svg">
+<img width="97.8%" height="97.8%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_2.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)
