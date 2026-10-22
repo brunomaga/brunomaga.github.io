@@ -6239,28 +6239,28 @@
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="729.84" y="195.17" as="sourcePoint" /><mxPoint x="618.51" y="116.66" as="targetPoint" /><Array as="points"><mxPoint x="729.84" y="116.66" /></Array></mxGeometry>
         </mxCell>
-        <mxCell id="moe_2017_dean-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="moe_2017_dean-figure">
+        <mxCell id="moe_2017_dean-1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="moe_2017_dean-figure">
           <mxGeometry x="46.67" y="154" width="61.83" height="31.5" as="geometry" />
         </mxCell>
         <mxCell id="moe_2017_dean-2" value="MoE&lt;br&gt;layer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;absoluteArcSize=1;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="moe_2017_dean-figure">
           <mxGeometry x="46.67" y="217" width="61.83" height="46.67" as="geometry" />
         </mxCell>
-        <mxCell id="moe_2017_dean-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="moe_2017_dean-figure">
+        <mxCell id="moe_2017_dean-3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="moe_2017_dean-figure">
           <mxGeometry x="46.67" y="295.17" width="61.83" height="31.5" as="geometry" />
         </mxCell>
-        <mxCell id="moe_2017_dean-8" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="moe_2017_dean-figure">
+        <mxCell id="moe_2017_dean-8" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="moe_2017_dean-figure">
           <mxGeometry x="134.22" y="154" width="61.83" height="31.5" as="geometry" />
         </mxCell>
         <mxCell id="moe_2017_dean-9" value="MoE&lt;br&gt;layer" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;absoluteArcSize=1;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="moe_2017_dean-figure">
           <mxGeometry x="134.22" y="217" width="61.83" height="46.67" as="geometry" />
         </mxCell>
-        <mxCell id="moe_2017_dean-10" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="moe_2017_dean-figure">
+        <mxCell id="moe_2017_dean-10" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="moe_2017_dean-figure">
           <mxGeometry x="134.22" y="295.17" width="61.83" height="31.5" as="geometry" />
         </mxCell>
         <mxCell id="moe_2017_dean-24" value="MoE layer" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="moe_2017_dean-figure">
           <mxGeometry x="277.67" y="89.34" width="70.37" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="moe_2017_dean-26" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="moe_2017_dean-figure">
+        <mxCell id="moe_2017_dean-26" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="moe_2017_dean-figure">
           <mxGeometry x="577.59" y="29.75" width="61.83" height="31.5" as="geometry" />
         </mxCell>
         <mxCell id="moe_2017_dean-28" value="+" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;spacingBottom=1;aspect=fixed;" vertex="1" parent="moe_2017_dean-figure">
@@ -6275,7 +6275,7 @@
         <mxCell id="moe_2017_dean-31" value="Expert 3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="moe_2017_dean-figure">
           <mxGeometry x="550.17" y="232.17" width="78.17" height="32.08" as="geometry" />
         </mxCell>
-        <mxCell id="moe_2017_dean-32" value="Expert &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;n-1&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="moe_2017_dean-figure">
+        <mxCell id="moe_2017_dean-32" value="Expert &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;n−1&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="moe_2017_dean-figure">
           <mxGeometry x="690.75" y="232.17" width="78.17" height="32.08" as="geometry" />
         </mxCell>
         <mxCell id="moe_2017_dean-33" value="Expert &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;n&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="moe_2017_dean-figure">
@@ -6293,11 +6293,11 @@
         <mxCell id="moe_2017_dean-37" value="Gating&lt;br&gt;Network" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="moe_2017_dean-figure">
           <mxGeometry x="518.67" y="341.83" width="62.42" height="43.17" as="geometry" />
         </mxCell>
-        <mxCell id="moe_2017_dean-38" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="moe_2017_dean-figure">
+        <mxCell id="moe_2017_dean-38" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="moe_2017_dean-figure">
           <mxGeometry x="581.09" y="429.33" width="61.83" height="31.5" as="geometry" />
         </mxCell>
         <mxCell id="moe_2017_dean-42" value="&lt;i&gt;x&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="moe_2017_dean-figure">
-          <mxGeometry x="600.34" y="407.26" width="14" height="20.8" as="geometry" />
+          <mxGeometry x="611.7" y="407.26" width="14" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="moe_2017_dean-46" value="×" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;spacingBottom=1;" vertex="1" parent="moe_2017_dean-figure">
           <mxGeometry x="485.33" y="170.17" width="20" height="20" as="geometry" />
@@ -6308,7 +6308,7 @@
         <mxCell id="moe_2017_dean-50" value="&lt;i&gt;G&lt;/i&gt;(&lt;i&gt;x&lt;/i&gt;)&lt;sub&gt;2&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="moe_2017_dean-figure">
           <mxGeometry x="273.23" y="157.77" width="40.44" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="moe_2017_dean-51" value="&lt;i&gt;G&lt;/i&gt;(&lt;i&gt;x&lt;/i&gt;)&lt;sub&gt;&lt;i&gt;n&lt;/i&gt;-1&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="moe_2017_dean-figure">
+        <mxCell id="moe_2017_dean-51" value="&lt;i&gt;G&lt;/i&gt;(&lt;i&gt;x&lt;/i&gt;)&lt;sub&gt;&lt;i&gt;n&lt;/i&gt;−1&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="moe_2017_dean-figure">
           <mxGeometry x="334" y="182.77" width="52.1" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="moe_gshard-label" value="moe_gshard.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
