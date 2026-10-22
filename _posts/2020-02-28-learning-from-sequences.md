@@ -186,7 +186,7 @@ So, the encoder is trained efficiently and learns a *context*. The main question
 BERT is a stack of Transformer encoders that learns language contexts and performs interpretation tasks. As the encoder has no mask, the context of each word is learnt from the words before and after it (hence *Bidirectional*). The following picture illustrates the model, where each block is one encoder layer of the transformer (the grey region on the left of the transformer picture):
 
 {: .picture}
-<img width="95.3%" height="95.3%" src="{{ site.assets }}/learning-from-sequences/bert.svg"/>
+<img width="83.9%" height="83.9%" src="{{ site.assets }}/learning-from-sequences/bert.svg"/>
 
 {: .caption}
 The BERT model, as a stack of Transformer encoders. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
