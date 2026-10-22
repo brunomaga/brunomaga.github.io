@@ -20,7 +20,7 @@
           <mxGeometry x="0" y="940.4" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="matmul-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="980.4" width="330.72" height="151.18" as="geometry" />
+          <mxGeometry x="0" y="980.4" width="370.59" height="136.44" as="geometry" />
         </mxCell>
         <mxCell id="matmul-3" value="" style="group;fontFamily=Source Sans 3;" vertex="1" parent="matmul-figure">
           <mxGeometry x="2.93" y="4.42" width="87.48" height="89.96" as="geometry" />
@@ -80,7 +80,7 @@
           <mxGeometry x="-2.93" y="-2.08" width="15" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="matmul-63" value="&lt;b&gt;output&lt;/b&gt;: A x C" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="matmul-48">
-          <mxGeometry x="-5.35" y="67.75" width="82.07" height="20.8" as="geometry" />
+          <mxGeometry x="-5.35" y="72.42" width="82.07" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="matmul-29" value="" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#f5f5f5;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="matmul-28">
           <mxGeometry x="21.09" y="8.55" width="19.44" height="24.88" as="geometry" />
@@ -134,7 +134,7 @@
           <mxGeometry x="-2.94" y="-2.08" width="15" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="matmul-46" value="&lt;b&gt;matrix 2&lt;/b&gt;: B x C" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="matmul-28">
-          <mxGeometry x="-6.51" y="72.42" width="94.11" height="20.8" as="geometry" />
+          <mxGeometry x="-6.51" y="74.76" width="94.11" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="matmul-4" value="" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#f5f5f5;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="matmul-3">
           <mxGeometry x="38.88" y="3.88" width="19.44" height="24.88" as="geometry" />
@@ -205,7 +205,7 @@
         <mxCell id="matmul-26" value="&lt;b&gt;matrix 1&lt;/b&gt;: A x B" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="matmul-3">
           <mxGeometry x="-2.93" y="72.42" width="93.34" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="matmul-x2686" parent="matmul-figure" value="their dot product" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="128.66" y="134.38" width="100.5" height="16.8" as="geometry" /></mxCell><mxCell id="matmul-x2685" parent="matmul-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#d5e8d4;" vertex="1"><mxGeometry x="104.66" y="136.78" width="20" height="12" as="geometry" /></mxCell><mxCell id="matmul-x2684" parent="matmul-figure" value="a row of matrix 1 and a column of matrix 2" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="54.4" y="110.38" width="244.8" height="16.8" as="geometry" /></mxCell><mxCell id="matmul-x2683" parent="matmul-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#dae8fc;" vertex="1"><mxGeometry x="30.4" y="112.78" width="20" height="12" as="geometry" /></mxCell><mxCell id="kv_cache-label" value="kv_cache.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
+        <mxCell id="matmul-x2686" parent="matmul-figure" value="their dot product" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="270.19" y="119.64" width="100.4" height="16.8" as="geometry" /></mxCell><mxCell id="matmul-x2685" parent="matmul-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#d5e8d4;" vertex="1"><mxGeometry x="246.19" y="122.04" width="20" height="12" as="geometry" /></mxCell><mxCell id="matmul-x2684" parent="matmul-figure" value="a row of matrix 1 and a column of matrix 2" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="-22.49" y="119.64" width="245.08" height="16.8" as="geometry" /></mxCell><mxCell id="matmul-x2683" parent="matmul-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#dae8fc;" vertex="1"><mxGeometry x="-46.49" y="122.04" width="20" height="12" as="geometry" /></mxCell><mxCell id="kv_cache-label" value="kv_cache.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="1191.58" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="kv_cache-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">

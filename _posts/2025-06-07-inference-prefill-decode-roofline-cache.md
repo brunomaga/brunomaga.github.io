@@ -101,7 +101,7 @@ Therefore, the roofline point ❌ of this example is $$\mathbf{(0.083, 10)}$$.
 For the multiplication of two matrices of shapes **$$A \times B$$** and **$$B \times C$$**, which gives an output matrix of shape **$$A \times C$$**, here are the FLOPs and the memory traffic, for a data type of **$$dt$$** bytes per element. Each element of the output is the dot product of a row of matrix 1 and a column of matrix 2, as illustrated in the following picture:
 
 {: .picture}
-<img width="37.1%" height="37.1%" src="{{ site.assets }}/inference/imgs/matmul.svg"/>
+<img width="47.4%" height="47.4%" src="{{ site.assets }}/inference/imgs/matmul.svg"/>
 
 {: .caption}
 **FLOPs:** $$AC$$ outputs $$\times$$ $$B$$ multiply-adds $$\times$$ 2 FLOPs $$= 2ABC$$. **Memory traffic, naive:** matrix 1 read $$C$$ times and matrix 2 read $$A$$ times, $$2ABC\text{ }dt$$. **Memory traffic, with cache:** inputs read once and output written once, $$(AB + BC + AC)\text{ }dt$$. **Arithmetic intensity:** $$2ABC / ((AB + BC + AC)\text{ }dt)$$, about $$2N / (3\text{ }dt)$$ for $$A = B = C = N$$.
