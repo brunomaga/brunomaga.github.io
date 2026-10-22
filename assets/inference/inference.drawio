@@ -5094,7 +5094,7 @@
         <mxCell id="mla-398" parent="mla-figure" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#885e10;fontFamily=Source Sans 3;" value="KV cache" vertex="1">
           <mxGeometry height="20.8" width="64.67" x="296.9" y="882.61" as="geometry" />
         </mxCell>
-        <mxCell id="mla-399" edge="1" parent="mla-figure" source="mla-213" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=13;labelBackgroundColor=none;exitX=0.993;exitY=0.65;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.1825;entryY=0.59;entryDx=0;entryDy=0;entryPerimeter=0;fontStyle=0;fontFamily=Source Sans 3;strokeWidth=1.4;endFill=1;endSize=5;" target="mla-241" value="@ W_uk">
+        <mxCell id="mla-399" edge="1" parent="mla-figure" source="mla-213" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=13;labelBackgroundColor=none;exitX=0.993;exitY=0.65;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.1825;entryY=0.59;entryDx=0;entryDy=0;entryPerimeter=0;fontStyle=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.4;endFill=1;endSize=5;" target="mla-241" value="@ W_uk">
           <mxGeometry relative="1" as="geometry"><mxPoint as="offset" x="0" y="-10.35" /></mxGeometry>
         </mxCell>
         <mxCell id="mla-400" edge="1" parent="mla-figure" source="mla-241" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=14;labelBackgroundColor=#ffffff;exitX=0.9169;exitY=0.63;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.2942;entryY=0.6;entryDx=0;entryDy=0;entryPerimeter=0;fontStyle=0;fontFamily=Source Sans 3;strokeWidth=1.4;endFill=1;endSize=5;" target="mla-276" value="">
