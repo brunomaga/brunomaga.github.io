@@ -8,456 +8,456 @@
           <mxGeometry x="0" y="0" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="mini-single-axis-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="40" width="180.83" height="180.83" as="geometry" />
+          <mxGeometry x="0" y="40" width="162" height="162" as="geometry" />
         </mxCell>
         <mxCell id="mini-single-axis-1012" value="" style="text;html=1;fontFamily=Source Sans 3;" vertex="1" parent="mini-single-axis-figure">
-          <mxGeometry x="0" y="0" width="180.83" height="180.83" as="geometry" />
+          <mxGeometry x="0" y="0" width="162" height="162" as="geometry" />
         </mxCell>
-        <mxCell id="mini-single-axis-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=16;strokeColor=#000000;strokeWidth=1.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mini-single-axis-figure">
-          <mxGeometry x="4.27" y="4.64" width="175" height="175" as="geometry" />
+        <mxCell id="mini-single-axis-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=16;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mini-single-axis-figure">
+          <mxGeometry x="1" y="1" width="160" height="160" as="geometry" />
         </mxCell>
         <mxCell id="mini-single-axis-3" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-single-axis-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="36.35" y="4.64" as="sourcePoint" />
-            <mxPoint x="36.35" y="179.64" as="targetPoint" />
+            <mxPoint x="30.33" y="1" as="sourcePoint" />
+            <mxPoint x="30.33" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-single-axis-4" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-single-axis-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="55.6" y="4.64" as="sourcePoint" />
-            <mxPoint x="55.6" y="179.64" as="targetPoint" />
+            <mxPoint x="47.93" y="1" as="sourcePoint" />
+            <mxPoint x="47.93" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-single-axis-5" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-single-axis-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="62.6" y="4.64" as="sourcePoint" />
-            <mxPoint x="62.6" y="179.64" as="targetPoint" />
+            <mxPoint x="54.33" y="1" as="sourcePoint" />
+            <mxPoint x="54.33" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-single-axis-6" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-single-axis-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="83.6" y="4.64" as="sourcePoint" />
-            <mxPoint x="83.6" y="179.64" as="targetPoint" />
+            <mxPoint x="73.53" y="1" as="sourcePoint" />
+            <mxPoint x="73.53" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-single-axis-7" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-single-axis-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="94.1" y="4.64" as="sourcePoint" />
-            <mxPoint x="94.1" y="179.64" as="targetPoint" />
+            <mxPoint x="83.13" y="1" as="sourcePoint" />
+            <mxPoint x="83.13" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-single-axis-8" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-single-axis-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="108.1" y="4.64" as="sourcePoint" />
-            <mxPoint x="108.1" y="179.64" as="targetPoint" />
+            <mxPoint x="95.93" y="1" as="sourcePoint" />
+            <mxPoint x="95.93" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-single-axis-9" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-single-axis-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="122.1" y="4.64" as="sourcePoint" />
-            <mxPoint x="122.1" y="179.64" as="targetPoint" />
+            <mxPoint x="108.73" y="1" as="sourcePoint" />
+            <mxPoint x="108.73" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-single-axis-10" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-single-axis-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="160.6" y="4.64" as="sourcePoint" />
-            <mxPoint x="160.6" y="179.64" as="targetPoint" />
+            <mxPoint x="143.93" y="1" as="sourcePoint" />
+            <mxPoint x="143.93" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-single-axis-11" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-single-axis-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="170.52" y="4.64" as="sourcePoint" />
-            <mxPoint x="170.52" y="179.64" as="targetPoint" />
+            <mxPoint x="153" y="1" as="sourcePoint" />
+            <mxPoint x="153" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-nug-label" value="mini-nug.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="280.83" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="mini-nug-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="320.83" width="180.83" height="180.83" as="geometry" />
+          <mxGeometry x="0" y="320.83" width="162" height="162" as="geometry" />
         </mxCell>
         <mxCell id="mini-nug-1013" value="" style="text;html=1;fontFamily=Source Sans 3;" vertex="1" parent="mini-nug-figure">
-          <mxGeometry x="0" y="0" width="180.83" height="180.83" as="geometry" />
+          <mxGeometry x="0" y="0" width="162" height="162" as="geometry" />
         </mxCell>
-        <mxCell id="mini-nug-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=16;strokeColor=#000000;strokeWidth=1.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mini-nug-figure">
-          <mxGeometry x="2.78" y="4.63" width="175" height="175" as="geometry" />
+        <mxCell id="mini-nug-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=16;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mini-nug-figure">
+          <mxGeometry x="1" y="1" width="160" height="160" as="geometry" />
         </mxCell>
         <mxCell id="mini-nug-3" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-nug-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="47.11" y="4.63" as="sourcePoint" />
-            <mxPoint x="47.11" y="179.63" as="targetPoint" />
+            <mxPoint x="41.53" y="1" as="sourcePoint" />
+            <mxPoint x="41.53" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-nug-4" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-nug-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="76.86" y="4.63" as="sourcePoint" />
-            <mxPoint x="76.86" y="179.63" as="targetPoint" />
+            <mxPoint x="68.73" y="1" as="sourcePoint" />
+            <mxPoint x="68.73" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-nug-5" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-nug-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="85.61" y="4.63" as="sourcePoint" />
-            <mxPoint x="85.61" y="179.63" as="targetPoint" />
+            <mxPoint x="76.73" y="1" as="sourcePoint" />
+            <mxPoint x="76.73" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-nug-6" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-nug-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="106.61" y="4.63" as="sourcePoint" />
-            <mxPoint x="106.61" y="179.63" as="targetPoint" />
+            <mxPoint x="95.93" y="1" as="sourcePoint" />
+            <mxPoint x="95.93" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-nug-7" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-nug-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="2.78" y="16.88" as="sourcePoint" />
-            <mxPoint x="177.78" y="16.88" as="targetPoint" />
+            <mxPoint x="1" y="12.2" as="sourcePoint" />
+            <mxPoint x="161" y="12.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-nug-8" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-nug-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="2.78" y="27.38" as="sourcePoint" />
-            <mxPoint x="177.78" y="27.38" as="targetPoint" />
+            <mxPoint x="1" y="21.8" as="sourcePoint" />
+            <mxPoint x="161" y="21.8" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-nug-9" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-nug-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="2.78" y="72.88" as="sourcePoint" />
-            <mxPoint x="177.78" y="72.88" as="targetPoint" />
+            <mxPoint x="1" y="63.4" as="sourcePoint" />
+            <mxPoint x="161" y="63.4" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-nug-10" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-nug-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="2.78" y="92.13" as="sourcePoint" />
-            <mxPoint x="177.78" y="92.13" as="targetPoint" />
+            <mxPoint x="1" y="81" as="sourcePoint" />
+            <mxPoint x="161" y="81" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-nug-11" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-nug-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="2.78" y="102.05" as="sourcePoint" />
-            <mxPoint x="177.78" y="102.05" as="targetPoint" />
+            <mxPoint x="1" y="90.07" as="sourcePoint" />
+            <mxPoint x="161" y="90.07" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-nug-12" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-nug-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="2.78" y="118.38" as="sourcePoint" />
-            <mxPoint x="177.78" y="118.38" as="targetPoint" />
+            <mxPoint x="1" y="105" as="sourcePoint" />
+            <mxPoint x="161" y="105" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-orb-label" value="mini-orb.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="561.66" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="mini-orb-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="601.66" width="180.83" height="180.83" as="geometry" />
+          <mxGeometry x="0" y="601.66" width="162" height="162" as="geometry" />
         </mxCell>
         <mxCell id="mini-orb-1018" value="" style="text;html=1;fontFamily=Source Sans 3;" vertex="1" parent="mini-orb-figure">
-          <mxGeometry x="0" y="0" width="180.83" height="180.83" as="geometry" />
+          <mxGeometry x="0" y="0" width="162" height="162" as="geometry" />
         </mxCell>
-        <mxCell id="mini-orb-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=16;strokeColor=#000000;strokeWidth=1.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mini-orb-figure">
-          <mxGeometry x="4.34" y="2.95" width="175" height="175" as="geometry" />
+        <mxCell id="mini-orb-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=16;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mini-orb-figure">
+          <mxGeometry x="1" y="1" width="160" height="160" as="geometry" />
         </mxCell>
         <mxCell id="mini-orb-3" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-orb-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="73.17" y="2.95" as="sourcePoint" />
-            <mxPoint x="73.17" y="177.95" as="targetPoint" />
+            <mxPoint x="63.93" y="1" as="sourcePoint" />
+            <mxPoint x="63.93" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-orb-4" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-orb-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="4.34" y="54.29" as="sourcePoint" />
-            <mxPoint x="73.17" y="54.29" as="targetPoint" />
+            <mxPoint x="1" y="47.94" as="sourcePoint" />
+            <mxPoint x="63.93" y="47.94" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-orb-5" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-orb-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="73.17" y="78.2" as="sourcePoint" />
-            <mxPoint x="179.34" y="78.2" as="targetPoint" />
+            <mxPoint x="63.93" y="69.8" as="sourcePoint" />
+            <mxPoint x="161" y="69.8" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-orb-6" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-orb-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="52.76" y="2.95" as="sourcePoint" />
-            <mxPoint x="52.76" y="54.29" as="targetPoint" />
+            <mxPoint x="45.27" y="1" as="sourcePoint" />
+            <mxPoint x="45.27" y="47.94" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-orb-7" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-orb-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="41.09" y="54.29" as="sourcePoint" />
-            <mxPoint x="41.09" y="177.95" as="targetPoint" />
+            <mxPoint x="34.6" y="47.94" as="sourcePoint" />
+            <mxPoint x="34.6" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-orb-8" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-orb-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="137.92" y="2.95" as="sourcePoint" />
-            <mxPoint x="137.92" y="78.2" as="targetPoint" />
+            <mxPoint x="123.13" y="1" as="sourcePoint" />
+            <mxPoint x="123.13" y="69.8" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-orb-9" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-orb-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="99.42" y="78.2" as="sourcePoint" />
-            <mxPoint x="99.42" y="177.95" as="targetPoint" />
+            <mxPoint x="87.93" y="69.8" as="sourcePoint" />
+            <mxPoint x="87.93" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-orb-10" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-orb-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="4.34" y="43.2" as="sourcePoint" />
-            <mxPoint x="52.76" y="43.2" as="targetPoint" />
+            <mxPoint x="1" y="37.8" as="sourcePoint" />
+            <mxPoint x="45.27" y="37.8" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-orb-11" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-orb-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="52.76" y="23.37" as="sourcePoint" />
-            <mxPoint x="73.17" y="23.37" as="targetPoint" />
+            <mxPoint x="45.27" y="19.67" as="sourcePoint" />
+            <mxPoint x="63.93" y="19.67" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-orb-12" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-orb-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="4.34" y="110.29" as="sourcePoint" />
-            <mxPoint x="41.09" y="110.29" as="targetPoint" />
+            <mxPoint x="1" y="99.14" as="sourcePoint" />
+            <mxPoint x="34.6" y="99.14" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-orb-13" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-orb-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="41.09" y="125.45" as="sourcePoint" />
-            <mxPoint x="73.17" y="125.45" as="targetPoint" />
+            <mxPoint x="34.6" y="113" as="sourcePoint" />
+            <mxPoint x="63.93" y="113" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-orb-14" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-orb-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="73.17" y="32.12" as="sourcePoint" />
-            <mxPoint x="137.92" y="32.12" as="targetPoint" />
+            <mxPoint x="63.93" y="27.67" as="sourcePoint" />
+            <mxPoint x="123.13" y="27.67" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-orb-15" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-orb-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="137.92" y="43.2" as="sourcePoint" />
-            <mxPoint x="179.34" y="43.2" as="targetPoint" />
+            <mxPoint x="123.13" y="37.8" as="sourcePoint" />
+            <mxPoint x="161" y="37.8" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-orb-16" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-orb-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="73.17" y="99.79" as="sourcePoint" />
-            <mxPoint x="99.42" y="99.79" as="targetPoint" />
+            <mxPoint x="63.93" y="89.54" as="sourcePoint" />
+            <mxPoint x="87.93" y="89.54" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-orb-17" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-orb-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="99.42" y="118.45" as="sourcePoint" />
-            <mxPoint x="179.34" y="118.45" as="targetPoint" />
+            <mxPoint x="87.93" y="106.6" as="sourcePoint" />
+            <mxPoint x="161" y="106.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-label" value="mini-str.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="842.49" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="mini-str-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="882.49" width="180.83" height="180.83" as="geometry" />
+          <mxGeometry x="0" y="882.49" width="162" height="162" as="geometry" />
         </mxCell>
         <mxCell id="mini-str-1037" value="" style="text;html=1;fontFamily=Source Sans 3;" vertex="1" parent="mini-str-figure">
-          <mxGeometry x="0" y="0" width="180.83" height="180.83" as="geometry" />
+          <mxGeometry x="0" y="0" width="162" height="162" as="geometry" />
         </mxCell>
-        <mxCell id="mini-str-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=16;strokeColor=#000000;strokeWidth=1.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mini-str-figure">
-          <mxGeometry x="3.71" y="2.94" width="175" height="175" as="geometry" />
+        <mxCell id="mini-str-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=16;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mini-str-figure">
+          <mxGeometry x="1" y="1" width="160" height="160" as="geometry" />
         </mxCell>
         <mxCell id="mini-str-3" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="48.04" y="2.94" as="sourcePoint" />
-            <mxPoint x="48.04" y="177.94" as="targetPoint" />
+            <mxPoint x="41.53" y="1" as="sourcePoint" />
+            <mxPoint x="41.53" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-4" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="77.79" y="2.94" as="sourcePoint" />
-            <mxPoint x="77.79" y="177.94" as="targetPoint" />
+            <mxPoint x="68.73" y="1" as="sourcePoint" />
+            <mxPoint x="68.73" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-5" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="86.54" y="2.94" as="sourcePoint" />
-            <mxPoint x="86.54" y="177.94" as="targetPoint" />
+            <mxPoint x="76.73" y="1" as="sourcePoint" />
+            <mxPoint x="76.73" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-6" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="107.54" y="2.94" as="sourcePoint" />
-            <mxPoint x="107.54" y="177.94" as="targetPoint" />
+            <mxPoint x="95.93" y="1" as="sourcePoint" />
+            <mxPoint x="95.93" y="161" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-7" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="3.71" y="25.69" as="sourcePoint" />
-            <mxPoint x="48.04" y="25.69" as="targetPoint" />
+            <mxPoint x="1" y="21.8" as="sourcePoint" />
+            <mxPoint x="41.53" y="21.8" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-8" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="3.71" y="44.36" as="sourcePoint" />
-            <mxPoint x="48.04" y="44.36" as="targetPoint" />
+            <mxPoint x="1" y="38.87" as="sourcePoint" />
+            <mxPoint x="41.53" y="38.87" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-9" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="3.71" y="71.19" as="sourcePoint" />
-            <mxPoint x="48.04" y="71.19" as="targetPoint" />
+            <mxPoint x="1" y="63.4" as="sourcePoint" />
+            <mxPoint x="41.53" y="63.4" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-10" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="3.71" y="89.86" as="sourcePoint" />
-            <mxPoint x="48.04" y="89.86" as="targetPoint" />
+            <mxPoint x="1" y="80.47" as="sourcePoint" />
+            <mxPoint x="41.53" y="80.47" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-11" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="3.71" y="99.77" as="sourcePoint" />
-            <mxPoint x="48.04" y="99.77" as="targetPoint" />
+            <mxPoint x="1" y="89.53" as="sourcePoint" />
+            <mxPoint x="41.53" y="89.53" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-12" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="3.71" y="146.44" as="sourcePoint" />
-            <mxPoint x="48.04" y="146.44" as="targetPoint" />
+            <mxPoint x="1" y="132.2" as="sourcePoint" />
+            <mxPoint x="41.53" y="132.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-13" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="48.04" y="39.11" as="sourcePoint" />
-            <mxPoint x="77.79" y="39.11" as="targetPoint" />
+            <mxPoint x="41.53" y="34.07" as="sourcePoint" />
+            <mxPoint x="68.73" y="34.07" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-14" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="48.04" y="57.19" as="sourcePoint" />
-            <mxPoint x="77.79" y="57.19" as="targetPoint" />
+            <mxPoint x="41.53" y="50.6" as="sourcePoint" />
+            <mxPoint x="68.73" y="50.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-15" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="48.04" y="84.61" as="sourcePoint" />
-            <mxPoint x="77.79" y="84.61" as="targetPoint" />
+            <mxPoint x="41.53" y="75.67" as="sourcePoint" />
+            <mxPoint x="68.73" y="75.67" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-16" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="48.04" y="103.27" as="sourcePoint" />
-            <mxPoint x="77.79" y="103.27" as="targetPoint" />
+            <mxPoint x="41.53" y="92.73" as="sourcePoint" />
+            <mxPoint x="68.73" y="92.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-17" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="48.04" y="113.19" as="sourcePoint" />
-            <mxPoint x="77.79" y="113.19" as="targetPoint" />
+            <mxPoint x="41.53" y="101.8" as="sourcePoint" />
+            <mxPoint x="68.73" y="101.8" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-18" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="48.04" y="129.52" as="sourcePoint" />
-            <mxPoint x="77.79" y="129.52" as="targetPoint" />
+            <mxPoint x="41.53" y="116.73" as="sourcePoint" />
+            <mxPoint x="68.73" y="116.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-19" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="77.79" y="45.52" as="sourcePoint" />
-            <mxPoint x="86.54" y="45.52" as="targetPoint" />
+            <mxPoint x="68.73" y="39.93" as="sourcePoint" />
+            <mxPoint x="76.73" y="39.93" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-20" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="77.79" y="64.19" as="sourcePoint" />
-            <mxPoint x="86.54" y="64.19" as="targetPoint" />
+            <mxPoint x="68.73" y="57" as="sourcePoint" />
+            <mxPoint x="76.73" y="57" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-21" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="77.79" y="91.61" as="sourcePoint" />
-            <mxPoint x="86.54" y="91.61" as="targetPoint" />
+            <mxPoint x="68.73" y="82.07" as="sourcePoint" />
+            <mxPoint x="76.73" y="82.07" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-22" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="77.79" y="110.27" as="sourcePoint" />
-            <mxPoint x="86.54" y="110.27" as="targetPoint" />
+            <mxPoint x="68.73" y="99.13" as="sourcePoint" />
+            <mxPoint x="76.73" y="99.13" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-23" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="77.79" y="120.19" as="sourcePoint" />
-            <mxPoint x="86.54" y="120.19" as="targetPoint" />
+            <mxPoint x="68.73" y="108.2" as="sourcePoint" />
+            <mxPoint x="76.73" y="108.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-24" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="77.79" y="136.52" as="sourcePoint" />
-            <mxPoint x="86.54" y="136.52" as="targetPoint" />
+            <mxPoint x="68.73" y="123.13" as="sourcePoint" />
+            <mxPoint x="76.73" y="123.13" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-25" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="86.54" y="49.02" as="sourcePoint" />
-            <mxPoint x="107.54" y="49.02" as="targetPoint" />
+            <mxPoint x="76.73" y="43.13" as="sourcePoint" />
+            <mxPoint x="95.93" y="43.13" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-26" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="86.54" y="67.69" as="sourcePoint" />
-            <mxPoint x="107.54" y="67.69" as="targetPoint" />
+            <mxPoint x="76.73" y="60.2" as="sourcePoint" />
+            <mxPoint x="95.93" y="60.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-27" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="86.54" y="77.02" as="sourcePoint" />
-            <mxPoint x="107.54" y="77.02" as="targetPoint" />
+            <mxPoint x="76.73" y="68.73" as="sourcePoint" />
+            <mxPoint x="95.93" y="68.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-28" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="86.54" y="95.69" as="sourcePoint" />
-            <mxPoint x="107.54" y="95.69" as="targetPoint" />
+            <mxPoint x="76.73" y="85.8" as="sourcePoint" />
+            <mxPoint x="95.93" y="85.8" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-29" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="86.54" y="105.61" as="sourcePoint" />
-            <mxPoint x="107.54" y="105.61" as="targetPoint" />
+            <mxPoint x="76.73" y="94.87" as="sourcePoint" />
+            <mxPoint x="95.93" y="94.87" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-30" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="86.54" y="122.52" as="sourcePoint" />
-            <mxPoint x="107.54" y="122.52" as="targetPoint" />
+            <mxPoint x="76.73" y="110.33" as="sourcePoint" />
+            <mxPoint x="95.93" y="110.33" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-31" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="107.54" y="37.36" as="sourcePoint" />
-            <mxPoint x="178.71" y="37.36" as="targetPoint" />
+            <mxPoint x="95.93" y="32.47" as="sourcePoint" />
+            <mxPoint x="161" y="32.47" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-32" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="107.54" y="55.44" as="sourcePoint" />
-            <mxPoint x="178.71" y="55.44" as="targetPoint" />
+            <mxPoint x="95.93" y="49" as="sourcePoint" />
+            <mxPoint x="161" y="49" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-33" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="107.54" y="90.44" as="sourcePoint" />
-            <mxPoint x="178.71" y="90.44" as="targetPoint" />
+            <mxPoint x="95.93" y="81" as="sourcePoint" />
+            <mxPoint x="161" y="81" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-34" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="107.54" y="109.11" as="sourcePoint" />
-            <mxPoint x="178.71" y="109.11" as="targetPoint" />
+            <mxPoint x="95.93" y="98.07" as="sourcePoint" />
+            <mxPoint x="161" y="98.07" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-35" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="107.54" y="139.44" as="sourcePoint" />
-            <mxPoint x="178.71" y="139.44" as="targetPoint" />
+            <mxPoint x="95.93" y="125.8" as="sourcePoint" />
+            <mxPoint x="161" y="125.8" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mini-str-36" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="mini-str-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="107.54" y="155.77" as="sourcePoint" />
-            <mxPoint x="178.71" y="155.77" as="targetPoint" />
+            <mxPoint x="95.93" y="140.73" as="sourcePoint" />
+            <mxPoint x="161" y="140.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="balance-label" value="balance.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
