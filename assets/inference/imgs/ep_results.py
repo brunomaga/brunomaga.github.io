@@ -2,8 +2,9 @@
 
 Left, prefill: the time per iteration, in s, against the batch size, in tokens per compute rank. Right, decode: the time
 per output token, in ms, against the number of concurrent sequences; these values are placeholders, not measured yet,
-and are drawn in grey. The data comes from the paper of the expert parallelism kernel fusion post. The picture follows
-CLAUDE.md (Pictures): Source Sans 3 text at page size (1 unit = 1 px), drawn as glyph outlines.
+and are drawn in grey, with the same markers. The data comes from the paper of the expert parallelism kernel fusion post.
+The picture follows CLAUDE.md (Pictures): Source Sans 3 text at page size (1 unit = 1 px), drawn as glyph outlines,
+1.8 px axes, 1.0 px data lines, and one legend in one column right of the plots.
 
 usage: python3 ep_results.py   (needs matplotlib and the Source Sans 3 font)
 """
@@ -36,10 +37,10 @@ LABELS = [dict(xytext=(0, 5), ha='center', va='bottom'),  # Baseline above its p
 
 plt.rcParams.update({
     'font.family': 'Source Sans 3', 'font.size': 12, 'svg.fonttype': 'path',
-    'axes.linewidth': 1.4, 'axes.edgecolor': BLACK, 'axes.labelsize': 14, 'axes.labelcolor': BLACK,
+    'axes.linewidth': 1.8, 'axes.edgecolor': BLACK, 'axes.labelsize': 14, 'axes.labelcolor': BLACK,
     'axes.titlesize': 14, 'axes.titleweight': 'bold',
     'xtick.labelsize': 12, 'ytick.labelsize': 12, 'xtick.color': BLACK, 'ytick.color': BLACK,
-    'xtick.major.width': 1.4, 'ytick.major.width': 1.4, 'xtick.major.size': 4, 'ytick.major.size': 4,
+    'xtick.major.width': 1.8, 'ytick.major.width': 1.8, 'xtick.major.size': 4, 'ytick.major.size': 4,
     'legend.fontsize': 14, 'svg.hashsalt': 'ep_results',   # the same ids on every run
 })
 
@@ -47,7 +48,7 @@ plt.rcParams.update({
 def panel(ax, title, xs, series, labels, xticks, xlabels, yticks, xlim, ylim, xlabel, ylabel, colors, styles, color):
     """One log2 panel: a line per implementation, each point labelled with its value."""
     for k, (ys, texts, c, ls) in enumerate(zip(series, labels, colors, styles)):
-        ax.plot(xs, ys, color=c, linestyle=ls, linewidth=1.4, marker=MARKERS[k], markersize=7, markerfacecolor=c,
+        ax.plot(xs, ys, color=c, linestyle=ls, linewidth=1.0, marker=MARKERS[k], markersize=7, markerfacecolor=c,
                 markeredgecolor=BLACK, markeredgewidth=1.0, label=NAMES[k], zorder=3)
         for x, y, t in zip(xs, ys, texts):
             ax.annotate(t, (x, y), textcoords='offset points', fontsize=12, color=color, **LABELS[k])
@@ -69,10 +70,9 @@ def panel(ax, title, xs, series, labels, xticks, xlabels, yticks, xlim, ylim, xl
     ax.set_axisbelow(True)
     for side in ('top', 'right'):
         ax.spines[side].set_visible(False)
-    ax.legend(loc='upper left', frameon=False, labelcolor=color, handlelength=2.4, borderaxespad=0.2)
 
 
-fig, (left, right) = plt.subplots(1, 2, figsize=(13.8, 4.4), dpi=72)     # 1 inch = 72 units = 72 px
+fig, (left, right) = plt.subplots(1, 2, figsize=(11.8, 4.4), dpi=72)     # 1 inch = 72 units = 72 px
 panel(left, 'prefill', PREFILL_X, PREFILL, PREFILL_LABELS, PREFILL_X, ['4k', '8k', '16k', '32k', '64k'],
       [0.25, 0.5, 1, 2, 4], (3500, 86000), (0.185, 4.6), 'batch size (tokens)', 'time per iteration (s)', COLORS,
       ['-'] * 3, BLACK)
@@ -80,6 +80,9 @@ panel(right, 'decode', DECODE_X, DECODE, [['%.1f' % v for v in ys] for ys in DEC
       [str(x) for x in DECODE_X], [16, 32], (27, 680), (13.8, 36), 'concurrent sequences', 'time per output token (ms)',
       [GREY] * 3, ['-', '--', ':'], GREY)
 fig.subplots_adjust(wspace=0.26)
+handles, names = left.get_legend_handles_labels()       # one legend for both panels, with the measured series
+right.legend(handles, names, loc='upper left', bbox_to_anchor=(1.03, 1.0), ncol=1, frameon=False, labelcolor=BLACK,
+             handlelength=2.4, borderaxespad=0.0)
 
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ep_results.svg')
 fig.savefig(out, bbox_inches='tight', pad_inches=0.02, transparent=True, metadata={'Date': None})
