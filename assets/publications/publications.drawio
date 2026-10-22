@@ -24,20 +24,20 @@
         </mxCell>
         <mxCell id="domino-20" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="domino-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="125.07" y="76.2" as="sourcePoint" />
-            <mxPoint x="125.07" y="209.03" as="targetPoint" />
+            <mxPoint x="135.07" y="76.2" as="sourcePoint" />
+            <mxPoint x="135.07" y="209.03" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="domino-21" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="domino-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="195.98" y="76.2" as="sourcePoint" />
-            <mxPoint x="195.98" y="209.03" as="targetPoint" />
+            <mxPoint x="215.98" y="76.2" as="sourcePoint" />
+            <mxPoint x="215.98" y="209.03" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="domino-22" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="domino-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="273.24" y="76.2" as="sourcePoint" />
-            <mxPoint x="273.24" y="209.03" as="targetPoint" />
+            <mxPoint x="293.24" y="76.2" as="sourcePoint" />
+            <mxPoint x="293.24" y="209.03" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="domino-42" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="domino-figure">
@@ -48,21 +48,21 @@
         </mxCell>
         <mxCell id="domino-44" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="domino-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="571.33" y="77.26" as="sourcePoint" />
-            <mxPoint x="571.33" y="210.62" as="targetPoint" />
+            <mxPoint x="581.33" y="77.26" as="sourcePoint" />
+            <mxPoint x="581.33" y="210.62" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="domino-45" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="domino-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="641.18" y="77.26" as="sourcePoint" />
-            <mxPoint x="641.18" y="210.62" as="targetPoint" />
+            <mxPoint x="661.18" y="77.26" as="sourcePoint" />
+            <mxPoint x="661.18" y="210.62" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="domino-1" value="X1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="16.85" y="1.06" width="76.73" height="30.69" as="geometry" />
+        <mxCell id="domino-1" value="X&lt;sub style=&quot;font-size: 12px;vertical-align:-3.5px;line-height:0;&quot;&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="domino-figure">
+          <mxGeometry x="16.85" y="1.06" width="76.73" height="32.4" as="geometry" />
         </mxCell>
-        <mxCell id="domino-2" value="X2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="16.85" y="35.99" width="76.73" height="32.28" as="geometry" />
+        <mxCell id="domino-2" value="X&lt;sub style=&quot;font-size: 12px;vertical-align:-3.5px;line-height:0;&quot;&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="domino-figure">
+          <mxGeometry x="16.85" y="37.46" width="76.73" height="32.4" as="geometry" />
         </mxCell>
         <mxCell id="domino-4" value="A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="domino-figure">
           <mxGeometry x="127.98" y="1.06" width="77.26" height="68.8" as="geometry" />
@@ -70,29 +70,29 @@
         <mxCell id="domino-6" value="B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="domino-figure">
           <mxGeometry x="236.99" y="1.06" width="77.26" height="68.8" as="geometry" />
         </mxCell>
-        <mxCell id="domino-8" value="Y1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="351.3" y="0" width="77.26" height="30.69" as="geometry" />
+        <mxCell id="domino-8" value="Y&lt;sub style=&quot;font-size: 12px;vertical-align:-3.5px;line-height:0;&quot;&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="domino-figure">
+          <mxGeometry x="351.3" y="1.06" width="77.26" height="32.4" as="geometry" />
         </mxCell>
-        <mxCell id="domino-9" value="Y2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="351.83" y="37.57" width="76.73" height="31.22" as="geometry" />
+        <mxCell id="domino-9" value="Y&lt;sub style=&quot;font-size: 12px;vertical-align:-3.5px;line-height:0;&quot;&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="domino-figure">
+          <mxGeometry x="351.3" y="37.46" width="77.26" height="32.4" as="geometry" />
         </mxCell>
-        <mxCell id="domino-11" value="X1·A·B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="60.77" y="86.26" width="60.33" height="28.05" as="geometry" />
+        <mxCell id="domino-11" value="X&lt;sub style=&quot;font-size: 12px;vertical-align:-3.5px;line-height:0;&quot;&gt;1&lt;/sub&gt;⊗A⊗B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="domino-figure">
+          <mxGeometry x="60.77" y="84.3" width="70.33" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="domino-12" value="X2·A·B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="128.51" y="86.26" width="61.92" height="28.05" as="geometry" />
+        <mxCell id="domino-12" value="X&lt;sub style=&quot;font-size: 12px;vertical-align:-3.5px;line-height:0;&quot;&gt;2&lt;/sub&gt;⊗A⊗B" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="domino-figure">
+          <mxGeometry x="138.51" y="84.3" width="71.92" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="domino-13" value="X1·A·B&lt;br&gt;(next layer)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="200.48" y="86.79" width="68.27" height="27.52" as="geometry" />
+        <mxCell id="domino-13" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;line-height:0;&quot;&gt;X&lt;sub style=&quot;font-size: 10px;vertical-align:-3px;line-height:0;&quot;&gt;1&lt;/sub&gt;⊗A⊗B&lt;/span&gt;&lt;br&gt;(next layer)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
+          <mxGeometry x="220.48" y="84.3" width="68.27" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="domino-14" value="X2·A·B&lt;br&gt;(next layer)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="278.8" y="86.79" width="68.27" height="27.52" as="geometry" />
+        <mxCell id="domino-14" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;line-height:0;&quot;&gt;X&lt;sub style=&quot;font-size: 10px;vertical-align:-3px;line-height:0;&quot;&gt;2&lt;/sub&gt;⊗A⊗B&lt;/span&gt;&lt;br&gt;(next layer)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
+          <mxGeometry x="298.8" y="84.3" width="68.27" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="domino-16" value="AllReduce&lt;br&gt;(Y1)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="127.45" y="133.89" width="64.03" height="26.46" as="geometry" />
+        <mxCell id="domino-16" value="AllReduce&lt;br&gt;(&lt;span style=&quot;font-family: NewComputerModernSansMath;line-height:0;&quot;&gt;Y&lt;sub style=&quot;font-size: 10px;vertical-align:-3px;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;/span&gt;)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
+          <mxGeometry x="137.45" y="131.1" width="74.03" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="domino-17" value="AllReduce&lt;br&gt;(Y2)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="202.07" y="133.89" width="64.03" height="26.46" as="geometry" />
+        <mxCell id="domino-17" value="AllReduce&lt;br&gt;(&lt;span style=&quot;font-family: NewComputerModernSansMath;line-height:0;&quot;&gt;Y&lt;sub style=&quot;font-size: 10px;vertical-align:-3px;line-height:0;&quot;&gt;2&lt;/sub&gt;&lt;/span&gt;)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
+          <mxGeometry x="222.07" y="131.1" width="64.03" height="32" as="geometry" />
         </mxCell>
         <mxCell id="domino-25" value="X" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="domino-figure">
           <mxGeometry x="465.22" y="1.59" width="76.73" height="68.8" as="geometry" />
@@ -100,35 +100,35 @@
         <mxCell id="domino-27" value="A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="domino-figure">
           <mxGeometry x="576.36" y="1.59" width="77.26" height="68.8" as="geometry" />
         </mxCell>
-        <mxCell id="domino-29" value="B1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
+        <mxCell id="domino-29" value="B&lt;sub style=&quot;font-size: 12px;vertical-align:-3.5px;line-height:0;&quot;&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="domino-figure">
           <mxGeometry x="685.37" y="1.59" width="32.28" height="68.8" as="geometry" />
         </mxCell>
-        <mxCell id="domino-30" value="B2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
+        <mxCell id="domino-30" value="B&lt;sub style=&quot;font-size: 12px;vertical-align:-3.5px;line-height:0;&quot;&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="domino-figure">
           <mxGeometry x="722.41" y="1.59" width="32.28" height="68.8" as="geometry" />
         </mxCell>
-        <mxCell id="domino-32" value="Y3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
+        <mxCell id="domino-32" value="Y&lt;sub style=&quot;font-size: 12px;vertical-align:-3.5px;line-height:0;&quot;&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="domino-figure">
           <mxGeometry x="799.68" y="1.59" width="32.28" height="68.8" as="geometry" />
         </mxCell>
-        <mxCell id="domino-33" value="Y4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="837.25" y="2.12" width="32.28" height="68.8" as="geometry" />
+        <mxCell id="domino-33" value="Y&lt;sub style=&quot;font-size: 12px;vertical-align:-3.5px;line-height:0;&quot;&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="domino-figure">
+          <mxGeometry x="837.25" y="1.59" width="32.28" height="68.8" as="geometry" />
         </mxCell>
-        <mxCell id="domino-35" value="X·A·B1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="509.15" y="92.61" width="60.33" height="28.05" as="geometry" />
+        <mxCell id="domino-35" value="X⊗A⊗B&lt;sub style=&quot;font-size: 12px;vertical-align:-3.5px;line-height:0;&quot;&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="domino-figure">
+          <mxGeometry x="509.15" y="90.6" width="70.33" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="domino-36" value="X·A·B2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="573.71" y="92.61" width="61.92" height="28.05" as="geometry" />
+        <mxCell id="domino-36" value="X⊗A⊗B&lt;sub style=&quot;font-size: 12px;vertical-align:-3.5px;line-height:0;&quot;&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="domino-figure">
+          <mxGeometry x="583.71" y="90.6" width="71.92" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="domino-37" value="Concat(Y3,Y4)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="715.59" y="89.96" width="18" height="77.26" as="geometry" />
+        <mxCell id="domino-37" value="Concat(&lt;span style=&quot;font-family: NewComputerModernSansMath;line-height:0;&quot;&gt;Y&lt;sub style=&quot;font-size: 10px;vertical-align:-3px;line-height:0;&quot;&gt;3&lt;/sub&gt;,Y&lt;sub style=&quot;font-size: 10px;vertical-align:-3px;line-height:0;&quot;&gt;4&lt;/sub&gt;&lt;/span&gt;)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;horizontal=0;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
+          <mxGeometry x="735.59" y="90.6" width="18" height="78.3" as="geometry" />
         </mxCell>
-        <mxCell id="domino-38" value="X·A·B1&lt;br&gt;(next layer)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="738.12" y="92.08" width="68.27" height="26.99" as="geometry" />
+        <mxCell id="domino-38" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;line-height:0;&quot;&gt;X⊗A⊗B&lt;sub style=&quot;font-size: 10px;vertical-align:-3px;line-height:0;&quot;&gt;1&lt;/sub&gt;&lt;/span&gt;&lt;br&gt;(next layer)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
+          <mxGeometry x="758.12" y="90.6" width="68.27" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="domino-40" value="AllReduce&lt;br&gt;(Y3)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="574.24" y="139.71" width="64.03" height="26.46" as="geometry" />
+        <mxCell id="domino-40" value="AllReduce&lt;br&gt;(&lt;span style=&quot;font-family: NewComputerModernSansMath;line-height:0;&quot;&gt;Y&lt;sub style=&quot;font-size: 10px;vertical-align:-3px;line-height:0;&quot;&gt;3&lt;/sub&gt;&lt;/span&gt;)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
+          <mxGeometry x="584.24" y="136.9" width="74.03" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="domino-41" value="AllReduce&lt;br&gt;(Y4)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="644.62" y="139.71" width="64.56" height="26.46" as="geometry" />
+        <mxCell id="domino-41" value="AllReduce&lt;br&gt;(&lt;span style=&quot;font-family: NewComputerModernSansMath;line-height:0;&quot;&gt;Y&lt;sub style=&quot;font-size: 10px;vertical-align:-3px;line-height:0;&quot;&gt;4&lt;/sub&gt;&lt;/span&gt;)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
+          <mxGeometry x="664.62" y="136.9" width="64.56" height="32" as="geometry" />
         </mxCell>
         <mxCell id="domino-3" value="" style="shape=sumEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="domino-figure">
           <mxGeometry x="100.78" y="23.86" width="20" height="20" as="geometry" />
@@ -136,7 +136,7 @@
         <mxCell id="domino-5" value="" style="shape=sumEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="domino-figure">
           <mxGeometry x="211.12" y="23.86" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="domino-7" value="=" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
+        <mxCell id="domino-7" value="=" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="domino-figure">
           <mxGeometry x="325.02" y="22.8" width="16.02" height="23.2" as="geometry" />
         </mxCell>
         <mxCell id="domino-10" value="Compute" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
@@ -149,10 +149,10 @@
           <mxGeometry x="384.07" y="171.11" width="36.05" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="domino-23" value="Intra-layer&lt;br&gt;overlap" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=3;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="122.66" y="174.36" width="73.09" height="37.6" as="geometry" />
+          <mxGeometry x="137.66" y="174.36" width="73.09" height="37.6" as="geometry" />
         </mxCell>
         <mxCell id="domino-24" value="Inter-layer&lt;br&gt;overlap" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=3;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="198.99" y="174.36" width="71.79" height="37.6" as="geometry" />
+          <mxGeometry x="218.99" y="174.36" width="71.79" height="37.6" as="geometry" />
         </mxCell>
         <mxCell id="domino-26" value="" style="shape=sumEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="domino-figure">
           <mxGeometry x="549.41" y="25.45" width="20" height="20" as="geometry" />
@@ -160,7 +160,7 @@
         <mxCell id="domino-28" value="" style="shape=sumEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="domino-figure">
           <mxGeometry x="659.22" y="25.45" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="domino-31" value="=" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
+        <mxCell id="domino-31" value="=" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="domino-figure">
           <mxGeometry x="773.4" y="24.39" width="16.02" height="23.2" as="geometry" />
         </mxCell>
         <mxCell id="domino-34" value="Compute" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
@@ -173,7 +173,7 @@
           <mxGeometry x="831.92" y="177.99" width="36.05" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="domino-46" value="Intra-layer&lt;br&gt;overlap" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=3;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="domino-figure">
-          <mxGeometry x="569.45" y="178.59" width="73.09" height="37.6" as="geometry" />
+          <mxGeometry x="584.45" y="178.59" width="73.09" height="37.6" as="geometry" />
         </mxCell>
         <mxCell id="simplifying_transformer_blocks-label" value="simplifying_transformer_blocks.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="1012.99" width="600" height="30" as="geometry" />

@@ -1138,7 +1138,7 @@ As the attention computation is modularized and highly optimized (e.g. FlashAtte
 <img loading="lazy" width="99.7%" height="99.7%" src="{{ site.assets }}/publications/domino.svg"/>
 
 {: .caption}
-**Left:** Domino row-wise (batch-dim) split on input <i>X</i>. **Right:** Domino col-wise (last-dim) split on weights <i>B</i>. Adapted from: [Domino: Eliminating Communication in LLM Training via Generic Tensor Slicing and Overlapping](https://arxiv.org/abs/2409.15241)
+**Left:** Domino row-wise (batch-dim) split on input <i>X</i>. The AllReduce of <i>Y</i><sub>1</sub> overlaps with the computation of <i>X</i><sub>2</sub> ⊗ <i>A</i> ⊗ <i>B</i> (intra-layer overlap), and the AllReduce of <i>Y</i><sub>2</sub> with the computation of <i>X</i><sub>1</sub> ⊗ <i>A</i> ⊗ <i>B</i> of the next layer (inter-layer overlap). **Right:** Domino col-wise (last-dim) split on weights <i>B</i>. The AllReduce of <i>Y</i><sub>3</sub> overlaps with the computation of <i>X</i> ⊗ <i>A</i> ⊗ <i>B</i><sub>2</sub>, but the next layer needs the concatenation of <i>Y</i><sub>3</sub> and <i>Y</i><sub>4</sub>, so the overlap stays within the layer. Here ⊗ is a matrix multiplication (GeMM). Adapted from: [Domino: Eliminating Communication in LLM Training via Generic Tensor Slicing and Overlapping](https://arxiv.org/abs/2409.15241)
 
 </div>
 </details>
