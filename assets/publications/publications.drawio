@@ -1723,13 +1723,13 @@
           <mxGeometry x="0" y="0" width="419.35" height="197.94" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-31" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=12;absoluteArcSize=1;arcSize=20;fillOpacity=35;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="424.11" y="0" width="453.88" height="197.94" as="geometry" />
+          <mxGeometry x="435.5" y="0" width="442.5" height="197.94" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-60" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=12;absoluteArcSize=1;arcSize=20;fillOpacity=35;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="0" y="215.34" width="419.75" height="236.37" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-109" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;absoluteArcSize=1;arcSize=20;fillOpacity=35;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="424.7" y="216.79" width="453.3" height="234.92" as="geometry" />
+          <mxGeometry x="435.5" y="215.34" width="442.5" height="236.37" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-25" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry relative="1" as="geometry">
@@ -1761,24 +1761,24 @@
         </mxCell>
         <mxCell id="contrastive_deep_supervision-56" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="502.06" y="68.15" as="sourcePoint" />
-            <mxPoint x="671.72" y="68.15" as="targetPoint" />
+            <mxPoint x="515.06" y="68.15" as="sourcePoint" />
+            <mxPoint x="684.72" y="68.15" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="502.06" y="41.69" />
-              <mxPoint x="671.72" y="41.69" />
+              <mxPoint x="515.06" y="41.69" />
+              <mxPoint x="684.72" y="41.69" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="contrastive_deep_supervision-57" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="583.63" y="41.69" as="sourcePoint" />
-            <mxPoint x="583.63" y="68.15" as="targetPoint" />
+            <mxPoint x="596.63" y="41.69" as="sourcePoint" />
+            <mxPoint x="596.63" y="68.15" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="contrastive_deep_supervision-58" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="583.63" y="41.69" as="sourcePoint" />
-            <mxPoint x="593.05" y="24.65" as="targetPoint" />
+            <mxPoint x="596.63" y="41.69" as="sourcePoint" />
+            <mxPoint x="606.05" y="24.65" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="contrastive_deep_supervision-105" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="contrastive_deep_supervision-figure">
@@ -1828,7 +1828,7 @@
         <mxCell id="contrastive_deep_supervision-158" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="680.78" y="258.48" as="sourcePoint" />
-            <mxPoint x="688.76" y="247.61" as="targetPoint" />
+            <mxPoint x="690.09" y="245.8" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="contrastive_deep_supervision-3" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=12;direction=south;flipH=1;size=0.4132;fillOpacity=60;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
@@ -1840,7 +1840,7 @@
         <mxCell id="contrastive_deep_supervision-5" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="79.76" y="60.18" width="39.15" height="96.43" as="geometry" />
         </mxCell>
-        <mxCell id="contrastive_deep_supervision-6" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#6c8ebf;fontSize=12;direction=south;flipH=1;size=0.4135;fillOpacity=55;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
+        <mxCell id="contrastive_deep_supervision-6" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="79.76" y="60.18" width="39.15" height="96.43" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-7" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
@@ -1849,7 +1849,7 @@
         <mxCell id="contrastive_deep_supervision-8" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="162.41" y="60.18" width="39.15" height="96.43" as="geometry" />
         </mxCell>
-        <mxCell id="contrastive_deep_supervision-9" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#6c8ebf;fontSize=12;direction=south;flipH=1;size=0.4135;fillOpacity=55;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
+        <mxCell id="contrastive_deep_supervision-9" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="162.41" y="60.18" width="39.15" height="96.43" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-10" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
@@ -1858,38 +1858,38 @@
         <mxCell id="contrastive_deep_supervision-11" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="258.84" y="60.18" width="39.15" height="96.43" as="geometry" />
         </mxCell>
-        <mxCell id="contrastive_deep_supervision-12" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#6c8ebf;fontSize=12;direction=south;flipH=1;size=0.4135;fillOpacity=55;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
+        <mxCell id="contrastive_deep_supervision-12" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="258.84" y="60.18" width="39.15" height="96.43" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-33" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=12;direction=south;flipH=1;size=0.4132;fillOpacity=60;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="430.64" y="56.55" width="35.53" height="87.73" as="geometry" />
+          <mxGeometry x="443.64" y="56.55" width="35.53" height="87.73" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-34" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="478.86" y="51.48" width="39.15" height="96.43" as="geometry" />
+          <mxGeometry x="491.86" y="51.48" width="39.15" height="96.43" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-35" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="487.56" y="51.48" width="39.15" height="96.43" as="geometry" />
+          <mxGeometry x="500.56" y="51.48" width="39.15" height="96.43" as="geometry" />
         </mxCell>
-        <mxCell id="contrastive_deep_supervision-36" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#6c8ebf;fontSize=12;direction=south;flipH=1;size=0.4135;fillOpacity=55;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="487.56" y="51.48" width="39.15" height="96.43" as="geometry" />
+        <mxCell id="contrastive_deep_supervision-36" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
+          <mxGeometry x="500.56" y="51.48" width="39.15" height="96.43" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-37" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="561.15" y="51.48" width="39.15" height="96.43" as="geometry" />
+          <mxGeometry x="574.15" y="51.48" width="39.15" height="96.43" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-38" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="569.85" y="51.48" width="39.15" height="96.43" as="geometry" />
+          <mxGeometry x="582.85" y="51.48" width="39.15" height="96.43" as="geometry" />
         </mxCell>
-        <mxCell id="contrastive_deep_supervision-39" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#6c8ebf;fontSize=12;direction=south;flipH=1;size=0.4135;fillOpacity=55;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="569.85" y="51.48" width="39.15" height="96.43" as="geometry" />
+        <mxCell id="contrastive_deep_supervision-39" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
+          <mxGeometry x="582.85" y="51.48" width="39.15" height="96.43" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-40" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="653.59" y="51.48" width="39.15" height="96.43" as="geometry" />
+          <mxGeometry x="666.59" y="51.48" width="39.15" height="96.43" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-41" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="662.29" y="51.48" width="39.15" height="96.43" as="geometry" />
+          <mxGeometry x="675.29" y="51.48" width="39.15" height="96.43" as="geometry" />
         </mxCell>
-        <mxCell id="contrastive_deep_supervision-42" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#6c8ebf;fontSize=12;direction=south;flipH=1;size=0.4135;fillOpacity=55;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="662.29" y="51.48" width="39.15" height="96.43" as="geometry" />
+        <mxCell id="contrastive_deep_supervision-42" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
+          <mxGeometry x="675.29" y="51.48" width="39.15" height="96.43" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-62" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=12;direction=south;flipH=1;size=0.4132;fillOpacity=60;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="31.18" y="275.88" width="35.53" height="87.73" as="geometry" />
@@ -1900,7 +1900,7 @@
         <mxCell id="contrastive_deep_supervision-64" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="84.47" y="261.74" width="39.15" height="96.43" as="geometry" />
         </mxCell>
-        <mxCell id="contrastive_deep_supervision-65" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#6c8ebf;fontSize=12;direction=south;flipH=1;size=0.4135;fillOpacity=55;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
+        <mxCell id="contrastive_deep_supervision-65" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="84.47" y="261.74" width="39.15" height="96.43" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-66" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
@@ -1909,7 +1909,7 @@
         <mxCell id="contrastive_deep_supervision-67" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="167.49" y="261.74" width="39.15" height="96.43" as="geometry" />
         </mxCell>
-        <mxCell id="contrastive_deep_supervision-68" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#6c8ebf;fontSize=12;direction=south;flipH=1;size=0.4135;fillOpacity=55;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
+        <mxCell id="contrastive_deep_supervision-68" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="167.49" y="261.74" width="39.15" height="96.43" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-69" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
@@ -1918,7 +1918,7 @@
         <mxCell id="contrastive_deep_supervision-70" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="263.56" y="261.74" width="39.15" height="96.43" as="geometry" />
         </mxCell>
-        <mxCell id="contrastive_deep_supervision-71" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#6c8ebf;fontSize=12;direction=south;flipH=1;size=0.4135;fillOpacity=55;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
+        <mxCell id="contrastive_deep_supervision-71" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="263.56" y="261.74" width="39.15" height="96.43" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-111" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=12;direction=south;flipH=1;size=0.4132;fillOpacity=60;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
@@ -1930,7 +1930,7 @@
         <mxCell id="contrastive_deep_supervision-113" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="497.34" y="262.83" width="39.15" height="96.43" as="geometry" />
         </mxCell>
-        <mxCell id="contrastive_deep_supervision-114" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#6c8ebf;fontSize=12;direction=south;flipH=1;size=0.4135;fillOpacity=55;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
+        <mxCell id="contrastive_deep_supervision-114" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="497.34" y="262.83" width="39.15" height="96.43" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-115" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
@@ -1939,7 +1939,7 @@
         <mxCell id="contrastive_deep_supervision-116" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="578.19" y="262.83" width="39.15" height="96.43" as="geometry" />
         </mxCell>
-        <mxCell id="contrastive_deep_supervision-117" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#6c8ebf;fontSize=12;direction=south;flipH=1;size=0.4135;fillOpacity=55;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
+        <mxCell id="contrastive_deep_supervision-117" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="578.19" y="262.83" width="39.15" height="96.43" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-118" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
@@ -1948,7 +1948,7 @@
         <mxCell id="contrastive_deep_supervision-119" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="674.26" y="262.83" width="39.15" height="96.43" as="geometry" />
         </mxCell>
-        <mxCell id="contrastive_deep_supervision-120" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#6c8ebf;fontSize=12;direction=south;flipH=1;size=0.4135;fillOpacity=55;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
+        <mxCell id="contrastive_deep_supervision-120" value="" style="shape=parallelogram;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;direction=south;flipH=1;size=0.4135;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="674.26" y="262.83" width="39.15" height="96.43" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-2" value="(a)" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
@@ -2015,70 +2015,70 @@
           <mxGeometry x="242.29" y="3.38" width="78.07" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-32" value="(b)" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="631.68" y="170.14" width="21.33" height="20.8" as="geometry" />
+          <mxGeometry x="644.68" y="170.14" width="21.33" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-43" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="456.02" y="93.53" as="sourcePoint" />
-            <mxPoint x="477.77" y="93.53" as="targetPoint" />
+            <mxPoint x="469.02" y="93.53" as="sourcePoint" />
+            <mxPoint x="490.77" y="93.53" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="contrastive_deep_supervision-44" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="499.52" y="93.53" as="sourcePoint" />
-            <mxPoint x="551" y="93.53" as="targetPoint" />
+            <mxPoint x="512.52" y="93.53" as="sourcePoint" />
+            <mxPoint x="564" y="93.53" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="contrastive_deep_supervision-45" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="550.27" y="93.53" as="sourcePoint" />
-            <mxPoint x="561.15" y="93.53" as="targetPoint" />
+            <mxPoint x="563.27" y="93.53" as="sourcePoint" />
+            <mxPoint x="574.15" y="93.53" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="contrastive_deep_supervision-46" value="conv" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="490.03" y="94.01" width="34.21" height="20.8" as="geometry" />
+          <mxGeometry x="503.03" y="94.01" width="34.21" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-47" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="595.59" y="93.53" as="sourcePoint" />
-            <mxPoint x="630.03" y="93.53" as="targetPoint" />
+            <mxPoint x="608.59" y="93.53" as="sourcePoint" />
+            <mxPoint x="643.03" y="93.53" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="contrastive_deep_supervision-48" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="629.3" y="93.53" as="sourcePoint" />
-            <mxPoint x="653.23" y="93.53" as="targetPoint" />
+            <mxPoint x="642.3" y="93.53" as="sourcePoint" />
+            <mxPoint x="666.23" y="93.53" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="contrastive_deep_supervision-49" value="conv" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="572.32" y="94.01" width="34.21" height="20.8" as="geometry" />
+          <mxGeometry x="585.32" y="94.01" width="34.21" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-50" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="678.97" y="93.53" as="sourcePoint" />
-            <mxPoint x="734.8" y="93.53" as="targetPoint" />
+            <mxPoint x="691.97" y="93.53" as="sourcePoint" />
+            <mxPoint x="747.8" y="93.53" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="contrastive_deep_supervision-51" value="conv" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="664.76" y="95.46" width="34.21" height="20.8" as="geometry" />
+          <mxGeometry x="677.76" y="95.46" width="34.21" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-52" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="734.8" y="89.54" width="7.98" height="7.98" as="geometry" />
+          <mxGeometry x="747.8" y="89.54" width="7.98" height="7.98" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-53" value="proj" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="723.28" y="99.45" width="29.55" height="20.8" as="geometry" />
+          <mxGeometry x="736.28" y="99.45" width="29.55" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-54" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="767.06" y="93.53" as="sourcePoint" />
-            <mxPoint x="743.14" y="93.53" as="targetPoint" />
+            <mxPoint x="776.06" y="93.53" as="sourcePoint" />
+            <mxPoint x="756.14" y="93.53" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="contrastive_deep_supervision-55" value="&lt;i&gt;Contrastive&lt;br&gt;Learning Loss&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="767.06" y="72.87" width="85.92" height="46.77" as="geometry" />
+        <mxCell id="contrastive_deep_supervision-55" value="&lt;i&gt;Contrastive&lt;br&gt;Learning Loss&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="contrastive_deep_supervision-figure">
+          <mxGeometry x="776.06" y="72.87" width="94" height="46.77" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-59" value="Task-irrelevant" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=3;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="543.67" y="7.01" width="98.78" height="20.8" as="geometry" />
+          <mxGeometry x="556.67" y="7.01" width="98.78" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-61" value="(c)" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="210.15" y="418.1" width="20.54" height="20.8" as="geometry" />
@@ -2102,7 +2102,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="contrastive_deep_supervision-75" value="conv" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="86.94" y="285.42" width="34.21" height="20.8" as="geometry" />
+          <mxGeometry x="86.94" y="304.99" width="34.21" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-76" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry relative="1" as="geometry">
@@ -2117,7 +2117,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="contrastive_deep_supervision-78" value="conv" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="169.96" y="285.42" width="34.21" height="20.8" as="geometry" />
+          <mxGeometry x="169.96" y="304.99" width="34.21" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-79" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry relative="1" as="geometry">
@@ -2132,7 +2132,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="contrastive_deep_supervision-81" value="conv" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="261.31" y="285.42" width="34.21" height="20.8" as="geometry" />
+          <mxGeometry x="266.03" y="304.99" width="34.21" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-82" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="335.34" y="302.35" width="7.98" height="7.98" as="geometry" />
@@ -2267,7 +2267,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="contrastive_deep_supervision-124" value="conv" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="499.81" y="286.14" width="34.21" height="20.8" as="geometry" />
+          <mxGeometry x="499.81" y="304.99" width="34.21" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-125" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry relative="1" as="geometry">
@@ -2282,7 +2282,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="contrastive_deep_supervision-127" value="conv" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="580.66" y="286.14" width="34.21" height="20.8" as="geometry" />
+          <mxGeometry x="580.66" y="304.99" width="34.21" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-128" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry relative="1" as="geometry">
@@ -2297,7 +2297,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="contrastive_deep_supervision-130" value="conv" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="664.76" y="286.14" width="34.21" height="20.8" as="geometry" />
+          <mxGeometry x="676.73" y="304.99" width="34.21" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-131" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry x="746.76" y="302.35" width="7.98" height="7.98" as="geometry" />
@@ -2357,7 +2357,7 @@
           <mxGeometry x="730.45" y="351.29" width="7.98" height="7.98" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-144" value="proj" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="687.75" y="331.82" width="29.55" height="20.8" as="geometry" />
+          <mxGeometry x="695.97" y="331.82" width="29.55" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-145" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="contrastive_deep_supervision-figure">
           <mxGeometry relative="1" as="geometry">
@@ -2411,7 +2411,7 @@
           <mxGeometry x="511.04" y="224.52" width="98.78" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="contrastive_deep_supervision-159" value="Task-biased" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=3;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="contrastive_deep_supervision-figure">
-          <mxGeometry x="667.49" y="226.33" width="78.07" height="20.8" as="geometry" />
+          <mxGeometry x="667.49" y="224.52" width="78.07" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="performers-label" value="performers.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="5331.21" width="600" height="30" as="geometry" />
