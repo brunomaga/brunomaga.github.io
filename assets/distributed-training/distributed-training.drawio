@@ -4279,40 +4279,40 @@
         <mxCell id="dnn_model_parallelism-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="40" width="485.33" height="159.83" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-1" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-1" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#fff2cc;" vertex="1" parent="dnn_model_parallelism-figure">
           <mxGeometry x="0" y="124.83" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-2" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-2" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#fff2cc;" vertex="1" parent="dnn_model_parallelism-figure">
           <mxGeometry x="35" y="124.83" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-3" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-3" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#fff2cc;" vertex="1" parent="dnn_model_parallelism-figure">
           <mxGeometry x="70" y="124.83" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-4" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-4" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#fff2cc;" vertex="1" parent="dnn_model_parallelism-figure">
           <mxGeometry x="105" y="124.83" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-5" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-5" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#fff2cc;" vertex="1" parent="dnn_model_parallelism-figure">
           <mxGeometry x="140" y="66.5" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-6" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-6" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#fff2cc;" vertex="1" parent="dnn_model_parallelism-figure">
           <mxGeometry x="175" y="124.83" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-7" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-7" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#fff2cc;" vertex="1" parent="dnn_model_parallelism-figure">
           <mxGeometry x="70" y="19.83" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-8" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-8" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#fff2cc;" vertex="1" parent="dnn_model_parallelism-figure">
           <mxGeometry x="70" y="66.5" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-9" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-9" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#fff2cc;" vertex="1" parent="dnn_model_parallelism-figure">
           <mxGeometry x="105" y="66.5" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-10" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-10" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#fff2cc;" vertex="1" parent="dnn_model_parallelism-figure">
           <mxGeometry x="35" y="66.5" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-11" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-11" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#fff2cc;" vertex="1" parent="dnn_model_parallelism-figure">
           <mxGeometry x="140" y="124.83" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-12" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-12" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#fff2cc;" vertex="1" parent="dnn_model_parallelism-figure">
           <mxGeometry x="105" y="19.83" width="23.33" height="23.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-13" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" target="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-7">
@@ -4393,7 +4393,7 @@
             <mxPoint x="46.67" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-26" value="" style="endArrow=none;html=1;exitX=0.59;exitY=0.031;exitDx=0;exitDy=0;exitPerimeter=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-6">
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-26" value="" style="endArrow=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-6">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
             <mxPoint x="268.33" y="136.5" as="sourcePoint" />
             <mxPoint x="46.67" y="89.83" as="targetPoint" />
@@ -4507,248 +4507,248 @@
             <mxPoint x="151.67" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-133" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
-          <mxGeometry x="256.67" y="124.83" width="23.33" height="23.33" as="geometry" />
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-133" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#d5e8d4;" vertex="1" parent="dnn_model_parallelism-figure">
+          <mxGeometry x="290.67" y="124.83" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-134" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
-          <mxGeometry x="291.67" y="124.83" width="23.33" height="23.33" as="geometry" />
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-134" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#d5e8d4;" vertex="1" parent="dnn_model_parallelism-figure">
+          <mxGeometry x="325.67" y="124.83" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-135" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
-          <mxGeometry x="326.67" y="124.83" width="23.33" height="23.33" as="geometry" />
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-135" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#d5e8d4;" vertex="1" parent="dnn_model_parallelism-figure">
+          <mxGeometry x="360.67" y="124.83" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-136" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
-          <mxGeometry x="385" y="124.83" width="23.33" height="23.33" as="geometry" />
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-136" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#dae8fc;" vertex="1" parent="dnn_model_parallelism-figure">
+          <mxGeometry x="419" y="124.83" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-137" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
-          <mxGeometry x="420" y="66.5" width="23.33" height="23.33" as="geometry" />
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-137" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#dae8fc;" vertex="1" parent="dnn_model_parallelism-figure">
+          <mxGeometry x="454" y="66.5" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-138" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
-          <mxGeometry x="455" y="124.83" width="23.33" height="23.33" as="geometry" />
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-138" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#dae8fc;" vertex="1" parent="dnn_model_parallelism-figure">
+          <mxGeometry x="489" y="124.83" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-139" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
-          <mxGeometry x="326.67" y="19.83" width="23.33" height="23.33" as="geometry" />
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-139" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#d5e8d4;" vertex="1" parent="dnn_model_parallelism-figure">
+          <mxGeometry x="360.67" y="19.83" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-140" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
-          <mxGeometry x="326.67" y="66.5" width="23.33" height="23.33" as="geometry" />
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-140" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#d5e8d4;" vertex="1" parent="dnn_model_parallelism-figure">
+          <mxGeometry x="360.67" y="66.5" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-141" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
-          <mxGeometry x="385" y="66.5" width="23.33" height="23.33" as="geometry" />
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-141" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#dae8fc;" vertex="1" parent="dnn_model_parallelism-figure">
+          <mxGeometry x="419" y="66.5" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-142" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
-          <mxGeometry x="291.67" y="66.5" width="23.33" height="23.33" as="geometry" />
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-142" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#d5e8d4;" vertex="1" parent="dnn_model_parallelism-figure">
+          <mxGeometry x="325.67" y="66.5" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-143" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
-          <mxGeometry x="420" y="124.83" width="23.33" height="23.33" as="geometry" />
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-143" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#dae8fc;" vertex="1" parent="dnn_model_parallelism-figure">
+          <mxGeometry x="454" y="124.83" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-144" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="dnn_model_parallelism-figure">
-          <mxGeometry x="385" y="19.83" width="23.33" height="23.33" as="geometry" />
+        <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-144" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fillColor=#dae8fc;" vertex="1" parent="dnn_model_parallelism-figure">
+          <mxGeometry x="419" y="19.83" width="23.33" height="23.33" as="geometry" />
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-145" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" target="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-139">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="303.33" y="66.5" as="sourcePoint" />
-            <mxPoint x="536.67" y="206.5" as="targetPoint" />
+            <mxPoint x="337.33" y="66.5" as="sourcePoint" />
+            <mxPoint x="570.67" y="206.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-146" value="" style="endArrow=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-139" target="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-140">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="501.67" y="288.17" as="sourcePoint" />
-            <mxPoint x="560" y="229.83" as="targetPoint" />
+            <mxPoint x="535.67" y="288.17" as="sourcePoint" />
+            <mxPoint x="594" y="229.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-147" value="" style="endArrow=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-139" target="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-137">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="513.33" y="299.83" as="sourcePoint" />
-            <mxPoint x="571.67" y="241.5" as="targetPoint" />
+            <mxPoint x="547.33" y="299.83" as="sourcePoint" />
+            <mxPoint x="605.67" y="241.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-148" value="" style="endArrow=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-141">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="350" y="78.17" as="sourcePoint" />
-            <mxPoint x="338.33" y="43.17" as="targetPoint" />
+            <mxPoint x="384" y="78.17" as="sourcePoint" />
+            <mxPoint x="372.33" y="43.17" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-149" value="" style="endArrow=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-137" target="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-144">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="396.67" y="101.5" as="sourcePoint" />
-            <mxPoint x="393.63" y="76.3" as="targetPoint" />
+            <mxPoint x="430.67" y="101.5" as="sourcePoint" />
+            <mxPoint x="427.63" y="76.3" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-150" value="" style="endArrow=none;html=1;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="396.67" y="66.5" as="sourcePoint" />
-            <mxPoint x="396.67" y="43.17" as="targetPoint" />
+            <mxPoint x="430.67" y="66.5" as="sourcePoint" />
+            <mxPoint x="430.67" y="43.17" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-151" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-140" target="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-144">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="513.33" y="89.83" as="sourcePoint" />
-            <mxPoint x="513.33" y="66.5" as="targetPoint" />
+            <mxPoint x="547.33" y="89.83" as="sourcePoint" />
+            <mxPoint x="547.33" y="66.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-152" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-142" target="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-144">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="525" y="101.5" as="sourcePoint" />
-            <mxPoint x="525" y="78.17" as="targetPoint" />
+            <mxPoint x="559" y="101.5" as="sourcePoint" />
+            <mxPoint x="559" y="78.17" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-153" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-133" target="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-142">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="466.67" y="78.17" as="sourcePoint" />
-            <mxPoint x="466.67" y="31.5" as="targetPoint" />
+            <mxPoint x="500.67" y="78.17" as="sourcePoint" />
+            <mxPoint x="500.67" y="31.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-154" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-134" target="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-142">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="478.33" y="89.83" as="sourcePoint" />
-            <mxPoint x="478.33" y="43.17" as="targetPoint" />
+            <mxPoint x="512.33" y="89.83" as="sourcePoint" />
+            <mxPoint x="512.33" y="43.17" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-155" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-135" target="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-142">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="490" y="101.5" as="sourcePoint" />
-            <mxPoint x="490" y="54.83" as="targetPoint" />
+            <mxPoint x="524" y="101.5" as="sourcePoint" />
+            <mxPoint x="524" y="54.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-156" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-136" target="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-142">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="501.67" y="113.17" as="sourcePoint" />
-            <mxPoint x="501.67" y="66.5" as="targetPoint" />
+            <mxPoint x="535.67" y="113.17" as="sourcePoint" />
+            <mxPoint x="535.67" y="66.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-157" value="" style="endArrow=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-143">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="513.33" y="124.83" as="sourcePoint" />
-            <mxPoint x="303.33" y="89.83" as="targetPoint" />
+            <mxPoint x="547.33" y="124.83" as="sourcePoint" />
+            <mxPoint x="337.33" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-158" value="" style="endArrow=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-138">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="525" y="136.5" as="sourcePoint" />
-            <mxPoint x="303.33" y="89.83" as="targetPoint" />
+            <mxPoint x="559" y="136.5" as="sourcePoint" />
+            <mxPoint x="337.33" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-159" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="303.33" y="124.83" as="sourcePoint" />
-            <mxPoint x="338.33" y="89.83" as="targetPoint" />
+            <mxPoint x="337.33" y="124.83" as="sourcePoint" />
+            <mxPoint x="372.33" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-160" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="338.33" y="124.83" as="sourcePoint" />
-            <mxPoint x="338.33" y="89.83" as="targetPoint" />
+            <mxPoint x="372.33" y="124.83" as="sourcePoint" />
+            <mxPoint x="372.33" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-161" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-136">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="373.33" y="124.83" as="sourcePoint" />
-            <mxPoint x="338.33" y="89.83" as="targetPoint" />
+            <mxPoint x="407.33" y="124.83" as="sourcePoint" />
+            <mxPoint x="372.33" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-162" value="" style="endArrow=none;html=1;strokeWidth=1.4;strokeColor=#b85450;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="431.67" y="124.83" as="sourcePoint" />
-            <mxPoint x="338.33" y="89.83" as="targetPoint" />
+            <mxPoint x="465.67" y="124.83" as="sourcePoint" />
+            <mxPoint x="372.33" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-163" value="" style="endArrow=none;html=1;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="466.67" y="124.83" as="sourcePoint" />
-            <mxPoint x="338.33" y="89.83" as="targetPoint" />
+            <mxPoint x="500.67" y="124.83" as="sourcePoint" />
+            <mxPoint x="372.33" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-164" value="" style="endArrow=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-133">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="480.43" y="125.56" as="sourcePoint" />
-            <mxPoint x="338.33" y="89.83" as="targetPoint" />
+            <mxPoint x="514.43" y="125.56" as="sourcePoint" />
+            <mxPoint x="372.33" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-165" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" target="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-141">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="338.33" y="124.83" as="sourcePoint" />
-            <mxPoint x="373.33" y="89.83" as="targetPoint" />
+            <mxPoint x="372.33" y="124.83" as="sourcePoint" />
+            <mxPoint x="407.33" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-166" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="396.67" y="124.83" as="sourcePoint" />
-            <mxPoint x="396.67" y="89.83" as="targetPoint" />
+            <mxPoint x="430.67" y="124.83" as="sourcePoint" />
+            <mxPoint x="430.67" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-167" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="431.67" y="124.83" as="sourcePoint" />
-            <mxPoint x="396.67" y="89.83" as="targetPoint" />
+            <mxPoint x="465.67" y="124.83" as="sourcePoint" />
+            <mxPoint x="430.67" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-168" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="466.67" y="124.83" as="sourcePoint" />
-            <mxPoint x="396.67" y="89.83" as="targetPoint" />
+            <mxPoint x="500.67" y="124.83" as="sourcePoint" />
+            <mxPoint x="430.67" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-169" value="" style="endArrow=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-134" target="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-141">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="478.33" y="124.83" as="sourcePoint" />
-            <mxPoint x="396.67" y="88.67" as="targetPoint" />
+            <mxPoint x="512.33" y="124.83" as="sourcePoint" />
+            <mxPoint x="430.67" y="88.67" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-170" value="" style="endArrow=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-133" target="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-141">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="515.43" y="125.56" as="sourcePoint" />
-            <mxPoint x="373.33" y="88.67" as="targetPoint" />
+            <mxPoint x="549.43" y="125.56" as="sourcePoint" />
+            <mxPoint x="407.33" y="88.67" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-171" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="396.67" y="124.83" as="sourcePoint" />
-            <mxPoint x="431.67" y="89.83" as="targetPoint" />
+            <mxPoint x="430.67" y="124.83" as="sourcePoint" />
+            <mxPoint x="465.67" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-172" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="431.67" y="124.83" as="sourcePoint" />
-            <mxPoint x="431.67" y="89.83" as="targetPoint" />
+            <mxPoint x="465.67" y="124.83" as="sourcePoint" />
+            <mxPoint x="465.67" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-173" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;strokeWidth=1.4;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="466.67" y="124.83" as="sourcePoint" />
-            <mxPoint x="431.67" y="89.83" as="targetPoint" />
+            <mxPoint x="500.67" y="124.83" as="sourcePoint" />
+            <mxPoint x="465.67" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-174" value="" style="endArrow=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-135" target="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-137">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="478.33" y="124.83" as="sourcePoint" />
-            <mxPoint x="408.33" y="89.83" as="targetPoint" />
+            <mxPoint x="512.33" y="124.83" as="sourcePoint" />
+            <mxPoint x="442.33" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-175" value="" style="endArrow=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-134">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="513.33" y="124.83" as="sourcePoint" />
-            <mxPoint x="431.67" y="89.83" as="targetPoint" />
+            <mxPoint x="547.33" y="124.83" as="sourcePoint" />
+            <mxPoint x="465.67" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-176" value="" style="endArrow=none;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fillColor=#f8cecc;strokeColor=#b85450;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure" source="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-133" target="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-137">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="550.43" y="125.56" as="sourcePoint" />
-            <mxPoint x="408.33" y="89.83" as="targetPoint" />
+            <mxPoint x="584.43" y="125.56" as="sourcePoint" />
+            <mxPoint x="442.33" y="89.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-180" value="vs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dnn_model_parallelism-figure">
-          <mxGeometry x="223.61" y="67.77" width="19.45" height="20.8" as="geometry" />
+          <mxGeometry x="234.8" y="67.77" width="19.45" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-182" value="" style="endArrow=none;dashed=1;html=1;strokeWidth=1.8;strokeColor=#000000;fontFamily=Source Sans 3;" edge="1" parent="dnn_model_parallelism-figure">
           <mxGeometry width="58.33" height="58.33" relative="1" as="geometry">
-            <mxPoint x="367.5" y="159.83" as="sourcePoint" />
-            <mxPoint x="367.5" y="8.17" as="targetPoint" />
+            <mxPoint x="401.5" y="159.83" as="sourcePoint" />
+            <mxPoint x="401.5" y="8.17" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-184" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="dnn_model_parallelism-figure">
-          <mxGeometry x="257.83" y="0" width="30.33" height="43.17" as="geometry" />
+          <mxGeometry x="291.83" y="0" width="30.33" height="43.17" as="geometry" />
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-188" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="dnn_model_parallelism-figure">
-          <mxGeometry x="455" y="0" width="30.33" height="43.17" as="geometry" />
+          <mxGeometry x="489" y="0" width="30.33" height="43.17" as="geometry" />
         </mxCell>
         <mxCell id="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-190" value="P&lt;sub&gt;1&lt;/sub&gt;" style="text;html=1;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="dnn_model_parallelism-9CDIgoBLL0a8i4J5DRN2-188">
           <mxGeometry width="19.79" height="20.8" as="geometry" x="-2" y="0" />

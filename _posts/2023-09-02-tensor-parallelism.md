@@ -12,7 +12,7 @@ This post discusses tensor (model) parallelism, particularly the [Megatron-LM](h
 **Tensor parallelism** aims at partitioning computation across the model’s tensor dimensions (e.g., sharding linear layer weights and corresponding activations). This is a hard problem: in practice, the dimension of tensor partitioning (row-wise, column-wise, or none) must be decided, and the communication and computation adapted accordingly. Therefore, it is a model- and data-specific implementation. The following picture illustrates this partitioning on a small fully-connected network:
 
 {: .picture}
-<img width="54.6%" height="54.6%" src="{{ site.assets }}/distributed-training/imgs/dnn_model_parallelism.svg"/>
+<img width="58.5%" height="58.5%" src="{{ site.assets }}/distributed-training/imgs/dnn_model_parallelism.svg"/>
 
 {: .caption}
 A fully-connected network (left) and the same network split by tensor parallelism over two processors $$P_0$$ and $$P_1$$ (right), each holding half of the neurons of every layer. Red lines are the connections between neurons on different processors, whose activations must be communicated.
