@@ -1951,49 +1951,49 @@
           <mxGeometry x="0" y="4886.38" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="4926.38" width="878" height="470.8" as="geometry" />
+          <mxGeometry x="0" y="4926.38" width="878" height="463.8" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-3" value="padded batch: 3 x 4" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
           <mxGeometry x="0" y="0" width="124.47" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-4" value="The" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="1.5" y="59.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="1.5" y="52.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-5" value="cat" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="65.5" y="59.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="65.5" y="52.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-6" value="sat" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="129.5" y="59.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="129.5" y="52.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-7" value="on" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="193.5" y="59.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="193.5" y="52.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-8" value="Hello" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="1.5" y="99.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="1.5" y="92.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-9" value="pad" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="65.5" y="99.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="65.5" y="92.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-10" value="pad" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="129.5" y="99.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="129.5" y="92.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-11" value="pad" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="193.5" y="99.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="193.5" y="92.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-12" value="Once" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="1.5" y="139.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="1.5" y="132.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-13" value="upon" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="65.5" y="139.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="65.5" y="132.4" width="58" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-14" value="a" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="129.5" y="139.4" width="58" height="30" as="geometry" />
+        <mxCell id="ragged_batching-14" value="a" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="129.5" y="132.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-15" value="pad" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="193.5" y="139.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="193.5" y="132.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-16" value="4 of the 12 tokens are padding" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="37.55" y="186" width="177.9" height="20.8" as="geometry" />
+          <mxGeometry x="37.55" y="179" width="177.9" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-17" value="ragged batch: 1 x 8" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
           <mxGeometry x="370.5" y="0" width="121.33" height="20.8" as="geometry" />
@@ -2002,322 +2002,323 @@
           <mxGeometry x="311.38" y="29" width="52.12" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-19" value="next token" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="297.79" y="146" width="65.71" height="20.8" as="geometry" />
+          <mxGeometry x="297.79" y="139" width="65.71" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-20" value="The" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="372" y="59.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="372" y="52.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-21" value="0" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
           <mxGeometry x="394" y="29" width="14" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-22" value="cat" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="436" y="59.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="436" y="52.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-23" value="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
           <mxGeometry x="458" y="29" width="14" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-24" value="sat" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="500" y="59.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="500" y="52.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-25" value="2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
           <mxGeometry x="522" y="29" width="14" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-26" value="on" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="564" y="59.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="564" y="52.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-27" value="3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
           <mxGeometry x="586" y="29" width="14" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-28" value="the" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="564" y="141.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="564" y="134.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-29" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=14;labelBackgroundColor=#ffffff;strokeWidth=1.4;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;fontStyle=0;fontFamily=Source Sans 3;endFill=1;endSize=5;" edge="1" parent="ragged_batching-figure" source="ragged_batching-26" target="ragged_batching-28">
           <mxGeometry x="0" relative="1" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-30" value="Hello" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="628" y="59.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="628" y="52.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-31" value="0" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
           <mxGeometry x="650" y="29" width="14" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-32" value="," style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="628" y="141.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="628" y="134.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-33" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=14;labelBackgroundColor=#ffffff;strokeWidth=1.4;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;fontStyle=0;fontFamily=Source Sans 3;endFill=1;endSize=5;" edge="1" parent="ragged_batching-figure" source="ragged_batching-30" target="ragged_batching-32">
           <mxGeometry x="0" relative="1" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-34" value="Once" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="692" y="59.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="692" y="52.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-35" value="0" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
           <mxGeometry x="714" y="29" width="14" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-36" value="upon" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="756" y="59.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="756" y="52.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-37" value="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
           <mxGeometry x="778" y="29" width="14" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-38" value="a" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="820" y="59.4" width="58" height="30" as="geometry" />
+        <mxCell id="ragged_batching-38" value="a" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="820" y="52.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-39" value="2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
           <mxGeometry x="842" y="29" width="14" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-40" value="time" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="820" y="141.4" width="58" height="30" as="geometry" />
+          <mxGeometry x="820" y="134.4" width="58" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-41" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=14;labelBackgroundColor=#ffffff;strokeWidth=1.4;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;fontStyle=0;fontFamily=Source Sans 3;endFill=1;endSize=5;" edge="1" parent="ragged_batching-figure" source="ragged_batching-38" target="ragged_batching-40">
           <mxGeometry x="0" relative="1" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-42" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="529" y="219.4" width="22" height="22" as="geometry" />
+          <mxGeometry x="529" y="212.4" width="22" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-43" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="499" y="249.4" width="22" height="22" as="geometry" />
+          <mxGeometry x="499" y="242.4" width="22" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-44" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="529" y="249.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-44" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="528" y="241.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-45" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="553" y="249.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-45" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="552" y="241.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-46" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="577" y="249.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-46" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="576" y="241.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-47" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="601" y="249.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-47" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="600" y="241.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-48" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="625" y="249.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-48" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="624" y="241.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-49" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="649" y="249.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-49" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="648" y="241.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-50" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="673" y="249.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-50" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="672" y="241.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-51" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="697" y="249.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-51" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="696" y="241.4" width="24" height="24" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-52" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="553" y="219.4" width="22" height="22" as="geometry" />
+          <mxGeometry x="553" y="212.4" width="22" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-53" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="499" y="273.4" width="22" height="22" as="geometry" />
+          <mxGeometry x="499" y="266.4" width="22" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-54" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="529" y="273.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-54" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="528" y="265.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-55" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="553" y="273.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-55" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="552" y="265.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-56" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="577" y="273.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-56" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="576" y="265.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-57" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="601" y="273.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-57" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="600" y="265.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-58" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="625" y="273.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-58" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="624" y="265.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-59" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="649" y="273.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-59" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="648" y="265.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-60" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="673" y="273.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-60" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="672" y="265.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-61" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="697" y="273.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-61" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="696" y="265.4" width="24" height="24" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-62" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="577" y="219.4" width="22" height="22" as="geometry" />
+          <mxGeometry x="577" y="212.4" width="22" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-63" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="499" y="297.4" width="22" height="22" as="geometry" />
+          <mxGeometry x="499" y="290.4" width="22" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-64" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="529" y="297.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-64" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="528" y="289.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-65" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="553" y="297.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-65" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="552" y="289.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-66" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="577" y="297.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-66" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="576" y="289.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-67" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="601" y="297.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-67" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="600" y="289.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-68" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="625" y="297.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-68" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="624" y="289.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-69" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="649" y="297.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-69" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="648" y="289.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-70" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="673" y="297.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-70" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="672" y="289.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-71" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="697" y="297.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-71" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="696" y="289.4" width="24" height="24" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-72" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="601" y="219.4" width="22" height="22" as="geometry" />
+          <mxGeometry x="601" y="212.4" width="22" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-73" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="499" y="321.4" width="22" height="22" as="geometry" />
+          <mxGeometry x="499" y="314.4" width="22" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-74" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="529" y="321.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-74" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="528" y="313.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-75" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="553" y="321.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-75" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="552" y="313.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-76" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="577" y="321.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-76" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="576" y="313.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-77" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="601" y="321.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-77" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="600" y="313.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-78" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="625" y="321.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-78" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="624" y="313.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-79" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="649" y="321.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-79" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="648" y="313.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-80" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="673" y="321.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-80" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="672" y="313.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-81" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="697" y="321.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-81" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="696" y="313.4" width="24" height="24" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-82" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="625" y="219.4" width="22" height="22" as="geometry" />
+          <mxGeometry x="625" y="212.4" width="22" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-83" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="499" y="345.4" width="22" height="22" as="geometry" />
+          <mxGeometry x="499" y="338.4" width="22" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-84" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="529" y="345.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-84" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="528" y="337.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-85" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="553" y="345.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-85" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="552" y="337.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-86" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="577" y="345.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-86" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="576" y="337.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-87" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="601" y="345.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-87" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="600" y="337.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-88" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="625" y="345.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-88" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="624" y="337.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-89" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="649" y="345.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-89" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="648" y="337.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-90" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="673" y="345.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-90" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="672" y="337.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-91" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="697" y="345.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-91" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="696" y="337.4" width="24" height="24" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-92" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="649" y="219.4" width="22" height="22" as="geometry" />
+          <mxGeometry x="649" y="212.4" width="22" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-93" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="499" y="369.4" width="22" height="22" as="geometry" />
+          <mxGeometry x="499" y="362.4" width="22" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-94" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="529" y="369.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-94" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="528" y="361.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-95" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="553" y="369.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-95" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="552" y="361.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-96" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="577" y="369.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-96" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="576" y="361.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-97" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="601" y="369.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-97" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="600" y="361.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-98" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="625" y="369.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-98" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="624" y="361.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-99" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="649" y="369.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-99" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="648" y="361.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-100" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="673" y="369.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-100" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="672" y="361.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-101" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="697" y="369.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-101" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="696" y="361.4" width="24" height="24" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-102" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="673" y="219.4" width="22" height="22" as="geometry" />
+          <mxGeometry x="673" y="212.4" width="22" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-103" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="499" y="393.4" width="22" height="22" as="geometry" />
+          <mxGeometry x="499" y="386.4" width="22" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-104" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="529" y="393.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-104" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="528" y="385.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-105" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="553" y="393.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-105" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="552" y="385.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-106" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="577" y="393.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-106" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="576" y="385.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-107" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="601" y="393.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-107" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="600" y="385.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-108" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="625" y="393.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-108" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="624" y="385.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-109" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="649" y="393.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-109" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="648" y="385.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-110" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="673" y="393.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-110" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="672" y="385.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-111" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="697" y="393.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-111" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="696" y="385.4" width="24" height="24" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-112" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="697" y="219.4" width="22" height="22" as="geometry" />
+          <mxGeometry x="697" y="212.4" width="22" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-113" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="499" y="417.4" width="22" height="22" as="geometry" />
+          <mxGeometry x="499" y="410.4" width="22" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-114" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="529" y="417.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-114" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="528" y="409.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-115" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="553" y="417.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-115" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="552" y="409.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-116" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="577" y="417.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-116" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="576" y="409.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-117" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="601" y="417.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-117" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="600" y="409.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-118" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="625" y="417.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-118" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="624" y="409.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-119" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="649" y="417.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-119" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="648" y="409.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-120" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="673" y="417.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-120" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="672" y="409.4" width="24" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="ragged_batching-121" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="697" y="417.4" width="22" height="22" as="geometry" />
+        <mxCell id="ragged_batching-121" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
+          <mxGeometry x="696" y="409.4" width="24" height="24" as="geometry" />
         </mxCell>
+        <mxCell id="ragged_batching-maskoutline" parent="ragged_batching-figure" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=1.2;" value="" vertex="1"><mxGeometry x="528" y="241.4" width="192" height="192" as="geometry" /></mxCell>
         <mxCell id="ragged_batching-122" value="keys" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="608.66" y="193" width="32.66" height="20.8" as="geometry" />
+          <mxGeometry x="608.66" y="186" width="32.66" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-123" value="queries" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="447.07" y="335" width="47.43" height="20.8" as="geometry" />
+          <mxGeometry x="447.07" y="328" width="47.43" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-124" value="&lt;b&gt;mask&lt;/b&gt;: S x S, block-diagonal and causal" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
-          <mxGeometry x="511.66" y="450" width="226.68" height="20.8" as="geometry" />
+          <mxGeometry x="511.66" y="443" width="226.68" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="disaggregation-label" value="disaggregation.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="5457.18" width="600" height="30" as="geometry" />
