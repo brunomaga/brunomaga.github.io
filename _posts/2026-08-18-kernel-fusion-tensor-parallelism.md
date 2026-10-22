@@ -68,7 +68,7 @@ $$
 When all tiles of $$H$$ are processed, $$Y$$ holds the full product $$H W_2$$, and $$H$$ was never stored in global memory, as illustrated below:
 
 {: .picture}
-<img width="98%" height="98%" src="{{ site.assets }}/inference/imgs/tp_matmuls.svg"/>
+<img width="98.7%" height="98.7%" src="{{ site.assets }}/inference/imgs/tp_matmuls.svg"/>
 
 {: .caption}
 **Left:** the regular execution computes all tiles of $$H$$, stores $$H$$ in global memory, and a second kernel computes $$Y$$. **Right:** the fused kernel multiplies each tile of $$H$$ by a row of tiles of $$W_2$$ and accumulates the results in a row of tiles of $$Y$$.
