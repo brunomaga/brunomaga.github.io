@@ -4960,7 +4960,7 @@
           <mxGeometry x="324.34" y="240.6" width="21.32" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="megatron-lm-45" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;dashed=1;arcSize=20;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="megatron-lm-figure">
-          <mxGeometry x="40" y="290" width="348" height="310" as="geometry" />
+          <mxGeometry x="40" y="290" width="348" height="327" as="geometry" />
         </mxCell>
         <mxCell id="megatron-lm-46" value="&lt;i&gt;Y&lt;/i&gt; = Self-Attention(&lt;i&gt;X&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="megatron-lm-figure">
           <mxGeometry x="138.7" y="294.6" width="144.6" height="20.8" as="geometry" />
@@ -5182,10 +5182,11 @@
           <mxGeometry x="346" y="477" width="26" height="26" as="geometry" />
         </mxCell>
         <mxCell id="megatron-lm-90" value="&lt;i&gt;Q&lt;/i&gt; = [&lt;i&gt;Q&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;, &lt;i&gt;Q&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;], &lt;i&gt;K&lt;/i&gt; = [&lt;i&gt;K&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;, &lt;i&gt;K&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;], &lt;i&gt;V&lt;/i&gt; = [&lt;i&gt;V&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;, &lt;i&gt;V&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;]" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontColor=#000000;fontStyle=0;fontFamily=NewComputerModernSansMath;whiteSpace=nowrap;" vertex="1" parent="megatron-lm-figure">
-          <mxGeometry x="79.1" y="571.6" width="269.8" height="20.8" as="geometry" />
+          <mxGeometry x="79.1" y="588.6" width="269.8" height="20.8" as="geometry" />
         </mxCell>
+        <mxCell id="megatron-lm-113" value="split attention heads:" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontColor=#000000;fontStyle=0;fontFamily=Source Sans 3;whiteSpace=nowrap;" vertex="1" parent="megatron-lm-figure"><mxGeometry x="79.1" y="571.6" width="269.8" height="20.8" as="geometry" /></mxCell>
         <mxCell id="megatron-lm-91" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;dashed=1;arcSize=20;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="megatron-lm-figure">
-          <mxGeometry x="408" y="290" width="262" height="310" as="geometry" />
+          <mxGeometry x="408" y="290" width="262" height="327" as="geometry" />
         </mxCell>
         <mxCell id="megatron-lm-92" value="&lt;i&gt;Z&lt;/i&gt; = Dropout(&lt;i&gt;YB&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="megatron-lm-figure">
           <mxGeometry x="484.1" y="294.6" width="109.8" height="20.8" as="geometry" />
@@ -5260,33 +5261,27 @@
           <mxGeometry x="622" y="418" width="30" height="40" as="geometry" />
         </mxCell>
         <mxCell id="megatron-lm-108" value="&lt;i&gt;B&lt;/i&gt; =" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="megatron-lm-figure">
-          <mxGeometry x="419.77" y="555.59" width="27.73" height="20.8" as="geometry" />
+          <mxGeometry x="419.77" y="572.59" width="27.73" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="megatron-lm-109" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="megatron-lm-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="457" y="540" as="sourcePoint" />
-            <mxPoint x="457" y="592" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="452" y="540" />
-              <mxPoint x="452" y="592" />
-            </Array>
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="452" y="557" /><mxPoint x="452" y="609" /></Array>
+            <mxPoint x="457" y="557" as="sourcePoint" />
+            <mxPoint x="457" y="609" as="targetPoint" />
+            
           </mxGeometry>
         </mxCell>
         <mxCell id="megatron-lm-110" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="megatron-lm-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="487" y="540" as="sourcePoint" />
-            <mxPoint x="487" y="592" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="492" y="540" />
-              <mxPoint x="492" y="592" />
-            </Array>
+          <mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="492" y="557" /><mxPoint x="492" y="609" /></Array>
+            <mxPoint x="487" y="557" as="sourcePoint" />
+            <mxPoint x="487" y="609" as="targetPoint" />
+            
           </mxGeometry>
         </mxCell>
         <mxCell id="megatron-lm-111" value="&lt;i&gt;B&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;br&gt;&lt;i&gt;B&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="megatron-lm-figure">
-          <mxGeometry x="460.33" y="547.19" width="23.34" height="37.6" as="geometry" />
+          <mxGeometry x="460.33" y="564.19" width="23.34" height="37.6" as="geometry" />
         </mxCell>
         <mxCell id="megatron-lm-112" value="(b)" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="megatron-lm-figure">
-          <mxGeometry x="323.94" y="610.6" width="22.11" height="20.8" as="geometry" />
+          <mxGeometry x="323.94" y="627.6" width="22.11" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="megatron_model_parallel_1-label" value="megatron_model_parallel_1.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="1083.23" width="600" height="30" as="geometry" />
