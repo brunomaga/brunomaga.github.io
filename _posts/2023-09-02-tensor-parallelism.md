@@ -42,7 +42,7 @@ After the MatMul and GeLU are done, they are followed by another MatMul and a dr
 <img width="96.9%" height="96.9%" src="{{ site.assets }}/distributed-training/imgs/tp_megatron_lm.svg"/>
 
 {: .caption}
-The MLP block of Megatron-LM on two GPUs. The first MatMul follows option 2: $$X$$ is replicated and $$A$$ is split by columns, so each GPU computes its own columns of $$XA$$ and applies the GeLU to them without any communication. The second MatMul follows option 1: $$B$$ is split by rows, so each GPU computes a partial sum of $$YB$$, and a sum-reduce adds the partial sums on both GPUs. Inspired by: [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053)
+The MLP block of Megatron-LM on two GPUs. The first MatMul follows option 2: $$X$$ is replicated and $$A$$ is split by columns, so each GPU computes its own columns of $$XA$$ and applies the GeLU to them without any communication. The second MatMul follows option 1: $$Y$$ is already split by columns and $$B$$ is split by rows, so each GPU computes a partial sum of $$YB$$, and a sum-reduce adds the partial sums on both GPUs. Inspired by: [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053)
 
 
 The algorithm of the attention mechanism is analogous, except that instead of a single MatMul $$XA$$ at the beginning of the workflow, there are three MatMuls $$XV$$, $$XQ$$ and $$XK$$ for the value, query and key matrices. Therefore, this algorithm requires one (not two) communication step per MLP and per attention block.
