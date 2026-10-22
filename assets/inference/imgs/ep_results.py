@@ -4,8 +4,8 @@ Left, prefill: the time per iteration, in s, against the batch size, in tokens p
 per output token, in ms, against the number of concurrent sequences; these values are placeholders, not measured yet,
 and are drawn in grey, with the same markers. The data comes from the paper of the expert parallelism kernel fusion post.
 The picture follows CLAUDE.md (Pictures): Source Sans 3 text at page size (1 unit = 1 px), drawn as glyph outlines,
-1.8 px axes and data lines (the weight of the measured results), the data drawn behind the axes, and one legend in one
-column right of the plots.
+1.8 px axes and data lines (the weight of the measured results), the data drawn behind the axes, the values next to
+their points with no box, and one legend in one column right of the plots.
 
 usage: python3 ep_results.py   (needs matplotlib and the Source Sans 3 font)
 """
@@ -32,9 +32,15 @@ BLACK, GREY = '#000000', '#666666'
 COLORS = ['#b85450', '#6c8ebf', '#82b366']               # red, blue and green accents
 MARKERS = ['s', '^', 'o']
 LABELS = [dict(xytext=(0, 5), ha='center', va='bottom'),  # Baseline above its points,
-          dict(xytext=(6, 0), ha='left', va='center',     # MegaKernel right of them, over the lines,
-               bbox=dict(boxstyle='square,pad=0.1', facecolor='#ffffff', edgecolor='none')),
+          None,                                           # MegaKernel at MK_PLACES,
           dict(xytext=(0, -6), ha='center', va='top')]    # MegaKernel+INC below them
+# MegaKernel's values lie between the other two series, with no box: each one sits right of its point (prefill) or
+# above it (decode; right of the first point, where the Baseline point leaves no room), moved to where no line runs,
+# 3 px or more from every line and marker. One (offset in points, ha, va) per point.
+MK_PLACES = {'prefill': [((7.5, -4), 'left', 'center'), ((9, -4), 'left', 'center'), ((14.5, -4), 'left', 'center'),
+                         ((13, -4), 'left', 'center'), ((7, 0), 'left', 'center')],
+             'decode': [((6, 11), 'left', 'center'), ((0, 4), 'center', 'bottom'), ((0, 5), 'center', 'bottom'),
+                        ((-5.5, 4.5), 'center', 'bottom'), ((0, 4), 'center', 'bottom')]}
 
 plt.rcParams.update({
     'font.family': 'Source Sans 3', 'font.size': 12, 'svg.fonttype': 'path',
@@ -52,8 +58,13 @@ def panel(ax, title, xs, series, labels, xticks, xlabels, yticks, xlim, ylim, xl
         # zorder 2, under the spines and the ticks (2.5) and the value labels (3)
         ax.plot(xs, ys, color=c, linestyle=ls, linewidth=1.8, marker=MARKERS[k], markersize=7, markerfacecolor=c,
                 markeredgecolor=BLACK, markeredgewidth=1.0, label=NAMES[k], zorder=2)
-        for x, y, t in zip(xs, ys, texts):
-            ax.annotate(t, (x, y), textcoords='offset points', fontsize=12, color=color, **LABELS[k])
+        for i, (x, y, t) in enumerate(zip(xs, ys, texts)):
+            if k == 1:
+                offset, ha, va = MK_PLACES[title][i]
+                kw = dict(xytext=offset, ha=ha, va=va)
+            else:
+                kw = LABELS[k]
+            ax.annotate(t, (x, y), textcoords='offset points', fontsize=12, color=color, **kw)
     ax.set_xscale('log', base=2)
     ax.set_yscale('log', base=2)
     ax.xaxis.set_major_locator(FixedLocator(xticks))
