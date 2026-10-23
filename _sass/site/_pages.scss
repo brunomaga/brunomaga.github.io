@@ -38,7 +38,7 @@
   line-height: 1.6;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: $grey-color;
+  color: $grey-dark;
 }
 
 .home-field-sep {
@@ -47,7 +47,7 @@
   height: 4px;
   margin: 0 0.8em;
   vertical-align: middle;
-  background-color: $grey-color;
+  background-color: $grey-dark;
 }
 
 .home-field-break { display: none; }
@@ -69,7 +69,7 @@
 }
 
 .home-links a,
-.home-links a:visited { color: $grey-color; }
+.home-links a:visited { color: $grey-dark; }
 
 // a padding that the negative margin cancels: a tap area of about 32px around each icon, with no change in the layout
 .home-links a {
@@ -89,7 +89,7 @@
   width: 100px;
   aspect-ratio: 1 / 1;
   overflow: hidden;
-  border: 1px solid #ddd;
+  border: 1px solid $grey;
   border-radius: 50%;
 
   @include media-query($on-palm) { width: 84px; }
@@ -131,8 +131,8 @@
   right: 0.5em;
   width: 0.45em;
   height: 0.45em;
-  border-right: 1.5px solid #999;
-  border-bottom: 1.5px solid #999;
+  border-right: 1.5px solid $grey-dark;
+  border-bottom: 1.5px solid $grey-dark;
   transform: rotate(45deg);
   transition: transform 0.15s;
 }
@@ -153,14 +153,14 @@
 .pub-table summary:hover .pub-title { text-decoration: underline; }
 
 .pub-meta {
-  color: $grey-color;
+  color: $grey-dark;
   font-size: 0.875em;
 }
 
 .pub-link,
 .pub-link:visited {
   margin-left: 0.4em;
-  color: $grey-color;
+  color: $grey-dark;
 }
 
 .pub-link:hover,
@@ -183,7 +183,7 @@
 .pub-table details[open] {
   padding-bottom: 0.8em;
   margin-bottom: 0.6em;
-  border-bottom: 1px solid #e4e4e4;
+  border-bottom: 1px solid $grey;
 }
 
 // The 404 page (404.html)

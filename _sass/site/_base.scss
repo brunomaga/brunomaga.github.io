@@ -1,4 +1,4 @@
-// Images, titles and headings
+// Images, titles, headings and tables
 
 img { height: auto; }
 
@@ -13,3 +13,14 @@ img { height: auto; }
 // before them is enough
 h2 { margin-top: 40px; }
 h3 { margin-top: 20px; }
+
+// tables: a grey header and light grey even rows, in place of minima's tints of its light grey. The label tables
+// (site/labels, imported after) keep plain rows
+table {
+  tr:nth-child(even) { background-color: $grey-light; }
+
+  th {
+    background-color: $grey;
+    border: 1px solid $grey;
+  }
+}
