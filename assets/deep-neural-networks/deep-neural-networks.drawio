@@ -804,11 +804,11 @@
           <mxGeometry x="85.5" y="94.5" width="102" height="68.5" as="geometry" />
         </mxCell>
         <mxCell id="densenet-8" value="BN-ReLU-Conv" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;rotation=-24.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="densenet-figure">
-          <mxGeometry x="86.5" y="119.75" width="100" height="18" as="geometry" />
+          <mxGeometry x="94.67" y="117.21" width="100" height="18" as="geometry" />
         </mxCell>
         <mxCell id="densenet-9" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="136.5" y="128.75" as="sourcePoint" />
+            <mxPoint x="145.6" y="136.2" as="sourcePoint" />
             <mxPoint x="155.12" y="144" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -828,11 +828,11 @@
           <mxGeometry x="220.12" y="180.25" width="102" height="68.5" as="geometry" />
         </mxCell>
         <mxCell id="densenet-15" value="BN-ReLU-Conv" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;rotation=-24.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="densenet-figure">
-          <mxGeometry x="221.12" y="205.5" width="100" height="18" as="geometry" />
+          <mxGeometry x="229.29" y="202.96" width="100" height="18" as="geometry" />
         </mxCell>
         <mxCell id="densenet-16" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="271.12" y="214.5" as="sourcePoint" />
+            <mxPoint x="280.22" y="221.95" as="sourcePoint" />
             <mxPoint x="289.75" y="229.75" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -852,11 +852,11 @@
           <mxGeometry x="354.75" y="266" width="102" height="68.5" as="geometry" />
         </mxCell>
         <mxCell id="densenet-22" value="BN-ReLU-Conv" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;rotation=-24.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="densenet-figure">
-          <mxGeometry x="355.75" y="291.25" width="100" height="18" as="geometry" />
+          <mxGeometry x="363.92" y="288.71" width="100" height="18" as="geometry" />
         </mxCell>
         <mxCell id="densenet-23" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#d6b656;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="405.75" y="300.25" as="sourcePoint" />
+            <mxPoint x="414.85" y="307.7" as="sourcePoint" />
             <mxPoint x="424.38" y="315.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -876,11 +876,11 @@
           <mxGeometry x="489.38" y="351.75" width="102" height="68.5" as="geometry" />
         </mxCell>
         <mxCell id="densenet-29" value="BN-ReLU-Conv" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;rotation=-24.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="densenet-figure">
-          <mxGeometry x="490.38" y="377" width="100" height="18" as="geometry" />
+          <mxGeometry x="498.55" y="374.46" width="100" height="18" as="geometry" />
         </mxCell>
         <mxCell id="densenet-30" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#d79b00;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="540.38" y="386" as="sourcePoint" />
+            <mxPoint x="549.48" y="393.45" as="sourcePoint" />
             <mxPoint x="559" y="401.25" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -904,7 +904,7 @@
         </mxCell>
         <mxCell id="densenet-37" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;fontSize=12;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="densenet-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="675.5" y="480" as="sourcePoint" />
+            <mxPoint x="683.54" y="484.44" as="sourcePoint" />
             <mxPoint x="713.5" y="501" as="targetPoint" />
           </mxGeometry>
         </mxCell>
