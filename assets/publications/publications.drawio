@@ -4808,31 +4808,31 @@
         <mxCell id="sparse_transformers-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="9826.15" width="771.63" height="347.13" as="geometry" />
         </mxCell>
-        <mxCell id="sparse_transformers-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sparse_transformers-figure">
+        <mxCell id="sparse_transformers-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sparse_transformers-figure">
           <mxGeometry x="0" y="3.26" width="90.51" height="91.16" as="geometry" />
         </mxCell>
-        <mxCell id="sparse_transformers-19" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sparse_transformers-figure">
+        <mxCell id="sparse_transformers-19" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sparse_transformers-figure">
           <mxGeometry x="119.81" y="3.26" width="90.51" height="91.16" as="geometry" />
         </mxCell>
-        <mxCell id="sparse_transformers-37" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sparse_transformers-figure">
+        <mxCell id="sparse_transformers-37" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sparse_transformers-figure">
           <mxGeometry x="280.65" y="3.26" width="90.51" height="91.16" as="geometry" />
         </mxCell>
-        <mxCell id="sparse_transformers-52" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sparse_transformers-figure">
+        <mxCell id="sparse_transformers-52" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sparse_transformers-figure">
           <mxGeometry x="400.47" y="3.26" width="90.51" height="91.16" as="geometry" />
         </mxCell>
-        <mxCell id="sparse_transformers-69" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sparse_transformers-figure">
+        <mxCell id="sparse_transformers-69" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sparse_transformers-figure">
           <mxGeometry x="561.3" y="3.26" width="90.51" height="91.16" as="geometry" />
         </mxCell>
-        <mxCell id="sparse_transformers-83" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sparse_transformers-figure">
+        <mxCell id="sparse_transformers-83" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sparse_transformers-figure">
           <mxGeometry x="681.12" y="3.26" width="90.51" height="91.16" as="geometry" />
         </mxCell>
-        <mxCell id="sparse_transformers-100" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sparse_transformers-figure">
+        <mxCell id="sparse_transformers-100" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sparse_transformers-figure">
           <mxGeometry x="0" y="112" width="210.33" height="210.33" as="geometry" />
         </mxCell>
-        <mxCell id="sparse_transformers-164" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sparse_transformers-figure">
+        <mxCell id="sparse_transformers-164" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sparse_transformers-figure">
           <mxGeometry x="280.65" y="112" width="210.33" height="210.33" as="geometry" />
         </mxCell>
-        <mxCell id="sparse_transformers-252" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sparse_transformers-figure">
+        <mxCell id="sparse_transformers-252" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sparse_transformers-figure">
           <mxGeometry x="561.3" y="112" width="210.33" height="210.33" as="geometry" />
         </mxCell>
         <mxCell id="sparse_transformers-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;fontSize=14;fillOpacity=50;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sparse_transformers-figure">

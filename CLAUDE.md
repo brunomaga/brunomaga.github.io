@@ -361,12 +361,11 @@ sections 6 and 7, and the font section 4.
   grey     fill #f5f5f5   accent #666666
   white    fill #ffffff
   ```
-  Masked and padding elements (the masked cells of an attention mask, padding tokens and padding cells) are
-  white, with the solid outline of their cell or token (section 7). The pad tokens of longvilla stay grey, as in the
-  paper's figure, whose white cells are empty positions. NULL or inactive elements are grey, in
-  the grey that stands out from the data next to them: dark grey #b3b3b3 next to white or pastel data, light
-  grey #f5f5f5 next to data filled with an accent color. The accent colors may also fill small marks (dots of
-  a scatter plot, nodes of a graph, heat map cells, filled tokens) where pastel fills are too faint.
+  Unused elements (the masked cells of an attention mask, padding tokens and cells, free slots of a cache,
+  pruned weights, missing values, NULL cells) are white, with a solid grey #666666 outline (section 7), never
+  grey: their text (NULL, 0, [M]) stays. The pad tokens of longvilla stay grey, as in the paper's figure, whose
+  white cells are empty positions. The accent colors may also fill small marks (dots of a scatter plot, nodes of
+  a graph, heat map cells, filled tokens) where pastel fills are too faint.
 - Fills are flat: no gradients, shadows or glow, and the faces of a cube share one fill.
 - A colored outline or frame always has a meaning that the text or the caption gives (a highlight, a group,
   the KV cache). No decorative accent frames.
@@ -397,21 +396,22 @@ sections 6 and 7, and the font section 4.
 
 - Every geometric element with a fill (rectangles, rounded boxes, circles, cubes, cylinders, filled table
   cells, block arrows, grey background panels and frames) has a black outline: strokeColor=#000000, no stroke
-  opacity. The cells of a block are the exception: their outlines are grey (see the blocks below). Six
+  opacity. The cells of a block and the unused elements (section 7) are the exceptions: their outlines are grey
+  (see the blocks below). Six
   weights, the same at page scale in every picture:
   ```
   thin       0.4 px   the cells of a matrix, an array, a table or a block of cubes, the lines that divide a
                       block into cells, the faces of a 3D tensor, pipeline passes
   regular    1.0 px   operations, layers, modules, data boxes (tensors, vectors, tokens), neurons and graph
                       nodes, operators, single cubes, block arrows, square brackets, the blocks of a time line,
-                      the outlines of idle areas and of dropped neurons, the data lines of a chart
+                      the grey outlines of idle areas, of unused single elements and of dropped neurons
   block      1.2 px   the outline of each block of cells (matrix, array, table, stack of objects), the
                       silhouette of each 3D tensor or block of cubes and the three edges at its front corner
   line       1.4 px   arrows and lines, axes of time lines, markers, brackets and number lines drawn as lines
   frame      1.8 px   frames of regions (devices, processes, groups, sections), colored or dashed ones too,
-                      the axes of charts and the frames of plots of a 2D domain or of an image (k-means,
-                      voronoi, the slicing layouts, svd_example, coordinate_descent), lines that divide a
-                      drawing into regions (the dashed lines between the panels of a picture)
+                      the axes and the data lines of charts, the frames of plots of a 2D domain or of an
+                      image (k-means, voronoi, the slicing layouts, svd_example, coordinate_descent), lines
+                      that divide a drawing into regions (the dashed lines between the panels of a picture)
   emphasis   3.6 px   red #b85450 outlines and frames, solid or dashed, that emphasise a part of a drawing
                       (the modules of the GPT-lite pictures, the MoE layers of moe_gshard, the red frames of
                       the first row and the first column in all_to_all), and black frames that emphasise a part
@@ -462,14 +462,13 @@ sections 6 and 7, and the font section 4.
   arrow at the emphasis weight has endSize=2.8, so that its head has the size of the others. Grey #666666 only
   for faded content. Lines without a head that join two parts of the flow (two boxes, or a box and an
   arrow): 1.4 px. The axis of a time line: 1.4 px, with the same head.
-- Charts: the axes and the frame of a plot are 1.8 px, also the axis line of a bar chart, and an axis drawn
-  with a head takes the head of the thin arrows. Data lines are 1.0 px, except, at the user's request, in
-  the charts of measured results (benchmarks and the results of papers: comet, llama3_scaling_laws,
-  ep_results...) and in the charts of the neuron posts (lif-brunel, neuron-electrical-activity,
-  neuron-variable-timestep), where they are 1.8 px, the weight of the axes. The data (lines, markers, bars)
-  is drawn behind the axes and the frame. Guide lines (a threshold, a roof, a projection on an axis) are grey
-  #666666, dashed, 1.0 px. The legend of a chart is one column outside the plot, on its right, and the chart
-  grows wider to make room for it.
+- Charts: the axes, the frame and the data lines of a plot are 1.8 px, in every chart, at the user's request:
+  the data lines (the values, the fits, the roofs of a roofline chart, the line samples of the legend) are as
+  thick as the axes. The axis line of a bar chart and the line in front of the bars of each category are 1.8 px
+  too, and an axis drawn with a head takes the head of the thin arrows. The data (lines, markers, bars) is drawn
+  behind the axes and the frame. Guide lines (a threshold, a projection on an axis) are grey #666666, dashed,
+  1.0 px. The legend of a chart is one column outside the plot, on its right, and the chart grows wider to make
+  room for it.
 - The links of a dense network (each neuron to each neuron of the next layer) are thin arrows with heads, as
   the others; the heads that converge on one node may touch.
 - Inhibition (one part blocks or breaks down another, as in a signalling pathway): 1.4 px black line with a
@@ -484,8 +483,9 @@ sections 6 and 7, and the font section 4.
     joins the line of the other before the head;
   - two arrows share a segment only when they leave the same point (fan-out) or end at the same point
     (fan-in);
-  - a label never covers its arrow: it sits above a horizontal segment or right of a vertical one, with no
-    background (labelBackgroundColor=none);
+  - text never sits on, touches or crosses a line or an arrow, at the user's request: the label of an arrow
+    sits above a horizontal segment or right of a vertical one, with no background
+    (labelBackgroundColor=none);
   - text keeps at least 2.5 px from every line and shape that does not hold it.
 - No end-of-sequence cells or tokens in schedules: the last decode cell is the last token.
 
@@ -506,7 +506,8 @@ sections 6 and 7, and the font section 4.
   span of several parts                                  square bracket, 1.0 px, its tip toward its text
   idle area (schedules, time lines)                      white box with square corners, a grey dashed outline
                                                          and no text
-  masked or padding element (cell, token)                white, with the solid outline of its cell or token
+  unused element (masked, padding, free, pruned or       white, with a solid grey outline
+  missing cell, token or slot)
   dropped neuron (dropout)                               white circle, grey dashed outline, grey cross
   transformation of a whole stage (a model into another) block arrow; thin arrows everywhere else
   ```
@@ -527,10 +528,11 @@ sections 6 and 7, and the font section 4.
 - Idle areas (the idle time of a schedule or a time line): a white box with square corners and a grey
   #666666 dashed outline, 1.0 px (rounded=0;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;dashed=1),
   with no text inside, as its look says it is idle. A legend may name it Idle.
-- Masked and padding elements (a masked cell of an attention mask, a padding token, a padding cell of a
-  table): a white fill and the solid outline of the element, thin grey for a cell inside a block, regular
-  black for a single token, so that they differ from the dashed idle areas (ragged_batching,
-  variable_batch_lr).
+- Unused elements (a masked cell of an attention mask, a padding token or cell, a free slot of a cache, a
+  pruned weight, a missing value, a NULL cell): a white fill and a solid grey #666666 outline, thin (0.4 px)
+  for a cell inside a block and regular (1.0 px) for a single token, slot or cube, so that they differ from
+  the dashed idle areas (ragged_batching, variable_batch_lr, paged_attention). Their text (NULL, 0, [M])
+  stays black.
 - A dropped neuron (dropout) is a white circle with a grey #666666 dashed outline, 1.0 px, the weight of
   the other neurons, and a grey #666666 cross over it.
 - A hatched mark that is not idle time (the new integration steps of local_variable_timestep_six_cell_example)
