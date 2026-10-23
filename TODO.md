@@ -972,6 +972,10 @@ that is not wrong.
 - Optional, `inference/imgs/quantization_granularity.svg`: the per-group panel colors its 12 groups with 6 colors
   (rows 1 and 3, and rows 2 and 4, repeat their colors). In the per-row panel each color is one scale, so the
   per-group panel reads as 6 scales. Fix: a black frame around each group, or 12 distinct fills.
+- `inference/imgs/gptq.svg`: the labels "err = W[:, i] − q" and "H = 2XXᵀ, from the calibration inputs X" take the
+  columns of X as the inputs, and q as the rounded column. The text, the code and `llm_int8.svg` take the rows of X as
+  the inputs, the text writes the rounded column as Ŵ[:, i], and `int4_packing.svg` uses q for the integers. Fix: "err
+  = W[:, i] − Ŵ[:, i]" and "H = 2XᵀX".
 
 ### Publication Summaries (publications.md)
 
