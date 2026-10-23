@@ -1766,8 +1766,8 @@
         </mxCell>
         <mxCell id="sora_vae-421" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="sora_vae-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="657.64" y="76.81" as="sourcePoint" />
-            <mxPoint x="687.14" y="76.81" as="targetPoint" />
+            <mxPoint x="657.64" y="50.81" as="sourcePoint" />
+            <mxPoint x="687.14" y="50.81" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="sora_vae-11" value="Visual&lt;br&gt;encoder" style="shape=trapezoid;whiteSpace=wrap;html=1;direction=south;fixedSize=1;size=17.91;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sora_vae-figure">
@@ -2667,102 +2667,102 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="sora_vae-b0" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="687.14" y="68.31" width="17" height="17" as="geometry" />
+          <mxGeometry x="687.14" y="42.31" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-b1" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="695.64" y="72.56" width="17" height="17" as="geometry" />
+          <mxGeometry x="695.64" y="46.56" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-b2" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="704.14" y="76.81" width="17" height="17" as="geometry" />
+          <mxGeometry x="704.14" y="50.81" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-b3" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="712.64" y="81.06" width="17" height="17" as="geometry" />
+          <mxGeometry x="712.64" y="55.06" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-b4" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="721.14" y="85.31" width="17" height="17" as="geometry" />
+          <mxGeometry x="721.14" y="59.31" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-b5" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="729.64" y="89.56" width="17" height="17" as="geometry" />
+          <mxGeometry x="729.64" y="63.56" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-b6" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="738.14" y="93.81" width="17" height="17" as="geometry" />
+          <mxGeometry x="738.14" y="67.81" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-b7" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="746.64" y="98.06" width="17" height="17" as="geometry" />
+          <mxGeometry x="746.64" y="72.06" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-b8" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="755.14" y="102.31" width="17" height="17" as="geometry" />
+          <mxGeometry x="755.14" y="76.31" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-b9" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="763.64" y="106.56" width="17" height="17" as="geometry" />
+          <mxGeometry x="763.64" y="80.56" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-b10" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="772.14" y="110.81" width="17" height="17" as="geometry" />
+          <mxGeometry x="772.14" y="84.81" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-b11" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="780.64" y="115.06" width="17" height="17" as="geometry" />
+          <mxGeometry x="780.64" y="89.06" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-b12" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="789.14" y="119.31" width="17" height="17" as="geometry" />
+          <mxGeometry x="789.14" y="93.31" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-b13" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="797.64" y="123.56" width="17" height="17" as="geometry" />
+          <mxGeometry x="797.64" y="97.56" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-b14" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="806.14" y="127.81" width="17" height="17" as="geometry" />
+          <mxGeometry x="806.14" y="101.81" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-b15" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="814.64" y="132.06" width="17" height="17" as="geometry" />
+          <mxGeometry x="814.64" y="106.06" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-b16" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="823.14" y="136.31" width="17" height="17" as="geometry" />
+          <mxGeometry x="823.14" y="110.31" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-b17" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="831.64" y="140.56" width="17" height="17" as="geometry" />
+          <mxGeometry x="831.64" y="114.56" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-b18" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="840.14" y="144.81" width="17" height="17" as="geometry" />
+          <mxGeometry x="840.14" y="118.81" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-b19" value="" style="html=1;whiteSpace=wrap;shape=isoCube2;backgroundOutline=1;isoAngle=15.5958;fillColor=#b3b3b3;strokeColor=#ffffff;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="848.64" y="149.06" width="17" height="17" as="geometry" />
+          <mxGeometry x="848.64" y="123.06" width="17" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-outline-4" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="sora_vae-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="695.64" y="68.31" as="sourcePoint" />
-            <mxPoint x="865.64" y="153.31" as="targetPoint" />
+            <mxPoint x="695.64" y="42.31" as="sourcePoint" />
+            <mxPoint x="865.64" y="127.31" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="865.64" y="153.31" />
-              <mxPoint x="865.64" y="161.81" />
-              <mxPoint x="857.14" y="166.06" />
-              <mxPoint x="687.14" y="81.06" />
-              <mxPoint x="687.14" y="72.56" />
-              <mxPoint x="695.64" y="68.31" />
+              <mxPoint x="865.64" y="127.31" />
+              <mxPoint x="865.64" y="135.81" />
+              <mxPoint x="857.14" y="140.06" />
+              <mxPoint x="687.14" y="55.06" />
+              <mxPoint x="687.14" y="46.56" />
+              <mxPoint x="695.64" y="42.31" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="sora_vae-outline-5" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="sora_vae-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="687.14" y="72.56" as="sourcePoint" />
-            <mxPoint x="865.64" y="153.31" as="targetPoint" />
+            <mxPoint x="687.14" y="46.56" as="sourcePoint" />
+            <mxPoint x="865.64" y="127.31" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="857.14" y="157.56" />
+              <mxPoint x="857.14" y="131.56" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="sora_vae-outline-6" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;" edge="1" parent="sora_vae-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="857.14" y="157.56" as="sourcePoint" />
-            <mxPoint x="857.14" y="166.06" as="targetPoint" />
+            <mxPoint x="857.14" y="131.56" as="sourcePoint" />
+            <mxPoint x="857.14" y="140.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="sora_vae-442" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="671.32" y="59.72" width="2.74" height="2.74" as="geometry" />
+          <mxGeometry x="671.32" y="33.72" width="2.74" height="2.74" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-443" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="677.27" y="62.69" width="2.74" height="2.74" as="geometry" />
+          <mxGeometry x="677.27" y="36.69" width="2.74" height="2.74" as="geometry" />
         </mxCell>
         <mxCell id="sora_vae-444" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sora_vae-figure">
-          <mxGeometry x="683.22" y="65.66" width="2.74" height="2.74" as="geometry" />
+          <mxGeometry x="683.22" y="39.66" width="2.74" height="2.74" as="geometry" />
         </mxCell>
         <mxCell id="masked_autoencoders_cropped-label" value="masked_autoencoders_cropped.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="2535.4" width="600" height="30" as="geometry" />
@@ -9979,7 +9979,7 @@
           <mxGeometry x="205.87" y="28.53" width="17.89" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="latte2-24" value="&lt;i&gt;x&lt;/i&gt;&lt;sub&gt;&lt;i&gt;j&lt;/i&gt;+1&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="latte2-figure">
-          <mxGeometry x="228.11" y="28.53" width="32.78" height="20.8" as="geometry" />
+          <mxGeometry x="227.33" y="28.53" width="32.78" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="latte2-28" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=0.4;opacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte2-figure">
           <mxGeometry relative="1" as="geometry">
@@ -9993,7 +9993,7 @@
             <mxPoint x="384.62" y="88.51" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte2-30" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;opacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte2-figure">
+        <mxCell id="latte2-30" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=0.4;opacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="355.44" y="69.57" as="sourcePoint" />
             <mxPoint x="399.41" y="26.08" as="targetPoint" />
@@ -10017,7 +10017,7 @@
             <mxPoint x="421.98" y="88.51" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="latte2-34" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;opacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte2-figure">
+        <mxCell id="latte2-34" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=0.4;opacity=50;fontFamily=Source Sans 3;" edge="1" parent="latte2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="392.8" y="69.57" as="sourcePoint" />
             <mxPoint x="436.77" y="26.08" as="targetPoint" />

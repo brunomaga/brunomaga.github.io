@@ -850,6 +850,11 @@ that is not wrong.
   (about 30 px taller), or keep the column.
 - Optional, `diffusion/longvilla.svg`: the GPU numbers of grid (3) are 14 px bold in 18 px cells, as in the paper.
   Fix: keep them (they name the GPUs in their colors), or 12 px regular.
+- `diffusion/latte2.svg`, panel (b): the labels x<sub>j</sub> and x<sub>j+1</sub> are 12.4 px tall, as tall as the 12.4
+  and 13.8 px top faces of the cuboids that hold them, so the subscript j of x<sub>j</sub> crosses the front edge of its
+  face, as in the paper's figure, and x<sub>j+1</sub> touches the back edge of its face. The cuboids match the cells of
+  the frames, so their faces cannot grow without leaving the grid. Fix: keep them as in the paper, or move x<sub>1</sub>
+  and x<sub>j</sub> to the front faces of the front cuboids (22 px tall) and the other two labels above their cuboids.
 
 ### Prefill vs decode, roofline, KV cache, batching and disaggregation (2025-06-07-inference-prefill-decode-roofline-cache.md)
 
