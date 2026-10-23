@@ -1253,6 +1253,17 @@ Content problems that need the author's decision, such as overlap between posts.
 - Optional: once both drafts are published, "knowledge distillation" in the introduction could link to the
   distillation post instead of Wikipedia.
 
+### From Mixture-of-Experts to RAG and Agentic AI Systems (_drafts/2026-10-23-moe-rag-agentic-ai.md)
+
+- The draft has no pictures. Proposed pictures: the MoE gate, dispatch and combine steps; the RAG index and query
+  pipeline; the static AAI (router, hedged fan-out of K agents, synthesizer) next to the dynamic AAI (orchestrator
+  loop over S steps), with the terms of Eq. 3 and Eq. 4 on the arrows.
+- The numbers of Liu et al. (2026) other than the KV cache hit rates (15 LLM calls per session, P90 concurrency 1.4,
+  166 ms per tool call, 247 tokens per completion, 9% tool failures, 28% and 4.7%, 50 times) and the 37 to 40% of
+  InferCept were not checked against the papers. Fix: check them in the full texts.
+- The MoE "top-k" and the agent count k share one symbol. Fix: keep both, as the table defines them, or name the
+  number of experts per token differently.
+
 ### Publication Summaries (publications.md)
 
 - DeepSeek-V2 (entry 038): the last sentence of item 2 of DeepSeekMoE, "Finely segmenting the experts into $$mN$$ ones
