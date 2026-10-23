@@ -792,7 +792,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="rc-90" value="&lt;i&gt;I&lt;/i&gt; (&lt;i&gt;t&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rc-figure">
-          <mxGeometry x="88.63" y="168.52" width="27.43" height="23.2" as="geometry" />
+          <mxGeometry x="88.63" y="166.32" width="27.43" height="23.2" as="geometry" />
         </mxCell>
         <mxCell id="rc-91" value="&lt;i&gt;R&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rc-figure">
           <mxGeometry x="55.02" y="215.68" width="17.67" height="23.2" as="geometry" />
@@ -1081,7 +1081,7 @@
           <mxGeometry x="257.25" y="157.56" width="14" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="network-52" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;I&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
-          <mxGeometry x="247.75" y="217.06" width="21" height="20.8" as="geometry" />
+          <mxGeometry x="247.75" y="219.06" width="21" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="diagram_class-label" value="diagram_class.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="737.63" width="600" height="30" as="geometry" />
