@@ -503,8 +503,8 @@ sections 6 and 7, and the font section 4.
     joins the line of the other before the head;
   - two arrows share a segment only when they leave the same point (fan-out) or end at the same point
     (fan-in);
-  - an arrow into a shape points to the middle of the side it reaches (the arrows into the latent volume of
-    sora_vae, at the user's request);
+  - a single arrow into a shape points to its centre: a horizontal arrow runs at the height of the centre of the
+    shape (the arrows into the latent volume and the latent sequence of sora_vae, at the user's request);
   - text never sits on, touches or crosses a line or an arrow, at the user's request: the label of an arrow
     sits above a horizontal segment or right of a vertical one, with no background
     (labelBackgroundColor=none);

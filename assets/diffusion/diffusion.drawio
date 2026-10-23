@@ -1767,7 +1767,7 @@
         <mxCell id="sora_vae-421" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="sora_vae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="657.64" y="88.81" as="sourcePoint" />
-            <mxPoint x="752" y="88.81" as="targetPoint" />
+            <mxPoint x="758" y="88.81" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="sora_vae-11" value="Visual&lt;br&gt;encoder" style="shape=trapezoid;whiteSpace=wrap;html=1;direction=south;fixedSize=1;size=17.91;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="sora_vae-figure">
