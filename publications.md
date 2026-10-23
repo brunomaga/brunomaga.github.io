@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Publications Bookmark
+title: Publication Summaries
 permalink: /publications/
 date_text: updated %b %Y
 ---

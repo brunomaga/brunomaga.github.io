@@ -52,7 +52,7 @@ I also keep a curated list of publications, books and other resources in the fie
 <tr>
 <td><span class="post-label">pubs</span></td>
 <td>
-  <a href="{{ site.publications_permalink }}">Publications Bookmark</a> <span class="pub-meta">(continuously updated)</span>
+  <a href="{{ site.publications_permalink }}">Publication Summaries</a> <span class="pub-meta">(continuously updated)</span>
 </td>
 </tr>
 <tr>
