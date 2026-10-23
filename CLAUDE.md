@@ -306,9 +306,20 @@ sections 6 and 7, and the font section 4.
 - Pictures shown side by side in one row each keep their own P. When the P values of a row add up to more
   than 98 (the spaces between pictures take the rest), the pictures wrap onto the next line. The two models at
   the top of the GPT-lite post are 92 px apart (twelve `&nbsp;` between their img tags), at the user's request.
-- A picture that does not fit 880 px at the text sizes below is redrawn: first narrow the empty space
-  between its parts, then move parts (wrap a row into two rows, stack panels, break long labels over two
-  lines). Never shrink the text to make it fit.
+- A picture that does not fit 880 px at the text sizes below is redrawn in this order, at the user's request:
+  first narrow the empty space between its parts; then shrink its elements (smaller matrices, cells, cubes,
+  circles and photos, shorter arrows, narrower tensors and boxes), as far as their text and the arrow layout of
+  section 6 allow; then, only where that is not enough, move parts (stack panels, move a legend). A long label
+  may break over two or three lines (the blue boxes of prefill_decode). Never shrink the text to make it fit.
+  Line weights and arrowheads keep their size, a box keeps 3 px between its text and its outline, a matrix
+  drawn to scale stays to scale, a photo keeps its aspect ratio, and the pictures of a series shrink together
+  (section 7).
+- A picture keeps its layout where smaller elements make it fit, at the user's request: a row of panels stays
+  one row (the two panels of ragged_batching), and a one-row array, tensor or sequence of tokens is never
+  wrapped onto a second row (the arrays of xcrs_format).
+- Pictures side by side whose rows refer to each other have the same height, each row at the height of the row
+  it refers to, at the user's request: the two rows of circles of svd_example_2 next to the two rows of photos
+  of svd_example.
 - A picture whose arrows or labels are crowded grows, taller or wider up to 880 px, before any text or arrow
   gets smaller (the transformer picture is taller, the DualPipe schedule wider). Its elements keep their size as
   it grows: only the spaces between them widen, which gives the arrows and their labels more room (tora, at the
@@ -623,7 +634,7 @@ sections 6 and 7, and the font section 4.
   legend). A chart's legend is one column (section 6).
 - Sizes for new and redrawn pictures: a one-line box 30 px tall, 20 px between boxes in a row, 40 px between
   rows (room for an arrow and its label), matrix and array cells 20 x 20 px with 12 px numbers (10 px when they
-  do not fit).
+  do not fit). A picture that does not fit the post column takes smaller elements (section 3).
 
 ### 8. Pipeline schedules
 
