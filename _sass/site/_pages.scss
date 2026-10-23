@@ -63,7 +63,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 20px;
+  font-size: 18px;
 
   @include media-query($on-palm) { margin-top: 0.6em; }
 }
@@ -73,8 +73,8 @@
 
 // a padding that the negative margin cancels: a tap area of about 32px around each icon, with no change in the layout
 .home-links a {
-  padding: 6px;
-  margin: -6px;
+  padding: 7px;
+  margin: -7px;
 }
 
 .home-links a:hover,
