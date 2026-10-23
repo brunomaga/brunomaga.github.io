@@ -327,6 +327,13 @@ sections 6 and 7, and the font section 4.
   does not touch them. The math font does not place combining accents, so a hat (𝑊̂) is a circumflex ˆ
   (U+02C6) that CSS sets over the letter: `<span style="position: relative; left: -0.566em; top: -0.244em;
   margin-right: -0.5em;">ˆ</span>` after 𝑊, with the offsets of the MATH table of the font.
+- A quotient that is hard to read on one line (the update of gptq, the 𝑠<sub>𝑗</sub> of smoothquant) is a built-up
+  fraction, as TeX sets it in display style, at the user's request; short ones stay inline (round(𝑤 / 𝑠),
+  max|𝑋<sub>𝑗</sub> / 𝑠<sub>𝑗</sub>|). The label holds the numerator and the denominator, stacked in an inline-block
+  around an empty block 0.06 em tall, with their baselines about 9 px above and under the main baseline, and more
+  where a subscript or superscript would reach the rule. The fraction rule is a 0.78 px black line of the picture
+  (the stroke of the minus sign) on the math axis, 0.25 em above the main baseline, as a browser rounds a CSS
+  border or background to whole pixels.
 - Text sizes, in page px (draw.io fontSize at page scale):
   ```
   title          16           the picture's title, and labels drawn larger than the regular text
@@ -450,7 +457,8 @@ sections 6 and 7, and the font section 4.
   square bracket over a time line points to its text. Pipeline schedules follow section 8: their passes keep thin
   black outlines. In continuous_chunked_batching, a forward pass lasts as long as its longest prefill: the
   requests that share it show their work first and padding until its end, as static batching pads the prompts of
-  a group, and only empty slots are idle.
+  a group, and only empty slots are idle. Each decode is one block with a thin grey line between its tokens (one
+  per step), and its label (D1) sits above it on a square bracket, at the user's request.
 - Every table, array and stack of objects, in every picture, has black text, thin grey lines between its
   cells and a black block outline (the tables of the matrix transpose post keep their blue cells). Only a
   cell that the picture emphasizes has another outline (the emphasis weight above).
