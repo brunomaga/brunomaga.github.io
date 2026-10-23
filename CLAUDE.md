@@ -161,8 +161,8 @@ word helps:
   operations, steps and relays (from the paper's appendix), in this order: AllGather-ReduceScatter; All-to-All,
   which sends each rank only the tokens it needs but needs a count exchange first; then in-network computing (INC)
   and the INC form of AllGather-ReduceScatter, which removes two steps (pack and global reduce); the INC
-  All-to-All, as All-to-All-Unique and All-to-All-Reduce; and the partial collectives (One-to-Many-Unique and
-  Many-to-One-Reduce), which lower the memory that INC All-to-All needs in the switch. No INC picture appears before
+  All-to-All, as All-to-All-Dispatch and All-to-All-Combine; and the partial collectives (One-to-Many-Dispatch and
+  Many-to-One-Combine), which lower the memory that INC All-to-All needs in the switch. No INC picture appears before
   INC is introduced. The two timelines of the collective and partial collective combine stand side by side.
 
 ### Titles
