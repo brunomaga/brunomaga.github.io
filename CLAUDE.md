@@ -268,7 +268,8 @@ sections 6 and 7, and the font section 4.
   links to its original file on upload.wikimedia.org, with no copy in assets.
 - A picture used by a post and by the publications page is stored once, in the post's asset folder, and
   both pages link to that file. The same holds for a picture used by two posts (for example
-  matrix-transpose/all_to_all.svg in the matrix transpose and mixture-of-experts posts).
+  matrix-transpose/all_to_all.svg in the matrix transpose and mixture-of-experts posts, and gptlite/gptlite.svg in
+  the two GPT-lite posts).
 - Charts drawn from data (plots, benchmarks, histograms) keep their data and the script or spreadsheet that
   draws them next to the SVG, and follow the same palette, font and sizes as the diagrams. A chart whose data
   or script is not in the repository is restyled in its SVG: its font, text sizes, colors and line weights
@@ -292,12 +293,15 @@ sections 6 and 7, and the font section 4.
   with P = W / 880 * 100 (W is the width of the exported SVG). So text, lines and arrowheads look the same
   size in every picture of the posts. A picture with a title above it takes P on its span (section 9).
 - Pictures shown side by side in one row each keep their own P. When the P values of a row add up to more
-  than 98 (the spaces between pictures take the rest), the pictures wrap onto the next line.
+  than 98 (the spaces between pictures take the rest), the pictures wrap onto the next line. The two models at
+  the top of the GPT-lite post are 92 px apart (twelve `&nbsp;` between their img tags), at the user's request.
 - A picture that does not fit 880 px at the text sizes below is redrawn: first narrow the empty space
   between its parts, then move parts (wrap a row into two rows, stack panels, break long labels over two
   lines). Never shrink the text to make it fit.
 - A picture whose arrows or labels are crowded grows, taller or wider up to 880 px, before any text or arrow
-  gets smaller (the transformer picture is taller, the DualPipe schedule wider).
+  gets smaller (the transformer picture is taller, the DualPipe schedule wider). Its elements keep their size as
+  it grows: only the spaces between them widen, which gives the arrows and their labels more room (tora, at the
+  user's request).
 
 ### 4. Font
 
@@ -309,11 +313,20 @@ sections 6 and 7, and the font section 4.
   label that is only a formula has the math font in its style; a label that mixes words and formulas has it
   on the formulas only, as <span style="font-family: NewComputerModernSansMath;">. Words, numbers, units,
   tensor dimensions (S x H·h), tick labels and names with an index (TRM1, FFN2) keep the text font.
-  Exception, at the user's request: the dimensions of sdpa are formulas in the math font, with the indices of
-  the post's text (S<sub>q</sub> × h). The math font has no bold or italic face: the browser slants and
+  Exception, at the user's request: the dimensions of sdpa and of the pictures of the pruning and quantization
+  post are formulas in the math font, with the indices of the post's text (S<sub>q</sub> × h,
+  𝑛<sub>heads</sub>⋅𝑑<sub>head</sub> × 𝐸). The math font has no bold or italic face: the browser slants and
   emboldens it. Formulas take the math font in every picture, also in one redrawn from a paper, whether or
   not the paper sets them in a math font. A product in a math-font formula is the dot operator ⋅ (U+22C5)
   with no spaces around it: the middle dot · with spaces leaves gaps of about 10 px in this font.
+- In the pictures of the pruning and quantization post, at the user's request, a formula looks as LaTeX sets
+  it: its variables are the italic letters of the math font (Unicode mathematical italic: 𝑊 for W, ℎ for h, 𝛼
+  for α), and function names, words and indices of several letters stay upright (max, round, err, vocab,
+  𝑑<sub>head</sub>). Inside brackets, a comma is followed by a thin space (U+2009), and an italic 𝑊 or 𝑈
+  before a bracket or a superscript by a hair space (U+200A), its italic correction, so that the slanted letter
+  does not touch them. The math font does not place combining accents, so a hat (𝑊̂) is a circumflex ˆ
+  (U+02C6) that CSS sets over the letter: `<span style="position: relative; left: -0.566em; top: -0.244em;
+  margin-right: -0.5em;">ˆ</span>` after 𝑊, with the offsets of the MATH table of the font.
 - Text sizes, in page px (draw.io fontSize at page scale):
   ```
   title          16           the picture's title, and labels drawn larger than the regular text
@@ -482,7 +495,8 @@ sections 6 and 7, and the font section 4.
   and the frame, and the data points are drawn over the lines of a plot (the observations over the sample lines of
   linear_bayesian_posterior). Exception, at the user's request: the x axes drawn as arrows in the charts of the
   variable timestep post (cvode_pulse_currents_table and the l5_neuron charts) are drawn behind the data that
-  crosses them, as in the original figures. Bars and filled areas take a pastel fill of the palette other than grey,
+  crosses them, as in the original figures, and the step markers of cvode_pulse_currents_table are red dots
+  2.0 px wide. Bars and filled areas take a pastel fill of the palette other than grey,
   as #f5f5f5 hardly shows on white (the green #d5e8d4 of kde, at the user's request). The level lines of a contour
   plot (coordinate_descent, linear_bayesian_posterior) keep 1.0 px: they are the background of the path or the
   samples drawn over them, and their dense rings would merge at 1.8 px. Guide lines (a threshold, a projection on an
