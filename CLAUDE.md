@@ -285,6 +285,12 @@ sections 6 and 7, and the font section 4.
 
 - The post content width is X = 880 px (minima's $content-width 940 px minus 2 x 30 px padding;
   assets/main.scss).
+- Every picture task first checks the page width, $content-width in assets/main.scss, at the user's request.
+  When it has changed, X is the new $content-width minus 60 px, and the sizes of these rules that follow from
+  X change with it (the 880 px below, the column of the publications page, the 287 px of the pipeline pictures
+  and the time unit of DualPipe in section 8): every P is recomputed with the new X, and every picture wider
+  than X, and every row of pictures side by side that no longer fits in X, is redrawn to fit it, as the rules
+  below say.
 - Every picture is drawn for a post, also one that only the publications page shows: at page scale, where
   1 draw.io px is 1 px on the page when the picture is shown at its natural size, and no wider than 880 px.
   The publications page puts its pictures in a 766 px column, so there they appear at 87% of their size in
