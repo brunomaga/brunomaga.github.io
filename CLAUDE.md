@@ -458,7 +458,10 @@ sections 6 and 7, and the font section 4.
   black outlines. In continuous_chunked_batching, a forward pass lasts as long as its longest prefill: the
   requests that share it show their work first and padding until its end, as static batching pads the prompts of
   a group, and only empty slots are idle. Each decode is one block with a thin grey line between its tokens (one
-  per step), and its label (D1) sits above it on a square bracket, at the user's request.
+  per step), and so is each prefill of the chunked panel, with a thin grey line between its chunks. The label of
+  each prefill and decode (P1, D1) sits above it on a square bracket 3 px inside each end of its block, and each
+  chunk has its own bracket and label, with the index of the chunk (P1<sub>1</sub>, P1<sub>2</sub>), at the user's
+  request.
 - Every table, array and stack of objects, in every picture, has black text, thin grey lines between its
   cells and a black block outline (the tables of the matrix transpose post keep their blue cells). Only a
   cell that the picture emphasizes has another outline (the emphasis weight above).
