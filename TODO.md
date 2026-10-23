@@ -937,9 +937,9 @@ that is not wrong.
   caption says. Fix: remove the right panel and its sentence in the caption until the decode step is measured.
 - The captions have no credit to the post's paper. `ep_stages.svg` and `ep_pipeline.svg` are the paper's own figures,
   and the other pictures redraw its figures. The paper is the author's own and not public yet. Fix: "Source: [MoeInc:
-  an Expert Parallelism MegaKernel with Overlap of Matrix, Vector and In-Network Compute](link)" under `ep_stages.svg`
-  and `ep_pipeline.svg`, and "Adapted from:" with the same link under the others, once the paper has a public link;
-  the user decides.
+  An Expert Parallelism MegaKernel Overlapping Matrix and Vector Units with In-Network Dispatch-and-Combine](link)"
+  under `ep_stages.svg` and `ep_pipeline.svg`, and "Adapted from:" with the same link under the others, once the paper
+  has a public link; the user decides.
 
 ### Knowledge distillation, speculative decoding and multi-token prediction (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
 
