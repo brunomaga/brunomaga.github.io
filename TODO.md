@@ -696,6 +696,13 @@ that is not wrong.
   and in the second "Attention scores of the masked attention of the decoder ... Masking sets the dot products of
   unseen words to $$-\infty$$ before the softmax, which gives them an attention score of zero."
 
+### Building a GPT model in PyTorch from scratch (2023-02-28-gptlite.md)
+
+- Optional, the GPT-lite pictures (`gptlite/*.svg`, `gptlite-cpp/gptlite_compact.svg`) and
+  `learning-from-sequences/transformer.svg`: the one-line boxes (Layer Norm, Linear, Softmax, Add & Norm) are 17.5 px
+  tall, so their 14 px labels sit about 2.3 px from the top and bottom outlines, where the arrows attach, and look
+  tight. Fix: make the one-line boxes 20 px tall in the whole series, moving every row.
+
 ### GPT in C++: LibTorch vs. PyTorch, TorchScript and torch.compile (2023-06-27-gptlite-cpp.md)
 
 - Optional, caption of `gptlite_compact.svg` and `benchmark_model.svg`: it starts with "This post details", and calls
@@ -999,17 +1006,19 @@ that is not wrong.
   the block)" to the caption.
 - Optional, caption of `publications/comet.svg` (Comet): "the number of SMs on Hopper(132)" lacks a space. Fix:
   "Hopper (132)".
-- Optional, `publications/efficiently_scaling_transformer_inference_multiquery.svg`: the green "1" on the top face of
-  the multi-query K / V slab sits about 0.5 px from the back edge of the face and 1.3 px from its front edge. Fix:
-  make the face about 3 px deeper, or put the "1" beside the slab.
 - `publications/attention_mech.svg`: the α of the four weights α_{t,1} to α_{t,T} is upright, while their t and T are
   italic, and `siamese_networks_2.svg` sets α in italic. Fix: <i>α</i> in the four labels.
 - `publications/rqvae.svg`, `contrastive_deep_supervision.svg` and `mlp_mixer.svg` are 880.4, 880.9 and 880.8 px wide
   (export margins), above the 880 px of section 3 of CLAUDE.md, so at 100% they show about 0.1% smaller than their
   size. The base commit had the same widths. Fix: narrow each drawing by 1 px, or let the 880 px limit allow for the
   export margins.
-- `publications/mutransfer.svg`: the grid lines run through the label "optimum shifts". Fix: a white box behind the
-  label.
+- Optional, `publications/mutransfer.svg`: the grid lines run through the label "optimum shifts", which section 6 of
+  CLAUDE.md allows for a label wider than the spacing of the grid lines. Fix: a white box behind the label.
+- `publications/rqvae.svg`: the cell labels of q(z\|x) (53) and of the front face of z<sub>q</sub>(x) (e<sub>1</sub>,
+  e<sub>2</sub>, e<sub>3</sub>, e<sub>53</sub>) touch or cross the 0.4 px cell lines, as they are wider than the 11 to
+  12.7 px cells. Fix: redraw both grids with fewer, larger cells, each label in the same relative cell as in the paper:
+  4 x 4 cells of about 15 px for q(z\|x), and 3 columns of 19 px by 4 rows of 15.4 px for the front face of
+  z<sub>q</sub>(x), with the lines of its top and side faces moved to the new cell lines.
 - `publications/training_compute_optimal_large_language_models_2.svg` lost the tick labels 2.5, 3.5, 4.5, 5.5, 250M, 1B
   and 5B. Fix: restore them.
 - `publications/training_compute_optimal_large_language_models_2.svg`: the projection lines are green, as in the paper

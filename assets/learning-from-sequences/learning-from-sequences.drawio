@@ -1527,7 +1527,7 @@
             <mxPoint x="351.5" y="155.1" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="bert_tasks-48" value="BERT" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontSize=16;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-48" value="BERT" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="8" y="57.9" width="36.02" height="19.2" as="geometry" />
         </mxCell>
         <mxCell id="bert_tasks-49" value="C" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="bert_tasks-figure">
@@ -1916,7 +1916,7 @@
             <mxPoint x="837.4" y="155.1" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="bert_tasks-137" value="BERT" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontSize=16;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-137" value="BERT" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="494.97" y="57.9" width="36.02" height="19.2" as="geometry" />
         </mxCell>
         <mxCell id="bert_tasks-138" value="C" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="bert_tasks-figure">
@@ -2253,7 +2253,7 @@
             <mxPoint x="351.5" y="575.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="bert_tasks-211" value="BERT" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontSize=16;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-211" value="BERT" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="8" y="478.4" width="36.02" height="19.2" as="geometry" />
         </mxCell>
         <mxCell id="bert_tasks-212" value="C" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="bert_tasks-figure">
@@ -2648,7 +2648,7 @@
             <mxPoint x="837.24" y="575.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="bert_tasks-301" value="BERT" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontSize=16;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-301" value="BERT" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="494.97" y="478.4" width="36.02" height="19.2" as="geometry" />
         </mxCell>
         <mxCell id="bert_tasks-302" value="C" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="bert_tasks-figure">
