@@ -918,10 +918,6 @@ that is not wrong.
   or redraw it with the measured costs.
 - `inference/imgs/ep_results.svg`: the right panel plots decode times that are placeholders, not measurements, as the
   caption says. Fix: remove the right panel and its sentence in the caption until the decode step is measured.
-- `inference/imgs/ep_results.svg`: the Baseline line crosses the corner of the labels 0.497, 0.882 and 23.8, and the
-  labels 0.312, 1.61, 20.6, 0.454, 0.783, 1.39, 2.62 and 24.0 are 0.2 to 2.4 px from a line, under the 2.5 px of
-  CLAUDE.md, Pictures, section 6. Fix: a position of its own for each of these labels in `ep_results.py`, as the
-  MegaKernel labels have (`MK_PLACES`).
 - The captions have no credit to the post's paper. `ep_stages.svg` and `ep_pipeline.svg` are the paper's own figures,
   and the other pictures redraw its figures. The paper is the author's own and not public yet. Fix: "Source: [MoeInc:
   an Expert Parallelism MegaKernel with Overlap of Matrix, Vector and In-Network Compute](link)" under `ep_stages.svg`

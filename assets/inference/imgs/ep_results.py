@@ -31,16 +31,20 @@ DECODE = [[18.4, 19.1, 20.6, 23.8, 30.2],
 BLACK, GREY = '#000000', '#666666'
 COLORS = ['#b85450', '#6c8ebf', '#82b366']               # red, blue and green accents
 MARKERS = ['s', '^', 'o']
-LABELS = [dict(xytext=(0, 5), ha='center', va='bottom'),  # Baseline above its points,
-          None,                                           # MegaKernel at MK_PLACES,
-          dict(xytext=(0, -6), ha='center', va='top')]    # MegaKernel+INC below them
-# MegaKernel's values lie between the other two series, with no box: each one sits right of its point (prefill) or
-# above it (decode; right of the first point, where the Baseline point leaves no room), moved to where no line runs,
-# 3 px or more from every line and marker. One (offset in points, ha, va) per point.
-MK_PLACES = {'prefill': [((7.5, -4), 'left', 'center'), ((9, -4), 'left', 'center'), ((14.5, -4), 'left', 'center'),
-                         ((13, -4), 'left', 'center'), ((7, 0), 'left', 'center')],
-             'decode': [((6, 11), 'left', 'center'), ((0, 4), 'center', 'bottom'), ((0, 5), 'center', 'bottom'),
-                        ((-5.5, 4.5), 'center', 'bottom'), ((0, 4), 'center', 'bottom')]}
+# Each value sits next to its point with no box, 3 px or more from every line and marker: Baseline's above its points,
+# MegaKernel+INC's below them, and MegaKernel's, which lie between the other two series, right of its point (prefill)
+# or above it (decode; right of the first point, where the Baseline point leaves no room). The labels of points where
+# a line runs on rise or move aside to clear it. One (offset in points, ha, va) per point, for each series.
+ABOVE, BELOW, RIGHT = ('center', 'bottom'), ('center', 'top'), ('left', 'center')
+PLACES = {'prefill': [[((2.5, 12), *ABOVE), ((0, 12), *ABOVE), ((0, 12), *ABOVE), ((0, 12), *ABOVE), ((0, 5), *ABOVE)],
+                      [((7.5, -4), *RIGHT), ((9, -4), *RIGHT), ((14.5, -4), *RIGHT), ((13, -4), *RIGHT),
+                       ((7, 0), *RIGHT)],
+                      [((2, -5), *BELOW), ((0, -7.5), *BELOW), ((0, -7.5), *BELOW), ((0, -7.5), *BELOW),
+                       ((0, -7.5), *BELOW)]],
+          'decode': [[((0, 5), *ABOVE), ((0, 5), *ABOVE), ((-1, 7.5), *ABOVE), ((-8, 5), *ABOVE), ((0, 5), *ABOVE)],
+                     [((6, 13.5), *RIGHT), ((0, 5), *ABOVE), ((0, 7.5), *ABOVE), ((-7, 5.5), *ABOVE), ((0, 5), *ABOVE)],
+                     [((0, -7.5), *BELOW), ((0, -7.5), *BELOW), ((0, -7.5), *BELOW), ((0, -7.5), *BELOW),
+                      ((0, -7.5), *BELOW)]]}
 
 plt.rcParams.update({
     'font.family': 'Source Sans 3', 'font.size': 12, 'svg.fonttype': 'path',
@@ -59,12 +63,8 @@ def panel(ax, title, xs, series, labels, xticks, xlabels, yticks, xlim, ylim, xl
         ax.plot(xs, ys, color=c, linestyle=ls, linewidth=1.8, marker=MARKERS[k], markersize=7, markerfacecolor=c,
                 markeredgecolor=BLACK, markeredgewidth=1.0, label=NAMES[k], zorder=2)
         for i, (x, y, t) in enumerate(zip(xs, ys, texts)):
-            if k == 1:
-                offset, ha, va = MK_PLACES[title][i]
-                kw = dict(xytext=offset, ha=ha, va=va)
-            else:
-                kw = LABELS[k]
-            ax.annotate(t, (x, y), textcoords='offset points', fontsize=12, color=color, **kw)
+            offset, ha, va = PLACES[title][k][i]
+            ax.annotate(t, (x, y), xytext=offset, textcoords='offset points', ha=ha, va=va, fontsize=12, color=color)
     ax.set_xscale('log', base=2)
     ax.set_yscale('log', base=2)
     ax.xaxis.set_major_locator(FixedLocator(xticks))

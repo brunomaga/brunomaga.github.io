@@ -5354,13 +5354,13 @@
         </mxCell>
         <mxCell id="argonne_parallel_2-141" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#82b366;strokeWidth=1.4;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="argonne_parallel_2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="328.02" y="97.12" as="sourcePoint" />
+            <mxPoint x="330.05" y="98.58" as="sourcePoint" />
             <mxPoint x="405.96" y="153.24" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="argonne_parallel_2-142" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#82b366;strokeWidth=1.4;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="argonne_parallel_2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="427.81" y="95.98" as="sourcePoint" />
+            <mxPoint x="430.12" y="96.94" as="sourcePoint" />
             <mxPoint x="494.34" y="123.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -5408,13 +5408,13 @@
         </mxCell>
         <mxCell id="argonne_parallel_2-202" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#82b366;strokeWidth=1.4;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="argonne_parallel_2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="635.51" y="97.12" as="sourcePoint" />
+            <mxPoint x="637.54" y="98.58" as="sourcePoint" />
             <mxPoint x="713.45" y="153.24" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="argonne_parallel_2-203" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#82b366;strokeWidth=1.4;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="argonne_parallel_2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="735.31" y="95.98" as="sourcePoint" />
+            <mxPoint x="737.62" y="96.94" as="sourcePoint" />
             <mxPoint x="801.84" y="123.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -7144,7 +7144,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="soft_moes-104" value="Assign" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;fontColor=#6b4a80;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="soft_moes-figure">
-          <mxGeometry x="96.76" y="24.19" width="45.9" height="20.8" as="geometry" />
+          <mxGeometry x="96.76" y="21.19" width="45.9" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="soft_moes-105" value="" style="shape=image;imageAspect=0;image=data:image/jpeg,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;fontFamily=Source Sans 3;" vertex="1" parent="soft_moes-figure">
           <mxGeometry x="586.22" y="19.85" width="47.07" height="47.07" as="geometry" />
@@ -7213,7 +7213,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="soft_moes-123" value="Weighted average" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;fontColor=#b85450;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="soft_moes-figure">
-          <mxGeometry x="475.25" y="24.76" width="107.32" height="20.8" as="geometry" />
+          <mxGeometry x="475.25" y="21.76" width="107.32" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="mixture_of_depths-label" value="mixture_of_depths.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="3818.39" width="600" height="30" as="geometry" />

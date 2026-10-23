@@ -1049,7 +1049,7 @@ L 345.103008 267.712
    </g>
    <g id="text_13">
     <!-- 0.312 -->
-    <g transform="translate(54.644358 218.23742) scale(0.12 -0.12)">
+    <g transform="translate(57.144358 211.23742) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b7"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4ba" transform="translate(74.609375 0)"/>
@@ -1059,7 +1059,7 @@ L 345.103008 267.712
    </g>
    <g id="text_14">
     <!-- 0.497 -->
-    <g transform="translate(117.720959 182.89435) scale(0.12 -0.12)">
+    <g transform="translate(117.720959 175.89435) scale(0.12 -0.12)">
      <defs>
       <path id="SourceSans3-Regular-4c0" d="M 1312 -77 
 Q 986 -77 742 48 
@@ -1126,7 +1126,7 @@ z
    </g>
    <g id="text_15">
     <!-- 0.882 -->
-    <g transform="translate(180.79756 139.351761) scale(0.12 -0.12)">
+    <g transform="translate(180.79756 132.351761) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b7"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4bf" transform="translate(74.609375 0)"/>
@@ -1136,7 +1136,7 @@ z
    </g>
    <g id="text_16">
     <!-- 1.61 -->
-    <g transform="translate(246.856348 93.904953) scale(0.12 -0.12)">
+    <g transform="translate(246.856348 86.904953) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b8"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4bd" transform="translate(74.609375 0)"/>
@@ -1202,7 +1202,7 @@ z
    </g>
    <g id="text_23">
     <!-- 0.252 -->
-    <g transform="translate(54.644358 262.538001) scale(0.12 -0.12)">
+    <g transform="translate(56.644358 261.538001) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b7"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4b9" transform="translate(74.609375 0)"/>
@@ -1212,7 +1212,7 @@ z
    </g>
    <g id="text_24">
     <!-- 0.454 -->
-    <g transform="translate(117.720959 217.851733) scale(0.12 -0.12)">
+    <g transform="translate(117.720959 219.351733) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b7"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4bb" transform="translate(74.609375 0)"/>
@@ -1222,7 +1222,7 @@ z
    </g>
    <g id="text_25">
     <!-- 0.783 -->
-    <g transform="translate(180.79756 176.477652) scale(0.12 -0.12)">
+    <g transform="translate(180.79756 177.977652) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b7"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4be" transform="translate(74.609375 0)"/>
@@ -1232,7 +1232,7 @@ z
    </g>
    <g id="text_26">
     <!-- 1.39 -->
-    <g transform="translate(246.856348 133.183998) scale(0.12 -0.12)">
+    <g transform="translate(246.856348 134.683998) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b8"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4ba" transform="translate(74.609375 0)"/>
@@ -1241,7 +1241,7 @@ z
    </g>
    <g id="text_27">
     <!-- 2.62 -->
-    <g transform="translate(309.932949 84.879793) scale(0.12 -0.12)">
+    <g transform="translate(309.932949 86.379793) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b9"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4bd" transform="translate(74.609375 0)"/>
@@ -1771,7 +1771,7 @@ L 712.197875 267.712
    </g>
    <g id="text_40">
     <!-- 20.6 -->
-    <g style="fill: #666666" transform="translate(550.942929 155.991772) scale(0.12 -0.12)">
+    <g style="fill: #666666" transform="translate(549.942929 153.491772) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b9"/>
      <use xlink:href="#SourceSans3-Regular-4b7" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(99.40625 0)"/>
@@ -1780,7 +1780,7 @@ L 712.197875 267.712
    </g>
    <g id="text_41">
     <!-- 23.8 -->
-    <g style="fill: #666666" transform="translate(613.537175 119.257136) scale(0.12 -0.12)">
+    <g style="fill: #666666" transform="translate(605.537175 119.257136) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b9"/>
      <use xlink:href="#SourceSans3-Regular-4ba" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(99.40625 0)"/>
@@ -1798,7 +1798,7 @@ L 712.197875 267.712
    </g>
    <g id="text_43">
     <!-- 16.9 -->
-    <g style="fill: #666666" transform="translate(442.195374 208.902159) scale(0.12 -0.12)">
+    <g style="fill: #666666" transform="translate(442.195374 206.402159) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b8"/>
      <use xlink:href="#SourceSans3-Regular-4bd" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(99.40625 0)"/>
@@ -1807,7 +1807,7 @@ L 712.197875 267.712
    </g>
    <g id="text_44">
     <!-- 17.4 -->
-    <g style="fill: #666666" transform="translate(488.348683 199.940588) scale(0.12 -0.12)">
+    <g style="fill: #666666" transform="translate(488.348683 198.940588) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b8"/>
      <use xlink:href="#SourceSans3-Regular-4be" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(99.40625 0)"/>
@@ -1816,7 +1816,7 @@ L 712.197875 267.712
    </g>
    <g id="text_45">
     <!-- 18.5 -->
-    <g style="fill: #666666" transform="translate(550.942929 183.345449) scale(0.12 -0.12)">
+    <g style="fill: #666666" transform="translate(550.942929 180.845449) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b8"/>
      <use xlink:href="#SourceSans3-Regular-4bf" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(99.40625 0)"/>
@@ -1825,7 +1825,7 @@ L 712.197875 267.712
    </g>
    <g id="text_46">
     <!-- 21.0 -->
-    <g style="fill: #666666" transform="translate(608.037175 151.599224) scale(0.12 -0.12)">
+    <g style="fill: #666666" transform="translate(606.537175 150.599224) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b9"/>
      <use xlink:href="#SourceSans3-Regular-4b8" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(99.40625 0)"/>
@@ -1834,7 +1834,7 @@ L 712.197875 267.712
    </g>
    <g id="text_47">
     <!-- 26.1 -->
-    <g style="fill: #666666" transform="translate(676.131421 96.788374) scale(0.12 -0.12)">
+    <g style="fill: #666666" transform="translate(676.131421 95.788374) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b9"/>
      <use xlink:href="#SourceSans3-Regular-4bd" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(99.40625 0)"/>
@@ -1843,7 +1843,7 @@ L 712.197875 267.712
    </g>
    <g id="text_48">
     <!-- 16.2 -->
-    <g style="fill: #666666" transform="translate(425.754437 245.208082) scale(0.12 -0.12)">
+    <g style="fill: #666666" transform="translate(425.754437 246.708082) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b8"/>
      <use xlink:href="#SourceSans3-Regular-4bd" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(99.40625 0)"/>
@@ -1852,7 +1852,7 @@ L 712.197875 267.712
    </g>
    <g id="text_49">
     <!-- 16.6 -->
-    <g style="fill: #666666" transform="translate(488.348683 239.002783) scale(0.12 -0.12)">
+    <g style="fill: #666666" transform="translate(488.348683 240.502783) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b8"/>
      <use xlink:href="#SourceSans3-Regular-4bd" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(99.40625 0)"/>
@@ -1861,7 +1861,7 @@ L 712.197875 267.712
    </g>
    <g id="text_50">
     <!-- 17.5 -->
-    <g style="fill: #666666" transform="translate(550.942929 225.570678) scale(0.12 -0.12)">
+    <g style="fill: #666666" transform="translate(550.942929 227.070678) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b8"/>
      <use xlink:href="#SourceSans3-Regular-4be" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(99.40625 0)"/>
@@ -1870,7 +1870,7 @@ L 712.197875 267.712
    </g>
    <g id="text_51">
     <!-- 19.6 -->
-    <g style="fill: #666666" transform="translate(613.537175 196.739332) scale(0.12 -0.12)">
+    <g style="fill: #666666" transform="translate(613.537175 198.239332) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b8"/>
      <use xlink:href="#SourceSans3-Regular-4c0" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(99.40625 0)"/>
@@ -1879,7 +1879,7 @@ L 712.197875 267.712
    </g>
    <g id="text_52">
     <!-- 24.0 -->
-    <g style="fill: #666666" transform="translate(676.131421 145.216215) scale(0.12 -0.12)">
+    <g style="fill: #666666" transform="translate(676.131421 146.716215) scale(0.12 -0.12)">
      <use xlink:href="#SourceSans3-Regular-4b9"/>
      <use xlink:href="#SourceSans3-Regular-4bb" transform="translate(49.703125 0)"/>
      <use xlink:href="#SourceSans3-Regular-4cb" transform="translate(99.40625 0)"/>

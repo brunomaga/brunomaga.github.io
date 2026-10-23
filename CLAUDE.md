@@ -466,8 +466,11 @@ sections 6 and 7, and the font section 4.
   the data lines (the values, the fits, the roofs of a roofline chart, the line samples of the legend) are as
   thick as the axes. The axis line of a bar chart and the line in front of the bars of each category are 1.8 px
   too, and an axis drawn with a head takes the head of the thin arrows. The data (lines, markers, bars) is drawn
-  behind the axes and the frame. Guide lines (a threshold, a projection on an axis) are grey #666666, dashed,
-  1.0 px. The legend of a chart is one column outside the plot, on its right, and the chart grows wider to make
+  behind the axes and the frame, and the data points are drawn over the lines of a plot (the observations over
+  the sample lines of linear_bayesian_posterior). The level lines of a contour plot (coordinate_descent,
+  linear_bayesian_posterior) keep 1.0 px: they are the background of the path or the samples drawn over them,
+  and their dense rings would merge at 1.8 px. Guide lines (a threshold, a projection on an axis) are grey
+  #666666, dashed, 1.0 px. The legend of a chart is one column outside the plot, on its right, and the chart grows wider to make
   room for it.
 - The links of a dense network (each neuron to each neuron of the next layer) are thin arrows with heads, as
   the others; the heads that converge on one node may touch.
@@ -486,7 +489,9 @@ sections 6 and 7, and the font section 4.
   - text never sits on, touches or crosses a line or an arrow, at the user's request: the label of an arrow
     sits above a horizontal segment or right of a vertical one, with no background
     (labelBackgroundColor=none);
-  - text keeps at least 2.5 px from every line and shape that does not hold it.
+  - text keeps at least 2.5 px from every line and shape that does not hold it. In a chart, a label wider than
+    the spacing of the grid lines (optimum shifts in mutransfer) and a value label at the end of a bar may
+    cross a grey grid line; they keep 2.5 px from the axes, the arrows and the other lines.
 - No end-of-sequence cells or tokens in schedules: the last decode cell is the last token.
 
 ### 7. Shapes, blocks and sizes
