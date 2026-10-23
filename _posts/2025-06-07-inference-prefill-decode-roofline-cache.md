@@ -46,7 +46,7 @@ The [roofline model](https://en.wikipedia.org/wiki/Roofline_model), presented in
 An example of a roofline chart with three applications is displayed below:
 
 {: .picture}
-<img width="99%" height="99%" src="{{ site.assets }}/inference/imgs/roofline.svg"/>
+<img width="98.9%" height="98.9%" src="{{ site.assets }}/inference/imgs/roofline.svg"/>
 
 {: .caption}
 A roofline plot, on a log-log scale. Below the ridge point, the roof rises with the arithmetic intensity at the peak memory bandwidth; beyond it, the roof is flat at the peak performance. App<sub>1</sub> is memory-bound. App<sub>2</sub> is compute-bound and runs below the peak performance. The arrows show how an application at ❌ moves right (more FLOPs per byte), moves up (closer to the roof), or gains from a higher roof. Adapted from: [Roofline model, Wikipedia](https://en.wikipedia.org/wiki/Roofline_model)
@@ -745,10 +745,10 @@ With continuous batching, a waiting request takes a free slot as soon as one is 
 **Chunked prefill**, introduced by [SARATHI](https://arxiv.org/abs/2308.16369), solves this by processing a long prompt in several smaller pieces (chunks), one per step, instead of in one forward pass. Every step then takes about the same time, and the other requests keep generating one token per step. The following picture compares chunked prefill with the batching schemes of the previous section:
 
 {: .picture}
-<img width="90.2%" height="90.2%" src="{{ site.assets }}/inference/imgs/continuous_chunked_batching.svg"/>
+<img width="86.2%" height="86.2%" src="{{ site.assets }}/inference/imgs/continuous_chunked_batching.svg"/>
 
 {: .caption}
-The same 7 requests (R1 to R7) on 4 slots, with static batching, continuous batching, and continuous batching with chunked prefill. P1 to P7 and D1 to D7 are the prefill and the decode of R1 to R7. A decode step and the prefill of a short prompt take one step, and the prefill of the long prompt of R5 takes three. Static batching runs the requests in groups of 4 until the longest request of each group finishes, and pads the prompts of a group to the longest one. Continuous batching gives a free slot to the next request at the next step, but the prefill of R5 stalls R1, R3 and R4 for two steps. With chunked prefill, R5 processes its prompt in 3 chunks of one step each, while the other requests continue.
+The same 7 requests (R1 to R7) on 4 slots, with static batching, continuous batching, and continuous batching with chunked prefill. P1 to P7 and D1 to D7 are the prefill and the decode of R1 to R7. A decode step takes one step, and a prefill takes one to three steps, depending on the length of its prompt. Static batching runs the requests in groups of 4 until the longest request of each group finishes, and pads the prompts of a group to the longest one. Continuous batching gives a free slot to the next request at the next step, but a prefill of two or three steps stalls the other requests of the batch until it ends. With chunked prefill, each prompt is processed in chunks of one step, while the other requests continue.
 
 Each chunk attends to the KV cache of the earlier chunks. Suppose an 8,000-token prompt arrives while 50 other sequences are decoding:
 - Without chunking: one step must process all 8,000 prompt tokens plus the 50 decode tokens. That step takes far longer than a normal decode step, so all 50 users see their text pause.

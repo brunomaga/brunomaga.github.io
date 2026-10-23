@@ -563,7 +563,7 @@
         <mxCell id="transformer_attention_lbdl-49" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.8;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="59.48" y="32.04" as="sourcePoint" />
-            <mxPoint x="109.64" y="32.04" as="targetPoint" />
+            <mxPoint x="110.68" y="32.04" as="targetPoint" />
             <Array as="points">
               <mxPoint x="78.61" y="32.04" />
               <mxPoint x="92.14" y="32.04" />
@@ -573,7 +573,7 @@
         <mxCell id="transformer_attention_lbdl-50" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.0;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="59.48" y="40.3" as="sourcePoint" />
-            <mxPoint x="109.64" y="32.04" as="targetPoint" />
+            <mxPoint x="110.68" y="32.04" as="targetPoint" />
             <Array as="points">
               <mxPoint x="78.61" y="40.3" />
               <mxPoint x="92.14" y="32.04" />
@@ -583,17 +583,17 @@
         <mxCell id="transformer_attention_lbdl-51" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=0.4;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="59.48" y="48.56" as="sourcePoint" />
-            <mxPoint x="109.64" y="32.04" as="targetPoint" />
+            <mxPoint x="110.68" y="32.04" as="targetPoint" />
             <Array as="points">
               <mxPoint x="78.61" y="48.56" />
               <mxPoint x="92.14" y="32.04" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="transformer_attention_lbdl-52" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=3.6;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
+        <mxCell id="transformer_attention_lbdl-52" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=2.6;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="59.48" y="56.82" as="sourcePoint" />
-            <mxPoint x="109.64" y="32.04" as="targetPoint" />
+            <mxPoint x="110.68" y="32.04" as="targetPoint" />
             <Array as="points">
               <mxPoint x="78.61" y="56.82" />
               <mxPoint x="92.14" y="32.04" />
@@ -603,7 +603,7 @@
         <mxCell id="transformer_attention_lbdl-53" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.0;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="59.48" y="65.08" as="sourcePoint" />
-            <mxPoint x="109.64" y="32.04" as="targetPoint" />
+            <mxPoint x="110.68" y="32.04" as="targetPoint" />
             <Array as="points">
               <mxPoint x="78.61" y="65.08" />
               <mxPoint x="92.14" y="32.04" />
@@ -721,7 +721,7 @@
         <mxCell id="transformer_attention_lbdl-outline-1" value="" edge="1" parent="transformer_attention_lbdl-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="24.48" y="27.91" as="sourcePoint" /><mxPoint x="57.52" y="27.91" as="targetPoint" /><Array as="points"><mxPoint x="57.52" y="27.91" /><mxPoint x="57.52" y="69.21" /><mxPoint x="24.48" y="69.21" /><mxPoint x="24.48" y="27.91" /></Array></mxGeometry></mxCell><mxCell id="transformer_attention_lbdl-outline-2" value="" edge="1" parent="transformer_attention_lbdl-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="111.28" y="19.65" as="sourcePoint" /><mxPoint x="144.32" y="19.65" as="targetPoint" /><Array as="points"><mxPoint x="144.32" y="19.65" /><mxPoint x="144.32" y="77.47" /><mxPoint x="111.28" y="77.47" /><mxPoint x="111.28" y="19.65" /></Array></mxGeometry></mxCell><mxCell id="transformer_attention_lbdl-outline-3" value="" edge="1" parent="transformer_attention_lbdl-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="198.78" y="27.91" as="sourcePoint" /><mxPoint x="223.56" y="27.91" as="targetPoint" /><Array as="points"><mxPoint x="223.56" y="27.91" /><mxPoint x="223.56" y="69.21" /><mxPoint x="198.78" y="69.21" /><mxPoint x="198.78" y="27.91" /></Array></mxGeometry></mxCell><mxCell id="transformer_attention_lbdl-outline-4" value="" edge="1" parent="transformer_attention_lbdl-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="277.41" y="19.65" as="sourcePoint" /><mxPoint x="302.19" y="19.65" as="targetPoint" /><Array as="points"><mxPoint x="302.19" y="19.65" /><mxPoint x="302.19" y="77.47" /><mxPoint x="277.41" y="77.47" /><mxPoint x="277.41" y="19.65" /></Array></mxGeometry></mxCell><mxCell id="transformer_attention_lbdl-90" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.8;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="225.61" y="32.04" as="sourcePoint" />
-            <mxPoint x="275.78" y="32.04" as="targetPoint" />
+            <mxPoint x="276.81" y="32.04" as="targetPoint" />
             <Array as="points">
               <mxPoint x="244.74" y="32.04" />
               <mxPoint x="258.28" y="32.04" />
@@ -731,7 +731,7 @@
         <mxCell id="transformer_attention_lbdl-91" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.0;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="225.61" y="40.3" as="sourcePoint" />
-            <mxPoint x="275.78" y="32.04" as="targetPoint" />
+            <mxPoint x="276.81" y="32.04" as="targetPoint" />
             <Array as="points">
               <mxPoint x="244.74" y="40.3" />
               <mxPoint x="258.28" y="32.04" />
@@ -741,17 +741,17 @@
         <mxCell id="transformer_attention_lbdl-92" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=0.4;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="225.61" y="48.56" as="sourcePoint" />
-            <mxPoint x="275.78" y="32.04" as="targetPoint" />
+            <mxPoint x="276.81" y="32.04" as="targetPoint" />
             <Array as="points">
               <mxPoint x="244.74" y="48.56" />
               <mxPoint x="258.28" y="32.04" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="transformer_attention_lbdl-93" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=3.6;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
+        <mxCell id="transformer_attention_lbdl-93" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=2.6;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="225.61" y="56.82" as="sourcePoint" />
-            <mxPoint x="275.78" y="32.04" as="targetPoint" />
+            <mxPoint x="276.81" y="32.04" as="targetPoint" />
             <Array as="points">
               <mxPoint x="244.74" y="56.82" />
               <mxPoint x="258.28" y="32.04" />
@@ -761,7 +761,7 @@
         <mxCell id="transformer_attention_lbdl-94" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.0;fontSize=12;curved=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="225.61" y="65.08" as="sourcePoint" />
-            <mxPoint x="275.78" y="32.04" as="targetPoint" />
+            <mxPoint x="276.81" y="32.04" as="targetPoint" />
             <Array as="points">
               <mxPoint x="244.74" y="65.08" />
               <mxPoint x="258.28" y="32.04" />
@@ -798,10 +798,10 @@
         <mxCell id="transformer_attention_lbdl-104" value="&lt;i&gt;Computes &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;Y&lt;/span&gt;&lt;sub&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;q&lt;/span&gt;&lt;/sub&gt;&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry x="210.42" y="101.05" width="80.32" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention_lbdl-105" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=3.6;fontFamily=Source Sans 3;" vertex="1" parent="transformer_attention_lbdl-figure">
+        <mxCell id="transformer_attention_lbdl-105" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=1.2;fontFamily=Source Sans 3;" vertex="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry x="111.28" y="27.91" width="33.04" height="8.26" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention_lbdl-106" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=3.6;fontFamily=Source Sans 3;" vertex="1" parent="transformer_attention_lbdl-figure">
+        <mxCell id="transformer_attention_lbdl-106" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=1.2;fontFamily=Source Sans 3;" vertex="1" parent="transformer_attention_lbdl-figure">
           <mxGeometry x="277.41" y="27.91" width="24.78" height="8.26" as="geometry" />
         </mxCell>
         <mxCell id="transformer_attention_masked-label" value="transformer_attention_masked.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">

@@ -698,14 +698,14 @@ that is not wrong.
 
 ### Building a GPT model in PyTorch from scratch (2023-02-28-gptlite.md)
 
-- Optional, the GPT-lite pictures (`gptlite/*.svg`, `gptlite-cpp/gptlite_compact.svg`) and
+- Optional, the GPT-lite pictures (`gptlite/*.svg`) and
   `learning-from-sequences/transformer.svg`: the one-line boxes (Layer Norm, Linear, Softmax, Add & Norm) are 17.5 px
   tall, so their 14 px labels sit about 2.3 px from the top and bottom outlines, where the arrows attach, and look
   tight. Fix: make the one-line boxes 20 px tall in the whole series, moving every row.
 
 ### GPT in C++: LibTorch vs. PyTorch, TorchScript and torch.compile (2023-06-27-gptlite-cpp.md)
 
-- Optional, caption of `gptlite_compact.svg` and `benchmark_model.svg`: it starts with "This post details", and calls
+- Optional, caption of `gptlite/gptlite.svg` and `benchmark_model.svg`: it starts with "This post details", and calls
   the left model "the GPT-3 Small model", while it is GPTlite with the dimensions of GPT-3 Small. Fix: "Left: GPTlite
   with N decoder blocks, with the dimensions of GPT-3 Small. Right: the benchmark DNN with L layers of width W. The
   left diagram is adapted from Attention is all you need."
@@ -964,19 +964,9 @@ that is not wrong.
 
 ### Pruning and quantization (_drafts/2026-04-22-inference-pruning-quantization.md)
 
-- Caption of `inference/imgs/hadamard_rotation.svg`: "the INT4 levels are closer together (5.7 instead of 12.6
-  apart)" gives the distances between the drawn level lines in pixels. In the units of x, the INT4 step is 40/7 =
-  5.71 before the rotation and 18.03/7 = 2.58 after it. Fix: "(2.6 instead of 5.7 apart)".
 - Optional, `inference/imgs/quantization_granularity.svg`: the per-group panel colors its 12 groups with 6 colors
   (rows 1 and 3, and rows 2 and 4, repeat their colors). In the per-row panel each color is one scale, so the
   per-group panel reads as 6 scales. Fix: a black frame around each group, or 12 distinct fills.
-- `inference/imgs/pruning_structures.svg` writes the number of heads as H ("H·d_head × E", "E × H·d_head"), while H is
-  the Hessian of GPTQ in the same post; the code names it `n_heads`. Fix: "n_heads·d_head × E" and "E ×
-  n_heads·d_head".
-- `inference/imgs/gptq.svg`: the labels "err = W[:, i] − q" and "H = 2XXᵀ, from the calibration inputs X" take the
-  columns of X as the inputs, and q as the rounded column. The text, the code and `llm_int8.svg` take the rows of X as
-  the inputs, the text writes the rounded column as Ŵ[:, i], and `int4_packing.svg` uses q for the integers. Fix: "err
-  = W[:, i] − Ŵ[:, i]" and "H = 2XᵀX".
 
 ### Publication Summaries (publications.md)
 

@@ -461,7 +461,7 @@ def quantize(model, bits, group_size=64):
 GPTQ quantizes 175B-parameter models to 3-4 bits in about four GPU hours. One step of the algorithm is illustrated below:
 
 {: .picture}
-<img width="57.8%" height="57.8%" src="{{ site.assets }}/inference/imgs/gptq.svg"/>
+<img width="61.1%" height="61.1%" src="{{ site.assets }}/inference/imgs/gptq.svg"/>
 
 {: .caption}
 GPTQ quantizes the columns of $$W$$ one at a time, and spreads the rounding error of each column over the columns not yet quantized. Inspired by: [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323)
@@ -682,7 +682,7 @@ QuaRot uses random Hadamard matrices, while SpinQuant learns the rotations, whic
 <img width="81.0%" height="81.0%" src="{{ site.assets }}/inference/imgs/hadamard_rotation.svg"/>
 
 {: .caption}
-Rotating the weights the other way, $$W R^T$$, keeps the output: $$(W R^T)(R x) = W x$$. After the rotation, the INT4 levels are closer together (5.7 instead of 12.6 apart), so the small values lose much less precision.
+Rotating the weights the other way, $$W R^T$$, keeps the output: $$(W R^T)(R x) = W x$$. After the rotation, the INT4 levels are closer together (2.6 instead of 5.7 apart), so the small values lose much less precision.
 
 The following code builds Hadamard matrices, and a linear layer that simulates low-precision weights and activations with fake quantization, with an optional rotation of its inputs. For simplicity, it rotates the input of every layer on the fly. QuaRot instead folds most rotations into the weights of the previous layers, and applies the few remaining ones with [fast Hadamard](https://en.wikipedia.org/wiki/Fast_Walsh%E2%80%93Hadamard_transform) kernels.
 
