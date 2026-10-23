@@ -57,7 +57,7 @@ It looks at two different testbenches, so readers may pick one based on their le
 The two models are illustrated below:
 
 {: .picture}
-<img width="25.3%" height="25.3%" src="{{ site.assets }}/gptlite/gptlite.svg"/>
+<img width="25.3%" height="25.3%" src="{{ site.assets }}/gptlite-cpp/gptlite_compact.svg"/>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 <img width="25.8%" height="25.8%" src="{{ site.assets }}/gptlite-cpp/benchmark_model.svg"/>
 

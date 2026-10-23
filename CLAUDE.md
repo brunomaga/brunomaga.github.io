@@ -268,8 +268,7 @@ sections 6 and 7, and the font section 4.
   links to its original file on upload.wikimedia.org, with no copy in assets.
 - A picture used by a post and by the publications page is stored once, in the post's asset folder, and
   both pages link to that file. The same holds for a picture used by two posts (for example
-  matrix-transpose/all_to_all.svg in the matrix transpose and mixture-of-experts posts, and gptlite/gptlite.svg in
-  the two GPT-lite posts).
+  matrix-transpose/all_to_all.svg in the matrix transpose and mixture-of-experts posts).
 - Charts drawn from data (plots, benchmarks, histograms) keep their data and the script or spreadsheet that
   draws them next to the SVG, and follow the same palette, font and sizes as the diagrams. A chart whose data
   or script is not in the repository is restyled in its SVG: its font, text sizes, colors and line weights
