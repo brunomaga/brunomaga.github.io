@@ -4,7 +4,8 @@ Left, prefill: the time per iteration, in s, against the batch size, in tokens p
 per output token, in ms, against the number of concurrent sequences; these values are placeholders, not measured yet,
 and are drawn in grey, with the same markers. The data comes from the paper of the expert parallelism kernel fusion post.
 The picture follows CLAUDE.md (Pictures): Source Sans 3 text at page size (1 unit = 1 px), drawn as glyph outlines,
-1.8 px axes, 1.0 px data lines, and one legend in one column right of the plots.
+1.8 px axes and data lines (the weight of the measured results), the data drawn behind the axes, the values next to
+their points with no box, and one legend in one column right of the plots.
 
 usage: python3 ep_results.py   (needs matplotlib and the Source Sans 3 font)
 """
@@ -30,10 +31,20 @@ DECODE = [[18.4, 19.1, 20.6, 23.8, 30.2],
 BLACK, GREY = '#000000', '#666666'
 COLORS = ['#b85450', '#6c8ebf', '#82b366']               # red, blue and green accents
 MARKERS = ['s', '^', 'o']
-LABELS = [dict(xytext=(0, 5), ha='center', va='bottom'),  # Baseline above its points,
-          dict(xytext=(6, 0), ha='left', va='center',     # MegaKernel right of them, over the lines,
-               bbox=dict(boxstyle='square,pad=0.1', facecolor='#ffffff', edgecolor='none')),
-          dict(xytext=(0, -6), ha='center', va='top')]    # MegaKernel+INC below them
+# Each value sits next to its point with no box, 3 px or more from every line and marker: Baseline's above its points,
+# MegaKernel+INC's below them, and MegaKernel's, which lie between the other two series, right of its point (prefill)
+# or above it (decode; right of the first point, where the Baseline point leaves no room). The labels of points where
+# a line runs on rise or move aside to clear it. One (offset in points, ha, va) per point, for each series.
+ABOVE, BELOW, RIGHT = ('center', 'bottom'), ('center', 'top'), ('left', 'center')
+PLACES = {'prefill': [[((2.5, 12), *ABOVE), ((0, 12), *ABOVE), ((0, 12), *ABOVE), ((0, 12), *ABOVE), ((0, 5), *ABOVE)],
+                      [((7.5, -4), *RIGHT), ((9, -4), *RIGHT), ((14.5, -4), *RIGHT), ((13, -4), *RIGHT),
+                       ((7, 0), *RIGHT)],
+                      [((2, -5), *BELOW), ((0, -7.5), *BELOW), ((0, -7.5), *BELOW), ((0, -7.5), *BELOW),
+                       ((0, -7.5), *BELOW)]],
+          'decode': [[((0, 5), *ABOVE), ((0, 5), *ABOVE), ((-1, 7.5), *ABOVE), ((-8, 5), *ABOVE), ((0, 5), *ABOVE)],
+                     [((6, 13.5), *RIGHT), ((0, 5), *ABOVE), ((0, 7.5), *ABOVE), ((-7, 5.5), *ABOVE), ((0, 5), *ABOVE)],
+                     [((0, -7.5), *BELOW), ((0, -7.5), *BELOW), ((0, -7.5), *BELOW), ((0, -7.5), *BELOW),
+                      ((0, -7.5), *BELOW)]]}
 
 plt.rcParams.update({
     'font.family': 'Source Sans 3', 'font.size': 12, 'svg.fonttype': 'path',
@@ -48,10 +59,12 @@ plt.rcParams.update({
 def panel(ax, title, xs, series, labels, xticks, xlabels, yticks, xlim, ylim, xlabel, ylabel, colors, styles, color):
     """One log2 panel: a line per implementation, each point labelled with its value."""
     for k, (ys, texts, c, ls) in enumerate(zip(series, labels, colors, styles)):
-        ax.plot(xs, ys, color=c, linestyle=ls, linewidth=1.0, marker=MARKERS[k], markersize=7, markerfacecolor=c,
-                markeredgecolor=BLACK, markeredgewidth=1.0, label=NAMES[k], zorder=3)
-        for x, y, t in zip(xs, ys, texts):
-            ax.annotate(t, (x, y), textcoords='offset points', fontsize=12, color=color, **LABELS[k])
+        # zorder 2, under the spines and the ticks (2.5) and the value labels (3)
+        ax.plot(xs, ys, color=c, linestyle=ls, linewidth=1.8, marker=MARKERS[k], markersize=7, markerfacecolor=c,
+                markeredgecolor=BLACK, markeredgewidth=1.0, label=NAMES[k], zorder=2)
+        for i, (x, y, t) in enumerate(zip(xs, ys, texts)):
+            offset, ha, va = PLACES[title][k][i]
+            ax.annotate(t, (x, y), xytext=offset, textcoords='offset points', ha=ha, va=va, fontsize=12, color=color)
     ax.set_xscale('log', base=2)
     ax.set_yscale('log', base=2)
     ax.xaxis.set_major_locator(FixedLocator(xticks))

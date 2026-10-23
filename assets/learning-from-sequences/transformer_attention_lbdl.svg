@@ -303,4 +303,6 @@
 <g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
 <use xlink:href="#glyph-2-0" x="201.966118" y="83.092644"/>
 </g>
+<path fill="none" stroke-width="3.6" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 111.281032 27.908326 L 144.321101 27.908326 L 144.321101 36.169718 L 111.281032 36.169718 Z M 111.281032 27.908326 " transform="matrix(0.710194, 0, 0, 0.710194, 0.715024, 0)"/>
+<path fill="none" stroke-width="3.6" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 277.410923 27.908326 L 302.1896 27.908326 L 302.1896 36.169718 L 277.410923 36.169718 Z M 277.410923 27.908326 " transform="matrix(0.710194, 0, 0, 0.710194, 0.715024, 0)"/>
 </svg>

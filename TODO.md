@@ -68,6 +68,12 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
   or remove the argument.
 - Optional, `assets/slicing/slicing.tar.gz`, `Slicing.cxx` line 54: the Windows branch calls `qsort_s(*base, ...)`,
   which dereferences a `void*` and does not compile. Fix: `qsort_s(base, ...)`.
+- `assets/slicing/slicing.tar.gz`, `SortBalanceSplit.cxx` (`getSubSlicesDetails`): every slice gets `(int)(p / S_k)`
+  ranks, with only a warning when $$S_k$$ does not divide $$p$$. For $$p = 8$$ and $$S_k = 3$$, the case that
+  `slicing/split.svg` shows, the slices are ranks 0-1, 2-3 and 4-5: ranks 6 and 7 belong to no slice and never call
+  `MPI_Comm_split`, so the other ranks wait in that collective. Fix: give slice $$s$$ the ranks
+  `ceil(s * p / S_k)` to `ceil((s + 1) * p / S_k) - 1` (3, 3 and 2 ranks for $$p = 8$$ and $$S_k = 3$$, as the
+  picture; no slice is empty, as $$p \ge S_k$$), with `numberOfCPUs` the size of that range.
 
 ### The Leaky Integrate-and-Fire Neuron and the Brunel Network (2016-02-08-lif-brunel.md)
 
@@ -481,6 +487,9 @@ that is not wrong.
   the origin of the render is known.
 - `slicing/mini-*.svg`: the four layouts have 10 (single axis), 35 (NUG, 5 x 7), 16 (ORB) and 35 (STR, 5 x 7)
   slices. Optional fix: 16 slices in all four (4 x 4 for NUG and STR), so that they compare on equal terms.
+- Optional, `slicing/sbs.svg`: in step 1.1, the top side of the red emphasis frame around the first row (x) lies
+  where the arms of the rank brackets end, so the arms touch the frame. Fix: move the rank brackets, the rank
+  numbers and the "rank" label of step 1.1 up by 3 px.
 
 ### The Leaky Integrate-and-Fire Neuron and the Brunel Network (2016-02-08-lif-brunel.md)
 
@@ -569,6 +578,8 @@ that is not wrong.
 - `neuron-variable-timestep/l5_neuron_pulse_1000ms_results.svg`: a grey bar is left in the inset (the magnified
   −50 mV line). Fix: remove it, as in the 100 ms chart.
 - `neuron-variable-timestep/neuron_132412.svg`: the tick labels 0.1, 10 and 1,000 are missing. Fix: restore them.
+- `neuron-variable-timestep/l5_neuron_pulse_1000ms_results.svg`: the zoom box is 0.8 px, while the zoom box of the
+  100 ms chart is 1.4 px. Fix: 1.4 px, as its connector.
 
 ### Linear Regression, Matrix Factorization and Loss Functions (2017-08-17-linear-regression-matrix-factorization.md)
 
@@ -594,6 +605,10 @@ that is not wrong.
   output as $$x^{(1)}$$, as `dnn.svg` does. Fix: inputs x₁⁽⁰⁾ to x₅⁽⁰⁾ and outputs x₁⁽¹⁾ to x₅⁽¹⁾ in both rows, and
   the caption "... where the input $$x_3^{(0)}$$ affects only the outputs $$x_2^{(1)}$$, $$x_3^{(1)}$$ and
   $$x_4^{(1)}$$. Bottom: a fully connected layer, where $$x_3^{(0)}$$ affects every output."
+- Optional, `deep-neural-networks/fully_sparse_connectivity.svg`, dense panel: the arrows from the far inputs reach
+  s1 and s5 only 6 to 11 degrees apart, so 2 to 3 heads overlap into one dark mark (less at s2 and s4). CLAUDE.md
+  lets heads that converge on one node of a dense network touch. Fix: end the five arrows into each output at points
+  about 7 px apart along the lower half of its circle.
 - `deep-neural-networks/densenet.svg`: the curved arrows into the fourth BN-ReLU-Conv box and into the Transition
   Layer arrive horizontally on their slanted (24 degree) top edges, and the lower barb of each head touches the edge.
   Fix: end each curve perpendicular to the edge (its last control point on the normal of the edge), with the whole
@@ -681,6 +696,13 @@ that is not wrong.
   and in the second "Attention scores of the masked attention of the decoder ... Masking sets the dot products of
   unseen words to $$-\infty$$ before the softmax, which gives them an attention score of zero."
 
+### Building a GPT model in PyTorch from scratch (2023-02-28-gptlite.md)
+
+- Optional, the GPT-lite pictures (`gptlite/*.svg`, `gptlite-cpp/gptlite_compact.svg`) and
+  `learning-from-sequences/transformer.svg`: the one-line boxes (Layer Norm, Linear, Softmax, Add & Norm) are 17.5 px
+  tall, so their 14 px labels sit about 2.3 px from the top and bottom outlines, where the arrows attach, and look
+  tight. Fix: make the one-line boxes 20 px tall in the whole series, moving every row.
+
 ### GPT in C++: LibTorch vs. PyTorch, TorchScript and torch.compile (2023-06-27-gptlite-cpp.md)
 
 - Optional, caption of `gptlite_compact.svg` and `benchmark_model.svg`: it starts with "This post details", and calls
@@ -715,7 +737,8 @@ that is not wrong.
 - Optional, `distributed-training/imgs/vdnn2.svg` and `vdnn3.svg` color the weights W purple and the gradients dX and
   dY green, while `deepspeed_stages.svg` colors the parameters blue, the gradients orange and the optimizer states
   green. Fix, for one color per meaning in the post: in vdnn2 and vdnn3, W blue, dX and dY orange, X and Y purple,
-  and the color words of their captions to match.
+  and the color words of their captions to match. The layers are light blue #dae8fc, at the user's request: with W
+  blue, check that the W arrows still stand out from them.
 - Optional, the caption of `distributed-training/imgs/benchmark_gptlite.svg` does not say how the memory is averaged.
   Fix: "GPTlite on one node with 8 GPUs, in fp32, with micro-batches of 1 sample: average and peak allocated memory
   per GPU, and throughput over all GPUs".
@@ -827,6 +850,11 @@ that is not wrong.
   (about 30 px taller), or keep the column.
 - Optional, `diffusion/longvilla.svg`: the GPU numbers of grid (3) are 14 px bold in 18 px cells, as in the paper.
   Fix: keep them (they name the GPUs in their colors), or 12 px regular.
+- `diffusion/latte2.svg`, panel (b): the labels x<sub>j</sub> and x<sub>j+1</sub> are 12.4 px tall, as tall as the 12.4
+  and 13.8 px top faces of the cuboids that hold them, so the subscript j of x<sub>j</sub> crosses the front edge of its
+  face, as in the paper's figure, and x<sub>j+1</sub> touches the back edge of its face. The cuboids match the cells of
+  the frames, so their faces cannot grow without leaving the grid. Fix: keep them as in the paper, or move x<sub>1</sub>
+  and x<sub>j</sub> to the front faces of the front cuboids (22 px tall) and the other two labels above their cuboids.
 
 ### Prefill vs decode, roofline, KV cache, batching and disaggregation (2025-06-07-inference-prefill-decode-roofline-cache.md)
 
@@ -983,17 +1011,19 @@ that is not wrong.
   the block)" to the caption.
 - Optional, caption of `publications/comet.svg` (Comet): "the number of SMs on Hopper(132)" lacks a space. Fix:
   "Hopper (132)".
-- Optional, `publications/efficiently_scaling_transformer_inference_multiquery.svg`: the green "1" on the top face of
-  the multi-query K / V slab sits about 0.5 px from the back edge of the face and 1.3 px from its front edge. Fix:
-  make the face about 3 px deeper, or put the "1" beside the slab.
 - `publications/attention_mech.svg`: the α of the four weights α_{t,1} to α_{t,T} is upright, while their t and T are
   italic, and `siamese_networks_2.svg` sets α in italic. Fix: <i>α</i> in the four labels.
 - `publications/rqvae.svg`, `contrastive_deep_supervision.svg` and `mlp_mixer.svg` are 880.4, 880.9 and 880.8 px wide
   (export margins), above the 880 px of section 3 of CLAUDE.md, so at 100% they show about 0.1% smaller than their
   size. The base commit had the same widths. Fix: narrow each drawing by 1 px, or let the 880 px limit allow for the
   export margins.
-- `publications/mutransfer.svg`: the grid lines run through the label "optimum shifts". Fix: a white box behind the
-  label.
+- Optional, `publications/mutransfer.svg`: the grid lines run through the label "optimum shifts", which section 6 of
+  CLAUDE.md allows for a label wider than the spacing of the grid lines. Fix: a white box behind the label.
+- `publications/rqvae.svg`: the cell labels of q(z\|x) (53) and of the front face of z<sub>q</sub>(x) (e<sub>1</sub>,
+  e<sub>2</sub>, e<sub>3</sub>, e<sub>53</sub>) touch or cross the 0.4 px cell lines, as they are wider than the 11 to
+  12.7 px cells. Fix: redraw both grids with fewer, larger cells, each label in the same relative cell as in the paper:
+  4 x 4 cells of about 15 px for q(z\|x), and 3 columns of 19 px by 4 rows of 15.4 px for the front face of
+  z<sub>q</sub>(x), with the lines of its top and side faces moved to the new cell lines.
 - `publications/training_compute_optimal_large_language_models_2.svg` lost the tick labels 2.5, 3.5, 4.5, 5.5, 250M, 1B
   and 5B. Fix: restore them.
 - `publications/training_compute_optimal_large_language_models_2.svg`: the projection lines are green, as in the paper

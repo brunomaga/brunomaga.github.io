@@ -308,11 +308,12 @@ sections 6 and 7, and the font section 4.
 - A formula is a variable with its indices, an expression or an equation (x, W_q, Δt = 25, softmax(QKᵀ)). A
   label that is only a formula has the math font in its style; a label that mixes words and formulas has it
   on the formulas only, as <span style="font-family: NewComputerModernSansMath;">. Words, numbers, units,
-  tensor dimensions (S x H·h), tick labels and names with an index (TRM1, FFN2) keep the text font. The
-  math font has no bold or italic face: the browser slants and emboldens it. Formulas take the math font in
-  every picture, also in one redrawn from a paper, whether or not the paper sets them in a math font. A
-  product in a math-font formula is the dot operator ⋅ (U+22C5) with no spaces around it: the middle dot ·
-  with spaces leaves gaps of about 10 px in this font.
+  tensor dimensions (S x H·h), tick labels and names with an index (TRM1, FFN2) keep the text font.
+  Exception, at the user's request: the dimensions of sdpa are formulas in the math font, with the indices of
+  the post's text (S<sub>q</sub> × h). The math font has no bold or italic face: the browser slants and
+  emboldens it. Formulas take the math font in every picture, also in one redrawn from a paper, whether or
+  not the paper sets them in a math font. A product in a math-font formula is the dot operator ⋅ (U+22C5)
+  with no spaces around it: the middle dot · with spaces leaves gaps of about 10 px in this font.
 - Text sizes, in page px (draw.io fontSize at page scale):
   ```
   title          16           the picture's title, and labels drawn larger than the regular text
@@ -335,7 +336,7 @@ sections 6 and 7, and the font section 4.
   sizes at least 1.1 times larger become 16, sizes under 0.9 times smaller become 12.
   Italic is allowed for variables and for emphasis, bold only for titles, subtitles and names the post's
   text refers to: the title of a frame or panel (its topmost label), N×, Encoder and Decoder, and the tensor
-  name of a label "name: shape" or "name(a, b)" (only the name: **q**: Sq x h). Bold changes the weight of a
+  name of a label "name: shape" or "name(a, b)" (only the name: **Q**: H x S x h). Bold changes the weight of a
   label, never its words, also in pictures from external sources.
 - Charts use the same fonts and sizes: tick labels 12, axis labels and legends 14, panel titles 14 bold. A
   panel title that is a sentence goes into the caption; panel letters and short panel names stay. A legend
@@ -360,11 +361,11 @@ sections 6 and 7, and the font section 4.
   grey     fill #f5f5f5   accent #666666
   white    fill #ffffff
   ```
-  Masked, padding, NULL or inactive elements are grey, in the grey that stands out from the data next to
-  them: dark grey #b3b3b3 next to white or pastel data, light grey #f5f5f5 next to data filled with an accent
-  color (the tokens #6c8ebf and the padding #f5f5f5 of variable_batch_lr_pipeline). The accent colors may also
-  fill small marks (dots of a scatter plot, nodes of a graph, heat map cells, filled tokens) where pastel
-  fills are too faint.
+  Unused elements (the masked cells of an attention mask, padding tokens and cells, free slots of a cache,
+  pruned weights, missing values, NULL cells) are white, with a solid grey #666666 outline (section 7), never
+  grey: their text (NULL, 0, [M]) stays. The pad tokens of longvilla stay grey, as in the paper's figure, whose
+  white cells are empty positions. The accent colors may also fill small marks (dots of a scatter plot, nodes of
+  a graph, heat map cells, filled tokens) where pastel fills are too faint.
 - Fills are flat: no gradients, shadows or glow, and the faces of a cube share one fill.
 - A colored outline or frame always has a meaning that the text or the caption gives (a highlight, a group,
   the KV cache). No decorative accent frames.
@@ -395,26 +396,27 @@ sections 6 and 7, and the font section 4.
 
 - Every geometric element with a fill (rectangles, rounded boxes, circles, cubes, cylinders, filled table
   cells, block arrows, grey background panels and frames) has a black outline: strokeColor=#000000, no stroke
-  opacity. The cells of a block are the exception: their outlines are grey (see the blocks below). Six
+  opacity. The cells of a block and the unused elements (section 7) are the exceptions: their outlines are grey
+  (see the blocks below). Six
   weights, the same at page scale in every picture:
   ```
   thin       0.4 px   the cells of a matrix, an array, a table or a block of cubes, the lines that divide a
                       block into cells, the faces of a 3D tensor, pipeline passes
   regular    1.0 px   operations, layers, modules, data boxes (tensors, vectors, tokens), neurons and graph
                       nodes, operators, single cubes, block arrows, square brackets, the blocks of a time line,
-                      the outlines of idle, masked and padding areas, the data lines of a chart
+                      the grey outlines of idle areas, of unused single elements and of dropped neurons
   block      1.2 px   the outline of each block of cells (matrix, array, table, stack of objects), the
                       silhouette of each 3D tensor or block of cubes and the three edges at its front corner
   line       1.4 px   arrows and lines, axes of time lines, markers, brackets and number lines drawn as lines
   frame      1.8 px   frames of regions (devices, processes, groups, sections), colored or dashed ones too,
-                      the axes of charts and the frames of plots of a 2D domain or of an image (k-means,
-                      voronoi, the slicing layouts, svd_example, coordinate_descent), lines that divide a
-                      drawing into regions (the dashed lines between the panels of a picture)
+                      the axes and the data lines of charts, the frames of plots of a 2D domain or of an
+                      image (k-means, voronoi, the slicing layouts, svd_example, coordinate_descent), lines
+                      that divide a drawing into regions (the dashed lines between the panels of a picture)
   emphasis   3.6 px   red #b85450 outlines and frames, solid or dashed, that emphasise a part of a drawing
                       (the modules of the GPT-lite pictures, the MoE layers of moe_gshard, the red frames of
                       the first row and the first column in all_to_all), and black frames that emphasise a part
                       (DualPipe's overlapped forward and backward passes, the selected experts in
-                      moe_switch_transformers)
+                      moe_switch_transformers, the blue and red rows of transformer_attention_lbdl)
   ```
   An emphasis outline or frame takes the corners of what it marks: square around data, matrices, tensors,
   tables and the regions of an XY map, 5 px around an operation and 10 px around a frame.
@@ -429,16 +431,17 @@ sections 6 and 7, and the font section 4.
   stacked in one interval have no outline around them, as there is no block or region inside a time line. A
   square bracket over a time line points to its text. Pipeline schedules follow section 8: their passes keep thin
   black outlines.
-- Tables have black text, thin grey lines between their cells and a black block outline; the tables of the
-  matrix transpose post keep their blue cells, and the stacks of objects that their pointers point to are
-  black arrays.
+- Every table, array and stack of objects, in every picture, has black text, thin grey lines between its
+  cells and a black block outline (the tables of the matrix transpose post keep their blue cells). Only a
+  cell that the picture emphasizes has another outline (the emphasis weight above).
 - Exceptions that keep their own look:
   - a box highlighted by a colored outline: the colored outline replaces its black one, with no second
     frame around the box (the red #b85450 outlines of the modules in the GPT-lite pictures);
   - other colored frames that highlight a group of parts: 1.8 px, as other frames (the orange KV cache
     frames, the red dashed windows of csa and hca). Red arrows and cross marks are not emphasis lines;
-  - dashed outlines of elements that are not frames: 0.4 px on filled elements, 1.4 px on lines without fill
-    (a dashed frame is 1.8 px, as other frames; the dash keeps its pattern);
+  - dashed outlines of elements that are not frames: 0.4 px on filled elements (1.0 px on idle boxes and
+    dropped neurons, section 7), 1.4 px on lines without fill (a dashed frame is 1.8 px, as other frames; the
+    dash keeps its pattern);
   - white masks that hide parts of a drawing, faded elements and red cross marks;
   - the arrows of the matrix transpose post, which are grey #666666;
   - the memory bars of deepspeed_stages and their legend swatches: thin black outlines, as their strips are
@@ -446,16 +449,29 @@ sections 6 and 7, and the font section 4.
   - the dashed outlines of the tensor shards in efficiently_scaling_transformer_inference_multiquery: 1.2 px,
     at the user's request, so that they show next to the filled shards;
   - the grey #666666 1.4 px line on the left of the steps of a loop in an algorithm picture (odd_even_sort),
-    at the user's request.
+    at the user's request;
+  - the arrays of the algorithm pictures of the distributed sort and slicing posts (sample_sort,
+    odd_even_sort, balance, split, sbs): a 1.8 px black outline, at the user's request;
+  - the lines between the samples (rows) of the token tables of variable_batch_lr and
+    variable_batch_lr_pipeline: 1.2 px black, at the user's request, so that each sample stands apart;
+  - the grey backgrounds of kohonen_1, kohonen_2 and kohonen_3: no outline, at the user's request;
+  - the outlines of the Generator and Discriminator trapezoids of gan: 1.8 px, at the user's request, as in the
+    original figure.
 - Thin arrows: black #000000, 1.4 px, endArrow=classic, endFill=1, endSize=5: a head 6.4 px long and wide,
   endSize plus the line weight, with its notch at 3/4 of its length. Dashed arrows use the same head. An
   arrow at the emphasis weight has endSize=2.8, so that its head has the size of the others. Grey #666666 only
   for faded content. Lines without a head that join two parts of the flow (two boxes, or a box and an
   arrow): 1.4 px. The axis of a time line: 1.4 px, with the same head.
-- Charts: the axes and the frame of a plot are 1.8 px, so that they stand out from the data, and an axis
-  drawn with a head takes the head of the thin arrows. Data lines are 1.0 px. Guide lines (a threshold, a
-  roof, a projection on an axis) are grey #666666, dashed, 1.0 px. The legend of a chart is one column outside
-  the plot, on its right, and the chart grows wider to make room for it.
+- Charts: the axes, the frame and the data lines of a plot are 1.8 px, in every chart, at the user's request:
+  the data lines (the values, the fits, the roofs of a roofline chart, the line samples of the legend) are as
+  thick as the axes. The axis line of a bar chart and the line in front of the bars of each category are 1.8 px
+  too, and an axis drawn with a head takes the head of the thin arrows. The data (lines, markers, bars) is drawn
+  behind the axes and the frame, and the data points are drawn over the lines of a plot (the observations over
+  the sample lines of linear_bayesian_posterior). The level lines of a contour plot (coordinate_descent,
+  linear_bayesian_posterior) keep 1.0 px: they are the background of the path or the samples drawn over them,
+  and their dense rings would merge at 1.8 px. Guide lines (a threshold, a projection on an axis) are grey
+  #666666, dashed, 1.0 px. The legend of a chart is one column outside the plot, on its right, and the chart grows wider to make
+  room for it.
 - The links of a dense network (each neuron to each neuron of the next layer) are thin arrows with heads, as
   the others; the heads that converge on one node may touch.
 - Inhibition (one part blocks or breaks down another, as in a signalling pathway): 1.4 px black line with a
@@ -470,9 +486,12 @@ sections 6 and 7, and the font section 4.
     joins the line of the other before the head;
   - two arrows share a segment only when they leave the same point (fan-out) or end at the same point
     (fan-in);
-  - a label never covers its arrow: it sits above a horizontal segment or right of a vertical one, with no
-    background (labelBackgroundColor=none);
-  - text keeps at least 2.5 px from every line and shape that does not hold it.
+  - text never sits on, touches or crosses a line or an arrow, at the user's request: the label of an arrow
+    sits above a horizontal segment or right of a vertical one, with no background
+    (labelBackgroundColor=none);
+  - text keeps at least 2.5 px from every line and shape that does not hold it. In a chart, a label wider than
+    the spacing of the grid lines (optimum shifts in mutransfer) and a value label at the end of a bar may
+    cross a grey grid line; they keep 2.5 px from the axes, the arrows and the other lines.
 - No end-of-sequence cells or tokens in schedules: the last decode cell is the last token.
 
 ### 7. Shapes, blocks and sizes
@@ -490,8 +509,11 @@ sections 6 and 7, and the font section 4.
   neuron, graph node                                     circle
   operator (+, x, concatenation)                         circle 20 px wide with the symbol inside
   span of several parts                                  square bracket, 1.0 px, its tip toward its text
-  idle, masked or padding area (schedules, time lines)   white box with square corners and a grey dashed
-                                                         outline
+  idle area (schedules, time lines)                      white box with square corners, a grey dashed outline
+                                                         and no text
+  unused element (masked, padding, free, pruned or       white, with a solid grey outline
+  missing cell, token or slot)
+  dropped neuron (dropout)                               white circle, grey dashed outline, grey cross
   transformation of a whole stage (a model into another) block arrow; thin arrows everywhere else
   ```
 - A square bracket is draw.io's curlyBracket with rounded=0: a straight line with square ends and a tip at
@@ -508,11 +530,16 @@ sections 6 and 7, and the font section 4.
 - Dashed lines use draw.io's default dash pattern; dotted lines use dashPattern=1 2.
 - Arrows are straight or orthogonal (edgeStyle=orthogonalEdgeStyle). Curves only for pointers to a part of
   the drawing and for loops.
-- Idle, masked or padding areas (the idle time of a schedule or a time line, a masked or padded region): a
-  white box with square corners and a grey #666666 dashed outline, 1.0 px (rounded=0;fillColor=#ffffff;
-  strokeColor=#666666;strokeWidth=1;dashed=1). A box at least 60 px wide holds its name ("idle", "masked",
-  "padding") in grey #666666, 12 px, at its centre. Masked or padding cells of a block of cells stay grey
-  cells (section 5).
+- Idle areas (the idle time of a schedule or a time line): a white box with square corners and a grey
+  #666666 dashed outline, 1.0 px (rounded=0;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;dashed=1),
+  with no text inside, as its look says it is idle. A legend may name it Idle.
+- Unused elements (a masked cell of an attention mask, a padding token or cell, a free slot of a cache, a
+  pruned weight, a missing value, a NULL cell): a white fill and a solid grey #666666 outline, thin (0.4 px)
+  for a cell inside a block and regular (1.0 px) for a single token, slot or cube, so that they differ from
+  the dashed idle areas (ragged_batching, variable_batch_lr, paged_attention). Their text (NULL, 0, [M])
+  stays black.
+- A dropped neuron (dropout) is a white circle with a grey #666666 dashed outline, 1.0 px, the weight of
+  the other neurons, and a grey #666666 cross over it.
 - A hatched mark that is not idle time (the new integration steps of local_variable_timestep_six_cell_example)
   is a hachure: black lines 0.6 px wide every 4 px at 45 degrees, drawn as vector paths: fillColor=#000000;
   strokeColor=none;fillStyle=hachure;sketch=1;jiggle=0;hachureAngle=45;hachureGap=4;fillWeight=0.6;
