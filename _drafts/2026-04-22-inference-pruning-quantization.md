@@ -102,7 +102,7 @@ Magnitude pruning ignores the inputs. A small weight that multiplies a large inp
 In the picture below, magnitude pruning removes the weights $$-0.2$$ and $$0.1$$, which multiply the largest inputs. Wanda keeps them, and removes $$0.5$$ and $$-0.6$$ instead:
 
 {: .picture}
-<img width="44.7%" height="44.7%" src="{{ site.assets }}/inference/imgs/wanda.svg"/>
+<img width="45.2%" height="45.2%" src="{{ site.assets }}/inference/imgs/wanda.svg"/>
 
 {: .caption}
 Each output row keeps its 3 highest scores (50%). The magnitude alone removes the weights of the two input features with the largest norms (6 and 8); the Wanda score keeps them. Inspired by: [A Simple and Effective Pruning Approach for Large Language Models](https://arxiv.org/abs/2306.11695)
@@ -461,7 +461,7 @@ def quantize(model, bits, group_size=64):
 GPTQ quantizes 175B-parameter models to 3-4 bits in about four GPU hours. One step of the algorithm is illustrated below:
 
 {: .picture}
-<img width="57.8%" height="57.8%" src="{{ site.assets }}/inference/imgs/gptq.svg"/>
+<img width="61.4%" height="61.4%" src="{{ site.assets }}/inference/imgs/gptq.svg"/>
 
 {: .caption}
 GPTQ quantizes the columns of $$W$$ one at a time, and spreads the rounding error of each column over the columns not yet quantized. Inspired by: [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323)
@@ -531,7 +531,7 @@ def quantize_gptq(model, data, n_batches, batch_size, seqlen, bits=4, group_size
 The factors are searched on calibration data. Unlike GPTQ, AWQ does not update the weights to fit the calibration data, so it is less likely to overfit the calibration set. The following picture illustrates the scaling of a salient channel:
 
 {: .picture}
-<img width="62.2%" height="62.2%" src="{{ site.assets }}/inference/imgs/awq.svg"/>
+<img width="62.4%" height="62.4%" src="{{ site.assets }}/inference/imgs/awq.svg"/>
 
 {: .caption}
 $$s_j = \text{mean}\lvert X_j \rvert^\alpha$$, with $$\alpha$$ searched on calibration data. The weights of the salient channel become larger, so rounding loses less of them. The division by $$s$$ is folded into the operation before. Inspired by: [AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration](https://arxiv.org/abs/2306.00978)
@@ -615,7 +615,7 @@ class W8A8Linear(nn.Module):
 **LLM.int8()** keeps the few outlier feature dimensions in 16 bits and runs everything else in INT8. A feature is an outlier when any of its values is larger in magnitude than a threshold, 6 in the paper. The outliers are rare, so more than 99.9% of the multiplications still run in INT8. The following diagram illustrates this *mixed-precision decomposition*, as the paper calls it:
 
 {: .picture}
-<img width="77.2%" height="77.2%" src="{{ site.assets }}/inference/imgs/llm_int8.svg"/>
+<img width="77.5%" height="77.5%" src="{{ site.assets }}/inference/imgs/llm_int8.svg"/>
 
 {: .caption}
 The feature columns of $$X$$ with outliers and the matching rows of $$W^T$$ are multiplied in FP16, the other features in INT8, and the two results are added. Adapted from: [LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale](https://arxiv.org/abs/2208.07339)
@@ -682,7 +682,7 @@ QuaRot uses random Hadamard matrices, while SpinQuant learns the rotations, whic
 <img width="81.0%" height="81.0%" src="{{ site.assets }}/inference/imgs/hadamard_rotation.svg"/>
 
 {: .caption}
-Rotating the weights the other way, $$W R^T$$, keeps the output: $$(W R^T)(R x) = W x$$. After the rotation, the INT4 levels are closer together (5.7 instead of 12.6 apart), so the small values lose much less precision.
+Rotating the weights the other way, $$W R^T$$, keeps the output: $$(W R^T)(R x) = W x$$. After the rotation, the INT4 levels are closer together (2.6 instead of 5.7 apart), so the small values lose much less precision.
 
 The following code builds Hadamard matrices, and a linear layer that simulates low-precision weights and activations with fake quantization, with an optional rotation of its inputs. For simplicity, it rotates the input of every layer on the fly. QuaRot instead folds most rotations into the weights of the previous layers, and applies the few remaining ones with [fast Hadamard](https://en.wikipedia.org/wiki/Fast_Walsh%E2%80%93Hadamard_transform) kernels.
 

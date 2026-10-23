@@ -662,7 +662,7 @@ Tora can generate videos guided by trajectories, images, texts, or combinations 
 Its trajectory extractor "converts the trajectory into motion patches, which inhabit the same latent space as the video patches". Text encoding is provided by T5. The architecture of Tora is illustrated in the following picture:
 
 {: .picture}
-<img width="98.5%" height="98.5%" src="{{ site.assets }}/diffusion/tora.svg"/> 
+<img width="98.6%" height="98.6%" src="{{ site.assets }}/diffusion/tora.svg"/> 
 
 {: .caption}
 Overview of the Tora architecture. Tora adds two modules: the Trajectory Extractor and the Motion-guidance Fuser. The Trajectory Extractor uses a 3D motion VAE to embed trajectory vectors into the same latent space as video patches, preserving motion information across frames. It then employs stacked convolutional layers to extract hierarchical motion features. The Motion-guidance Fuser uses adaptive normalization layers to integrate these multi-level motion conditions into the corresponding DiT blocks, so that generated videos follow the defined trajectories. Tora uses the scalability of DiT to create motion-controllable videos of extended duration. Adapted from: [Tora: Trajectory-oriented Diffusion Transformer for Video Generation](https://arxiv.org/abs/2407.21705).
