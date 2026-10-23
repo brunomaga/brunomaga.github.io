@@ -448,7 +448,9 @@ sections 6 and 7, and the font section 4.
   the cells of a block: its blocks have square corners and regular black outlines, dashed ones too, and blocks
   stacked in one interval have no outline around them, as there is no block or region inside a time line. A
   square bracket over a time line points to its text. Pipeline schedules follow section 8: their passes keep thin
-  black outlines.
+  black outlines. In continuous_chunked_batching, a forward pass lasts as long as its longest prefill: the
+  requests that share it show their work first and padding until its end, as static batching pads the prompts of
+  a group, and only empty slots are idle.
 - Every table, array and stack of objects, in every picture, has black text, thin grey lines between its
   cells and a black block outline (the tables of the matrix transpose post keep their blue cells). Only a
   cell that the picture emphasizes has another outline (the emphasis weight above).
