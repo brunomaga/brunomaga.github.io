@@ -264,6 +264,11 @@ sections 6 and 7, and the font section 4.
   paper repository's draw.io or TikZ source. The paper repositories stay unchanged. Two pictures are the
   exception: ep_stages.svg and ep_pipeline.svg of the expert parallelism post stay the paper's own figures,
   copied unchanged and shown at 100% width.
+- Until 1 November 2026, at the user's request, the paper repository of the expert parallelism post gets new
+  and changed figures. Every SVG revision (every picture task) in that time first pulls the latest imgs/*.svg
+  and their draw.io or TikZ sources from the paper repositories, and adapts the pictures of the kernel fusion
+  posts to them: a changed figure is redrawn again in this repo (copied again for ep_stages.svg and
+  ep_pipeline.svg), and a new figure that the post does not show yet is reported to the user.
 - A picture or an animation shown unchanged from Wikimedia Commons (the Newton's method and k-means GIFs)
   links to its original file on upload.wikimedia.org, with no copy in assets.
 - A picture used by a post and by the publications page is stored once, in the post's asset folder, and
