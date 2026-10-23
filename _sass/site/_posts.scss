@@ -37,11 +37,15 @@ mjx-container.math-scroll {
 }
 
 // pictures ({: .picture} in Markdown: a paragraph of one or more pictures) and their captions ({: .caption}: the
-// paragraph below the pictures) are centred, in small text that is black whatever color the surrounding block would
-// give it; the small text also sets the spacing between the pictures of a row
+// paragraph below the pictures) are centred and black, whatever color the surrounding block would give them. The
+// captions are 14px, the size of the text inside the pictures; the small text of a picture paragraph sets the
+// spacing between the pictures of a row
 .post-content .picture,
 .post-content .caption {
   text-align: center;
-  font-size: small;
   color: #000;
 }
+
+.post-content .picture { font-size: small; }
+
+.post-content .caption { font-size: 14px; }

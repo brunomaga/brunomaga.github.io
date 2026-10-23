@@ -649,7 +649,7 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
 ### 9. Captions
 
 - No caption inside a picture. The caption is Markdown below the picture, in the site's caption style
-  (centred, small, black), one paragraph:
+  (centred, 14px, black), one paragraph:
   ```
   {: .picture}
   <img ...>
