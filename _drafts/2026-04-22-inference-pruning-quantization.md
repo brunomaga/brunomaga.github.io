@@ -461,7 +461,7 @@ def quantize(model, bits, group_size=64):
 GPTQ quantizes 175B-parameter models to 3-4 bits in about four GPU hours. One step of the algorithm is illustrated below:
 
 {: .picture}
-<img width="57.8%" height="57.8%" src="{{ site.assets }}/inference/imgs/gptq.svg"/>
+<img width="61.4%" height="61.4%" src="{{ site.assets }}/inference/imgs/gptq.svg"/>
 
 {: .caption}
 GPTQ quantizes the columns of $$W$$ one at a time, and spreads the rounding error of each column over the columns not yet quantized. Inspired by: [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323)
