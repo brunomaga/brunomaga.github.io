@@ -10,9 +10,9 @@ layout: default
     <div class="home-links">
       <a href="https://linkedin.com/in/brunomaga" aria-label="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
       <a href="https://github.com/brunomaga" aria-label="GitHub" title="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
-      <a href="{{ site.google_scholar }}" aria-label="Google Scholar" title="Google Scholar"><i class="ai ai-google-scholar" aria-hidden="true"></i></a>
+      <a href="{{ site.google_scholar }}" aria-label="Google Scholar" title="Google Scholar"><svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg></a>
       <!-- <a href="{{ '/resume.pdf' | relative_url }}" aria-label="Resume" title="Resume"><i class="far fa-file-lines" aria-hidden="true"></i></a> -->
-      <a href="mailto:{{ site.author.email }}?subject=Hello" aria-label="Email" title="Email"><i class="far fa-envelope" aria-hidden="true"></i></a>
+      <a href="mailto:{{ site.author.email }}?subject=Hello" aria-label="Email" title="Email"><i class="fas fa-envelope" aria-hidden="true"></i></a>
     </div>
   </div>
 
