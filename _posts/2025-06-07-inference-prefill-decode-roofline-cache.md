@@ -46,7 +46,7 @@ The [roofline model](https://en.wikipedia.org/wiki/Roofline_model), presented in
 An example of a roofline chart with three applications is displayed below:
 
 {: .picture}
-<img width="99%" height="99%" src="{{ site.assets }}/inference/imgs/roofline.svg"/>
+<img width="98.9%" height="98.9%" src="{{ site.assets }}/inference/imgs/roofline.svg"/>
 
 {: .caption}
 A roofline plot, on a log-log scale. Below the ridge point, the roof rises with the arithmetic intensity at the peak memory bandwidth; beyond it, the roof is flat at the peak performance. App<sub>1</sub> is memory-bound. App<sub>2</sub> is compute-bound and runs below the peak performance. The arrows show how an application at ❌ moves right (more FLOPs per byte), moves up (closer to the roof), or gains from a higher roof. Adapted from: [Roofline model, Wikipedia](https://en.wikipedia.org/wiki/Roofline_model)

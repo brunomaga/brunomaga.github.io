@@ -363,8 +363,10 @@ sections 6 and 7, and the font section 4.
   ```
   Unused elements (the masked cells of an attention mask, padding tokens and cells, free slots of a cache,
   pruned weights, missing values, NULL cells) are white, with a solid grey #666666 outline (section 7), never
-  grey: their text (NULL, 0, [M]) stays. The pad tokens of longvilla stay grey, as in the paper's figure, whose
-  white cells are empty positions. The accent colors may also fill small marks (dots of a scatter plot, nodes of
+  grey: their text (NULL, 0) stays. The pad tokens of longvilla stay grey, as in the paper's figure, whose
+  white cells are empty positions. Mask tokens are not unused elements, as the model reads them: the [M] tokens
+  of dflash have a black outline, and the mask tokens of masked_autoencoders_cropped keep their grey #b3b3b3
+  fill, at the user's request. The accent colors may also fill small marks (dots of a scatter plot, nodes of
   a graph, heat map cells, filled tokens) where pastel fills are too faint.
 - Fills are flat: no gradients, shadows or glow, and the faces of a cube share one fill.
 - A colored outline or frame always has a meaning that the text or the caption gives (a highlight, a group,
@@ -416,7 +418,7 @@ sections 6 and 7, and the font section 4.
                       (the modules of the GPT-lite pictures, the MoE layers of moe_gshard, the red frames of
                       the first row and the first column in all_to_all), and black frames that emphasise a part
                       (DualPipe's overlapped forward and backward passes, the selected experts in
-                      moe_switch_transformers, the blue and red rows of transformer_attention_lbdl)
+                      moe_switch_transformers)
   ```
   An emphasis outline or frame takes the corners of what it marks: square around data, matrices, tensors,
   tables and the regions of an XY map, 5 px around an operation and 10 px around a frame.
@@ -424,7 +426,10 @@ sections 6 and 7, and the font section 4.
   weight around it and thin grey #666666 lines between its cells: the cells, the lines that divide the block
   and the faces of a 3D tensor are grey. Boxes glued into one matrix (the column and row splits of the
   Megatron-LM pictures) share a thin grey line inside one black block outline. A single cell (a token, a K or
-  V block, a single cube) has no block outline and keeps its black outline.
+  V block, a single cube) has no block outline and keeps its black outline. A matrix or an array is one block,
+  never a set of single cells, at the user's request: an attention mask is one S x S matrix with the fill of each
+  cell and the labels of its rows and columns (omnigen), and a block of a paged KV cache is an array of a fixed
+  number of slots, one 1 x 4 array (paged_attention, prefix_caching).
 - A time line (tp_timeline, tp_block_specialization, continuous_chunked_batching,
   local_variable_timestep_six_cell_example, the time row of prefill_decode) is made of intervals of time, not of
   the cells of a block: its blocks have square corners and regular black outlines, dashed ones too, and blocks
@@ -456,22 +461,33 @@ sections 6 and 7, and the font section 4.
     variable_batch_lr_pipeline: 1.2 px black, at the user's request, so that each sample stands apart;
   - the grey backgrounds of kohonen_1, kohonen_2 and kohonen_3: no outline, at the user's request;
   - the outlines of the Generator and Discriminator trapezoids of gan: 1.8 px, at the user's request, as in the
-    original figure.
+    original figure;
+  - the curves of transformer_attention_lbdl, whose weights follow the attention scores, as in the original
+    figure: the strongest one is 2.6 px, blue #6c8ebf on the left and red #b85450 on the right, thicker than the
+    other lines and thinner than the emphasis weight, and the selected rows of Q and Y have a black block outline
+    (1.2 px), at the user's request;
+  - the colored arrows and the red cross of roofline: 3.6 px, at the user's request, with the head of an arrow at
+    the emphasis weight;
+  - the cut lines of sbs: blue #6c8ebf, 3.6 px, in the middle of a 16 px gap between two arrays, with one red
+    emphasis frame per slice in steps 2.1 and 3.1, at the user's request.
 - Thin arrows: black #000000, 1.4 px, endArrow=classic, endFill=1, endSize=5: a head 6.4 px long and wide,
   endSize plus the line weight, with its notch at 3/4 of its length. Dashed arrows use the same head. An
   arrow at the emphasis weight has endSize=2.8, so that its head has the size of the others. Grey #666666 only
   for faded content. Lines without a head that join two parts of the flow (two boxes, or a box and an
   arrow): 1.4 px. The axis of a time line: 1.4 px, with the same head.
-- Charts: the axes, the frame and the data lines of a plot are 1.8 px, in every chart, at the user's request:
-  the data lines (the values, the fits, the roofs of a roofline chart, the line samples of the legend) are as
-  thick as the axes. The axis line of a bar chart and the line in front of the bars of each category are 1.8 px
-  too, and an axis drawn with a head takes the head of the thin arrows. The data (lines, markers, bars) is drawn
-  behind the axes and the frame, and the data points are drawn over the lines of a plot (the observations over
-  the sample lines of linear_bayesian_posterior). The level lines of a contour plot (coordinate_descent,
-  linear_bayesian_posterior) keep 1.0 px: they are the background of the path or the samples drawn over them,
-  and their dense rings would merge at 1.8 px. Guide lines (a threshold, a projection on an axis) are grey
-  #666666, dashed, 1.0 px. The legend of a chart is one column outside the plot, on its right, and the chart grows wider to make
-  room for it.
+- Charts: the axes, the frame and the data lines of a plot are 1.8 px, in every chart, at the user's request: the
+  data lines (the values, the fits, the roofs of a roofline chart, the line samples of the legend) are as thick as
+  the axes. The axis line of a bar chart and the line in front of the bars of each category are 1.8 px too, and an
+  axis drawn with a head takes the head of the thin arrows. The data (lines, markers, bars) is drawn behind the axes
+  and the frame, and the data points are drawn over the lines of a plot (the observations over the sample lines of
+  linear_bayesian_posterior). Exception, at the user's request: the x axes drawn as arrows in the charts of the
+  variable timestep post (cvode_pulse_currents_table and the l5_neuron charts) are drawn behind the data that
+  crosses them, as in the original figures. Bars and filled areas take a pastel fill of the palette other than grey,
+  as #f5f5f5 hardly shows on white (the green #d5e8d4 of kde, at the user's request). The level lines of a contour
+  plot (coordinate_descent, linear_bayesian_posterior) keep 1.0 px: they are the background of the path or the
+  samples drawn over them, and their dense rings would merge at 1.8 px. Guide lines (a threshold, a projection on an
+  axis) are grey #666666, dashed, 1.0 px (a lighter #999999 in roofline, at the user's request). The legend of a
+  chart is one column outside the plot, on its right, and the chart grows wider to make room for it.
 - The links of a dense network (each neuron to each neuron of the next layer) are thin arrows with heads, as
   the others; the heads that converge on one node may touch.
 - Inhibition (one part blocks or breaks down another, as in a signalling pathway): 1.4 px black line with a
@@ -486,6 +502,8 @@ sections 6 and 7, and the font section 4.
     joins the line of the other before the head;
   - two arrows share a segment only when they leave the same point (fan-out) or end at the same point
     (fan-in);
+  - a single arrow into a shape points to its centre: a horizontal arrow runs at the height of the centre of the
+    shape (the arrows into the latent volume and the latent sequence of sora_vae, at the user's request);
   - text never sits on, touches or crosses a line or an arrow, at the user's request: the label of an arrow
     sits above a horizontal segment or right of a vertical one, with no background
     (labelBackgroundColor=none);
@@ -521,7 +539,9 @@ sections 6 and 7, and the font section 4.
 - Operations and frames have round corners: 5 px for an operation (rounded=1;absoluteArcSize=1;arcSize=10),
   10 px for a frame (arcSize=20). Every frame of a region has them, also a dashed or colored one
   (ring_attention_qkv, moe_gshard, jamba). Data, matrix and array cells, plot bars and the cells of a schedule
-  or a time line have square corners (rounded=0). Capsules (fully round ends) keep their shape. A frame that
+  or a time line have square corners (rounded=0). Capsules (fully round ends) keep their shape. The chat bubbles
+  of llama2_gatt have 15 px round corners (arcSize=30), capsules for one line, as in the original figure, at the
+  user's request. A frame that
   marks a region of an XY map (a 2D domain, a plot, an image) has square corners, as the region is an area
   of the map (str_steps).
 - Block arrows: body 10 px wide, head 20 px wide and 10 px long (flexArrow: width=10;endWidth=10;endSize=3.07;
@@ -536,8 +556,8 @@ sections 6 and 7, and the font section 4.
 - Unused elements (a masked cell of an attention mask, a padding token or cell, a free slot of a cache, a
   pruned weight, a missing value, a NULL cell): a white fill and a solid grey #666666 outline, thin (0.4 px)
   for a cell inside a block and regular (1.0 px) for a single token, slot or cube, so that they differ from
-  the dashed idle areas (ragged_batching, variable_batch_lr, paged_attention). Their text (NULL, 0, [M])
-  stays black.
+  the dashed idle areas (ragged_batching, variable_batch_lr, paged_attention). Their text (NULL, 0) stays
+  black.
 - A dropped neuron (dropout) is a white circle with a grey #666666 dashed outline, 1.0 px, the weight of
   the other neurons, and a grey #666666 cross over it.
 - A hatched mark that is not idle time (the new integration steps of local_variable_timestep_six_cell_example)
