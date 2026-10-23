@@ -2,13 +2,12 @@
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
 
-// Compiles to /assets/main.css: the site's variables, which set minima's greys, then the minima theme's styles and
-// the site's own, in _sass/site/
+// Compiles to /assets/main.css: the minima theme's styles, then the site's own, in _sass/site/
 $content-width: 940px;
 
 @import
-  "site/variables",
   "minima",
+  "site/variables",
   "site/base",
   "site/labels",
   "site/posts",
