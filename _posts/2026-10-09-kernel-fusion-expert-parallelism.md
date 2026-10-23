@@ -48,7 +48,7 @@ Each model below comes with a table of its one-sided operations per microbatch: 
 **AllGather-ReduceScatter** (AGRS) broadcasts all tokens to all ranks, and reduce-scatters the results. On the dispatch, every rank pushes its whole microbatch to every rank through the switch, so each rank holds all tokens. Each rank runs its experts on the tokens routed to them and sums their outputs per token, ignoring the tokens not routed to its experts and writing zero outputs ($$\emptyset$$) for them. On the combine, every rank pushes its outputs for the tokens of each token rank to that rank, $$\emptyset$$ where it holds none, and the token rank computes the final sum. The following picture illustrates both collectives on the example:
 
 {: .picture}
-<img width="72.8%" height="72.8%" src="{{ site.assets }}/inference/imgs/ep_all_gather_reduce_scatter.svg"/>
+<img width="73.5%" height="73.5%" src="{{ site.assets }}/inference/imgs/ep_all_gather_reduce_scatter.svg"/>
 
 {: .caption}
 AllGather-ReduceScatter through a switch that relays each packet, with the dispatch (All-Gather) on the left and the combine (Reduce-Scatter) on the right. $$A_0$$ is token A sent to the expert rank $$P_0$$, $$E_0(\text{AC}_0)$$ the expert $$E_0$$ of $$P_0$$ processing tokens A and C, $$\sigma^y_t$$ the partial sum of the expert outputs of $$P_y$$ for token $$t$$, $$\Sigma_t = \sigma^0_t + \sigma^1_t + \sigma^2_t$$ their sum across all ranks, i.e. the final output of token $$t$$, and $$\emptyset$$ a token without output. Under each collective, a bracket names its model and counts its steps per node $$P_x$$.
@@ -72,7 +72,7 @@ AllGather-ReduceScatter does not depend on the routing, which makes it simple, b
 **All-to-All** (A2A) avoids the worst case that AllGather always pays, i.e. sending every token to every rank whatever the routing. Its clear benefit is a *selective* send and receive: each token goes only to the ranks that hold its experts, so a token whose experts lie on $$d \le \min(k,W)$$ distinct ranks leaves its owner $$d$$ times, as many times as with AllGather only when $$d=W$$. Its combine is the reverse all-to-all, followed by a sum on the owner of each token:
 
 {: .picture}
-<img width="72.8%" height="72.8%" src="{{ site.assets }}/inference/imgs/ep_all_to_all.svg"/>
+<img width="73.5%" height="73.5%" src="{{ site.assets }}/inference/imgs/ep_all_to_all.svg"/>
 
 {: .caption}
 All-to-All through a switch that relays each packet, with the dispatch on the left and the combine on the right, in the notation of AllGather-ReduceScatter. $$\emptyset$$ on a dashed arrow is a packet with a zero count in its header, sent where a rank has no data for the destination.
@@ -109,7 +109,7 @@ In practice, both lower the bandwidth that each rank needs and the number of pac
 An INC switch improves AllGather-ReduceScatter with fewer relays and less bandwidth. On the dispatch, each rank pushes a single copy of its tokens to the INC switch, which broadcasts their concatenation to all ranks once every rank has arrived. On the combine, the INC switch pulls the outputs of each rank once the rank signals them ready, sums them as they arrive, and returns to each token rank the outputs of its tokens:
 
 {: .picture}
-<img width="91.2%" height="91.2%" src="{{ site.assets }}/inference/imgs/ep_all_gather_reduce_scatter_inc.svg"/>
+<img width="88.0%" height="88.0%" src="{{ site.assets }}/inference/imgs/ep_all_gather_reduce_scatter_inc.svg"/>
 
 {: .caption}
 INC AllGather-ReduceScatter, with INC All-Gather on the left and INC Reduce-Scatter on the right. $$A_{012}$$ is token A for the expert ranks $$P_0$$, $$P_1$$ and $$P_2$$, $$\text{ABC}_0$$ the tokens A, B and C for $$P_0$$, $$\sigma^0_{A\emptyset C}$$ the partial sums of $$P_0$$ for the tokens A and C, with no output for B, and $$r^0_{A\emptyset C}$$ the signal that they are ready (dotted). The first INC switch of the combine maps each ready signal, in a dashed box, to the pull of the partial sums that it names, $$r^y_t \rightarrow \sigma^y_t$$; the expert ranks are drawn again where the INC switch pulls from them.
@@ -149,7 +149,7 @@ The transfer and the sum are fused into **All-to-All-Combine**, an all-to-all ex
 The combine needs no metadata of its own, as it reuses the counts per sender of the dispatch, transposed, and the compute ranks run no cross-rank arithmetic. Note that each expert rank applies the routing weights to its expert outputs before it publishes its partial results, so the switch only adds them. The following picture shows both collectives on the example above:
 
 {: .picture}
-<img width="91.2%" height="91.2%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_inc.svg"/>
+<img width="88.2%" height="88.2%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_inc.svg"/>
 
 {: .caption}
 The dispatch and combine of the example through the INC switch, with $$W$$ transfers in and $$W$$ out per collective. **Left:** All-to-All-Dispatch. **Right:** All-to-All-Combine. $$A_{02}$$ is token A for the expert ranks $$P_0$$ and $$P_2$$, $$\text{AC}_0$$ the tokens A and C for $$P_0$$, $$\sigma^y_{AC}$$ the partial sums of $$P_y$$ for tokens A and C, and $$r^y_{AC}$$ the signal that they are ready (dotted). The INC switch maps each ready signal to the pull of the partial sums that it names, $$r^y_t \rightarrow \sigma^y_t$$, and adds them into $$\Sigma_t$$.
@@ -196,7 +196,7 @@ The weak point of the INC collectives is the memory of the switch. All-to-All-Di
 The $$s$$ signal tells each expert rank that it can release its partial results, which it could not know otherwise, as only the token rank receives the sum. All-to-All-Combine needs none, as every rank receives its own sums, which the switch sends only once it has pulled the partial results of every rank. The following picture shows the two operations on the example above:
 
 {: .picture}
-<img width="99.8%" height="99.8%" src="{{ site.assets }}/inference/imgs/ep_one_to_many_inc.svg"/>
+<img width="97.7%" height="97.7%" src="{{ site.assets }}/inference/imgs/ep_one_to_many_inc.svg"/>
 
 {: .caption}
 The partial collective operations, One-to-Many-Dispatch (left) and Many-to-One-Combine (right), with token C of $$P_2$$ and every rank and expert on its path in black, and the others in grey. The INC switch relays the tokens of each sender as they land. $$P_0$$ and $$P_1$$ signal $$P_2$$ that their outputs are ready (dotted), and $$P_2$$ signals the INC switch $$r^{01}_C$$, naming them, which starts the pulls of $$\sigma^0_C$$ and $$\sigma^1_C$$. Once it has read both, the switch signals $$s^0_C$$ to $$P_0$$ and $$s^1_C$$ to $$P_1$$, which can then release them, and returns their sum $$\Sigma_C$$ to $$P_2$$ alone. No transfer waits for another token rank.
@@ -222,10 +222,10 @@ The timelines below follow token C through both forms, with the operations of ea
 {: .picture}
 <img width="44.6%" height="44.6%" src="{{ site.assets }}/inference/imgs/ep_timeline.svg"/>
 <span style="display:inline-block; width:4%;"></span>
-<img width="49.0%" height="49.0%" src="{{ site.assets }}/inference/imgs/ep_timeline_noncollective.svg"/>
+<img width="48.9%" height="48.9%" src="{{ site.assets }}/inference/imgs/ep_timeline_noncollective.svg"/>
 
 {: .caption}
-The dispatch and combine of token C, owned by $$P_2$$. **Left:** All-to-All-Dispatch and All-to-All-Combine. **Right:** One-to-Many-Dispatch and Many-to-One-Combine. $$P_2$$ sends $$C_{01}$$, i.e. token C for the expert ranks $$P_0$$ and $$P_1$$, which the INC switch sends on as $$C_0$$ to $$P_0$$, $$C_1$$ to $$P_1$$ and $$\emptyset$$ to $$P_2$$ once all ranks have arrived (left), or as soon as it lands (right). It pulls the partial sums $$\sigma^0_C$$ and $$\sigma^1_C$$ as each rank signals it $$r^0_C$$ or $$r^1_C$$ (left), or once $$P_2$$, signalled $$r^0_C$$ and $$r^1_C$$, has signalled it $$r^{01}_C$$, signalling $$s^0_C$$ and $$s^1_C$$ once it has read both (right), and sends their sum $$\Sigma_C$$ to $$P_2$$. The asterisk marks nonblocking calls, and dotted arrows are flags raised with `signal`.
+The dispatch and combine of token C, owned by $$P_2$$. **Left:** All-to-All-Dispatch and All-to-All-Combine. **Right:** One-to-Many-Dispatch and Many-to-One-Combine. $$P_2$$ sends $$C_{01}$$, i.e. token C for the expert ranks $$P_0$$ and $$P_1$$, which the INC switch sends on as $$C_0$$ to $$P_0$$, $$C_1$$ to $$P_1$$ and $$\emptyset$$ to $$P_2$$ once all ranks have arrived (left), or as soon as it lands, to $$P_0$$ and $$P_1$$ alone (right, where $$P_2$$, which takes no part as an expert rank, is grey). It pulls the partial sums $$\sigma^0_C$$ and $$\sigma^1_C$$ as each rank signals it $$r^0_C$$ or $$r^1_C$$ (left), or once $$P_2$$, signalled $$r^0_C$$ and $$r^1_C$$, has signalled it $$r^{01}_C$$, signalling $$s^0_C$$ and $$s^1_C$$ once it has read both (right), and sends their sum $$\Sigma_C$$ to $$P_2$$. The asterisk marks nonblocking calls, and dotted arrows are flags raised with `signal`.
 
 The collective form takes fewer steps and relays: its combine takes three steps where the partial collective one takes four, as the $$s$$ signal is off the critical path, and one relay per link and direction where the partial collective one takes up to $$W$$, plus $$\mathcal{O}(W^2)$$ signals. However, it pays in memory, $$W$$ times what the partial collective form holds, and in latency, as it waits for the slowest rank, which the partial collective form never does.
 
@@ -288,10 +288,10 @@ Three implementations are compared in this post, from no fusion to fusion with I
 The following picture follows one microbatch through the memories that an MoE layer touches (the local memory of a rank, its global memory, and the far side of the network) in the Baseline and in MegaKernel+INC, and shows how INC simplifies the layer:
 
 {: .picture}
-<img width="82.4%" height="82.4%" src="{{ site.assets }}/inference/imgs/ep_data_movement.svg"/>
+<img width="84.7%" height="84.7%" src="{{ site.assets }}/inference/imgs/ep_data_movement.svg"/>
 
 {: .caption}
-Data movement for one microbatch. **Left:** Baseline, one kernel per stage. **Right:** MegaKernel+INC, one fused kernel with the INC transfers, without the `pack` and the `global reduce` stages. Each row is a stage (colored box) and the tensor it stores in global memory (white box), and $$\star$$ marks the symmetric heap. The blue frame holds the experts, dashed lines mark kernel boundaries, and the brace one kernel launch. Each INC stage runs as the collective or the partial collective operation.
+Data movement for one microbatch. **Left:** Baseline, one kernel per stage. **Right:** MegaKernel+INC, one fused kernel with the INC transfers, without the `pack` and the `global reduce` stages. Each row is a stage (colored box) and the tensor it stores in global memory (white box), and $$\star$$ marks the symmetric heap. The blue frame holds the experts, dashed lines mark kernel boundaries, and the bracket one kernel launch. Each INC stage runs as the collective or the partial collective operation.
 
 ## Pipelining and three-way overlap
 
