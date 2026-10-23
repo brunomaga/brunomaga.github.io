@@ -1,14 +1,9 @@
-// The site's own sizes and colours, imported before minima so that minima uses the site's greys. The link blue
-// ($brand-color), the phone width ($on-palm) and the spacing unit ($spacing-unit, 30px) are minima's.
+// The site's own sizes and colours. The link blue ($brand-color), the phone width ($on-palm) and the spacing unit
+// ($spacing-unit, 30px) are minima's, and so are the greys of minima's tables, blockquotes and code.
 
-// the three greys: dark for secondary text and icons, grey for lines and table headers, and light for the even rows
-// of tables. Minima's greys are set to the dark grey and the grey, for its blockquotes, code and table lines
-$grey-dark: #8f8f8f;
-$grey: #f0f0f0;
-$grey-light: #f7f7f7;
-
-$grey-color: $grey-dark;
-$grey-color-light: $grey;
+// the two greys: grey for secondary text and icons, and grey-light for lines
+$grey: #8f8f8f;
+$grey-light: #e8e8e8;
 
 // the text size of the labels, in small capitals
 $label-font-size: 12px;
@@ -17,4 +12,4 @@ $label-font-size: 12px;
 $label-column-width: 3.5 * $label-font-size;
 
 // the grey line on the left of each group of rows in the label tables
-$side-line: 2px solid $grey;
+$side-line: 2px solid $grey-light;
