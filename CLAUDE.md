@@ -418,12 +418,13 @@ sections 6 and 7, and the font section 4.
 
 - Every geometric element with a fill (rectangles, rounded boxes, circles, cubes, cylinders, filled table
   cells, block arrows, grey background panels and frames) has a black outline: strokeColor=#000000, no stroke
-  opacity. The cells of a block and the unused elements (section 7) are the exceptions: their outlines are grey
-  (see the blocks below). Six
+  opacity. The cells of a block and the unused elements (section 7) are the exceptions: their outlines are grey,
+  except where two fills meet (see the blocks below). Six
   weights, the same at page scale in every picture:
   ```
   thin       0.4 px   the cells of a matrix, an array, a table or a block of cubes, the lines that divide a
-                      block into cells, the faces of a 3D tensor, pipeline passes
+                      block into cells, the faces of a 3D tensor, pipeline passes, the black boundary between
+                      two fills inside a block
   regular    1.0 px   operations, layers, modules, data boxes (tensors, vectors, tokens), neurons and graph
                       nodes, operators, single cubes, block arrows, square brackets, the blocks of a time line,
                       the grey outlines of idle areas, of unused single elements and of dropped neurons
@@ -445,11 +446,21 @@ sections 6 and 7, and the font section 4.
 - A block (a matrix, an array, a table, a stack of objects, a block of cubes) has a black outline at the block
   weight around it and thin grey #666666 lines between its cells: the cells, the lines that divide the block
   and the faces of a 3D tensor are grey. Boxes glued into one matrix (the column and row splits of the
-  Megatron-LM pictures) share a thin grey line inside one black block outline. A single cell (a token, a K or
-  V block, a single cube) has no block outline and keeps its black outline. A matrix or an array is one block,
+  Megatron-LM pictures) share one black block outline, with a thin grey line between two boxes of the same fill
+  and a thin black boundary line (below) between two boxes of different fills. A single cell (a token, a K or V
+  block, a single cube) has no block outline and keeps its black outline. A matrix or an array is one block,
   never a set of single cells, at the user's request: an attention mask is one S x S matrix with the fill of each
   cell and the labels of its rows and columns (omnigen), and a block of a paged KV cache is an array of a fixed
   number of slots, one 1 x 4 array (paged_attention, prefix_caching).
+- Inside a block, a thin black line (0.4 px) marks the boundary between two regions of different fills, at the
+  user's request: a colored region and a white one (unused, masked or empty cells, or the white background of
+  the block), two colors, or a color and a picture. It is drawn over the grey lines of the cells, which stay
+  between cells of the same fill, and it follows the fills, not what the cells stand for. The faces of a block of
+  cubes, of a 3D tensor and of a stack of layers follow the same rule (transformer_attention_lbdl,
+  group_normalization, ulysses_sequence_parallelism, graph_transformer_networks), while their silhouette and the
+  three edges at their front corner keep the block weight. Where a black or colored line at least as thick
+  already marks the boundary (a block outline, an emphasis frame), no line is added. Heat maps, whose cells each
+  have their own shade, keep their grey lines (mixture_of_depths, transformer_attention).
 - A time line (tp_timeline, tp_block_specialization, continuous_chunked_batching,
   local_variable_timestep_six_cell_example, the time row of prefill_decode) is made of intervals of time, not of
   the cells of a block: its blocks have square corners and regular black outlines, dashed ones too, and blocks
@@ -463,8 +474,9 @@ sections 6 and 7, and the font section 4.
   chunk has its own bracket and label, with the index of the chunk (P1<sub>1</sub>, P1<sub>2</sub>), at the user's
   request.
 - Every table, array and stack of objects, in every picture, has black text, thin grey lines between its
-  cells and a black block outline (the tables of the matrix transpose post keep their blue cells). Only a
-  cell that the picture emphasizes has another outline (the emphasis weight above).
+  cells of the same fill, thin black lines between cells of different fills and a black block outline (the
+  tables of the matrix transpose post keep their blue cells). Only a cell that the picture emphasizes has
+  another outline (the emphasis weight above).
 - Exceptions that keep their own look:
   - a box highlighted by a colored outline: the colored outline replaces its black one, with no second
     frame around the box (the red #b85450 outlines of the modules in the GPT-lite pictures);
@@ -490,8 +502,7 @@ sections 6 and 7, and the font section 4.
     original figure;
   - the curves of transformer_attention_lbdl, whose weights follow the attention scores, as in the original
     figure: the strongest one is 2.6 px, blue #6c8ebf on the left and red #b85450 on the right, thicker than the
-    other lines and thinner than the emphasis weight, and the selected rows of Q and Y have a black block outline
-    (1.2 px), at the user's request;
+    other lines and thinner than the emphasis weight, at the user's request;
   - the colored arrows and the red cross of roofline: 3.6 px, at the user's request, with the head of an arrow at
     the emphasis weight;
   - the cut lines of sbs: blue #6c8ebf, 3.6 px, in the middle of a 16 px gap between two arrays, with one red
@@ -584,7 +595,8 @@ sections 6 and 7, and the font section 4.
   pruned weight, a missing value, a NULL cell): a white fill and a solid grey #666666 outline, thin (0.4 px)
   for a cell inside a block and regular (1.0 px) for a single token, slot or cube, so that they differ from
   the dashed idle areas (ragged_batching, variable_batch_lr, paged_attention). Their text (NULL, 0) stays
-  black.
+  black. Inside a block, the thin black boundary line of section 6 replaces the grey outline of an unused cell on
+  each side where it touches a cell of another fill.
 - A dropped neuron (dropout) is a white circle with a grey #666666 dashed outline, 1.0 px, the weight of
   the other neurons, and a grey #666666 cross over it.
 - A hatched mark that is not idle time (the new integration steps of local_variable_timestep_six_cell_example)
