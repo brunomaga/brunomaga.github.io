@@ -1,4 +1,6 @@
 title: "Bruno Magalhaes"
+# empty, so that the home page title is only the site title (GitHub Pages fills an unset description with the repository description)
+description: ""
 author:
   name: Bruno Magalhaes
   email: "brunomaga+blog@gmail.com"
