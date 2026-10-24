@@ -167,7 +167,7 @@ Finally, the view swap is completed by communicating the data, based on the meta
 These counts are then used to allocate the buffers for the incoming data and to perform an `MPI_Alltoallv` that sends/delivers the elements of the final matrix across all compute nodes. Upon completion, the (previously column-oriented) elements are sorted by row and column, which yields the final dataset: 
 
 {: .picture}
-<img width="78.7%" height="78.7%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_3.svg">
+<img width="99.2%" height="99.2%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_3.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)
