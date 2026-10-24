@@ -198,7 +198,7 @@ A `C++`-based Brunel network model of LIF neurons was implemented, and the appro
 **Synchronous regular dynamics** (SR):
 
 {: .picture}
-<img width="99.9%" height="99.9%" src="{{ site.assets }}/lif-brunel/raster_plot_g3_f2.svg">
+<img width="92.9%" height="92.9%" src="{{ site.assets }}/lif-brunel/raster_plot_g3_f2.svg">
 
 In the pictures above, the global activity oscillates slowly in the SI slow state, where each neuron fires irregularly at a very low rate, and is stationary in the AI state. In the SR state, the network is almost fully synchronized, and the neurons fire regularly at high rates.
 

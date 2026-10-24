@@ -283,19 +283,20 @@ sections 6 and 7, and the font section 4.
 
 ### 3. Page width and scale
 
-- The pictures of a post are drawn for a band X = 880 px wide, the width of the page (minima's $content-width
-  in assets/main.scss). The text column is 60 px narrower (820 px, inside minima's 2 x 30 px padding), and a
-  picture paragraph takes that padding on both sides (_sass/site/_posts.scss): a picture wider than the text
-  reaches up to 30 px beyond it on each side. On a screen narrower than the page, the band is as wide as the
-  screen, and the pictures scale down with it.
+- The pictures of a post are shown in a band X = 880 px wide, the width of the page (minima's $content-width
+  in assets/main.scss). The text column is 60 px narrower (T = 820 px, inside minima's 2 x 30 px padding), and
+  a picture paragraph takes that padding on both sides (_sass/site/_posts.scss). A picture is drawn to fit the
+  text column, at most T wide; one that is wider (a paper's own figure shown at 100%, section 2) reaches up to
+  30 px beyond the text on each side. On a screen narrower than the page, the band is as wide as the screen,
+  and the pictures scale down with it.
 - Every picture task first checks the page width, $content-width in assets/main.scss, at the user's request.
-  When it has changed, X is the new $content-width, and the sizes of these rules that follow from
-  X change with it (the 880 px below, the column of the publications page, the 287 px of the pipeline pictures
-  and the time unit of DualPipe in section 8): every P is recomputed with the new X, and every picture wider
-  than X, and every row of pictures side by side that no longer fits in X, is redrawn to fit it, as the rules
-  below say.
+  When it has changed, X is the new $content-width and T is X minus 60 px, and the sizes of these rules that
+  follow from them change with them (the 820 px and 880 px below, the column of the publications page, the
+  264 px of the pipeline pictures and the time unit of DualPipe in section 8): every P is recomputed with the
+  new X, and every picture wider than T, and every row of pictures side by side that no longer fits in T, is
+  redrawn to fit it, as the rules below say.
 - Every picture is drawn for a post, also one that only the publications page shows: at page scale, where
-  1 draw.io px is 1 px on the page when the picture is shown at its natural size, and no wider than 880 px.
+  1 draw.io px is 1 px on the page when the picture is shown at its natural size, and no wider than 820 px.
   The publications page keeps its pictures in its 734 px notes column, so there they appear at 83% of their
   size in a post, which is fine.
 - The Markdown of every page, the publications page too, shows a picture of width W px at W/880*100
@@ -309,7 +310,7 @@ sections 6 and 7, and the font section 4.
 - Pictures shown side by side in one row each keep their own P. When the P values of a row add up to more
   than 98 (the spaces between pictures take the rest), the pictures wrap onto the next line. The two models at
   the top of the GPT-lite post are 92 px apart (twelve `&nbsp;` between their img tags), at the user's request.
-- A picture that does not fit 880 px at the text sizes below is redrawn in this order, at the user's request:
+- A picture that does not fit 820 px at the text sizes below is redrawn in this order, at the user's request:
   first narrow the empty space between its parts; then shrink its elements (smaller matrices, cells, cubes,
   circles and photos, shorter arrows, narrower tensors and boxes), as far as their text and the arrow layout of
   section 6 allow; then, only where that is not enough, move parts (stack panels, move a legend). A long label
@@ -323,7 +324,7 @@ sections 6 and 7, and the font section 4.
 - Pictures side by side whose rows refer to each other have the same height, each row at the height of the row
   it refers to, at the user's request: the two rows of circles of svd_example_2 next to the two rows of photos
   of svd_example.
-- A picture whose arrows or labels are crowded grows, taller or wider up to 880 px, before any text or arrow
+- A picture whose arrows or labels are crowded grows, taller or wider up to 820 px, before any text or arrow
   gets smaller (the transformer picture is taller, the DualPipe schedule wider). Its elements keep their size as
   it grows: only the spaces between them widen, which gives the arrows and their labels more room (tora, at the
   user's request).
@@ -637,7 +638,7 @@ sections 6 and 7, and the font section 4.
   legend). A chart's legend is one column (section 6).
 - Sizes for new and redrawn pictures: a one-line box 30 px tall, 20 px between boxes in a row, 40 px between
   rows (room for an arrow and its label), matrix and array cells 20 x 20 px with 12 px numbers (10 px when they
-  do not fit). A picture that does not fit the band of section 3 takes smaller elements.
+  do not fit). A picture that does not fit the text column of section 3 takes smaller elements.
 
 ### 8. Pipeline schedules
 
@@ -645,8 +646,8 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
 - One row per GPU, labelled "GPU 0" to "GPU 3" (to "GPU 7" for DualPipe; "Worker 1" to "Worker 4" where the
   post's text says workers, as for the PipeDream pictures), 14 px regular, right-aligned 4 px left of the
   first cell.
-- Rows 20 px tall and 3 px apart. One time unit is 21.86 px wide (15.44 px for DualPipe, so that its 8 GPUs
-  and 16 micro-batches fit 880 px): a forward pass takes 1 unit, a backward pass 2 units, or 1 unit each for
+- Rows 20 px tall and 3 px apart. One time unit is 21.86 px wide (14.4 px for DualPipe, so that its 8 GPUs
+  and 16 micro-batches fit 820 px): a forward pass takes 1 unit, a backward pass 2 units, or 1 unit each for
   the backward for inputs (B) and the backward for weights (W). With two chunks per GPU (interleaved 1F1B,
   ZB-V, DualPipeV), each pass of a chunk takes half as long. DualPipe runs one stage per direction on each
   GPU, so its passes take the full time.
@@ -669,7 +670,8 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
   too; their annotations ("Pipeline flush", "Startup State", the time axis) keep their place relative to
   the rows.
 - No title inside a schedule (section 9). Pictures compared side by side in one row (pipeline_8_stages,
-  pipeline_4_stages, pipeline_2_stages) are at most 287 px wide each, so that three fit one row.
+  pipeline_4_stages, pipeline_2_stages) are at most 264 px wide each, so that three fit one row of the text
+  column with the spaces between them.
 
 ### 9. Captions
 

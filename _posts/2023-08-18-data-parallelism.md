@@ -471,7 +471,7 @@ All implementations use the same numerical precision (fp32), communication bucke
 The GPTlite model was tested with a micro-batch size of 1 sample per GPU, and the results are:
 
 {: .picture}
-<img width="99.8%" height="99.8%" src="{{ site.assets }}/distributed-training/imgs/benchmark_gptlite.svg"/>
+<img width="92.9%" height="92.9%" src="{{ site.assets }}/distributed-training/imgs/benchmark_gptlite.svg"/>
 
 {: .caption}
 Maximum and average memory allocated, and throughput, of GPTlite (GPT-3 small) with distributed data parallelism, DeepSpeed ZeRO-1 to ZeRO-3, and ZeRO-3 with CPU offloading, at a micro-batch size of 1 sample per GPU.

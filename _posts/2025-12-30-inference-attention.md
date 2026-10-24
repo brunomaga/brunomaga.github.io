@@ -75,7 +75,7 @@ Decode reads the whole KV cache at every step, so a smaller KV cache means faste
 **Multi-Head Attention** ([MHA](https://arxiv.org/abs/1706.03762)), the attention of the original Transformer, keeps one query, one key and one value per head. The following picture illustrates it with $$H = 4$$ heads, one color per head, where the keys and values of all heads form the KV cache:
 
 {: .picture}
-<img width="97.6%" height="97.6%" src="{{ site.assets }}/inference/imgs/mha.svg"/>
+<img width="92.6%" height="92.6%" src="{{ site.assets }}/inference/imgs/mha.svg"/>
 
 In 2019, Noam Shazeer proposed **Multi-Query Attention** ([MQA](https://arxiv.org/abs/1911.02150)), which keeps one query per head, but all heads share a single key head and a single value head. The KV cache shrinks by a factor equal to the number of heads, at some cost in quality. The following picture shows the same example with MQA:
 

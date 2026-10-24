@@ -37,7 +37,7 @@ Each rank holds a disjoint subset of rows of the initial graph $$G$$, such that 
 A common format for the distributed storage of a sparse matrix is the **Compressed Sparse Row** (CSR) format. Each submatrix stored on a compute node is represented (serialized) as three arrays, holding (1) the number of populated columns per row, (2) the id of each populated column, and (3) their respective values. Note that the standard CSR stores the offset of each row instead of its number of populated columns. For clarity, the following picture illustrates a sample graph with vertices 0-5 and 12 edges labeled A-T, its representative sparse matrix, and the CSR data structure on 3 ranks:
 
 {: .picture}
-<img width="98.8%" height="98.8%" src="{{ site.assets }}/matrix-transpose/crs_format.svg">
+<img width="92.2%" height="92.2%" src="{{ site.assets }}/matrix-transpose/crs_format.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)
@@ -139,7 +139,7 @@ Having a single edge between each pair of nodes is often not the case in real-li
 The solution starts by defining a data format that can hold high-cardinality elements per pair of graph nodes. It is called the **extended CSR**, or XCSR for short, and is defined as the previous CSR data structure with an added dimension that holds the number of elements per matrix cell (or edges between pairs of nodes). The layout is as follows:
 
 {: .picture}
-<img width="99.7%" height="99.7%" src="{{ site.assets }}/matrix-transpose/xcrs_format.svg">
+<img width="92.3%" height="92.3%" src="{{ site.assets }}/matrix-transpose/xcrs_format.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)

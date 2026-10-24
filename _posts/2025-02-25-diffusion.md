@@ -498,7 +498,7 @@ Another interesting feature that improves quality is [classifier-free guidance](
 Running diffusion directly on pixels is already expensive for high-resolution images. This led to the creation of the **[latent diffusion model](https://arxiv.org/abs/2112.10752)**, where diffusion is applied in the latent space of a pretrained [autoencoder](https://en.wikipedia.org/wiki/Autoencoder) (e.g. a VAE) instead of on the image directly. This reduces the cost of training on high-resolution images by working on their compressed representation. As diffusion moved towards the domain of video, the large amount of data per sample made this compression even more important, and video models now compress their input in both the spatial and temporal dimensions:
 
 {: .picture}
-<img width="98.6%" height="98.6%" src="{{ site.assets }}/diffusion/sora_vae.svg"/> 
+<img width="92.8%" height="92.8%" src="{{ site.assets }}/diffusion/sora_vae.svg"/> 
 
 {: .caption}
 An overview of the latent space compression in Sora. The pre-processing step "turns videos into [visual] patches by first compressing videos into a lower-dimensional latent space and subsequently decomposing the representation into spacetime patches". Adapted from: [Video generation models as world simulators (OpenAI)](https://openai.com/index/video-generation-models-as-world-simulators/)
@@ -581,7 +581,7 @@ And here are some examples of DiT-inspired conditional diffusion models:
 OmniGen is a diffusion model made only of a VAE and a transformer (initialized from the Phi-3 LLM), able to perform several image generation tasks: text-to-image, image editing, subject-driven generation and visual-conditional generation. Text input is tokenized, and image inputs are transformed into embeddings via a VAE. Its framework is illustrated in the following picture:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/diffusion/omnigen.svg"/> 
+<img width="92.1%" height="92.1%" src="{{ site.assets }}/diffusion/omnigen.svg"/> 
 
 {: .caption}
 The framework of OmniGen. Texts are tokenized into tokens, while input images are transformed into embedding via VAE. OmniGen can accept free-form multi-modal prompts and generate images through the rectified flow approach. The attention mask (left) is causal across the input sequence and bidirectional within each image. Adapted from: [OmniGen: Unified Image Generation](https://arxiv.org/abs/2409.11340).
@@ -662,7 +662,7 @@ Tora can generate videos guided by trajectories, images, texts, or combinations 
 Its trajectory extractor "converts the trajectory into motion patches, which inhabit the same latent space as the video patches". Text encoding is provided by T5. The architecture of Tora is illustrated in the following picture:
 
 {: .picture}
-<img width="98.6%" height="98.6%" src="{{ site.assets }}/diffusion/tora.svg"/> 
+<img width="92.1%" height="92.1%" src="{{ site.assets }}/diffusion/tora.svg"/> 
 
 {: .caption}
 Overview of the Tora architecture. Tora adds two modules: the Trajectory Extractor and the Motion-guidance Fuser. The Trajectory Extractor uses a 3D motion VAE to embed trajectory vectors into the same latent space as video patches, preserving motion information across frames. It then employs stacked convolutional layers to extract hierarchical motion features. The Motion-guidance Fuser uses adaptive normalization layers to integrate these multi-level motion conditions into the corresponding DiT blocks, so that generated videos follow the defined trajectories. Tora uses the scalability of DiT to create motion-controllable videos of extended duration. Adapted from: [Tora: Trajectory-oriented Diffusion Transformer for Video Generation](https://arxiv.org/abs/2407.21705).

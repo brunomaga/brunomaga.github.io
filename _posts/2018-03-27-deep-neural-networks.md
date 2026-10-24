@@ -168,7 +168,7 @@ It is common to not only compute the output of a single filter but to use multip
 With several channels, the result is not a 2D output in the next level, but in fact a 3D output. Layer after layer, there are increasingly more channels but a smaller “footprint”. In brief, applying local connectivity to a 2D input dataset on a *deep* neural network leads to the following final structure, a **[convolutional neural network](https://en.wikipedia.org/wiki/Convolutional_neural_network)** (CNN):
 
 {: .picture}
-<img width="99.8%" height="99.8%" src="{{ site.assets }}/deep-neural-networks/cnn.svg">
+<img width="92%" height="92%" src="{{ site.assets }}/deep-neural-networks/cnn.svg">
 
 {: .caption}
 A CNN that classifies $$16 \times 16$$ RGB patches of a satellite image as road or non-road: two stages of convolution and pooling, two fully connected layers, and the output probabilities of the two classes. Each label gives the shape of the data after a layer for $$N$$ input images, with the number of channels or units in brackets.
