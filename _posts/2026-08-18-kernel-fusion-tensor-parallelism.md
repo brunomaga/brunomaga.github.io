@@ -68,10 +68,10 @@ $$
 When all tiles of $$H$$ are processed, $$Y$$ holds the full product $$H W_2$$, and $$H$$ was never stored in global memory, as illustrated below:
 
 {: .picture}
-<img width="98.7%" height="98.7%" src="{{ site.assets }}/inference/imgs/tp_matmuls.svg"/>
+<img width="82.8%" height="82.8%" src="{{ site.assets }}/inference/imgs/tp_matmuls.svg"/>
 
 {: .caption}
-**Left:** the regular execution computes all tiles of $$H$$, stores $$H$$ in global memory, and a second kernel computes $$Y$$. **Right:** the fused kernel multiplies each tile of $$H$$ by a row of tiles of $$W_2$$ and accumulates the results in a row of tiles of $$Y$$.
+**Top:** the regular execution computes all tiles of $$H$$, stores $$H$$ in global memory, and a second kernel computes $$Y$$. **Bottom:** the fused kernel multiplies each tile of $$H$$ by a row of tiles of $$W_2$$ and accumulates the results in a row of tiles of $$Y$$.
 
 Many blocks add their products to the same tile of $$Y$$ at the same time, so the additions must be atomic. However, blocking atomic additions quickly become a bottleneck, as the contention on $$Y$$ grows with the number of tiles. Instead, the kernel accumulates the tiles with the *asynchronous* tile reductions of the GPU, which add a tile of on-chip memory to a tile of global memory without blocking the thread block that issues them.
 
