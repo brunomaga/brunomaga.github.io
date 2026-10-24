@@ -16,8 +16,9 @@ draw.io prints 100 px per inch, so its PDF has 0.72 pt per draw.io px, and the S
 to px; its viewBox keeps the PDF's units. Chrome, which prints the PDF, fits the picture into a page that draw.io
 sizes in hundredths of an inch, which can scale the picture by a few tenths of a percent: the scale is read from the
 PDF and the width and height take it into account, so that 1 draw.io px is always 1 px on the page. The script
-prints each picture's width and height in px and the width P = W / 880 * 100 to use in the Markdown:
-<img width="P%" height="P%" ...>.
+prints each picture's width and height in px and the width P = W / X * 100 to use in the Markdown,
+<img width="P%" height="P%" ...>, where X is the band that the pictures of a post take, the width of the page
+($content-width in assets/main.scss; CLAUDE.md, Pictures, section 3).
 
 Requires the draw.io desktop app (DRAWIO, default "drawio"; on a headless Linux machine for example
 DRAWIO="xvfb-run -a drawio --no-sandbox"), pdftocairo and pdftoppm (poppler-utils), and the fonts Source Sans 3
@@ -26,7 +27,15 @@ and New Computer Modern Sans Math (CLAUDE.md, Pictures, section 11).
 import collections, concurrent.futures, copy, os, re, shlex, shutil, subprocess, sys, tempfile, zlib
 import xml.etree.ElementTree as ET
 
-PAGE = 880           # content width of a post, in px
+
+def band_width():
+    """The width of the band of the pictures of a post in px: $content-width in assets/main.scss."""
+    scss = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, 'assets', 'main.scss')
+    with open(scss, encoding='utf-8') as f:
+        return float(re.search(r'^\$content-width:\s*([\d.]+)px', f.read(), re.M).group(1))
+
+
+PAGE = band_width()
 PT_PER_PX = 0.72
 DPI = 288
 INK = re.compile(rb'[\x00-\xf5]')                  # a pixel darker than white

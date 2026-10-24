@@ -283,18 +283,21 @@ sections 6 and 7, and the font section 4.
 
 ### 3. Page width and scale
 
-- The post content width is X = 880 px (minima's $content-width 940 px minus 2 x 30 px padding;
-  assets/main.scss).
+- The pictures of a post are drawn for a band X = 880 px wide, the width of the page (minima's $content-width
+  in assets/main.scss). The text column is 60 px narrower (820 px, inside minima's 2 x 30 px padding), and a
+  picture paragraph takes that padding on both sides (_sass/site/_posts.scss): a picture wider than the text
+  reaches up to 30 px beyond it on each side. On a screen narrower than the page, the band is as wide as the
+  screen, and the pictures scale down with it.
 - Every picture task first checks the page width, $content-width in assets/main.scss, at the user's request.
-  When it has changed, X is the new $content-width minus 60 px, and the sizes of these rules that follow from
+  When it has changed, X is the new $content-width, and the sizes of these rules that follow from
   X change with it (the 880 px below, the column of the publications page, the 287 px of the pipeline pictures
   and the time unit of DualPipe in section 8): every P is recomputed with the new X, and every picture wider
   than X, and every row of pictures side by side that no longer fits in X, is redrawn to fit it, as the rules
   below say.
 - Every picture is drawn for a post, also one that only the publications page shows: at page scale, where
   1 draw.io px is 1 px on the page when the picture is shown at its natural size, and no wider than 880 px.
-  The publications page puts its pictures in a 766 px column, so there they appear at 87% of their size in
-  a post, which is fine.
+  The publications page keeps its pictures in its 734 px notes column, so there they appear at 83% of their
+  size in a post, which is fine.
 - The Markdown of every page, the publications page too, shows a picture of width W px at W/880*100
   percent, rounded to one decimal:
   ```
@@ -634,7 +637,7 @@ sections 6 and 7, and the font section 4.
   legend). A chart's legend is one column (section 6).
 - Sizes for new and redrawn pictures: a one-line box 30 px tall, 20 px between boxes in a row, 40 px between
   rows (room for an arrow and its label), matrix and array cells 20 x 20 px with 12 px numbers (10 px when they
-  do not fit). A picture that does not fit the post column takes smaller elements (section 3).
+  do not fit). A picture that does not fit the band of section 3 takes smaller elements.
 
 ### 8. Pipeline schedules
 
