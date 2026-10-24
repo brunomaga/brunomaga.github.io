@@ -48,9 +48,9 @@ mjx-container.math-scroll {
 
 .post-content .picture { font-size: small; }
 
-// a picture paragraph also takes the padding of the page on both sides: the pictures are drawn for a band as wide as
-// the page ($content-width), and a wide one reaches beyond the text into the margins. The notes of the publications
-// page sit in a table cell, and keep their pictures inside it
+// a picture paragraph also takes the padding of the page on both sides: the pictures are shown in a band as wide as
+// the page ($content-width), and one wider than the text reaches beyond it into the margins. The notes of the
+// publications page sit in a table cell, and keep their pictures inside it
 .post-content .picture {
   margin-right: -$spacing-unit;
   margin-left: -$spacing-unit;

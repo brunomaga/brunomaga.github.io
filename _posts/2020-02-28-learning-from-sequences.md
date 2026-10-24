@@ -235,7 +235,7 @@ In the original paper, the authors successfully applied this model to four famil
 The inputs and outputs of the fine-tuning for these tasks are illustrated in the following picture: 
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/learning-from-sequences/bert_tasks.svg"/>
+<img width="92.2%" height="92.2%" src="{{ site.assets }}/learning-from-sequences/bert_tasks.svg"/>
 
 {: .caption}
 Input and output of the fine-tuning phase of a BERT network, applied to four types of tasks: (a) sentence pair classification (MNLI, QQP, QNLI, STS-B, MRPC, RTE, SWAG), (b) single sentence classification (SST-2, CoLA), (c) question answering (SQuAD v1.1) and (d) single sentence tagging (CoNLL-2003 NER). Adapted from: [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)

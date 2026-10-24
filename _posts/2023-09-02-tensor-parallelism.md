@@ -39,7 +39,7 @@ The rationale is the following: the MLP is a sequence of (1) a MatMul $$XA$$, (2
 After the MatMul and GeLU are done, they are followed by another MatMul and a dropout. Note that with this approach (pictured below), the output $$Y$$ of the first MatMul and GeLU (which is the input for the second MatMul) is split column-wise. Therefore, Megatron uses the previous approach for the second MatMul, which requires 1 collective communication step. In total, 1 communication step is performed for 2 MatMuls.
 
 {: .picture}
-<img width="96.9%" height="96.9%" src="{{ site.assets }}/distributed-training/imgs/tp_megatron_lm.svg"/>
+<img width="92.5%" height="92.5%" src="{{ site.assets }}/distributed-training/imgs/tp_megatron_lm.svg"/>
 
 {: .caption}
 The MLP block of Megatron-LM on two GPUs. The first MatMul follows option 2: $$X$$ is replicated and $$A$$ is split by columns, so each GPU computes its own columns of $$XA$$ and applies the GeLU to them without any communication. The second MatMul follows option 1: $$Y$$ is already split by columns and $$B$$ is split by rows, so each GPU computes a partial sum of $$YB$$, and a sum-reduce adds the partial sums on both GPUs. Inspired by: [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053)
