@@ -168,8 +168,8 @@ word helps:
 ### Titles
 
 - A post title, with the category that the home page puts before it ("Machine Learning: "), fits on one line of
-  the home page on a desktop screen. The title column is 815 px wide at 16 px: keep the line under 750 px in the
-  site's font, about 90 characters, so that it also fits with wider system fonts.
+  the home page on a desktop screen. The title column is 735 px wide at 16 px: keep the line under 690 px in the
+  site's font, about 85 characters, so that it also fits with wider system fonts.
 - A text task does not change titles: it proposes new ones in the title issues of `TODO.md`. The user approved
   the titles of seven posts on 2026-10-18; they are applied.
 
