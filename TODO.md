@@ -1289,16 +1289,11 @@ Content problems that need the author's decision, such as overlap between posts.
 
 ### From Mixture-of-Experts to RAG and Agentic AI Systems (_drafts/2026-10-23-moe-rag-agentic-ai.md)
 
-- The decode sums of Eq. 1, 3 and 4 run from $$d = 0$$ to $$n_{\text{out}} - 1$$ ($$n_{\text{final}} - 1$$,
-  $$n_s - 1$$): $$n_{\text{out}}$$ decode steps after a prefill that already gives the first output token, so
-  $$n_{\text{out}} + 1$$ tokens in all, one more than the output (the prefill and decode post counts
-  $$\text{TTLT} = \text{TTFT} + \text{TPOT} \times (n - 1)$$). Proposed fix: end the sums at $$n_{\text{out}} - 2$$,
-  $$n_{\text{final}} - 2$$ and $$n_s - 2$$, or define $$n_{\text{out}}$$, $$n_{\text{final}}$$ and $$n_s$$ as the
-  number of decode steps.
 - Eq. 4 prefills at step $$s$$ all the $$c_s - c_{s-1}$$ tokens appended since step $$s - 1$$, on a cache of
-  $$c_{s-1}$$ tokens. These include the $$n_{s-1}$$ tokens decoded at step $$s - 1$$, whose KV cache the decode has
-  already computed. Proposed fix: $$t_{\text{orch}}(c_s - c_{s-1} - n_{s-1},\; c_{s-1} + n_{s-1})$$ with
-  $$n_0 = 0$$, or a sentence saying that the model counts them for simplicity.
+  $$c_{s-1}$$ tokens. These include the $$n_{s-1}$$ tokens decoded at step $$s - 1$$, and the decode has already
+  computed the KV cache of all of them but the last one. Proposed fix:
+  $$t_{\text{orch}}(c_s - c_{s-1} - n_{s-1} + 1,\; c_{s-1} + n_{s-1} - 1)$$ for $$s > 1$$, or a sentence saying that
+  the model prefills them again, for simplicity.
 - One symbol for several quantities: $$k$$ is the number of experts per token of the MoE (top-k), the number of
   chunks of RAG (top-k) and the number of agent results used; $$d$$ is the decode index of the sums and the decoded
   tokens $$d_s$$ of the context of the orchestrator (the Execution table and the aai_dynamic picture). Proposed fix:

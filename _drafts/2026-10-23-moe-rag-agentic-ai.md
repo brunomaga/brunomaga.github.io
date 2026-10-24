@@ -19,11 +19,11 @@ As a short reminder, an MoE system runs on a network of accelerators, and works 
 The combined [prefill and decode]({{ site.baseurl }}{% post_url 2025-06-07-inference-prefill-decode-roofline-cache %}) latency of an MoE model of $$L_{\text{moe}}$$ layers, for an input sequence of $$n_{\text{in}}$$ tokens and an output of $$n_{\text{out}}$$ tokens, is then given by:
 
 $$
-T_{\text{MoE}} = \underbrace{\vphantom{\sum_{d=0}^{n}\max_{i}} L_{\text{moe}} \cdot t_{\text{layer}}(n_{\text{in}},\; 0)}_{\text{MoE prefill}} + \underbrace{\vphantom{\sum_{d=0}^{n}\max_{i}} L_{\text{moe}} \sum_{d=0}^{n_{\text{out}}-1} t_{\text{layer}}(1,\; n_{\text{in}} + d)}_{\text{MoE decode}}
+T_{\text{MoE}} = \underbrace{\vphantom{\sum_{d=0}^{n}\max_{i}} L_{\text{moe}} \cdot t_{\text{layer}}(n_{\text{in}},\; 0)}_{\text{MoE prefill}} + \underbrace{\vphantom{\sum_{d=0}^{n}\max_{i}} L_{\text{moe}} \sum_{d=0}^{n_{\text{out}}-2} t_{\text{layer}}(1,\; n_{\text{in}} + d)}_{\text{MoE decode}}
 \tag{1}
 $$
 
-where $$t_{\text{layer}}(m, c)$$ is the latency of one layer, a function of the size $$m$$ of the query tensor (the number of new tokens) and the size $$c$$ of the KV cache, which grows by one token at each decode step. The latency of a layer is computed as:
+where $$t_{\text{layer}}(m, c)$$ is the latency of one layer, a function of the size $$m$$ of the query tensor (the number of new tokens) and the size $$c$$ of the KV cache, which grows by one token at each decode step. The prefill produces the first output token, so the other $$n_{\text{out}} - 1$$ tokens take one decode step each. The latency of a layer is computed as:
 
 $$
 t_{\text{layer}}(m, c) = t_{\text{attn}}(m, c) + t_{\text{gate}}(m) + \mathbf{t}_{\textbf{dispatch}}(m) + t_{\text{expert}}(m) + \mathbf{t}_{\textbf{combine}}(m)
@@ -73,7 +73,7 @@ The $$K$$ agents then run in parallel as a **hedged fan-out**: the system procee
 The latency is the routing time, plus the fan-out time, plus the synthesizer's prefill of its $$n_{\text{synth}}$$ input tokens and decode of the $$n_{\text{final}}$$ tokens of the response:
 
 $$
-T_{\text{static}} = t_{\text{route}} + \underbrace{\vphantom{\sum_{d=0}^{n}\max_{i}} \min\!\left(\max_{i \in [1,k]}\left(\mathbf{t}_{\textbf{dispatch}}^{(i)} + t_{\text{agent}}^{(i)} + \mathbf{t}_{\textbf{combine}}^{(i)}\right),\; \text{TTLT}\right)}_{\text{hedged fan-out of } K \text{ agents, first } k \text{ results within TTLT}} + \underbrace{\vphantom{\sum_{d=0}^{n}\max_{i}} t_{\text{synth}}\!\left(n_{\text{synth}},\; 0\right)}_{\text{synthesizer prefill}} + \underbrace{\vphantom{\sum_{d=0}^{n}\max_{i}} \sum_{d=0}^{n_{\text{final}}-1} t_{\text{synth}}\!\left(1,\; n_{\text{synth}} + d\right)}_{\text{synthesizer decode}}
+T_{\text{static}} = t_{\text{route}} + \underbrace{\vphantom{\sum_{d=0}^{n}\max_{i}} \min\!\left(\max_{i \in [1,k]}\left(\mathbf{t}_{\textbf{dispatch}}^{(i)} + t_{\text{agent}}^{(i)} + \mathbf{t}_{\textbf{combine}}^{(i)}\right),\; \text{TTLT}\right)}_{\text{hedged fan-out of } K \text{ agents, first } k \text{ results within TTLT}} + \underbrace{\vphantom{\sum_{d=0}^{n}\max_{i}} t_{\text{synth}}\!\left(n_{\text{synth}},\; 0\right)}_{\text{synthesizer prefill}} + \underbrace{\vphantom{\sum_{d=0}^{n}\max_{i}} \sum_{d=0}^{n_{\text{final}}-2} t_{\text{synth}}\!\left(1,\; n_{\text{synth}} + d\right)}_{\text{synthesizer decode}}
 \tag{3}
 $$
 
@@ -98,7 +98,7 @@ A dynamic AAI. At each step, the orchestrator decodes calls to agents, which are
 The loop ends when the orchestrator produces the final answer at step $$S$$, or when $$S$$ reaches the cap $$S_{\max}$$. The orchestrator thus combines the roles of the router and the synthesizer, and adds a continue-or-stop decision after each step. A static AAI therefore behaves like a dynamic one limited to a single round of agent calls, with the routing delegated to a separate, typically cheaper, component. A RAG pipeline can serve as one of the agents in either structure. In a dynamic AAI, the orchestrator can query it repeatedly with queries it writes itself, which is the agentic RAG setting described above. The total latency is then:
 
 $$
-T_{\text{dynamic}} = \sum_{s=1}^{S} \left[\, \underbrace{\vphantom{\sum_{d=0}^{n}\max_{i}} t_{\text{orch}}\!\left(c_s - c_{s-1},\; c_{s-1}\right)}_{\text{orchestrator prefill}} + \underbrace{\vphantom{\sum_{d=0}^{n}\max_{i}} \sum_{d=0}^{n_s-1} t_{\text{orch}}\!\left(1,\; c_s + d\right)}_{\text{orchestrator decode}} + \underbrace{\vphantom{\sum_{d=0}^{n}\max_{i}} \min\!\left(\max_{j \in [1,k_s]}\left(\mathbf{t}_{\textbf{dispatch}}^{(j)} + t_{\text{agent}}^{(j)} + \mathbf{t}_{\textbf{combine}}^{(j)}\right),\; \text{TTLT}\right)}_{\text{hedged fan-out of } K_s \text{ agents, first } k_s \text{ results within TTLT}} \right]
+T_{\text{dynamic}} = \sum_{s=1}^{S} \left[\, \underbrace{\vphantom{\sum_{d=0}^{n}\max_{i}} t_{\text{orch}}\!\left(c_s - c_{s-1},\; c_{s-1}\right)}_{\text{orchestrator prefill}} + \underbrace{\vphantom{\sum_{d=0}^{n}\max_{i}} \sum_{d=0}^{n_s-2} t_{\text{orch}}\!\left(1,\; c_s + d\right)}_{\text{orchestrator decode}} + \underbrace{\vphantom{\sum_{d=0}^{n}\max_{i}} \min\!\left(\max_{j \in [1,k_s]}\left(\mathbf{t}_{\textbf{dispatch}}^{(j)} + t_{\text{agent}}^{(j)} + \mathbf{t}_{\textbf{combine}}^{(j)}\right),\; \text{TTLT}\right)}_{\text{hedged fan-out of } K_s \text{ agents, first } k_s \text{ results within TTLT}} \right]
 \tag{4}
 $$
 
