@@ -19,7 +19,7 @@ A GPT-like model generates text *autoregressively*: it reads the prompt, predict
 The following picture illustrates both phases for a prompt of four tokens and four output tokens, with the keys and values that each step writes to the KV cache and reads from it:
 
 {: .picture}
-<img width="96.4%" height="96.4%" src="{{ site.assets }}/inference/imgs/prefill_decode.svg"/>
+<img width="91%" height="91%" src="{{ site.assets }}/inference/imgs/prefill_decode.svg"/>
 
 This observation motivates most of this post. Almost every decode optimization does one of three things:
 - it **reads fewer bytes** per token (quantization, smaller KV caches, smaller models), or
@@ -785,7 +785,7 @@ Instead, the sequences are concatenated, and **each step is one forward pass ove
 The following picture illustrates three sequences in a padded batch and in a ragged batch, with the block-diagonal causal mask of the ragged batch:
 
 {: .picture}
-<img width="99.9%" height="99.9%" src="{{ site.assets }}/inference/imgs/ragged_batching.svg"/>
+<img width="91.8%" height="91.8%" src="{{ site.assets }}/inference/imgs/ragged_batching.svg"/>
 
 The following code packs sequences of different lengths into one flat sequence, with the position of every token, the block-diagonal causal mask, and the indices of the last tokens:
 

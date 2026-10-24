@@ -443,8 +443,8 @@ that is not wrong.
     arrows of CLAUDE.md.
   - `inference/imgs/medusa.svg`, `eagle.svg` and the other pictures of the speculative decoding draft show a 4 x 1
     matrix after the target model, where the originals show a row of 3D cubes. Fix: the row of cubes again.
-  - `inference/imgs/prefill_decode.svg` is crowded. Fix: draw it 880 px wide (100%), with more space between its
-    parts.
+  - `inference/imgs/prefill_decode.svg` is crowded. Fix: draw it as wide as the 820 px text column, with more space
+    between its parts.
   - `distributed-training/imgs/dnn_model_parallelism.svg` is hard to read at its width, and its 64 links are lines
     without heads, while CLAUDE.md, Pictures, section 6, draws the links of a dense network as thin arrows with heads.
     Neither the picture nor the text says which layer is the input. Fix: draw it larger, and add the heads in the
@@ -454,6 +454,40 @@ that is not wrong.
   (CLAUDE.md, Pictures, section 4). Fix: set the formulas of every picture as that post does (italic variables,
   upright words, thin spaces after the commas in brackets, hair spaces after 𝑊 and 𝑈 before a bracket or a
   superscript), then check each picture at its page size.
+- 75 pictures are wider than the 820 px text column (CLAUDE.md, Pictures, section 3), so they reach into the side
+  margins, and the two timelines of the expert parallelism post, `inference/imgs/ep_timeline.svg` and
+  `ep_timeline_noncollective.svg`, are wider than it side by side. Among them are the series of the pictures redrawn
+  for the text column on 2026-10-24, which keep their larger elements: `mqa.svg` and `gqa.svg` next to `mha.svg`, the
+  three `xcrs_transpose_*.svg`, `matrix-transposition-crs.svg` and `layouts.svg` next to `crs_format.svg` and
+  `xcrs_format.svg`, and `raster_plot_g4.5_f0.9.svg` and `raster_plot_g5_f2.svg` next to `raster_plot_g3_f2.svg`.
+  Fix: redraw each one to fit 820 px, as section 3 says, a series with the element sizes of its redrawn picture. The
+  pictures, by post: distributed-matmul-dbs (`distributed-matmul-dbs/`): `layout_columns.svg`; matrix-transpose
+  (`matrix-transpose/`): `layouts.svg`, `matrix-transposition-crs.svg`, `xcrs_transpose_1.svg`,
+  `xcrs_transpose_2.svg`, `xcrs_transpose_3.svg`; slicing (`slicing/`): `str_steps.svg`; lif-brunel (`lif-brunel/`):
+  `neuron_plot_equations.svg`, `raster_plot_g4.5_f0.9.svg`, `raster_plot_g5_f2.svg`; neuron-electrical-activity
+  (`neuron-electrical-activity/`): `neuron_model_scales.svg`; neuron-variable-timestep (`neuron-variable-timestep/`):
+  `l5_neuron_soma_voltage_per_step_6ms.svg`, `l5_neuron_pulse1_3ma_100ms_cvode_vs_backward_euler.svg`,
+  `l5_neuron_pulse_1000ms_results.svg`, `cvode_dependency_on_variation_solution.svg`,
+  `cvode_dependency_on_events_arrival.svg`; learning-from-sequences (`learning-from-sequences/`):
+  `encoder_decoder_2.svg`; data-parallelism (`distributed-training/imgs/`): `workflow_sharding.svg`,
+  `deepspeed_stages.svg`; tensor-parallelism (`distributed-training/imgs/`): `argonne_parallel_2.svg`;
+  mixture-of-experts (`distributed-training/imgs/`): `moe_2017_dean.svg`, `moe_switch_transformers.svg`,
+  `moe_switch_transformers_2.svg`, `moe_megablocks.svg`, `soft_moes.svg`, `mixture_of_depths.svg`,
+  `mixture_of_depths_2.svg`; training-variable-length-curriculum (`distributed-training/imgs/`):
+  `variable_batch_lr_pipeline.svg`; sequence-context-parallelism (`distributed-training/imgs/`):
+  `ring_attention.svg`; diffusion (`diffusion/`): `align_your_latents.svg`, `anymate_anyone.svg`,
+  `playground_v3.svg`, `dit_moe.svg`, `longvilla.svg`, `pipefusion.svg`; inference-prefill-decode-roofline-cache
+  (`inference/imgs/`): `roofline.svg`, `kv_cache.svg`, `paged_attention.svg`, `prefix_caching.svg`,
+  `semantic_caching.svg`, `chunked_prefill.svg`, `disaggregation.svg`; inference-attention (`inference/imgs/`):
+  `mqa.svg`, `gqa.svg`, `dsa.svg`; kernel-fusion-tensor-parallelism (`inference/imgs/`): `tp_timeline.svg`,
+  `tp_matmuls.svg`; kernel-fusion-expert-parallelism (`inference/imgs/`): `ep_one_to_many_inc.svg`, `ep_results.svg`;
+  inference-distillation-speculative-decoding (`inference/imgs/`): `kd_methods.svg`, `spec_decoding.svg`,
+  `spec_sampling.svg`, `prompt_lookup.svg`, `medusa.svg`, `eagle.svg`, `dflash.svg`, `layerskip.svg`,
+  `mtp_sequential.svg`; inference-pruning-quantization (`inference/imgs/`): `pruning_structures.svg`, `minitron.svg`,
+  `quantization_granularity.svg`, `microscaling.svg`; the publications page (`publications/`): `nemotron3_2.svg`,
+  `comet.svg`, `tpla.svg`, `llama3_scaling_laws.svg`, `llama_3_multi_modal.svg`, `domino.svg`, `dylora.svg`,
+  `contrastive_deep_supervision.svg`, `mlp_mixer.svg`, `pay_attention_to_mlps.svg`, `scaling_laws.svg`,
+  `gpt3_fig11.svg`, `rqvae.svg`.
 
 ### Distributed Matrix Multiplication and Database Joins (2014-04-02-distributed-matmul-dbs.md)
 
