@@ -14,44 +14,44 @@ Imagine a model that is too large to fit in the local memory of a single process
 Each process is responsible for a subset of layers and is called a **stage**, as in the stages of a [pipeline](https://en.wikipedia.org/wiki/Pipeline_(computing)). This type of parallelism is called **pipeline parallelism**. The following picture gives a simple illustration of the process:
 
 {: .picture}
-<img width="36.5%" height="36.5%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline.svg"/>
+<img width="34.3%" height="34.3%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline.svg"/>
 
 {: .caption}
-Training of a model split into 4 stages on 4 workers, without pipelining: the forward pass of a mini-batch goes from worker 1 to worker 4, and its backward pass, which takes twice as long, comes back, so only one worker computes at a time. The number in each cell is the mini-batch index. Adapted from: [PipeDream: Generalized Pipeline Parallelism for DNN Training](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/)
+Training of a model split into 4 stages on 4 GPUs, without pipelining: the forward pass of a mini-batch goes from GPU 0 to GPU 3, and its backward pass, which takes twice as long, comes back, so only one GPU computes at a time. The number in each cell is the mini-batch index. Adapted from: [PipeDream: Generalized Pipeline Parallelism for DNN Training](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/)
 
 Now note that the above method would yield a low utilization of compute resources: processes would always have to wait for the connecting layers in other processes to be computed before doing their share of the forward/backward compute. So pipeline parallelism is usually combined with **micro-batching / gradient accumulation**.
 
 In practice, the mini-batch is split into several micro-batches that are passed sequentially to the first process of the pipeline. When a process finishes the current micro-batch, it sends its activations to the following process and receives the activations of the next micro-batch from the previous process. This is mathematically equivalent to regular gradient accumulation. This approach is detailed in the paper [GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism (Google, 2018, arXiv)](https://arxiv.org/abs/1811.06965) and can be illustrated as:
 
 {: .picture}
-<img width="59.4%" height="59.4%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline_parallel.svg"/>
+<img width="57.3%" height="57.3%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline_parallel.svg"/>
 
 {: .caption}
-Pipeline parallelism with gradient accumulation (GPipe) on 4 workers: the mini-batch is split into 4 micro-batches, all forward passes run before the backward passes, and the gradients are added at the pipeline flush, before the next mini-batch starts. Adapted from: [PipeDream: Generalized Pipeline Parallelism for DNN Training](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/)
+Pipeline parallelism with gradient accumulation (GPipe) on 4 GPUs: the mini-batch is split into 4 micro-batches, all forward passes run before the backward passes, and the gradients are added at the pipeline flush, before the next mini-batch starts. Adapted from: [PipeDream: Generalized Pipeline Parallelism for DNN Training](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/)
 
 Setting a high micro-batching factor can lead to high memory usage, as activations have to be stored until the backward pass for the current mini-batch finishes. This can be improved by (1) **activation offloading**, which stores and loads activations to/from the CPU when needed; and (2) **activation checkpointing** at the beginning of every stage, which recomputes activations in the backward pass instead of storing them. In brief, offloading saves memory at the cost of data transfers between the GPU and the CPU, and checkpointing at the cost of extra computation.
 
-The other hyper-parameter to define is the number of stages. So far, the examples above used a number of stages equal to the number of workers, i.e. a single pipeline that spans all workers. However, it is possible to have multiple pipelines in parallel and to combine pipeline parallelism with other dimensions of parallelism. As an example, here are some combinations of pipeline and data parallelism on an 8-GPU network:
+The other hyper-parameter to define is the number of stages. So far, the examples above used a number of stages equal to the number of GPUs, i.e. a single pipeline that spans all GPUs. However, it is possible to have multiple pipelines in parallel and to combine pipeline parallelism with other dimensions of parallelism. As an example, here are some combinations of pipeline and data parallelism on an 8-GPU network:
 
 {: .picture}
-<img width="29.9%" height="29.9%" src="{{ site.assets }}/distributed-training/imgs/pipeline_8_stages.svg"/>
+<img width="28%" height="28%" src="{{ site.assets }}/distributed-training/imgs/pipeline_8_stages.svg"/>
 &nbsp;
-<img width="29.9%" height="29.9%" src="{{ site.assets }}/distributed-training/imgs/pipeline_4_stages.svg"/>
+<img width="28%" height="28%" src="{{ site.assets }}/distributed-training/imgs/pipeline_4_stages.svg"/>
 &nbsp;
-<img width="29.9%" height="29.9%" src="{{ site.assets }}/distributed-training/imgs/pipeline_2_stages.svg"/>
+<img width="28%" height="28%" src="{{ site.assets }}/distributed-training/imgs/pipeline_2_stages.svg"/>
 
 {: .caption}
-Combinations of pipeline and data parallelism on 8 workers, for one micro-batch: forward passes in blue, backward passes in green, idle time in dashed boxes. Left: one pipeline of 8 stages. Center: 2 data-parallel groups of 4 pipeline stages. Right: 4 data-parallel groups of 2 pipeline stages.
+Combinations of pipeline and data parallelism on 8 GPUs, for one micro-batch: forward passes in blue, backward passes in green, idle time in dashed boxes. Left: one pipeline of 8 stages. Center: 2 data-parallel groups of 4 pipeline stages. Right: 4 data-parallel groups of 2 pipeline stages.
 
 In the pictures above, fewer stages lead to less idle time but to more layers per GPU, so the number of stages is usually the smallest one that fits the model in memory. However, no matter which pipeline configuration is used, there are periods of idleness that cannot be removed.
 
 With this in mind, there is plenty of ongoing work to improve this. As an example, [PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, SOSP 2019)](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/) is a pipeline method that overlaps the forward and backward passes of different mini-batches. To do so, it keeps track of the version (mini-batch id) and stores several versions of the activations and parameters whose backward pass has not completed:
 
 {: .picture}
-<img width="56.4%" height="56.4%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline_parallel_microsoft.svg"/>
+<img width="54.2%" height="54.2%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline_parallel_microsoft.svg"/>
 
 {: .caption}
-The PipeDream schedule on 4 workers. In the startup state, worker 1 admits 4 mini-batches; in the steady state, each worker alternates the forward pass of one mini-batch and the backward pass of an earlier one, so several mini-batches are in flight at the same time. Backward passes are prioritized over forward passes on each worker. Adapted from: [PipeDream: Generalized Pipeline Parallelism for DNN Training](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/)
+The PipeDream schedule on 4 GPUs. In the startup state, GPU 0 admits 4 mini-batches; in the steady state, each GPU alternates the forward pass of one mini-batch and the backward pass of an earlier one, so several mini-batches are in flight at the same time. Backward passes are prioritized over forward passes on each GPU. Adapted from: [PipeDream: Generalized Pipeline Parallelism for DNN Training](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/)
 
 Where is the caveat? In practice, mixing forward and backward passes from different mini-batches can lead to wrong parameter updates. Therefore, the authors perform versioning of the parameters (*weight stashing*), effectively having several versions of the same parameters in the model.
 

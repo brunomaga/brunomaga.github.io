@@ -32,7 +32,7 @@ Each rank holds $$n/p$$ consecutive rows of $$A$$, and the matching entries of $
 2. each rank multiplies its rows of $$A$$ by $$x$$.
 
 {: .picture}
-<img width="93.2%" height="93.2%" src="{{ site.assets }}/distributed-matmul-dbs/matvec_row1d.svg">
+<img width="93.1%" height="93.1%" src="{{ site.assets }}/distributed-matmul-dbs/matvec_row1d.svg">
 
 {: .caption}
 Matrix-vector product on 4 ranks, colored by rank. **Left:** the initial layout. **Right:** rank 1 after the all-gather, ready to compute $$y_2$$ and $$y_3$$.
@@ -298,7 +298,7 @@ In practice, only *row numbers* cross the network, and the result stays split by
 **Outer joins.** The join index also holds pairs with one side missing, such as Mary (row 1) and Joe (row 3) in the left outer join, and the servers write `NULL` where a row number is missing, as illustrated below:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/distributed-matmul-dbs/layout_columns.svg">
+<img width="92.6%" height="92.6%" src="{{ site.assets }}/distributed-matmul-dbs/layout_columns.svg">
 
 {: .caption}
 A left outer join of tables split by columns across 3 servers. Column `#` is the implicit row number. Server 1 builds the join index (1) and sends row numbers (2), and servers 2 and 3 gather their rows (3). The first three rows are the inner join.

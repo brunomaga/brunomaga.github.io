@@ -196,7 +196,7 @@ The weak point of the INC collectives is the memory of the switch. All-to-All-Di
 The $$s$$ signal tells each expert rank that it can release its partial results, which it could not know otherwise, as only the token rank receives the sum. All-to-All-Combine needs none, as every rank receives its own sums, which the switch sends only once it has pulled the partial results of every rank. The following picture shows the two operations on the example above:
 
 {: .picture}
-<img width="97.7%" height="97.7%" src="{{ site.assets }}/inference/imgs/ep_one_to_many_inc.svg"/>
+<img width="92.9%" height="92.9%" src="{{ site.assets }}/inference/imgs/ep_one_to_many_inc.svg"/>
 
 {: .caption}
 The partial collective operations, One-to-Many-Dispatch (left) and Many-to-One-Combine (right), with token C of $$P_2$$ and every rank and expert on its path in black, and the others in grey. The INC switch relays the tokens of each sender as they land. $$P_0$$ and $$P_1$$ signal $$P_2$$ that their outputs are ready (dotted), and $$P_2$$ signals the INC switch $$r^{01}_C$$, naming them, which starts the pulls of $$\sigma^0_C$$ and $$\sigma^1_C$$. Once it has read both, the switch signals $$s^0_C$$ to $$P_0$$ and $$s^1_C$$ to $$P_1$$, which can then release them, and returns their sum $$\Sigma_C$$ to $$P_2$$ alone. No transfer waits for another token rank.
@@ -220,9 +220,9 @@ On the partial collective combine, each $$P_y$$ signals $$P_x$$ through the swit
 The timelines below follow token C through both forms, with the operations of each device:
 
 {: .picture}
-<img width="44.6%" height="44.6%" src="{{ site.assets }}/inference/imgs/ep_timeline.svg"/>
+<img width="44.2%" height="44.2%" src="{{ site.assets }}/inference/imgs/ep_timeline.svg"/>
 <span style="display:inline-block; width:4%;"></span>
-<img width="48.9%" height="48.9%" src="{{ site.assets }}/inference/imgs/ep_timeline_noncollective.svg"/>
+<img width="43.9%" height="43.9%" src="{{ site.assets }}/inference/imgs/ep_timeline_noncollective.svg"/>
 
 {: .caption}
 The dispatch and combine of token C, owned by $$P_2$$. **Left:** All-to-All-Dispatch and All-to-All-Combine. **Right:** One-to-Many-Dispatch and Many-to-One-Combine. $$P_2$$ sends $$C_{01}$$, i.e. token C for the expert ranks $$P_0$$ and $$P_1$$, which the INC switch sends on as $$C_0$$ to $$P_0$$, $$C_1$$ to $$P_1$$ and $$\emptyset$$ to $$P_2$$ once all ranks have arrived (left), or as soon as it lands, to $$P_0$$ and $$P_1$$ alone (right, where $$P_2$$, which takes no part as an expert rank, is grey). It pulls the partial sums $$\sigma^0_C$$ and $$\sigma^1_C$$ as each rank signals it $$r^0_C$$ or $$r^1_C$$ (left), or once $$P_2$$, signalled $$r^0_C$$ and $$r^1_C$$, has signalled it $$r^{01}_C$$, signalling $$s^0_C$$ and $$s^1_C$$ once it has read both (right), and sends their sum $$\Sigma_C$$ to $$P_2$$. The asterisk marks nonblocking calls, and dotted arrows are flags raised with `signal`.
@@ -316,7 +316,7 @@ The kernel was evaluated on [OLMoE-1B-7B](https://arxiv.org/abs/2409.02060), an 
 A forward pass was timed at 4,096 to 65,536 tokens per compute rank, which covers the chunks of chunked prefill and large prefill batches, and the time reported is the mean of five iterations after warm-up. Each iteration is a single forward pass over the whole batch that emits one token, i.e. the prefill step. Here, the MoE layer takes 87% to 96% of the time of an iteration, and this is the regime where the all-to-all of expert parallelism is the known bottleneck. The runtime per iteration of the three implementations is displayed below:
 
 {: .picture}
-<img width="99.4%" height="99.4%" src="{{ site.assets }}/inference/imgs/ep_results.svg"/>
+<img width="92.9%" height="92.9%" src="{{ site.assets }}/inference/imgs/ep_results.svg"/>
 
 {: .caption}
 Runtime with the all-to-all backend, on $$\log_2$$ axes. **Left:** prefill time per iteration against the batch size. **Right:** decode time per output token against the number of concurrent sequences, with placeholder values that are not measured yet.

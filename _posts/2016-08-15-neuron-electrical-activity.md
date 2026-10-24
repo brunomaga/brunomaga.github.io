@@ -28,7 +28,7 @@ Due to the very sophisticated anatomical structure and behaviour of neurons, num
 Brain simulators also work at different levels of detail, as displayed in the picture below, where each model zooms into a part of the model on its left:
 
 {: .picture}
-<img width="98.6%" height="98.6%" src="{{ site.assets }}/neuron-electrical-activity/neuron_model_scales.svg">
+<img width="92.8%" height="92.8%" src="{{ site.assets }}/neuron-electrical-activity/neuron_model_scales.svg">
 
 {: .caption}
 Levels of detail in brain simulation. Each red outline marks the part that the next model describes in more detail. This post covers the compartmental neuron model (in bold). In the reaction-diffusion model, the line with a flat head marks the breakdown of cAMP by PDE. Adapted from: J. M. Eppler, Introduction to NEST, First community workshop on NESTML, 2015

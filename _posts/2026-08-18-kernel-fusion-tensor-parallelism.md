@@ -40,7 +40,7 @@ where the sum of the partial outputs $$H^{(g)} W_2^{(g)} \in \mathbb{R}^{M \time
 A regular implementation of this FFN launches 7 kernels: a matrix multiplication, a bias addition and an activation for each layer, plus the all-reduce. Each kernel loads its inputs from global memory and stores its outputs there, as displayed at the top of the timeline below. The kernel of this post runs the whole FFN as one kernel, with a single load and a single store to global memory (bottom), and with many small all-reduce steps that overlap the computation:
 
 {: .picture}
-<img width="95.5%" height="95.5%" src="{{ site.assets }}/inference/imgs/tp_timeline.svg"/>
+<img width="92.9%" height="92.9%" src="{{ site.assets }}/inference/imgs/tp_timeline.svg"/>
 
 {: .caption}
 Execution timeline of an FFN with Megatron-LM tensor parallelism. **Top:** the regular execution, with 7 kernels that load from (arrow up) and store to (arrow down) global memory. **Bottom:** the fused kernel, with several small, overlapping all-reduce steps performed in the network switch.
@@ -68,7 +68,7 @@ $$
 When all tiles of $$H$$ are processed, $$Y$$ holds the full product $$H W_2$$, and $$H$$ was never stored in global memory, as illustrated below:
 
 {: .picture}
-<img width="98.7%" height="98.7%" src="{{ site.assets }}/inference/imgs/tp_matmuls.svg"/>
+<img width="70.2%" height="70.2%" src="{{ site.assets }}/inference/imgs/tp_matmuls.svg"/>
 
 {: .caption}
 **Left:** the regular execution computes all tiles of $$H$$, stores $$H$$ in global memory, and a second kernel computes $$Y$$. **Right:** the fused kernel multiplies each tile of $$H$$ by a row of tiles of $$W_2$$ and accumulates the results in a row of tiles of $$Y$$.
