@@ -1255,14 +1255,21 @@ Content problems that need the author's decision, such as overlap between posts.
 
 ### From Mixture-of-Experts to RAG and Agentic AI Systems (_drafts/2026-10-23-moe-rag-agentic-ai.md)
 
-- The draft has no pictures. Proposed pictures: the MoE gate, dispatch and combine steps; the RAG index and query
-  pipeline; the static AAI (router, hedged fan-out of K agents, synthesizer) next to the dynamic AAI (orchestrator
-  loop over S steps), with the terms of Eq. 3 and Eq. 4 on the arrows.
-- The numbers of Liu et al. (2026) other than the KV cache hit rates (15 LLM calls per session, P90 concurrency 1.4,
-  166 ms per tool call, 247 tokens per completion, 9% tool failures, 28% and 4.7%, 50 times) and the 37 to 40% of
-  InferCept were not checked against the papers. Fix: check them in the full texts.
-- The MoE "top-k" and the agent count k share one symbol. Fix: keep both, as the table defines them, or name the
-  number of experts per token differently.
+- The decode sums of Eq. 1, 3 and 4 run from $$d = 0$$ to $$n_{\text{out}} - 1$$ ($$n_{\text{final}} - 1$$,
+  $$n_s - 1$$): $$n_{\text{out}}$$ decode steps after a prefill that already gives the first output token, so
+  $$n_{\text{out}} + 1$$ tokens in all, one more than the output (the prefill and decode post counts
+  $$\text{TTLT} = \text{TTFT} + \text{TPOT} \times (n - 1)$$). Proposed fix: end the sums at $$n_{\text{out}} - 2$$,
+  $$n_{\text{final}} - 2$$ and $$n_s - 2$$, or define $$n_{\text{out}}$$, $$n_{\text{final}}$$ and $$n_s$$ as the
+  number of decode steps.
+- Eq. 4 prefills at step $$s$$ all the $$c_s - c_{s-1}$$ tokens appended since step $$s - 1$$, on a cache of
+  $$c_{s-1}$$ tokens. These include the $$n_{s-1}$$ tokens decoded at step $$s - 1$$, whose KV cache the decode has
+  already computed. Proposed fix: $$t_{\text{orch}}(c_s - c_{s-1} - n_{s-1},\; c_{s-1} + n_{s-1})$$ with
+  $$n_0 = 0$$, or a sentence saying that the model counts them for simplicity.
+- One symbol for several quantities: $$k$$ is the number of experts per token of the MoE (top-k), the number of
+  chunks of RAG (top-k) and the number of agent results used; $$d$$ is the decode index of the sums and the decoded
+  tokens $$d_s$$ of the context of the orchestrator (the Execution table and the aai_dynamic picture). Proposed fix:
+  keep top-k as the name of the selection, and name the agent results and the decoded tokens with other letters
+  (e.g. $$r$$ and $$o_s$$), in the text, the formulas, the tables and the pictures.
 
 ### Publication Summaries (publications.md)
 
