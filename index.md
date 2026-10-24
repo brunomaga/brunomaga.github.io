@@ -94,7 +94,7 @@ I also keep a curated list of publications, books and other resources in the fie
 <tr>
 <td></td>
 <td>
-  <a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/copy.html">Understanding Machine Learning: From Theory to Algorithms, Shai Shalev-Shwartz, Shai Ben-David</a><a class="pub-link" href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/copy.html" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a><a class="pub-link" href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf" target="_blank" rel="noopener" title="Download the PDF"><i class="fa-solid fa-download" aria-hidden="true"></i></a>
+  <a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/copy.html">Understanding Machine Learning: From Theory to Algorithms, S. Shalev-Shwartz, S. Ben-David</a><a class="pub-link" href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/copy.html" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a><a class="pub-link" href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf" target="_blank" rel="noopener" title="Download the PDF"><i class="fa-solid fa-download" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>
