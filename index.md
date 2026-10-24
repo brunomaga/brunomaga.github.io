@@ -21,7 +21,7 @@ layout: default
 
 <!-- introduction paragraph -->
 <p class="home-intro">
-Hi 👋🏽! I am Bruno, an ML Systems Researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research Switzerland</a>. Previously, I was an ML Researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a>, and an HPC Engineer and PhD in Computational Neuroscience at <a href="https://epfl.ch">EPFL</a>. I focus on ML efficiency — from embedded inference to distributed training — across Transformer, MoE, diffusion, and agentic models.
+Hi 👋🏽! I am Bruno, an ML Systems Researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research Switzerland</a>. Previously, I was an ML Researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a>, and an HPC Engineer and PhD Computational Neuroscience at <a href="https://epfl.ch">EPFL</a>. I focus on ML efficiency — from embedded inference to distributed training — across Transformer, MoE, diffusion, and agentic models.
 </p>
 
 <p class="home-text">
@@ -94,7 +94,7 @@ I also keep a curated list of publications, books and other resources in the fie
 <tr>
 <td></td>
 <td>
-  <a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/copy.html">Understanding Machine Learning: From Theory to Algorithms, Shai Shalev-Shwartz, Shai Ben-David</a><a class="pub-link" href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/copy.html" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a><a class="pub-link" href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf" target="_blank" rel="noopener" title="Download the PDF"><i class="fa-solid fa-download" aria-hidden="true"></i></a>
+  <a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/copy.html">Understanding Machine Learning: From Theory to Algorithms, S. Shalev-Shwartz, S. Ben-David</a><a class="pub-link" href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/copy.html" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a><a class="pub-link" href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf" target="_blank" rel="noopener" title="Download the PDF"><i class="fa-solid fa-download" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>

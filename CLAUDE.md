@@ -168,8 +168,8 @@ word helps:
 ### Titles
 
 - A post title, with the category that the home page puts before it ("Machine Learning: "), fits on one line of
-  the home page on a desktop screen. The title column is 815 px wide at 16 px: keep the line under 750 px in the
-  site's font, about 90 characters, so that it also fits with wider system fonts.
+  the home page on a desktop screen. The title column is 735 px wide at 16 px: keep the line under 690 px in the
+  site's font, about 85 characters, so that it also fits with wider system fonts.
 - A text task does not change titles: it proposes new ones in the title issues of `TODO.md`. The user approved
   the titles of seven posts on 2026-10-18; they are applied.
 
@@ -264,6 +264,11 @@ sections 6 and 7, and the font section 4.
   paper repository's draw.io or TikZ source. The paper repositories stay unchanged. Two pictures are the
   exception: ep_stages.svg and ep_pipeline.svg of the expert parallelism post stay the paper's own figures,
   copied unchanged and shown at 100% width.
+- Until 1 November 2026, at the user's request, the paper repository of the expert parallelism post gets new
+  and changed figures. Every SVG revision (every picture task) in that time first pulls the latest imgs/*.svg
+  and their draw.io or TikZ sources from the paper repositories, and adapts the pictures of the kernel fusion
+  posts to them: a changed figure is redrawn again in this repo (copied again for ep_stages.svg and
+  ep_pipeline.svg), and a new figure that the post does not show yet is reported to the user.
 - A picture or an animation shown unchanged from Wikimedia Commons (the Newton's method and k-means GIFs)
   links to its original file on upload.wikimedia.org, with no copy in assets.
 - A picture used by a post and by the publications page is stored once, in the post's asset folder, and
@@ -280,6 +285,12 @@ sections 6 and 7, and the font section 4.
 
 - The post content width is X = 880 px (minima's $content-width 940 px minus 2 x 30 px padding;
   assets/main.scss).
+- Every picture task first checks the page width, $content-width in assets/main.scss, at the user's request.
+  When it has changed, X is the new $content-width minus 60 px, and the sizes of these rules that follow from
+  X change with it (the 880 px below, the column of the publications page, the 287 px of the pipeline pictures
+  and the time unit of DualPipe in section 8): every P is recomputed with the new X, and every picture wider
+  than X, and every row of pictures side by side that no longer fits in X, is redrawn to fit it, as the rules
+  below say.
 - Every picture is drawn for a post, also one that only the publications page shows: at page scale, where
   1 draw.io px is 1 px on the page when the picture is shown at its natural size, and no wider than 880 px.
   The publications page puts its pictures in a 766 px column, so there they appear at 87% of their size in
@@ -295,9 +306,20 @@ sections 6 and 7, and the font section 4.
 - Pictures shown side by side in one row each keep their own P. When the P values of a row add up to more
   than 98 (the spaces between pictures take the rest), the pictures wrap onto the next line. The two models at
   the top of the GPT-lite post are 92 px apart (twelve `&nbsp;` between their img tags), at the user's request.
-- A picture that does not fit 880 px at the text sizes below is redrawn: first narrow the empty space
-  between its parts, then move parts (wrap a row into two rows, stack panels, break long labels over two
-  lines). Never shrink the text to make it fit.
+- A picture that does not fit 880 px at the text sizes below is redrawn in this order, at the user's request:
+  first narrow the empty space between its parts; then shrink its elements (smaller matrices, cells, cubes,
+  circles and photos, shorter arrows, narrower tensors and boxes), as far as their text and the arrow layout of
+  section 6 allow; then, only where that is not enough, move parts (stack panels, move a legend). A long label
+  may break over two or three lines (the blue boxes of prefill_decode). Never shrink the text to make it fit.
+  Line weights and arrowheads keep their size, a box keeps 3 px between its text and its outline, a matrix
+  drawn to scale stays to scale, a photo keeps its aspect ratio, and the pictures of a series shrink together
+  (section 7).
+- A picture keeps its layout where smaller elements make it fit, at the user's request: a row of panels stays
+  one row (the two panels of ragged_batching), and a one-row array, tensor or sequence of tokens is never
+  wrapped onto a second row (the arrays of xcrs_format).
+- Pictures side by side whose rows refer to each other have the same height, each row at the height of the row
+  it refers to, at the user's request: the two rows of circles of svd_example_2 next to the two rows of photos
+  of svd_example.
 - A picture whose arrows or labels are crowded grows, taller or wider up to 880 px, before any text or arrow
   gets smaller (the transformer picture is taller, the DualPipe schedule wider). Its elements keep their size as
   it grows: only the spaces between them widen, which gives the arrows and their labels more room (tora, at the
@@ -612,7 +634,7 @@ sections 6 and 7, and the font section 4.
   legend). A chart's legend is one column (section 6).
 - Sizes for new and redrawn pictures: a one-line box 30 px tall, 20 px between boxes in a row, 40 px between
   rows (room for an arrow and its label), matrix and array cells 20 x 20 px with 12 px numbers (10 px when they
-  do not fit).
+  do not fit). A picture that does not fit the post column takes smaller elements (section 3).
 
 ### 8. Pipeline schedules
 

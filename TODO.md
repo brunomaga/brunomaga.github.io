@@ -1285,12 +1285,17 @@ Content problems that need the author's decision, such as overlap between posts.
 ## Title issues
 
 A new title keeps the URL, which comes from the file name (`permalink: /:title` in `_config.yml`). A title, with the
-category that the home page puts before it, fits on one line of the home page on a desktop screen (under 750 px).
+category that the home page puts before it, fits on one line of the home page on a desktop screen (under 690 px).
 
 ### All posts
 
 - The capitalization is mixed: the posts up to 2019 use title case, most posts since 2023 use sentence case, and
   a few titles mix both. Fix: one style for all titles.
+- With the 880 px page, nine post titles are longer than 690 px on the home page (they still fit its 735 px
+  column in the site's font, but may wrap with a wider system font): kernel fusion for Megatron-LM (722 px),
+  faster attention (693 px), variable sequence lengths (725 px), learning from sequences (694 px), VAEs and GANs
+  (729 px), Bayesian linear regression (718 px), deep neural networks (708 px), variable timestep (720 px) and
+  the LIF neuron and Brunel network (694 px). Fix: shorter titles, under 690 px.
 
 ### Unsupervised Learning basics and Principal Component Analysis (2017-11-01-unsupervised-learning.md)
 
