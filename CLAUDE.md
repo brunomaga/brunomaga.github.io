@@ -322,7 +322,8 @@ sections 6 and 7, and the font section 4.
   one row (the two panels of ragged_batching, the five parts of xcrs_transpose_3, as in the original figure), and
   a one-row array, tensor or sequence of tokens is never wrapped onto a second row (the arrays of xcrs_format).
 - Two variants that a picture compares are drawn one above the other, each in one row, with each part above its
-  counterpart, at the user's request: the baseline and the fused kernel of tp_matmuls.
+  counterpart, at the user's request: the baseline and the fused kernel of tp_matmuls, with no line between the two
+  rows.
 - To make room, a picture may draw fewer of the parts that it repeats only as an illustration (the latent volume
   of sora_vae is 12 slices deep and its latent sequence 16 cells long), join the single tokens of one sequence into
   one array (the prompt of prefill_decode, a 1 x 4 array), or move a label next to another part (the (N/2)× of
