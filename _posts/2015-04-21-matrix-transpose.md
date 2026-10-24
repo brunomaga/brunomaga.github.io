@@ -47,7 +47,7 @@ Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs An
 A small mental trick to understand this is to notice that a sparse matrix transpose is nothing more than a composition of two operations: a local matrix transpose and a view swap. So these two operations can be used to describe a distributed sparse matrix in four different data layouts, illustrated below:
 
 {: .picture}
-<img width="96.4%" height="96.4%" src="{{ site.assets }}/matrix-transpose/layouts.svg">
+<img width="53.0%" height="53.0%" src="{{ site.assets }}/matrix-transpose/layouts.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)
@@ -109,7 +109,7 @@ This information is required to match each column/row id to its target rank in t
 The first step performs a dense matrix transpose (`MPI_Alltoall`) to send/receive the number of elements to/from other ranks. The second step performs a selective scatter-gather (`MPI_Alltoallv`) that delivers the elements to the final rank. The following picture illustrates both steps on the sample matrix above: the transpose of the element counts (left), and the exchange of the elements with their row and column ids (right):
 
 {: .picture}
-<img width="98%" height="98%" src="{{ site.assets }}/matrix-transpose/matrix-transposition-crs.svg">
+<img width="92.7%" height="92.7%" src="{{ site.assets }}/matrix-transpose/matrix-transposition-crs.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)
@@ -147,7 +147,7 @@ Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs An
 The transpose algorithm then follows in three steps. First, each compute node (rank) collects the metadata of its own sub-matrix, composed of the set of triplets of the form [ row id, column id, number of elements], indicating the row, column and dimensionality of each cell. Then the ranks perform a **local transpose** of their own data, by reordering their triplets by column and row id. This sequence illustrates the first step:
  
 {: .picture}
-<img width="99.2%" height="99.2%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_1.svg">
+<img width="89.0%" height="89.0%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_1.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)
@@ -157,7 +157,7 @@ The second step starts the **view swap** method. All ranks pack their triplets a
 More importantly, the matrix composed of all triplets across all ranks is a distributed matrix with a fixed element size per cell (a tuple of fixed size). Therefore, this exchange is performed by the same distributed transpose presented above in the section *How to transpose it?*. After the exchange, all ranks will hold the triplets of the metadata (*but not the data yet*) of the final matrix structure:   
 
 {: .picture}
-<img width="97.8%" height="97.8%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_2.svg">
+<img width="92.7%" height="92.7%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_2.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)

@@ -498,7 +498,7 @@ Another interesting feature that improves quality is [classifier-free guidance](
 Running diffusion directly on pixels is already expensive for high-resolution images. This led to the creation of the **[latent diffusion model](https://arxiv.org/abs/2112.10752)**, where diffusion is applied in the latent space of a pretrained [autoencoder](https://en.wikipedia.org/wiki/Autoencoder) (e.g. a VAE) instead of on the image directly. This reduces the cost of training on high-resolution images by working on their compressed representation. As diffusion moved towards the domain of video, the large amount of data per sample made this compression even more important, and video models now compress their input in both the spatial and temporal dimensions:
 
 {: .picture}
-<img width="92.8%" height="92.8%" src="{{ site.assets }}/diffusion/sora_vae.svg"/> 
+<img width="92.2%" height="92.2%" src="{{ site.assets }}/diffusion/sora_vae.svg"/> 
 
 {: .caption}
 An overview of the latent space compression in Sora. The pre-processing step "turns videos into [visual] patches by first compressing videos into a lower-dimensional latent space and subsequently decomposing the representation into spacetime patches". Adapted from: [Video generation models as world simulators (OpenAI)](https://openai.com/index/video-generation-models-as-world-simulators/)
@@ -537,7 +537,7 @@ To train on videos, they use the method presented in [Align your Latents: High-R
 The following picture illustrates the temporal layers inserted between the spatial layers of the image model:
 
 {: .picture}
-<img width="93.9%" height="93.9%" src="{{ site.assets }}/diffusion/align_your_latents.svg"/> 
+<img width="92.7%" height="92.7%" src="{{ site.assets }}/diffusion/align_your_latents.svg"/> 
 
 {: .caption}
 **Left:** a pre-trained LDM is turned into a video generator by inserting temporal layers that learn to align frames into temporally consistent sequences. During optimization, the image backbone $$\theta$$ remains fixed and only the parameters $$\phi$$ of the temporal layers $$l^i_\phi$$ are trained. **Right:** During training, the base model $$\theta$$ interprets the input sequence of length $$T$$ as a batch of images. For the temporal layers $$l^i_\phi$$, these batches are reshaped into video format. Their output $$z'$$ is combined with the spatial output $$z$$, using a learned merge parameter $$\alpha$$. During inference, skipping the temporal layers ($$\alpha^i_\phi=1$$) yields the original image model. For illustration purposes, only a single U-Net Block is shown. $$B$$ denotes the batch size, $$T$$ the sequence length, $$C$$ the input channels and $$H$$ and $$W$$ the spatial dimensions of the input. $$c_S$$ is an optional context-frame conditioning, used when training prediction models. Adapted from: [Align your Latents: High-Resolution Video Synthesis with Latent Diffusion Models](https://arxiv.org/abs/2304.08818).
@@ -551,7 +551,7 @@ A U-Net-based diffusion model that takes as input a reference image (a photo of 
 Spatio-temporal attention is achieved by a spatial attention that converts an input $$B \times T \times H \times W \times C$$ into $$(B * T ) \times (H * W) \times C$$ to perform attention of patches within the same frame. It is followed by a temporal attention that converts it into $$(B * H * W) \times T \times C$$ and performs attention of the same patch across time. An overview of the model is displayed below:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/diffusion/anymate_anyone.svg"/> 
+<img width="92.6%" height="92.6%" src="{{ site.assets }}/diffusion/anymate_anyone.svg"/> 
 
 {: .caption}
 Overview of Animate Anyone. The pose sequence is initially encoded using Pose Guider and fused with multi-frame noise, followed by the Denoising UNet conducting the denoising process for video generation. The computational block of the Denoising UNet consists of Spatial-Attention, Cross-Attention, and Temporal-Attention, as illustrated in the dashed box on the right. The integration of reference image involves two aspects. Firstly, detailed features are extracted through ReferenceNet and utilized for Spatial-Attention. Secondly, semantic features are extracted through the CLIP image encoder for Cross-Attention. Temporal-Attention operates in the temporal dimension. Finally, the VAE decoder decodes the result into a video clip. Adapted from: [Animate Anyone: Consistent and Controllable Image-to-Video Synthesis for Character Animation](https://arxiv.org/abs/2311.17117).
@@ -594,7 +594,7 @@ The framework of OmniGen. Texts are tokenized into tokens, while input images ar
 A text-to-image diffusion model that replaces the commonly used T5 and CLIP text encoders with the latents of a decoder-only LLM (Llama3-8B), as illustrated in the following picture:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/diffusion/playground_v3.svg"/> 
+<img width="92.5%" height="92.5%" src="{{ site.assets }}/diffusion/playground_v3.svg"/> 
 
 {: .caption}
 Simplified structure of Playground v3 (PGv3). Text conditioning comes only from Llama3-8B, with no T5 or CLIP encoder: each PGv3 block attends jointly to the image tokens and to the keys and values of the matching Llama3 block. Adapted from: [Playground v3: Improving Text-to-Image Alignment with Deep-Fusion Large Language Models](https://arxiv.org/abs/2409.10695).
@@ -704,7 +704,7 @@ And here is some work on multi-dimensional parallelism for large-scale models su
 Presents DiT-MoE, a sparse [Mixture of Experts](https://en.wikipedia.org/wiki/Mixture_of_experts) (MoE) version of DiT, delivering good scaling properties, performance comparable to dense DiTs, and highly optimized inference. Its architecture is illustrated in the following picture:
 
 {: .picture}
-<img width="97.4%" height="97.4%" src="{{ site.assets }}/diffusion/dit_moe.svg"/> 
+<img width="92.6%" height="92.6%" src="{{ site.assets }}/diffusion/dit_moe.svg"/> 
 
 {: .caption}
 <b>Overview of the DiT-MoE architecture.</b> DiT-MoE is built upon the DiT and composed of MoE-inserted Transformer blocks. In each block, the MLP is replaced by a sparsely activated mixture of MLPs. The right subfigure shows the MoE layer with the shared expert strategy. Adapted from: [Scaling Diffusion Transformers to 16 Billion Parameters](https://arxiv.org/abs/2407.11633).
@@ -720,7 +720,7 @@ LongVILA details a 5-stage pipeline for training long-context visual-language mo
 In Stage 5, the model is fine-tuned for long video understanding with Multi-Modal Sequence Parallelism (MM-SP) based on [LoongTrain: Efficient Training of Long-Sequence LLMs with Head-Context Parallelism](https://arxiv.org/abs/2406.18485). The workflow of MM-SP is illustrated in the following picture:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/diffusion/longvilla.svg"/> 
+<img width="92.7%" height="92.7%" src="{{ site.assets }}/diffusion/longvilla.svg"/> 
 
 {: .caption}
 Workflow of Multi-Modal Sequence Parallelism (MM-SP) with a Batch Size (bs) of 4 and a Sequence Parallel Size (SP\_Size) of 3. To support sequence parallelism for multi-modal inputs, MM-SP uses a custom sharding strategy that balances the workload and is compatible with SP communication. Adapted from: [LongVILA: Scaling Long-Context Visual Language Models for Long Videos](https://arxiv.org/abs/2408.10188).
@@ -735,7 +735,7 @@ Workflow of Multi-Modal Sequence Parallelism (MM-SP) with a Batch Size (bs) of 4
 PipeFusion splits images into patches and distributes the network layers across multiple devices, orchestrating communication and computation in a pipeline-parallel manner. xDiT is a parallel **inference** engine for DiTs that uses [Unified Sequence Parallelism](https://arxiv.org/abs/2405.07719) (including Ulysses attention and Ring attention), PipeFusion, and hybrid parallelism. xDiT is applied to and benchmarked on the following DiT implementations: CogVideoX, Flux, Latte, HunyuanDiT, Stable Diffusion 3, PixArt-Sigma, PixArt-alpha. The following picture compares PipeFusion with DistriFusion:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/diffusion/pipefusion.svg"/> 
+<img width="92.4%" height="92.4%" src="{{ site.assets }}/diffusion/pipefusion.svg"/> 
 
 {: .caption}
 (a) DistriFusion replicates DiT parameters on two devices. It splits an image into 2 patches and employs asynchronous allgather for activations of every layer. (b) PipeFusion shards DiT parameters on two devices. It splits an image into 4 patches and employs asynchronous P2P for activations across two devices. In both panels, the orange and blue blocks run on the two devices. Adapted from: [PipeFusion: Displaced Patch Pipeline Parallelism for Inference of Diffusion Transformer Models](https://arxiv.org/abs/2405.14430).

@@ -130,7 +130,7 @@ Here, samples are collected until the batch reaches (at most) 30 tokens. The bat
 Pipeline parallelism requires the same batch size and sequence length across all micro-batches within a batch, because activation shapes must stay fixed during gradient accumulation. Enforcing a consistent `B x S x E` across micro-batches can lead to smaller micro-batches and additional padding. Since version 0.15, DeepSpeed lifts this constraint with the option `PipelineModule(dynamic_shape=True)`, at a possible cost in performance. The figure below contrasts standard Distributed Data Parallel (DDP, left) with pipeline parallelism (right) for 2 processes and 2 gradient accumulation steps (4 micro-batches total):
 
 {: .picture}
-<img width="95%" height="95%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr_pipeline.svg"/>
+<img width="92%" height="92%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr_pipeline.svg"/>
 
 In the pipeline case (right), all micro-batches in the batch have the same `B x S x E` shape. To satisfy this constraint, fewer samples are packed per micro-batch compared to the non-pipeline case (left), and padding is used when needed.
 

@@ -40,7 +40,7 @@ where the sum of the partial outputs $$H^{(g)} W_2^{(g)} \in \mathbb{R}^{M \time
 A regular implementation of this FFN launches 7 kernels: a matrix multiplication, a bias addition and an activation for each layer, plus the all-reduce. Each kernel loads its inputs from global memory and stores its outputs there, as displayed at the top of the timeline below. The kernel of this post runs the whole FFN as one kernel, with a single load and a single store to global memory (bottom), and with many small all-reduce steps that overlap the computation:
 
 {: .picture}
-<img width="95.5%" height="95.5%" src="{{ site.assets }}/inference/imgs/tp_timeline.svg"/>
+<img width="92.9%" height="92.9%" src="{{ site.assets }}/inference/imgs/tp_timeline.svg"/>
 
 {: .caption}
 Execution timeline of an FFN with Megatron-LM tensor parallelism. **Top:** the regular execution, with 7 kernels that load from (arrow up) and store to (arrow down) global memory. **Bottom:** the fused kernel, with several small, overlapping all-reduce steps performed in the network switch.

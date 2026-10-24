@@ -443,8 +443,6 @@ that is not wrong.
     arrows of CLAUDE.md.
   - `inference/imgs/medusa.svg`, `eagle.svg` and the other pictures of the speculative decoding draft show a 4 x 1
     matrix after the target model, where the originals show a row of 3D cubes. Fix: the row of cubes again.
-  - `inference/imgs/prefill_decode.svg` is crowded. Fix: draw it as wide as the 820 px text column, with more space
-    between its parts.
   - `distributed-training/imgs/dnn_model_parallelism.svg` is hard to read at its width, and its 64 links are lines
     without heads, while CLAUDE.md, Pictures, section 6, draws the links of a dense network as thin arrows with heads.
     Neither the picture nor the text says which layer is the input. Fix: draw it larger, and add the heads in the
@@ -454,40 +452,6 @@ that is not wrong.
   (CLAUDE.md, Pictures, section 4). Fix: set the formulas of every picture as that post does (italic variables,
   upright words, thin spaces after the commas in brackets, hair spaces after 𝑊 and 𝑈 before a bracket or a
   superscript), then check each picture at its page size.
-- 75 pictures are wider than the 820 px text column (CLAUDE.md, Pictures, section 3), so they reach into the side
-  margins, and the two timelines of the expert parallelism post, `inference/imgs/ep_timeline.svg` and
-  `ep_timeline_noncollective.svg`, are wider than it side by side. Among them are the series of the pictures redrawn
-  for the text column on 2026-10-24, which keep their larger elements: `mqa.svg` and `gqa.svg` next to `mha.svg`, the
-  three `xcrs_transpose_*.svg`, `matrix-transposition-crs.svg` and `layouts.svg` next to `crs_format.svg` and
-  `xcrs_format.svg`, and `raster_plot_g4.5_f0.9.svg` and `raster_plot_g5_f2.svg` next to `raster_plot_g3_f2.svg`.
-  Fix: redraw each one to fit 820 px, as section 3 says, a series with the element sizes of its redrawn picture. The
-  pictures, by post: distributed-matmul-dbs (`distributed-matmul-dbs/`): `layout_columns.svg`; matrix-transpose
-  (`matrix-transpose/`): `layouts.svg`, `matrix-transposition-crs.svg`, `xcrs_transpose_1.svg`,
-  `xcrs_transpose_2.svg`, `xcrs_transpose_3.svg`; slicing (`slicing/`): `str_steps.svg`; lif-brunel (`lif-brunel/`):
-  `neuron_plot_equations.svg`, `raster_plot_g4.5_f0.9.svg`, `raster_plot_g5_f2.svg`; neuron-electrical-activity
-  (`neuron-electrical-activity/`): `neuron_model_scales.svg`; neuron-variable-timestep (`neuron-variable-timestep/`):
-  `l5_neuron_soma_voltage_per_step_6ms.svg`, `l5_neuron_pulse1_3ma_100ms_cvode_vs_backward_euler.svg`,
-  `l5_neuron_pulse_1000ms_results.svg`, `cvode_dependency_on_variation_solution.svg`,
-  `cvode_dependency_on_events_arrival.svg`; learning-from-sequences (`learning-from-sequences/`):
-  `encoder_decoder_2.svg`; data-parallelism (`distributed-training/imgs/`): `workflow_sharding.svg`,
-  `deepspeed_stages.svg`; tensor-parallelism (`distributed-training/imgs/`): `argonne_parallel_2.svg`;
-  mixture-of-experts (`distributed-training/imgs/`): `moe_2017_dean.svg`, `moe_switch_transformers.svg`,
-  `moe_switch_transformers_2.svg`, `moe_megablocks.svg`, `soft_moes.svg`, `mixture_of_depths.svg`,
-  `mixture_of_depths_2.svg`; training-variable-length-curriculum (`distributed-training/imgs/`):
-  `variable_batch_lr_pipeline.svg`; sequence-context-parallelism (`distributed-training/imgs/`):
-  `ring_attention.svg`; diffusion (`diffusion/`): `align_your_latents.svg`, `anymate_anyone.svg`,
-  `playground_v3.svg`, `dit_moe.svg`, `longvilla.svg`, `pipefusion.svg`; inference-prefill-decode-roofline-cache
-  (`inference/imgs/`): `roofline.svg`, `kv_cache.svg`, `paged_attention.svg`, `prefix_caching.svg`,
-  `semantic_caching.svg`, `chunked_prefill.svg`, `disaggregation.svg`; inference-attention (`inference/imgs/`):
-  `mqa.svg`, `gqa.svg`, `dsa.svg`; kernel-fusion-tensor-parallelism (`inference/imgs/`): `tp_timeline.svg`,
-  `tp_matmuls.svg`; kernel-fusion-expert-parallelism (`inference/imgs/`): `ep_one_to_many_inc.svg`, `ep_results.svg`;
-  inference-distillation-speculative-decoding (`inference/imgs/`): `kd_methods.svg`, `spec_decoding.svg`,
-  `spec_sampling.svg`, `prompt_lookup.svg`, `medusa.svg`, `eagle.svg`, `dflash.svg`, `layerskip.svg`,
-  `mtp_sequential.svg`; inference-pruning-quantization (`inference/imgs/`): `pruning_structures.svg`, `minitron.svg`,
-  `quantization_granularity.svg`, `microscaling.svg`; the publications page (`publications/`): `nemotron3_2.svg`,
-  `comet.svg`, `tpla.svg`, `llama3_scaling_laws.svg`, `llama_3_multi_modal.svg`, `domino.svg`, `dylora.svg`,
-  `contrastive_deep_supervision.svg`, `mlp_mixer.svg`, `pay_attention_to_mlps.svg`, `scaling_laws.svg`,
-  `gpt3_fig11.svg`, `rqvae.svg`.
 
 ### Distributed Matrix Multiplication and Database Joins (2014-04-02-distributed-matmul-dbs.md)
 
@@ -518,6 +482,12 @@ that is not wrong.
 - Optional, `matrix-transpose/xcrs_transpose_3.svg`: the labels "Objects to be sent" and "Objects to be received"
   name the values of the view swap, which the post calls values. Fix: "Values to be sent" and "Values to be
   received".
+- `matrix-transpose/xcrs_format.svg`, `xcrs_transpose_1.svg` and `xcrs_transpose_3.svg`: as in the paper's figure,
+  some letter boxes straddle the gaps between the blocks of the ranks or cross the outline of a block (F, J/K and R/S
+  in xcrs_transpose_1; A, G, O, B/C, H/I, T and R/S in xcrs_transpose_3), and the L/M/N connector of
+  xcrs_transpose_1 runs along the right outline of the block of rank 1. Fix: put each box next to its dot inside its
+  own block, or in the free space beside the matrix, and route the L/M/N connector down through the empty cell of
+  row 5, column 3.
 
 ### Distributed Load Balancing and Spatial Slicing (2015-12-01-slicing.md)
 
@@ -543,6 +513,9 @@ that is not wrong.
   2](https://www.nest-simulator.org/wp-content/uploads/2015/02/NEST_by_Example.pdf)" and "Source: [Dynamics of
   Sparsely Connected Networks of Excitatory and Inhibitory Spiking Neurons, Table
   1](https://link.springer.com/article/10.1023/A:1008925309027)".
+- `lif-brunel/raster_plot_g3_f2.svg`, `raster_plot_g4.5_f0.9.svg` and `raster_plot_g5_f2.svg`: the time axis of the
+  spike-count histogram is not aligned with the raster's: its 0 and 1,000 ms sit about 7 to 9 px left of the
+  raster's. Fix: the same x for 0 and 1,000 ms in the histogram as in the raster, in the three plots.
 
 ### Numerical Simulation of Detailed Neuron Models (2016-08-15-neuron-electrical-activity.md)
 
@@ -612,13 +585,16 @@ that is not wrong.
   caption defines it: Newton iterations solve each mechanism implicitly, but the coupling between mechanisms stays
   explicit. Fix: a key line in the legend, "† implicit per mechanism, explicit across mechanisms".
 - `neuron-variable-timestep/l5_neuron_pulse1_3ma_100ms_cvode_vs_backward_euler.svg` (the 100 ms chart): the grey
-  spike of atol 10⁻¹ touches the tick label 25. Fix: the tick labels and t (ms) under the traces, as in the 1000 ms
-  chart.
+  spike of atol 10⁻¹ crosses the right edge of the tick label 25. Fix: the tick labels and t (ms) under the traces,
+  as in the 1000 ms chart.
 - `neuron-variable-timestep/l5_neuron_pulse_1000ms_results.svg`: a grey bar is left in the inset (the magnified
   −50 mV line). Fix: remove it, as in the 100 ms chart.
 - `neuron-variable-timestep/neuron_132412.svg`: the tick labels 0.1, 10 and 1,000 are missing. Fix: restore them.
 - `neuron-variable-timestep/l5_neuron_pulse_1000ms_results.svg`: the zoom box is 0.8 px, while the zoom box of the
   100 ms chart is 1.4 px. Fix: 1.4 px, as its connector.
+- `neuron-variable-timestep/l5_neuron_soma_voltage_per_step_6ms.svg`, right panel: a red step dot sits 0.7 px from
+  the tick label 4, under the 2.5 px of section 6 of CLAUDE.md. Fix: the tick labels and t (ms) under the traces in
+  both panels, as in the 1000 ms chart.
 
 ### Linear Regression, Matrix Factorization and Loss Functions (2017-08-17-linear-regression-matrix-factorization.md)
 
@@ -787,16 +763,21 @@ that is not wrong.
 - `distributed-training/imgs/vdnn2.svg` and `vdnn3.svg` label the last layer "Layer(N)", and the vdnn2 caption says
   "at layer N", while the text numbers the layers from 1 to $$L+1$$ and writes the number of samples as $$N$$ (under
   the MAE formula). Fix: "Layer(L+1)", and in the caption "at its last layer, $$L+1$$".
+- Optional, `distributed-training/imgs/workflow_data_parallelism.svg` keeps 20 px between its process frames and
+  12 px between the arrows and the frames, while `workflow_sharding.svg` now has 12 and 8 px. Fix: the same gaps in
+  both.
 
 ### Pipeline parallelism (1F1B, Zero Bubble, DualPipe) (2023-08-30-pipeline-parallelism.md)
 
-- `distributed-training/imgs/pipeline_8_stages.svg`, `pipeline_4_stages.svg` and `pipeline_2_stages.svg` label their
-  rows "Worker 1" to "Worker 8", and the caption says "8 workers", while the text says GPUs and the other schedules
-  label their rows "GPU 0" to "GPU 3" (CLAUDE.md keeps "Worker" for the PipeDream pictures). The caption also calls
-  the center and right panels "2 data-parallel groups of 4 pipeline stages" and "4 data-parallel groups of 2 pipeline
-  stages", but in Megatron-LM and DeepSpeed a data-parallel group holds the GPUs of one stage: the panels show 2
-  pipelines of 4 stages and 4 pipelines of 2 stages. Fix: rows "GPU 0" to "GPU 7", and the caption "... on 8 GPUs.
-  ... Center: 2 pipelines of 4 stages. Right: 4 pipelines of 2 stages."
+- The caption of `distributed-training/imgs/pipeline_8_stages.svg`, `pipeline_4_stages.svg` and
+  `pipeline_2_stages.svg` calls the center and right panels "2 data-parallel groups of 4 pipeline stages" and "4
+  data-parallel groups of 2 pipeline stages", but in Megatron-LM and DeepSpeed a data-parallel group holds the GPUs
+  of one stage: the panels show 2 pipelines of 4 stages and 4 pipelines of 2 stages. Fix: "Center: 2 pipelines of 4
+  stages. Right: 4 pipelines of 2 stages."
+- `distributed-training/imgs/pipeline_8_stages.svg`, `pipeline_4_stages.svg` and `pipeline_2_stages.svg` draw each
+  backward pass as long as a forward pass (1 time unit), while the other schedules, and section 8 of CLAUDE.md, give
+  it 2 units. Fix: backward cells twice as long as the forward cells, each picture keeping its width (the 8-stage
+  one goes from about 12.9 to 8.6 px per unit).
 
 ### Tensor parallelism (2023-09-02-tensor-parallelism.md)
 
@@ -827,6 +808,10 @@ that is not wrong.
   or restore the superscripts and change the text.
 - `distributed-training/imgs/mixture_of_depths.svg`: the faded column uses opacity, which darkens the arrowheads where
   they overlap. Fix: grey #666666 lines and light fills instead of the opacity.
+- Optional, `distributed-training/imgs/moe_gshard.svg`: the two device frames of panel (c) leave 25 px on each side
+  of their boxes, as in the paper, while the frames of panels (a) and (b) leave 27 px on the left and 8 px on the
+  right. Fix: the same margins in the four frames, with boxes about 97 px wide so that the picture still fits
+  820 px.
 
 ### Variable sequence lengths, curriculum learning, adaptive batch size and LR (2024-05-10-training-variable-length-curriculum.md)
 
@@ -847,6 +832,8 @@ that is not wrong.
   DDP (left) and pipeline parallelism (right). Pipeline parallelism needs the same shape in all micro-batches of a
   batch (here 3x11xE), so it packs fewer samples per micro-batch." (The left micro-batches hold 30, 28, 30 and 26
   tokens, the right ones 24, 25, 22 and 17.)
+- Optional, `distributed-training/imgs/variable_batch_lr.svg` keeps 10 and 12 px between its labels and its
+  tables, while `variable_batch_lr_pipeline.svg` now has 6 and 8 px. Fix: the same gaps in both.
 
 ### Sequence and context parallelism with Ulysses and Ring attention (2024-08-30-sequence-context-parallelism.md)
 
@@ -887,13 +874,16 @@ that is not wrong.
 - Optional, `diffusion/tora.svg`: the legend (Add, Noise patch, Motion patch) is one column, as in the paper; a row is
   about 270 px wide, and about 205 px are free beside the Trajectory Extractor box. Fix: a row under the output frames
   (about 30 px taller), or keep the column.
-- Optional, `diffusion/longvilla.svg`: the GPU numbers of grid (3) are 14 px bold in 18 px cells, as in the paper.
-  Fix: keep them (they name the GPUs in their colors), or 12 px regular.
+- Optional, `diffusion/longvilla.svg`: the GPU numbers of grid (3) are 14 px bold in cells 17 px wide and 18 px
+  tall, as in the paper. Fix: keep them (they name the GPUs in their colors), or 12 px regular.
 - `diffusion/latte2.svg`, panel (b): the labels x<sub>j</sub> and x<sub>j+1</sub> are 12.4 px tall, as tall as the 12.4
   and 13.8 px top faces of the cuboids that hold them, so the subscript j of x<sub>j</sub> crosses the front edge of its
   face, as in the paper's figure, and x<sub>j+1</sub> touches the back edge of its face. The cuboids match the cells of
   the frames, so their faces cannot grow without leaving the grid. Fix: keep them as in the paper, or move x<sub>1</sub>
   and x<sub>j</sub> to the front faces of the front cuboids (22 px tall) and the other two labels above their cuboids.
+- Optional, `diffusion/sora_vae.svg`: the cells of the latent volume and of the latent sequence are grey #b3b3b3
+  cubes with white 0.4 px lines, not a fill of the palette with #999999 lines (CLAUDE.md, Pictures, sections 5 and
+  6). Fix: #f5f5f5 or the closest pastel fill, #999999 cell lines and a black 1.2 px silhouette.
 
 ### Prefill vs decode, roofline, KV cache, batching and disaggregation (2025-06-07-inference-prefill-decode-roofline-cache.md)
 
@@ -927,6 +917,11 @@ that is not wrong.
 - Optional, `inference/imgs/prefix_caching.svg`: the labels "h₁ = hash(∅, block 1)" to "h₃ = hash(h₂, block 3)" are
   set entirely in the math font, words included. Fix: "hash" and "block 1" to "block 3" in Source Sans 3, and h₁ to
   h₃ and ∅ in the math font (section 4 of CLAUDE.md).
+- `inference/imgs/chunked_prefill.svg`: the prompt boxes are 31.49 px tall and the decode boxes 29.52 px, left from
+  a scaled drawing. Fix: every box of both rows 30 px tall (CLAUDE.md, Pictures, section 7).
+- `inference/imgs/disaggregation.svg`: the box sizes come from a scaled drawing (requests 104.94 x 40.23 px, GPU
+  boxes 148.66 x 34.98 px, blocks of the time line 92.69 x 26.23 px with 3.5 px gaps). Fix: one-line boxes 30 px
+  tall (CLAUDE.md, Pictures, section 7).
 
 ### Faster attention (GQA, FlashAttention, sparse, linear and latent attention) (2025-12-30-inference-attention.md)
 
@@ -974,6 +969,9 @@ that is not wrong.
   An Expert Parallelism MegaKernel Overlapping Matrix and Vector Units with In-Network Dispatch-and-Combine](link)"
   under `ep_stages.svg` and `ep_pipeline.svg`, and "Adapted from:" with the same link under the others, once the paper
   has a public link; the user decides.
+- Optional, `inference/imgs/ep_one_to_many_inc.svg`: the three INC switch frames have grey #666666 outlines, while
+  the same frames of `ep_all_to_all_inc.svg` and `ep_all_gather_reduce_scatter_inc.svg` are black. Fix: black
+  outlines, unless the grey fades them on purpose.
 
 ### Knowledge distillation, speculative decoding and multi-token prediction (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
 
@@ -990,16 +988,18 @@ that is not wrong.
 - `inference/imgs/layerskip.svg` and the text write the exit layer of the draft as E ("drafts of the first E = 4
   layers", "the first $$E$$ layers"), while E is the embedding size in the code of the post ([B, S, E]) and in
   `medusa.svg` and `eagle.svg`. Fix: $$\ell$$ for the exit layer, in the picture and in the text.
-- `inference/imgs/layerskip.svg`: the arrows from the two output heads to p_1 and d_1 slant by 1 px, as the token
-  rows sit 1 px above the centres of the heads (48.4 and 240.4 instead of 49.4 and 241.4), and the dashed input frame
-  is 0.5 px left of the centre of the layer column, so the arrow from it to layer 1 slants too. Fix: move the rows p_1
-  to p_3 and d_1 to d_3 down 1 px, and centre the frame on the column.
-- `inference/imgs/mtp_sequential.svg`: the six dashed token frames leave 4 px around their tokens, so their 10 px
-  corners touch the corners of the first and last token of each row, while `mtp_parallel.svg` leaves 6 px. Fix: make
-  the frames 4 px wider and 4 px taller.
 - Optional, `inference/imgs/mtp_sequential.svg`: the dashed frames of the output tokens are blue #6c8ebf, while those
   of the input tokens are black, and neither the caption nor the text gives the blue a meaning. Fix: black frames, or
   a caption that names the blue frames as the targets of each loss.
+- `inference/imgs/medusa.svg`, `eagle.svg` and `dflash.svg` keep tokens of 36 x 30, 30 x 30 and 32 x 30 px, while
+  the other pictures of the draft use 46 x 30 px. With 46 x 30 px tokens, eagle would be about 880 px wide, medusa
+  about 830 px, and the token rows of dflash would be wider than its draft layers. Fix: a new layout for each
+  (eagle: t6 above the output layer, or the drafter on a second row; medusa: the tree attention mask under the
+  candidate tree; dflash: draft layers as wide as the row of 8 tokens, with the row labels left of the rows), or
+  two token sizes in the draft.
+- `inference/imgs/mtp_parallel.svg`: its one-line boxes are 44 to 46 px tall and its output tokens 60 x 30 px,
+  unlike the 30 px boxes and 46 x 30 px tokens of the other pictures of the draft. Fix: boxes 30 px tall and output
+  tokens 46 x 30 px.
 
 ### Pruning and quantization (_drafts/2026-04-22-inference-pruning-quantization.md)
 
@@ -1042,10 +1042,6 @@ that is not wrong.
   "Hopper (132)".
 - `publications/attention_mech.svg`: the α of the four weights α_{t,1} to α_{t,T} is upright, while their t and T are
   italic, and `siamese_networks_2.svg` sets α in italic. Fix: <i>α</i> in the four labels.
-- `publications/rqvae.svg`, `contrastive_deep_supervision.svg` and `mlp_mixer.svg` are 880.4, 880.9 and 880.8 px wide
-  (export margins), above the 880 px of section 3 of CLAUDE.md, so at 100% they show about 0.1% smaller than their
-  size. The base commit had the same widths. Fix: narrow each drawing by 1 px, or let the 880 px limit allow for the
-  export margins.
 - Optional, `publications/mutransfer.svg`: the grid lines run through the label "optimum shifts", which section 6 of
   CLAUDE.md allows for a label wider than the spacing of the grid lines. Fix: a white box behind the label.
 - `publications/rqvae.svg`: the cell labels of q(z\|x) (53) and of the front face of z<sub>q</sub>(x) (e<sub>1</sub>,
@@ -1059,6 +1055,10 @@ that is not wrong.
   and as the caption says ("Green: the projected optimal model size ..."), while section 6 of CLAUDE.md draws the
   projections on an axis as grey dashed guide lines. Fix: keep the green lines, or grey dashed guides with a reworded
   caption; the user decides.
+- `publications/scaling_laws.svg`: the three fitted power laws are legend boxes inside the plots, as in Figure 1 of
+  the paper, while section 6 of CLAUDE.md puts the legend of a chart in one column outside the plot, on its right;
+  three legends outside the panels do not fit 820 px. Fix: write each formula as a label next to its fit line, or
+  add the legends inside the plots to section 6 as an exception.
 
 ## Content issues
 

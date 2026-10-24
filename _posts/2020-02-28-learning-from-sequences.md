@@ -36,7 +36,7 @@ The training consists of an encoding and a decoding phase:
 This algorithm can be illustrated as follows, where the thick arrow passes the last hidden state of the encoder to the first iteration of the decoder:
 
 {: .picture}
-<img width="96.4%" height="96.4%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder_2.svg"/>
+<img width="92.5%" height="92.5%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder_2.svg"/>
 
 {: .caption}
 Training workflow of an encoder-decoder architecture that learns the translation of the English sentence "Hello World." into the French sentence "Bonjour le monde.".

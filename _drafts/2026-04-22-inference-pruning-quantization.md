@@ -25,7 +25,7 @@ Pruning removes parts of a trained model. The idea is old: the 1989 paper [Optim
 The picture below shows the rows and columns that each structure removes, for an embedding size $$E$$ and an MLP of $$d_\text{ff}$$ neurons:
 
 {: .picture}
-<img width="97.4%" height="97.4%" src="{{ site.assets }}/inference/imgs/pruning_structures.svg"/>
+<img width="92.3%" height="92.3%" src="{{ site.assets }}/inference/imgs/pruning_structures.svg"/>
 
 All the structured methods below build a smaller linear layer from the rows and columns they keep:
 
@@ -214,7 +214,7 @@ NVIDIA's [Minitron](https://arxiv.org/abs/2407.14679) combines structured prunin
 An illustration of the recipe is displayed below:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/minitron.svg"/>
+<img width="92.6%" height="92.6%" src="{{ site.assets }}/inference/imgs/minitron.svg"/>
 
 {: .caption}
 The importance of each head, neuron, embedding channel and layer is estimated on a small calibration set, the model is pruned to the target size, and the pruned model is retrained by distillation from the trained one. The steps repeat for each smaller size. Adapted from: [Compact Language Models via Pruning and Knowledge Distillation](https://arxiv.org/abs/2407.14679)
@@ -368,7 +368,7 @@ The **granularity** of the scales matters as much as the number of bits. A singl
 One scale per output channel (a row of the weight matrix), per *group* of, e.g., 128 consecutive weights, or per token for the activations, follows the data much more closely, at the cost of storing more scales. Group-wise scales are the standard for 4-bit weights. The following picture compares the three granularities on a weight matrix with one outlier weight:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/quantization_granularity.svg"/>
+<img width="91.8%" height="91.8%" src="{{ site.assets }}/inference/imgs/quantization_granularity.svg"/>
 
 {: .caption}
 **One scale per tensor:** 1 scale, and the outlier stretches the scale of 47 other weights. **One scale per output channel (row):** 4 scales, and the outlier stretches the scale of 11 other weights. **One scale per group of 4 weights:** 12 scales, and the outlier stretches the scale of 3 other weights.
@@ -731,7 +731,7 @@ Blackwell tensor cores apply these scales in hardware. OpenAI's gpt-oss models, 
 The picture below shows the FP4 values and the blocks of both formats:
 
 {: .picture}
-<img width="99.3%" height="99.3%" src="{{ site.assets }}/inference/imgs/microscaling.svg"/>
+<img width="92.6%" height="92.6%" src="{{ site.assets }}/inference/imgs/microscaling.svg"/>
 
 The following code simulates both formats with fake quantization. Used with the `FakeQuantLinear` layer above, it quantizes the weights and activations of GPTlite to FP4:
 
