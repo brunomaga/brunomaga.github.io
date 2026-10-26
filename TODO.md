@@ -969,9 +969,9 @@ that is not wrong.
   An Expert Parallelism MegaKernel Overlapping Matrix and Vector Units with In-Network Dispatch-and-Combine](link)"
   under `ep_stages.svg` and `ep_pipeline.svg`, and "Adapted from:" with the same link under the others, once the paper
   has a public link; the user decides.
-- Optional, `inference/imgs/ep_one_to_many_inc.svg`: the three INC switch frames have grey #666666 outlines, while
-  the same frames of `ep_all_to_all_inc.svg` and `ep_all_gather_reduce_scatter_inc.svg` are black. Fix: black
-  outlines, unless the grey fades them on purpose.
+- The paper redrew `agrs_inc.svg` and `all_to_all_inc.svg` (2026-10-26): the bracket under each INC diagram now
+  names its operation a collective. `ep_all_gather_reduce_scatter_inc.svg` and `ep_all_to_all_inc.svg` do not have
+  it yet. Fix: redraw them from the paper's draw.io in the next picture task.
 
 ### Knowledge distillation, speculative decoding and multi-token prediction (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
 
@@ -1267,9 +1267,10 @@ Content problems that need the author's decision, such as overlap between posts.
 ### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
 
 - The paper has not measured the decode step (the right panel of its runtime figure, and its decode timeline), the
-  partial collective operations (its table of collective and partial collective results) and the number of microbatches in
-  flight with the memory each one takes. The post shows the two decode placeholders with a note in their captions,
-  and leaves the rest out. Fix: add these results to the post once the paper has them.
+  partial collective operations (the One-to-Many row of its table of collective and partial collective results) and
+  the number of microbatches in flight with the memory each one takes. The post shows the two decode placeholders
+  with a note in their captions, the One-to-Many row as not measured, and leaves the rest out. Fix: add these results
+  to the post once the paper has them.
 
 ### Knowledge distillation, speculative decoding and multi-token prediction (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
 

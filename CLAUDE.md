@@ -161,9 +161,15 @@ word helps:
   operations, steps and relays (from the paper's appendix), in this order: AllGather-ReduceScatter; All-to-All,
   which sends each rank only the tokens it needs but needs a count exchange first; then in-network computing (INC)
   and the INC form of AllGather-ReduceScatter, which removes two steps (pack and global reduce); the INC
-  All-to-All, as All-to-All-Dispatch and All-to-All-Combine; and the partial collectives (One-to-Many-Dispatch and
-  Many-to-One-Combine), which lower the memory that INC All-to-All needs in the switch. No INC picture appears before
-  INC is introduced. The two timelines of the collective and partial collective combine stand side by side.
+  All-to-All, as All-to-All-Dispatch and All-to-All-Combine, followed by its timeline. No INC picture appears before
+  INC is introduced. The routing table of the example is a Markdown table, not a picture.
+- The implementation of the partial collectives (One-to-Many-Dispatch and Many-to-One-Combine) is confidential, at
+  the user's request (2026-10-26): the expert parallelism post follows the public version of the paper (`main.tex`,
+  never `main_confidential.tex`). It says what they are (a variant of the all-to-all that multicasts the tokens and
+  reduces their expert outputs iteratively, as a sequence of partial collectives that wait only for the ranks
+  involved), their advantages and disadvantages, when to use each form, and their results, but has no picture,
+  timeline, protocol (operations, signals, flags, slots, metadata), operation table or step, relay or signal counts
+  of them, and says that their details will be released in the near future.
 
 ### Titles
 

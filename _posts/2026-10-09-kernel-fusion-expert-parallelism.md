@@ -23,13 +23,13 @@ Consider $$W$$ compute ranks, i.e. devices, and an MoE layer of $$E$$ experts, w
 - the **dispatch** sends each token to the ranks that hold its $$k$$ experts, and each rank runs its local experts on the tokens it receives;
 - the **combine** returns the weighted outputs of the experts to the rank that owns each token, where the $$k$$ contributions are summed.
 
-Each rank is therefore the **token rank** of its tokens and the **expert rank** of its experts. The following picture shows a small example of $$W=3$$ ranks, each holding one token and one expert, with top-$$k=2$$. The router produces a routing table, which maps each token to its experts and to the ranks that hold them:
+Each rank is therefore the **token rank** of its tokens and the **expert rank** of its experts. The following table shows a small example of $$W=3$$ ranks, each holding one token and one expert, with top-$$k=2$$. The router produces this **routing table**, which maps each token to its experts and to the ranks that hold them. Each row is a token rank, and each column the expert of a rank:
 
-{: .picture}
-<img width="29.1%" height="29.1%" src="{{ site.assets }}/inference/imgs/ep_routing_table.svg"/>
-
-{: .caption}
-The routing table of the tokens A, B and C, owned by the ranks $$P_0$$, $$P_1$$ and $$P_2$$, which hold the experts $$E_0$$, $$E_1$$ and $$E_2$$, for top-$$k=2$$. Each row is a token rank, and each column the expert of a rank.
+| Token rank | $$E_0$$ on $$P_0$$ | $$E_1$$ on $$P_1$$ | $$E_2$$ on $$P_2$$ |
+|:-:|:-:|:-:|:-:|
+| $$P_0$$ | A | | A |
+| $$P_1$$ | | B | B |
+| $$P_2$$ | C | C | |
 
 The collectives in this post are built with the one-sided operations of [SHMEM](https://en.wikipedia.org/wiki/SHMEM), which reach the memory of a remote rank without involving it. The ranks address each other through a **symmetric heap**, a memory region allocated at the same offset on every rank. Five operations are needed, each given with the OpenSHMEM call that implements it:
 
@@ -166,6 +166,16 @@ The one-sided operations per microbatch are:
 | Switch holds | the tokens of every token rank, until the last arrives | the sums $$\Sigma$$ of every token rank |
 | Switch waits for | all $$W$$ token ranks | all $$W$$ expert ranks |
 
+Every flag is a 32-bit integer, into which each sender writes the *magic* of its step, a value that strictly increases from step to step, so that a flag left from an earlier step never reads as an arrival. Slots are indexed by the microbatch modulo the pipeline depth, and a slot is written again only after the combine of the microbatch that used it has completed. As this combine follows every read of the slot, no further flow control is needed: in All-to-All-Combine, each rank receives its sums only after the switch has pulled the partial results of every rank.
+
+The timeline below follows token C through both collectives, with the operations of each device:
+
+{: .picture}
+<img width="44.2%" height="44.2%" src="{{ site.assets }}/inference/imgs/ep_timeline.svg"/>
+
+{: .caption}
+The dispatch and combine of token C, owned by $$P_2$$, through All-to-All-Dispatch and All-to-All-Combine. $$P_2$$ sends $$C_{01}$$, i.e. token C for the expert ranks $$P_0$$ and $$P_1$$, which the INC switch sends on as $$C_0$$ to $$P_0$$, $$C_1$$ to $$P_1$$ and $$\emptyset$$ to $$P_2$$ once all ranks have arrived. It pulls the partial sums $$\sigma^0_C$$ and $$\sigma^1_C$$ as each rank signals it $$r^0_C$$ or $$r^1_C$$, and sends their sum $$\Sigma_C$$ to $$P_2$$. The asterisk marks nonblocking calls, and dotted arrows are flags raised with `signal`.
+
 No switch implements these two collectives today. Therefore, the implementation of this post emulates the INC switch with two extra devices of the same type as the compute ranks, one for the dispatch and one for the combine, which run the one-sided operations above on the symmetric heap. They hold no model parameters and run no experts.
 
 ### Bandwidth and packet count
@@ -188,46 +198,11 @@ The cost is that the switch starts transfers itself, rather than being a purely 
 
 ## Collective or partial collective
 
-The weak point of the INC collectives is the memory of the switch. All-to-All-Dispatch and All-to-All-Combine are collectives: they are asynchronous on the compute ranks, but synchronous on the switch, which delivers nothing until all $$W$$ ranks have arrived, and holds the data of every rank until then. Their **partial collective** forms span only the $$W_x$$ ranks that the tokens of a token rank select, so that the switch holds the data of one token rank at a time:
+The weak point of the INC collectives is the memory of the switch. All-to-All-Dispatch and All-to-All-Combine, as INC All-Gather and INC Reduce-Scatter, are collectives: they are asynchronous on the compute ranks, but synchronous on the switch, which stalls its relays and delivers nothing until all $$W$$ ranks have sent their data into it.
 
-- **One-to-Many-Dispatch**, a one-to-many multicast dispatch, relays the tokens of each sender, still sent once, as soon as they land, without waiting for the other senders;
-- **Many-to-One-Combine**, a many-to-one reduce combine, lets the token rank, once signalled by its $$W_x$$ expert ranks that their outputs are ready ($$r$$), name them to the switch ($$r$$). The switch pulls their partial results, signals each of them that it has read them ($$s$$), and returns the sum to the token rank alone.
+The paper also implements an INC **One-to-Many-Dispatch** and **Many-to-One-Combine**, a variant of the all-to-all that multicasts the tokens and reduces their expert outputs iteratively, to save memory compared to the all-to-all. It is implemented as a sequence of **partial collectives**, one-to-many with an INC multicast on the dispatch and many-to-one with an INC reduce on the combine. Unlike the collective all-to-all, they do not wait for all ranks, but only for those involved in the dispatch and combine of a given rank, i.e. the $$W_x \le W$$ ranks that its microbatch selects. Because of industry confidentiality, the specific implementation cannot be detailed, and its details will be released in the near future.
 
-The $$s$$ signal tells each expert rank that it can release its partial results, which it could not know otherwise, as only the token rank receives the sum. All-to-All-Combine needs none, as every rank receives its own sums, which the switch sends only once it has pulled the partial results of every rank. The following picture shows the two operations on the example above:
-
-{: .picture}
-<img width="92.9%" height="92.9%" src="{{ site.assets }}/inference/imgs/ep_one_to_many_inc.svg"/>
-
-{: .caption}
-The partial collective operations, One-to-Many-Dispatch (left) and Many-to-One-Combine (right), with token C of $$P_2$$ and every rank and expert on its path in black, and the others in grey. The INC switch relays the tokens of each sender as they land. $$P_0$$ and $$P_1$$ signal $$P_2$$ that their outputs are ready (dotted), and $$P_2$$ signals the INC switch $$r^{01}_C$$, naming them, which starts the pulls of $$\sigma^0_C$$ and $$\sigma^1_C$$. Once it has read both, the switch signals $$s^0_C$$ to $$P_0$$ and $$s^1_C$$ to $$P_1$$, which can then release them, and returns their sum $$\Sigma_C$$ to $$P_2$$ alone. No transfer waits for another token rank.
-
-The one-sided operations per microbatch are:
-
-| | One-to-Many-Dispatch (INC push) | Many-to-One-Combine (INC pull) |
-|:--|:--|:--|
-| Token rank $$P_x$$ | `put_signal*` $$\times 1$$ | `wait_until` $$r$$ $$\times W_x$$ + `signal` $$r$$ $$\times 1$$ + `wait_until` $$\Sigma$$ $$\times 1$$ |
-| INC switch | (`wait_until_some` + split by expert rank + `put_signal*` $$\times W_x$$) $$\times W$$, and `signal` $$\times W$$ per layer | (`wait_until_some` $$r$$ + (`get` $$\sigma$$ + add to $$\Sigma$$) $$\times W_x$$ + `signal` $$s$$ $$\times W_x$$ + `put_signal*` $$\Sigma$$) $$\times W$$ |
-| Expert rank $$P_y$$ | `wait_until_some` per token rank that it serves | (`signal` $$r$$ + `wait_until_some` $$s$$) per token rank that it serves |
-| Steps | 2 | 4 |
-| Relays per node | 1 in, $$W_x$$ out | $$W_x$$ in, 1 out, plus $$2W_x+1$$ signals |
-| Switch holds | the tokens of one token rank, until relayed | the sums $$\Sigma$$ of one token rank |
-| Switch waits for | none | the $$W_x$$ expert ranks of one token rank |
-
-On the partial collective dispatch, $$P_y$$ keeps one slot and one flag per sender, so that packets from different senders never collide. As $$P_y$$ cannot know how many senders will select it, the join moves from the microbatch to the layer. Each sender marks its last microbatch, and once the switch has relayed the last microbatch of every sender, it issues a fence (`shmem_fence`), so that these relays reach each rank first, and raises a layer-done flag on every rank, i.e. the $$W$$ signals per layer of the table.
-
-On the partial collective combine, each $$P_y$$ signals $$P_x$$ through the switch, which forwards the signal unprocessed. The request of $$P_x$$ to the switch carries neither a payload nor addresses: the switch reuses the counts of the dispatch, and every rank keeps its partial results for each token rank at the same offset of its symmetric heap. Every partial result that a request names is ready when the request arrives, so no `get` waits on a straggler.
-
-The timelines below follow token C through both forms, with the operations of each device:
-
-{: .picture}
-<img width="44.2%" height="44.2%" src="{{ site.assets }}/inference/imgs/ep_timeline.svg"/>
-<span style="display:inline-block; width:4%;"></span>
-<img width="43.9%" height="43.9%" src="{{ site.assets }}/inference/imgs/ep_timeline_noncollective.svg"/>
-
-{: .caption}
-The dispatch and combine of token C, owned by $$P_2$$. **Left:** All-to-All-Dispatch and All-to-All-Combine. **Right:** One-to-Many-Dispatch and Many-to-One-Combine. $$P_2$$ sends $$C_{01}$$, i.e. token C for the expert ranks $$P_0$$ and $$P_1$$, which the INC switch sends on as $$C_0$$ to $$P_0$$, $$C_1$$ to $$P_1$$ and $$\emptyset$$ to $$P_2$$ once all ranks have arrived (left), or as soon as it lands, to $$P_0$$ and $$P_1$$ alone (right, where $$P_2$$, which takes no part as an expert rank, is grey). It pulls the partial sums $$\sigma^0_C$$ and $$\sigma^1_C$$ as each rank signals it $$r^0_C$$ or $$r^1_C$$ (left), or once $$P_2$$, signalled $$r^0_C$$ and $$r^1_C$$, has signalled it $$r^{01}_C$$, signalling $$s^0_C$$ and $$s^1_C$$ once it has read both (right), and sends their sum $$\Sigma_C$$ to $$P_2$$. The asterisk marks nonblocking calls, and dotted arrows are flags raised with `signal`.
-
-The collective form takes fewer steps and relays: its combine takes three steps where the partial collective one takes four, as the $$s$$ signal is off the critical path, and one relay per link and direction where the partial collective one takes up to $$W$$, plus $$\mathcal{O}(W^2)$$ signals. However, it pays in memory, $$W$$ times what the partial collective form holds, and in latency, as it waits for the slowest rank, which the partial collective form never does.
+All-to-All-Dispatch and All-to-All-Combine take fewer steps and relays, with one relay per link and direction. However, they pay in memory and in latency: until the last rank arrives, the switch holds the data of every rank and waits for the slowest one. On the other hand, One-to-Many-Dispatch and Many-to-One-Combine need up to $$W$$ times less INC memory, which suits them to larger batches, whose data a collective could not hold in the memory of the switch. Not waiting for every rank matters most in the combine: under expert load imbalance, the expert ranks finish at different times, and the outputs of each one are sent to the switch as they are computed, instead of waiting for the most loaded rank. Note that each expert still runs one matrix multiplication over all its tokens, as under the all-to-all.
 
 The routing density decides which form to use. Under uniform routing, each of the $$k\,m_b$$ expert choices of a microbatch misses a given rank with probability $$1-1/W$$, so the number of distinct ranks that the microbatch selects is approximately given by:
 
@@ -235,11 +210,9 @@ $$
 W_x \approx W \left( 1 - \left( 1 - \frac{1}{W} \right)^{k\, m_b} \right)
 $$
 
-where $$W_x$$ tends to $$W$$ once $$k\,m_b \gg W$$. The join of the collective form then waits for no rank that the owner would not wait for anyway, and during prefill it hides behind the matrix units. Thus, the collective form wins and is the default: at $$k=8$$ and $$W=4$$, even a single token selects 3.6 ranks on average.
+where $$W_x$$ tends to $$W$$ once $$k\,m_b \gg W$$. The partial collectives then wait for as many ranks as the collective ones, and during prefill the wait hides behind the matrix units. Thus, All-to-All-Dispatch and All-to-All-Combine win and are the default: at $$k=8$$ and $$W=4$$, even a single token selects 3.6 ranks on average. Decode relays very little data, so the memory of the switch is no constraint, and the latency of the network is the bottleneck. The extra steps and relays of One-to-Many-Dispatch and Many-to-One-Combine then cost more than they save, so decode uses All-to-All-Dispatch and All-to-All-Combine too.
 
-Sparse routing favors the partial collective form: with the 256 experts and $$k=8$$ of DeepSeek-V3 on 64 ranks, a decode microbatch of 4 tokens selects about 25 ranks, yet the collective form makes each rank wait for all 64. The partial collective form also wins with stragglers, with a switch of little memory, and when attention and experts run on separate ranks, as in [MegaScale-Infer](https://arxiv.org/abs/2504.02263), so that only some ranks send.
-
-Every flag is a 32-bit integer, into which each sender writes the *magic* of its step, a value that strictly increases from step to step, so that a flag left from an earlier step never reads as an arrival. Slots are indexed by the microbatch modulo the pipeline depth, and a slot is written again only after the combine of the microbatch that used it has completed. In Many-to-One-Combine, an expert rank receives no sum for the tokens of another rank, so it waits for the $$s$$ signal of the switch before it writes that slot again; no further flow control is needed.
+One-to-Many-Dispatch and Many-to-One-Combine win with large batches, expert load imbalance and stragglers, a switch of little memory, and when attention and experts run on separate ranks, as in [MegaScale-Infer](https://arxiv.org/abs/2504.02263), so that only some ranks send.
 
 ## The hardware
 
@@ -344,6 +317,17 @@ Fusion pays here for a different reason than in prefill. A non-fused layer pays,
 - **fused communication**: the collectives are one-sided operations issued from inside the kernel, with the replication and the sum of the INC switch, instead of library calls.
 
 Thus, the relative gain of fusion should be largest where the batch is smallest. However, the round trip of the INC switch adds a fixed latency per microbatch that prefill hides behind the matrix units and decode cannot, so below some number of concurrent sequences MegaKernel+INC may lose to MegaKernel. The measurements will tell where. Moreover, decode is bound by memory, so the allocator bounded by the pipeline depth, described in the next section, matters more in decode than in prefill.
+
+### All-to-All or One-to-Many
+
+The following table compares the prefill time per iteration, in seconds, of MegaKernel+INC with All-to-All-Dispatch and All-to-All-Combine (All-to-All) and with One-to-Many-Dispatch and Many-to-One-Combine (One-to-Many). The One-to-Many row is not measured yet, and neither is the decode step:
+
+| Prefill, batch (tokens) | 4k | 8k | 16k | 32k | 64k |
+|:--|--:|--:|--:|--:|--:|
+| All-to-All | 0.252 | 0.454 | 0.783 | 1.39 | 2.62 |
+| One-to-Many | not measured | not measured | not measured | not measured | not measured |
+
+The routing is dense at $$k=8$$ and $$W=4$$, so the section on the partial collectives above predicts no gain from One-to-Many-Dispatch and Many-to-One-Combine: prefill hides both pairs of collectives, and decode exposes the extra steps and relays.
 
 ## Communication volume and memory
 
