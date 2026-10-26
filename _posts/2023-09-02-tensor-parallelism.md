@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Tensor parallelism"
+title:  "Tensor parallelism like Megatron-LM"
 categories: ["Distributed Training"]
 tags: ["tensor parallelism", "Megatron-LM", "collectives", "PyTorch"]
 ---
