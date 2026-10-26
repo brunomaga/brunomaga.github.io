@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Kernel Fusion for Megatron-LM Tensor Parallelism and MoE Expert Sharding"
+title:  "Kernel Fusion for Tensor Parallelism and MoE Expert Sharding"
 categories: ["Efficient Inference"]
 tags: ["LLM", "kernel fusion", "tensor parallelism", "Megatron-LM", "in-network computing", "collectives", "Mixture-of-Experts", "expert sharding"]
 ---
