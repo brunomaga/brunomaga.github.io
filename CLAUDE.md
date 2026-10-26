@@ -170,6 +170,8 @@ word helps:
   involved), their advantages and disadvantages, when to use each form, and their results, but has no picture,
   timeline, protocol (operations, signals, flags, slots, metadata), operation table or step, relay or signal counts
   of them, and says that their details will be released in the near future.
+- Never open, read or search any `*_confidential*` file (`main_confidential.tex`, `main_confidential.pdf` and the
+  like) in the paper repositories, at the user's request (2026-10-26): the posts use only the public files.
 
 ### Titles
 
