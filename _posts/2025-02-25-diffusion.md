@@ -495,7 +495,7 @@ Another interesting feature that improves quality is [classifier-free guidance](
 
 ## Video diffusion and 3D attention
 
-Running diffusion directly on pixels is already expensive for high-resolution images. This led to the creation of the **[latent diffusion model](https://arxiv.org/abs/2112.10752)**, where diffusion is applied in the latent space of a pretrained [autoencoder](https://en.wikipedia.org/wiki/Autoencoder) (e.g. a VAE) instead of on the image directly. This reduces the cost of training on high-resolution images by working on their compressed representation. As diffusion moved towards the domain of video, the large amount of data per sample made this compression even more important, and video models now compress their input in both the spatial and temporal dimensions:
+Running diffusion directly on pixels is already expensive for high-resolution images. This led to the creation of the **[latent diffusion model](https://arxiv.org/abs/2112.10752)**, where diffusion is applied in the [latent space](https://en.wikipedia.org/wiki/Latent_space) of a pretrained [autoencoder](https://en.wikipedia.org/wiki/Autoencoder) (e.g. a VAE) instead of on the image directly. This reduces the cost of training on high-resolution images by working on their compressed representation. As diffusion moved towards the domain of video, the large amount of data per sample made this compression even more important, and video models now compress their input in both the spatial and temporal dimensions:
 
 {: .picture}
 <img width="92.2%" height="92.2%" src="{{ site.assets }}/diffusion/sora_vae.svg"/> 
@@ -516,6 +516,34 @@ The other challenge with video data is attention: how to correlate image patches
 An illustration of a masked autoencoder that randomly picks 10% of the spacetime patches of a video. These patches retain enough representative power to reconstruct the original video. Adapted from: [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113)
 
 In practice, the spatial and temporal attentions are cheaper and can reuse the spatial layers of a pre-trained image model. The full 3D attention relates every patch to the patches of all frames, which helps to keep objects with large motions consistent across frames (Section 2.2 of [CogVideoX](https://arxiv.org/abs/2408.06072)).
+
+## Why diffusion instead of autoregressive models for video generation
+
+A video is a 3D cube of pixels: height × width × time. An **[autoregressive model](https://en.wikipedia.org/wiki/Autoregressive_model)** generates it *one frame at a time*, each frame conditioned on the previous ones. A diffusion model generates *the whole cube at once*: it starts from a cube of noise and denoises all the frames together over $$T$$ steps. The following picture illustrates both:
+
+{: .picture}
+<img width="88%" height="88%" src="{{ site.assets }}/diffusion/ar_vs_diffusion.svg"/>
+
+{: .caption}
+The generation of a video, a cube of height × width × time, by an autoregressive model and by a diffusion model. The cubes show 8 of the 100 frames.
+
+As an example, imagine a video of $$F=100$$ frames of $$256 \times 256$$ pixels with 3 colors, i.e. $$100 \times 256 \times 256 \times 3 \approx 20$$ million values. Both models generate it in a latent space, as the [latent diffusion models](#video-diffusion-and-3d-attention) above: an encoder compresses each frame into a **latent** of 1000 values, and a decoder turns each latent back into a frame. So the models only generate a matrix of $$100 \times 1000$$ values, about 200 times fewer than the pixels, as illustrated below:
+
+{: .picture}
+<img width="73.3%" height="73.3%" src="{{ site.assets }}/diffusion/video_encoder_decoder.svg"/>
+
+{: .caption}
+An encoder compresses each frame of a video into a latent of 1000 values, one row of the matrix of latents, and a decoder turns each latent back into a frame. The cubes show 8 of the 100 frames, and the matrix 8 of the 100 latents.
+
+To count their cost, imagine also that both models are only [matrix multiplications](https://en.wikipedia.org/wiki/Matrix_multiplication) (matmuls): $$L=10$$ layers, each one multiplying its input by a weight matrix of $$1000 \times 1000$$ values, i.e. 10 million weights in total. A matmul $$[m \times k] \times [k \times n]$$ costs $$2mkn$$ [FLOPs](https://en.wikipedia.org/wiki/FLOPS): a multiply and an accumulate for each of the $$kn$$ weights and each of the $$m$$ rows of the input. So:
+- the **autoregressive model** runs $$F=100$$ sequential steps, one per frame. In each step, each layer multiplies the latent of one frame, a $$1 \times 1000$$ matrix, by its weights, which costs $$2 \times 1 \times 1000 \times 1000 = 2 \times 10^6$$ FLOPs. The video takes $$100 \times 10 = 1000$$ matmuls and $$2 \times 10^9$$ FLOPs.
+- the **diffusion model** runs $$T=100$$ sequential steps, one per noise level. In each step, each layer multiplies the latents of all the frames, a $$100 \times 1000$$ matrix, by its weights, which costs $$2 \times 100 \times 1000 \times 1000 = 2 \times 10^8$$ FLOPs. The video takes the same 1000 matmuls, but $$2 \times 10^{11}$$ FLOPs.
+
+Thus, **the diffusion model performs $$T=100$$ times more FLOPs**: as many matmuls as the autoregressive model, each one over all the frames instead of one. Real models also mix the latents of different frames, e.g. with the attention of the [DiT](#diffusion-transformers) above, which this count leaves out.
+
+However, both models read the same 10 million weights from memory in each step, and a GPU performs hundreds of FLOPs in the time it reads one weight (about 600 for 16-bit weights on an H100). With 2 FLOPs per weight, the autoregressive model is [memory-bound](https://en.wikipedia.org/wiki/Memory-bound_function) and leaves the GPU mostly idle, as the decode phase of a large language model ([roofline model]({% post_url 2025-06-07-inference-prefill-decode-roofline-cache %}#roofline-model)). The diffusion model uses each weight on the 100 frames at once, i.e. 200 FLOPs per weight, in about the same time. So **the diffusion model benefits from parallelism**. On longer videos, its steps fill the GPU and its extra FLOPs take time, but its frames then split across many GPUs ([sequence parallelism]({% post_url 2024-08-30-sequence-context-parallelism %})), while the autoregressive model has a single frame per step to split.
+
+Moreover, **the diffusion model makes fewer errors**. The autoregressive model never revises a frame, so its errors carry over to the next frames and accumulate into flicker and drift, while each diffusion step revises all the frames with the context of the previous and the following ones. However, **the autoregressive model can stream its video**: its first frame is ready after one step, and it can extend the video for as long as needed, while a diffusion model generates clips of a fixed length, and no frame is ready before its last step. **Hybrid** models are autoregressive across chunks of frames and use diffusion within each chunk ([Diffusion Forcing](https://arxiv.org/abs/2407.01392), [CausVid](https://arxiv.org/abs/2412.07772)): [Self Forcing](https://arxiv.org/abs/2506.08009) generates video in real time, at 17 frames per second on a single H100.
 
 ## Further Reading 
 
