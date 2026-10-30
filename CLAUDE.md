@@ -144,8 +144,8 @@ word helps:
   - the only hardware fact is the number of GPUs ("8 GPUs in one node"). The devices are called GPUs, devices or
     ranks, with no vendor, device model, interconnect or switch name, and no number that points to a device model
     (an SM count, a bandwidth, a memory size);
-  - libraries take generic names: CCL (collective communication library) for NCCL, HCCL and the like, and shmem
-    for NVSHMEM and the like. Vendor programming models, instructions and APIs (CUDA, PTX, TMA, multimem,
+  - libraries take generic names: CCL (collective communication library) for NCCL and the like, and shmem for
+    NVSHMEM and the like. Vendor programming models, instructions and APIs (CUDA, PTX, TMA, multimem,
     atomicAdd...) are described by what they do;
   - generic GPU terms stay (SMs, thread blocks, shared memory, HBM);
   - other work cited in these posts is described without hardware names either ("multicast and reduction inside
@@ -157,6 +157,9 @@ word helps:
 - Exception, at the user's request (2026-10-22): the expert parallelism post names the INC switches and deployments
   that it cites as other work (SHArP, SHARPv2, NVLink SHARP, Megatron-Core, vLLM, DeepSeek-V3 and DeepSeek-V4).
   The hardware and libraries of the post's own experiments stay unnamed.
+- The repository is public: when CLAUDE.md, TODO.md, commit messages and pull requests write about these two posts,
+  they name neither the paper repositories nor the hardware and libraries of the papers' experiments. They call the
+  repositories the MoE and the FFN paper repositories.
 - The expert parallelism post shows each communication model once, in one picture each followed by its table of
   operations, steps and relays (from the paper's appendix), in this order: AllGather-ReduceScatter; All-to-All,
   which sends each rank only the tokens it needs but needs a count exchange first; then in-network computing (INC)
@@ -172,6 +175,12 @@ word helps:
   of them, and says that their details will be released in the near future.
 - Never open, read or search any `*_confidential*` file (`main_confidential.tex`, `main_confidential.pdf` and the
   like) in the paper repositories, at the user's request (2026-10-26): the posts use only the public files.
+- Each kernel fusion post follows the latest public version of its paper. Every task on one of the two posts first
+  checks the paper's repository for commits after the one recorded here and, where the public files of the paper
+  changed, updates the post's text, tables and captions to them (the picture rules say how the pictures follow);
+  then it records the new commit here. The expert parallelism post follows the MoE paper repository at commit
+  d1b9da2 (2026-10-23). The tensor parallelism post has no recorded commit yet: its next task compares it with the
+  latest version of the FFN paper.
 
 ### Titles
 
@@ -222,7 +231,7 @@ These rules apply to every picture in _posts, _drafts and publications.md: drawi
 to SVG, sizing it in the Markdown and writing its caption. Read this section before any such task, and add
 each new picture rule the user gives to it, in the same change.
 
-The two kernel fusion paper repositories (brunomaga/moe_paper_huawei and brunomaga/ffn_tp_paper_huawei)
+The repositories of the two kernel fusion papers (the MoE and the FFN paper repositories)
 are the style reference only. Never change them. Their imgs/*.svg figures are the example of the palette to
 follow (pastel draw.io fills, black outlines and arrows, dark accent text). The line weights and corners follow
 sections 6 and 7, and the font section 4.
