@@ -1233,10 +1233,10 @@ Content problems that need the author's decision, such as overlap between posts.
   another name, and has new and redrawn figures. So the decode placeholders of the post (the right panel of
   `ep_results.svg` and the time axis of `ep_stages.svg`), its One-to-Many row and its names of the partial
   collectives are out of date. The third iteration of the text rewrite left this post as it is on master, as its
-  rewrite was written before the post followed the public version of the paper. Fix: a task on the post syncs its
-  text, tables, captions and pictures to the public files of the paper at the new commit, in the style of
-  CLAUDE.md, and records the commit there; the new figures of the partial collectives stay out, unless the user
-  changes the rules on them.
+  rewrite was written before the post followed the public version of the paper. Fix: after 1 November 2026, at the
+  user's request (2026-10-30), a task of its own syncs the text, tables, captions and pictures of the post to the
+  public files of the paper at its latest commit, in the style of CLAUDE.md, and records the commit there; the new
+  figures of the partial collectives stay out, unless the user changes the rules on them.
 - The token names are italic in 𝐴<sub>0</sub>, Σ<sub>𝐴</sub> and the packets of the communication pictures, and upright
   in the token sets AC<sub>0</sub>, BC<sub>1</sub> and AB<sub>2</sub> of the expert boxes, in the caption of
   `ep_all_gather_reduce_scatter.svg` ($$A_0$$, $$E_0(\text{AC}_0)$$) and in the four pictures. Fix: one form for the

@@ -203,6 +203,8 @@ word helps:
   changed, updates the post's text, tables and captions to them (the picture rules say how the pictures follow);
   then it records the new commit here. The expert parallelism post follows the MoE paper repository at commit
   d1b9da2 (2026-10-23), and the tensor parallelism post the FFN paper repository at commit 1076c33 (2026-10-18).
+  At the user's request (2026-10-30), the expert parallelism post stays at its commit until 1 November 2026, and is
+  synced once after that date, in a task of its own.
 
 ### Titles
 
@@ -287,7 +289,9 @@ sections 6 and 7, and the font section 4.
   and changed figures. Every SVG revision (every picture task) in that time first pulls the latest imgs/*.svg
   and their draw.io or TikZ sources from the paper repositories, and adapts the pictures of the kernel fusion
   posts to them: a changed figure is redrawn again in this repo (copied again for ep_stages.svg and
-  ep_pipeline.svg), and a new figure that the post does not show yet is reported to the user.
+  ep_pipeline.svg), and a new figure that the post does not show yet is reported to the user. The expert
+  parallelism post is the exception, at the user's request (2026-10-30): its pictures stay as they are until
+  1 November 2026, and follow the paper once after that date, in the task that syncs the post.
 - A picture or an animation shown unchanged from Wikimedia Commons (the Newton's method and k-means GIFs)
   links to its original file on upload.wikimedia.org, with no copy in assets.
 - A picture used by a post and by the publications page is stored once, in the post's asset folder, and
