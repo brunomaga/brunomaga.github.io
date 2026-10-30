@@ -38,7 +38,7 @@ $$
 where $$Q$$, $$K$$ and $$V$$ are the queries, keys and values of the head, $$h$$ is the head size, and the softmax turns each row of scores into weights that sum to one. The following picture illustrates this computation for $$S_q$$ queries and $$S_k$$ keys, with the names used in the code below:
 
 {: .picture}
-<img width="68.8%" height="68.8%" src="{{ site.assets }}/inference/imgs/sdpa.svg"/>
+<img width="68.9%" height="68.9%" src="{{ site.assets }}/inference/imgs/sdpa.svg"/>
 
 The following code implements this attention. The function `scaled_dot_product_attention` takes an optional mask of the keys that each query can see, and `causal_mask` builds the mask of a decoder, where each token sees only itself and the previous tokens. Most modules of this post reuse both functions:
 
@@ -331,7 +331,7 @@ DSA was added to an already trained model, in two stages. First, during a short 
 With a KV cache, the indexer key of every token is cached too. Index scores are often tied, since the ReLU outputs many zeros, so the selection uses a [stable sort](https://en.wikipedia.org/wiki/Sorting_algorithm#Stability), which breaks ties the same way whether the tokens are processed together or one at a time. Decoding with a KV cache then gives the same result as processing the whole sequence at once. The following picture illustrates DSA with $$H = 4$$ heads, where each query attends only to the 3 tokens with the highest index scores:
 
 {: .picture}
-<img width="92.4%" height="92.4%" src="{{ site.assets }}/inference/imgs/dsa.svg"/>
+<img width="93%" height="93%" src="{{ site.assets }}/inference/imgs/dsa.svg"/>
 
 The following code adds DSA to multi-head attention. It keeps the projections of `GQA` with `num_groups = num_heads`, so it can load the weights of a trained MHA module, and adds the indexer. First, `lightning_index_scores` computes the index scores of the formula above, `top_k_indices` selects the highest ones with a stable sort, and `indexer_loss` computes the loss of the warm-up.
 

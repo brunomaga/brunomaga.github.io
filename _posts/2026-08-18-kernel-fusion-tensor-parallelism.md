@@ -173,7 +173,7 @@ Thus, fusion, overlap and in-network computing are complementary rather than int
 Finally, the expert FFNs of these benchmarks are split across the 8 GPUs with expert sharding, as pictured below for one expert on 2 GPUs:
 
 {: .picture}
-<img width="59.7%" height="59.7%" src="{{ site.assets }}/inference/imgs/tp_expert_sharding.svg"/>
+<img width="59.6%" height="59.6%" src="{{ site.assets }}/inference/imgs/tp_expert_sharding.svg"/>
 
 {: .caption}
 One expert, with $$W_i$$ in green and $$W_o$$ in red. The activation is omitted. **(a)** Without parallelism, one GPU holds the whole expert. **(b)** With expert sharding, GPU A holds the first half of the columns of $$W_i$$ and of the rows of $$W_o$$, and GPU B the second half. The dashed slices are on the other GPU. Both GPUs process all the tokens $$x$$, and a sum-reduce adds their partial outputs $$y_A$$ and $$y_B$$. Inspired by Figure 2 of [Accelerating MoE Model Inference with Expert Sharding](https://arxiv.org/abs/2503.08467).

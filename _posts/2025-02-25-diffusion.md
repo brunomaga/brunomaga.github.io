@@ -363,7 +363,7 @@ As Transformers became a key building block of sequence-based ML, the 2022 paper
 ViTs have also been shown to have better scaling properties and accuracy than [convolutional neural networks](https://en.wikipedia.org/wiki/Convolutional_neural_network) when trained on large datasets. Moreover, regarding DiT scaling, it was shown that (1) DiT Gflops are strongly correlated with FID (more Gflops, lower FID), (2) DiT Gflops are critical to improving performance, and (3) larger DiT models use large compute more efficiently. The DiT architecture is illustrated in the following picture:
 
 {: .picture}
-<img width="79.7%" height="79.7%" src="{{ site.assets }}/diffusion/dit.svg"/> 
+<img width="79.8%" height="79.8%" src="{{ site.assets }}/diffusion/dit.svg"/> 
 
 {: .caption}
 <b>The Diffusion Transformer (DiT) architecture.</b> <i>Left:</i> a conditional latent DiT; the input latent is decomposed into patches and processed by several DiT blocks. <i>Right:</i> the DiT block that adds the conditioning by adaptive layer norm (adaLN-Zero). The paper also tested in-context conditioning, cross-attention and adaLN blocks, and adaLN-Zero worked best. Adapted from: [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748).
@@ -535,7 +535,7 @@ The other challenge with video data is attention: how to correlate image patches
   However, [Masked Autoencoders Are Scalable Vision Learners](https://arxiv.org/abs/2111.06377) showed that masked autoencoders (MAE) are scalable self-supervised learners for computer vision that only need to encode a random subset of the patches (25% on images). [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113) extended it to videos, where only 10% of the $$T * H * W$$ spacetime patches are needed. As the cost of the attention grows with the square of the sequence length, an encoder that keeps 10% of the 16,384 patches of the example above (1,638 tokens) computes 100 times fewer attention scores. [Patch n' Pack: NaViT, a Vision Transformer for any Aspect Ratio and Resolution](https://arxiv.org/abs/2307.06304) also uses random token dropping, together with sequence packing, to speed up training. The masked autoencoder for videos is illustrated in the following picture:
 
 {: .picture}
-<img width="90.7%" height="90.7%" src="{{ site.assets }}/diffusion/masked_autoencoders_cropped.svg"/> 
+<img width="90.9%" height="90.9%" src="{{ site.assets }}/diffusion/masked_autoencoders_cropped.svg"/> 
 
 {: .caption}
 An illustration of a masked autoencoder that randomly picks 10% of the spacetime patches of a video. These patches retain enough representative power to reconstruct the original video. Adapted from: [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113)
@@ -555,7 +555,7 @@ The generation of a video, a cube of height × width × time, by an autoregressi
 As an example, imagine a video of $$F=100$$ frames of $$256 \times 256$$ pixels with 3 colors, i.e. $$100 \times 256 \times 256 \times 3 \approx 20$$ million values. Both models generate it in a latent space, as the [latent diffusion models](#latent-diffusion) above: an encoder compresses each frame into a **latent** of 1000 values, and a decoder turns each latent back into a frame. So the models only generate a matrix of $$100 \times 1000$$ values, about 200 times fewer than the pixels, as illustrated below:
 
 {: .picture}
-<img width="73.3%" height="73.3%" src="{{ site.assets }}/diffusion/video_encoder_decoder.svg"/>
+<img width="74.7%" height="74.7%" src="{{ site.assets }}/diffusion/video_encoder_decoder.svg"/>
 
 {: .caption}
 An encoder compresses each frame of a video into a latent of 1000 values, one row of the matrix of latents, and a decoder turns each latent back into a frame. The cubes show 8 of the 100 frames, and the matrix 8 of the 100 latents.
@@ -590,7 +590,7 @@ To train on videos, they use the method presented in [Align your Latents: High-R
 The following picture illustrates the temporal layers inserted between the spatial layers of the image model:
 
 {: .picture}
-<img width="92.7%" height="92.7%" src="{{ site.assets }}/diffusion/align_your_latents.svg"/> 
+<img width="92.9%" height="92.9%" src="{{ site.assets }}/diffusion/align_your_latents.svg"/> 
 
 {: .caption}
 **Left:** a pre-trained LDM is turned into a video generator by inserting temporal layers that learn to align frames into temporally consistent sequences. During optimization, the image backbone $$\theta$$ remains fixed and only the parameters $$\phi$$ of the temporal layers $$l^i_\phi$$ are trained. **Right:** During training, the base model $$\theta$$ interprets the input sequence of length $$T$$ as a batch of images. For the temporal layers $$l^i_\phi$$, these batches are reshaped into video format. Their output $$z'$$ is combined with the spatial output $$z$$, using a learned merge parameter $$\alpha$$. During inference, skipping the temporal layers ($$\alpha^i_\phi=1$$) yields the original image model. For illustration purposes, only a single U-Net Block is shown. $$B$$ denotes the batch size, $$T$$ the sequence length, $$C$$ the input channels and $$H$$ and $$W$$ the spatial dimensions of the input. $$c_S$$ is an optional context-frame conditioning, used when training prediction models. Adapted from: [Align your Latents: High-Resolution Video Synthesis with Latent Diffusion Models](https://arxiv.org/abs/2304.08818).
@@ -740,7 +740,7 @@ or even more.
 The following picture illustrates the method:
 
 {: .picture}
-<img width="90.7%" height="90.7%" src="{{ site.assets }}/diffusion/masked_autoencoders_cropped.svg"/> 
+<img width="90.9%" height="90.9%" src="{{ site.assets }}/diffusion/masked_autoencoders_cropped.svg"/> 
 
 {: .caption}
 <b>Masked Autoencoders as spatiotemporal learners</b>. A large subset (<i>e.g.</i>, 90%) of random patches in spacetime is masked. An encoder operates on the set of visible patches. A small decoder then processes the full set of encoded patches and mask tokens to reconstruct the input. Except for patch and positional embeddings, <i>neither the encoder, the decoder, nor the masking strategy, has any spatiotemporal inductive bias</i>. Adapted from: [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113).
@@ -757,7 +757,7 @@ And here is some work on multi-dimensional parallelism for large-scale models su
 Presents DiT-MoE, a sparse [Mixture-of-Experts](https://en.wikipedia.org/wiki/Mixture_of_experts) (MoE) version of DiT, delivering good scaling properties, performance comparable to dense DiTs, and highly optimized inference. Its architecture is illustrated in the following picture:
 
 {: .picture}
-<img width="92.6%" height="92.6%" src="{{ site.assets }}/diffusion/dit_moe.svg"/> 
+<img width="92.8%" height="92.8%" src="{{ site.assets }}/diffusion/dit_moe.svg"/> 
 
 {: .caption}
 <b>Overview of the DiT-MoE architecture.</b> DiT-MoE is built upon the DiT and composed of MoE-inserted Transformer blocks. In each block, the MLP is replaced by a sparsely activated mixture of MLPs. The right subfigure shows the MoE layer with the shared expert strategy. Adapted from: [Scaling Diffusion Transformers to 16 Billion Parameters](https://arxiv.org/abs/2407.11633).

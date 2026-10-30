@@ -463,11 +463,9 @@ that is not wrong.
     without heads, while CLAUDE.md, Pictures, section 6, draws the links of a dense network as thin arrows with heads.
     Neither the picture nor the text says which layer is the input. Fix: draw it larger, and add the heads in the
     direction of the forward pass, once the user picks the input layer.
-- The formulas of the pictures outside the pruning and quantization post set their variables in the upright
-  letters of the math font, while the text of the posts (MathJax) and the pictures of that post set them in italic
-  (CLAUDE.md, Pictures, section 4). Fix: set the formulas of every picture as that post does (italic variables,
-  upright words, thin spaces after the commas in brackets, hair spaces after 𝑊 and 𝑈 before a bracket or a
-  superscript), then check each picture at its page size.
+- Optional: two labels keep less than the 3 px of CLAUDE.md, Pictures, section 3, between their text and the outline
+  of their box, as on master: 𝑠<sub>𝑡−1</sub> of `publications/attention_mech.svg` (2.4 px on each side) and
+  𝑥<sub>𝑗+1</sub> of the two rows of tokens of `diffusion/latte2.svg` (2.9 px). Fix: boxes 2 px wider, or keep them.
 
 ### Distributed Matrix Multiplication and Database Joins (2014-04-02-distributed-matmul-dbs.md)
 
@@ -1064,8 +1062,6 @@ that is not wrong.
   the block)" to the caption.
 - Optional, caption of `publications/comet.svg` (Comet): "the number of SMs on Hopper(132)" lacks a space. Fix:
   "Hopper (132)".
-- `publications/attention_mech.svg`: the α of the four weights α_{t,1} to α_{t,T} is upright, while their t and T are
-  italic, and `siamese_networks_2.svg` sets α in italic. Fix: <i>α</i> in the four labels.
 - Optional, `publications/mutransfer.svg`: the grid lines run through the label "optimum shifts", which section 6 of
   CLAUDE.md allows for a label wider than the spacing of the grid lines. Fix: a white box behind the label.
 - `publications/rqvae.svg`: the cell labels of q(z\|x) (53) and of the front face of z<sub>q</sub>(x) (e<sub>1</sub>,
@@ -1235,6 +1231,10 @@ Content problems that need the author's decision, such as overlap between posts.
   text, tables, captions and pictures to the public files of the paper at the new commit, in the style of
   CLAUDE.md, and records the commit there; the new figures of the partial collectives stay out, unless the user
   changes the rules on them.
+- The token names are italic in 𝐴<sub>0</sub>, Σ<sub>𝐴</sub> and the packets of the communication pictures, and upright
+  in the token sets AC<sub>0</sub>, BC<sub>1</sub> and AB<sub>2</sub> of the expert boxes, in the caption of
+  `ep_all_gather_reduce_scatter.svg` ($$A_0$$, $$E_0(\text{AC}_0)$$) and in the four pictures. Fix: one form for the
+  token names, italic everywhere (𝐴𝐶<sub>0</sub>, the tokens 𝐴 and 𝐶) or upright everywhere, once the user picks it.
 
 ### Knowledge distillation, speculative decoding and multi-token prediction (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
 

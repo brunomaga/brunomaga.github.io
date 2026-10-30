@@ -194,7 +194,7 @@ $$
 where each channel type $$i$$ has a maximum conductance $$g_i$$, a gating term $$w_i$$ (such as $$m^3 h$$ for sodium) and a reversal potential $$E_i$$. This equation describes the electrical circuit in the picture below, where the membrane is a capacitor and each ion channel type is a resistor in series with a battery, whose voltage is the reversal potential of that ion.
 
 {: .picture}
-<img width="49%" height="49%" src="{{ site.assets }}/neuron-electrical-activity/compartment_rc_circuit.svg">
+<img width="49.1%" height="49.1%" src="{{ site.assets }}/neuron-electrical-activity/compartment_rc_circuit.svg">
 
 {: .caption}
 The electrical circuit of one compartment. The membrane is the capacitor $$C$$. Each ion channel is a resistor $$R$$ in series with a battery $$E$$, its reversal potential. Arrows mark gated channels, whose resistance changes over time. The leak $$L$$ has a constant resistance. $$I$$ is the total current through the membrane

@@ -357,28 +357,37 @@ sections 6 and 7, and the font section 4.
 
 ### 4. Font
 
-- Text, labels and tensor dimensions: Source Sans 3 (fontFamily=Source Sans 3). Formulas: New Computer
+- Text and labels: Source Sans 3 (fontFamily=Source Sans 3). Formulas and tensor dimensions: New Computer
   Modern Sans Math (fontFamily=NewComputerModernSansMath), the sans-serif math font of the Computer Modern
   family (no font is named "Latin Modern Sans Math"; Latin Modern Sans has no math symbols). Code
   identifiers may use Courier New. Indices use Unicode sub/superscripts or <sub>/<sup>.
 - A formula is a variable with its indices, an expression or an equation (x, W_q, Δt = 25, softmax(QKᵀ)). A
   label that is only a formula has the math font in its style; a label that mixes words and formulas has it
-  on the formulas only, as <span style="font-family: NewComputerModernSansMath;">. Words, numbers, units,
-  tensor dimensions (S x H·h), tick labels and names with an index (TRM1, FFN2) keep the text font.
-  Exception, at the user's request: the dimensions of sdpa and of the pictures of the pruning and quantization
-  post are formulas in the math font, with the indices of the post's text (S<sub>q</sub> × h,
-  𝑛<sub>heads</sub>⋅𝑑<sub>head</sub> × 𝐸). The math font has no bold or italic face: the browser slants and
-  emboldens it. Formulas take the math font in every picture, also in one redrawn from a paper, whether or
-  not the paper sets them in a math font. A product in a math-font formula is the dot operator ⋅ (U+22C5)
-  with no spaces around it: the middle dot · with spaces leaves gaps of about 10 px in this font.
-- In the pictures of the pruning and quantization post, at the user's request, a formula looks as LaTeX sets
-  it: its variables are the italic letters of the math font (Unicode mathematical italic: 𝑊 for W, ℎ for h, 𝛼
-  for α), and function names, words and indices of several letters stay upright (max, round, err, vocab,
-  𝑑<sub>head</sub>). Inside brackets, a comma is followed by a thin space (U+2009), and an italic 𝑊 or 𝑈
-  before a bracket or a superscript by a hair space (U+200A), its italic correction, so that the slanted letter
-  does not touch them. The math font does not place combining accents, so a hat (𝑊̂) is a circumflex ˆ
-  (U+02C6) that CSS sets over the letter: `<span style="position: relative; left: -0.566em; top: -0.244em;
-  margin-right: -0.5em;">ˆ</span>` after 𝑊, with the offsets of the MATH table of the font.
+  on the formulas only, as <span style="font-family: NewComputerModernSansMath;">. Tensor dimensions and repeat
+  counts are formulas too, at the user's request, with × between the factors and the indices of the post's text
+  (𝑆 × 𝐸, 100 × 256 × 256 × 3, 𝑆<sub>𝑞</sub> × ℎ, 𝑛<sub>heads</sub>⋅𝑑<sub>head</sub> × 𝐸, 𝑁×). Words, numbers,
+  units, tick labels, code identifiers (top_k, wq) and names with an index (TRM1, FFN2) keep the text font. The
+  math font has no bold or italic face: the browser slants and emboldens it. Formulas take the math font in every
+  picture, also in one redrawn from a paper, whether or not the paper sets them in a math font. A product in a
+  math-font formula is the dot operator ⋅ (U+22C5) with no spaces around it: the middle dot · with spaces leaves
+  gaps of about 10 px in this font.
+- In every picture, at the user's request, a formula looks as LaTeX sets it: its variables are the italic letters
+  of the math font (Unicode mathematical italic: 𝑊 for W, ℎ for h, 𝛼 for α), a run of single-letter symbols stays
+  italic (𝑄𝐾ᵀ, 𝑑𝑥, 𝑖𝑗), and function names, words, units and indices of several letters stay upright (max, round,
+  err, hash, vocab, 𝑑<sub>head</sub>, the B of 7.5B). A bold vector or matrix takes the form of the post's text:
+  upright where the text writes \mathbf or <b>x</b> (the x and z of the diffusion pictures, the x, z and g of
+  vae2), bold italic elsewhere (the 𝑸, 𝑲 and 𝑽 of the attention pictures, the 𝝓 and 𝜺 of vae2). Names that are not
+  variables keep the form of the post's text (the tokens AC<sub>0</sub> of the expert parallelism pictures, the
+  draft token b of spec_sampling). Inside brackets, a comma is followed by a thin space (U+2009), or by the narrow
+  no-break space (U+202F, as wide) in a label that may wrap; the 𝒩(0,𝜎²) of lora has none, as its trapezoid
+  leaves no room. An italic letter with an italic correction of at least 0.08 em in the MATH table of the font
+  (𝑉, 𝑌, 𝑇, 𝑃, 𝐹, 𝑊, 𝑁, 𝐽, 𝑈, 𝑓, 𝑀, 𝐼) is followed by a hair space (U+200A), its italic correction, before a
+  bracket, a prime, a superscript or a × that follows it with no space (𝑁 ×), so that the slanted letter does not
+  touch them. The math font does not place combining accents, so a hat (𝑊̂) is a circumflex ˆ (U+02C6) and a
+  tilde a ˜ (U+02DC) that CSS sets over the letter: `<span style="position: relative; left: -0.566em; top:
+  -0.244em; margin-right: -0.5em;">ˆ</span>` after 𝑊, with the offsets of the MATH table of the font (a hat left
+  −0.445 em after 𝑥, −0.433 em after 𝑦, and −0.37 em with top −0.011 em after 𝑐; a tilde left −0.506 em and top
+  −0.266 em after 𝑂).
 - A quotient that is hard to read on one line (the update of gptq, the 𝑠<sub>𝑗</sub> of smoothquant) is a built-up
   fraction, as TeX sets it in display style, at the user's request; short ones stay inline (round(𝑤 / 𝑠),
   max|𝑋<sub>𝑗</sub> / 𝑠<sub>𝑗</sub>|). The label holds the numerator and the denominator, stacked in an inline-block
@@ -408,7 +417,7 @@ sections 6 and 7, and the font section 4.
   sizes at least 1.1 times larger become 16, sizes under 0.9 times smaller become 12.
   Italic is allowed for variables and for emphasis, bold only for titles, subtitles and names the post's
   text refers to: the title of a frame or panel (its topmost label), N× and (N/2)× (moe_gshard), Encoder and
-  Decoder, and the tensor name of a label "name: shape" or "name(a, b)" (only the name: **Q**: H x S x h). Bold
+  Decoder, and the tensor name of a label "name: shape" or "name(a, b)" (only the name: **𝑸**: 𝐻 × 𝑆 × ℎ). Bold
   changes the weight of a label, never its words, also in pictures from external sources.
 - Charts use the same fonts and sizes: tick labels 12, axis labels and legends 14, panel titles 14 bold. A
   panel title that is a sentence goes into the caption; panel letters and short panel names stay. A legend

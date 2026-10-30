@@ -149,7 +149,7 @@ The transfer and the sum are fused into **All-to-All-Combine**, an all-to-all ex
 The combine needs no metadata of its own, as it reuses the counts per sender of the dispatch, transposed, and the compute ranks run no cross-rank arithmetic. Note that each expert rank applies the routing weights to its expert outputs before it publishes its partial results, so the switch only adds them. The following picture shows both collectives on the example above:
 
 {: .picture}
-<img width="88.2%" height="88.2%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_inc.svg"/>
+<img width="88%" height="88%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_inc.svg"/>
 
 {: .caption}
 The dispatch and combine of the example through the INC switch, with $$W$$ transfers in and $$W$$ out per collective. **Left:** All-to-All-Dispatch. **Right:** All-to-All-Combine. $$A_{02}$$ is token A for the expert ranks $$P_0$$ and $$P_2$$, $$\text{AC}_0$$ the tokens A and C for $$P_0$$, $$\sigma^y_{AC}$$ the partial sums of $$P_y$$ for tokens A and C, and $$r^y_{AC}$$ the signal that they are ready (dotted). The INC switch maps each ready signal to the pull of the partial sums that it names, $$r^y_t \rightarrow \sigma^y_t$$, and adds them into $$\Sigma_t$$.

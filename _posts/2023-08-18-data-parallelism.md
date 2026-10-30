@@ -17,7 +17,7 @@ This post explains how data parallelism works, how sharding (ZeRO and FSDP) remo
 [Data parallelism](https://en.wikipedia.org/wiki/Data_parallelism) refers to the parallel execution of different input samples across processors. Consider any data input of shape $$B \times S \times E$$ (batch size, sequence/temporal size and embedding/feature size): data parallelism refers to the use case where the data is split across $$P$$ processes along the batch dimension, leading to a local input of shape $$B/P \times S \times E$$:
 
 {: .picture}
-<img width="24.1%" height="24.1%" src="{{ site.assets }}/distributed-training/imgs/data_parallelism.svg"/>
+<img width="24.2%" height="24.2%" src="{{ site.assets }}/distributed-training/imgs/data_parallelism.svg"/>
 
 {: .caption}
 An illustration of the DDP data layout, split across 4 processes color-coded as blue, yellow, red and green.

@@ -47,7 +47,7 @@ Using the previous notation, assume a mini-batch split across the sequence dimen
 [(DeepSpeed) Ulysses parallelism](https://arxiv.org/abs/2309.14509) solves this by swapping the distributed view from sequence-split to head-split before the MHA module, and back after it. The key idea is that the attention heads are independent of each other: a process that holds the full sequence for a subset of the heads computes their attention locally, as in the following illustration:
 
 {: .picture}
-<img width="82.6%" height="82.6%" src="{{ site.assets }}/distributed-training/imgs/ulysses_sequence_parallelism.svg"/>
+<img width="82.7%" height="82.7%" src="{{ site.assets }}/distributed-training/imgs/ulysses_sequence_parallelism.svg"/>
 
 {: .caption}
 Overview of Ulysses sequence parallelism. **Left:** the initial view of the input tensor, distributed across 4 color-coded GPUs and split along the sequence (`S`) dimension. **Center:** the *first all-to-all* changes the distributed view from sequence-split to head-split. Each process now holds full sequences for a subset of heads and computes attention locally. **Right:** the *second all-to-all* changes the view back from head-split to sequence-split. Inspired by: [DeepSpeed Ulysses: System Optimizations for Enabling Training of Extreme Long Sequence Transformer Models](https://arxiv.org/abs/2309.14509)

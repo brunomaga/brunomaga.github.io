@@ -206,7 +206,7 @@ For the example above, $$D = \operatorname{diag}(3, 1)$$, and the eigenvectors $
 The **[Singular Value Decomposition](https://en.wikipedia.org/wiki/Singular_value_decomposition)** (SVD) is a decomposition of the form $$A = U \Sigma V^{\intercal}$$:
 
 {: .picture}
-<img width="41.1%" height="41.1%" src="{{ site.assets }}/algebra-for-ml/mml_svd.svg"/>
+<img width="41%" height="41%" src="{{ site.assets }}/algebra-for-ml/mml_svd.svg"/>
 
 {: .caption}
 The SVD of a matrix $$A \in \mathbb{R}^{m \times n}$$, $$A = U \Sigma V^{\intercal}$$, with the orthogonal matrices $$U \in \mathbb{R}^{m \times m}$$ and $$V \in \mathbb{R}^{n \times n}$$, and $$\Sigma \in \mathbb{R}^{m \times n}$$, whose only non-zero entries are the singular values on its diagonal. Adapted from: [Mathematics for Machine Learning, Section 4.5](https://mml-book.github.io/)

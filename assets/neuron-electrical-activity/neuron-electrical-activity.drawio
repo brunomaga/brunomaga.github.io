@@ -600,25 +600,25 @@
             <mxPoint x="67.97" y="132.68" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="net_current_conservation-16" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.439em;line-height:0;&quot;&gt;a&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
+        <mxCell id="net_current_conservation-16" value="𝑖&lt;sub style=&quot;font-size: 11px;vertical-align:-0.439em;line-height:0;&quot;&gt;𝑎&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
           <mxGeometry x="101.68" y="-5.11" width="10.4" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="net_current_conservation-17" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.439em;line-height:0;&quot;&gt;a&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
+        <mxCell id="net_current_conservation-17" value="𝑖&lt;sub style=&quot;font-size: 11px;vertical-align:-0.439em;line-height:0;&quot;&gt;𝑎&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
           <mxGeometry x="3.35" y="79.39" width="10.4" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="net_current_conservation-18" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.439em;line-height:0;&quot;&gt;a&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
+        <mxCell id="net_current_conservation-18" value="𝑖&lt;sub style=&quot;font-size: 11px;vertical-align:-0.439em;line-height:0;&quot;&gt;𝑎&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
           <mxGeometry x="182.52" y="102.39" width="10.4" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="net_current_conservation-19" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.439em;line-height:0;&quot;&gt;a&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
+        <mxCell id="net_current_conservation-19" value="𝑖&lt;sub style=&quot;font-size: 11px;vertical-align:-0.439em;line-height:0;&quot;&gt;𝑎&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
           <mxGeometry x="122.35" y="169.06" width="10.4" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="net_current_conservation-20" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.505em;line-height:0;&quot;&gt;m&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
+        <mxCell id="net_current_conservation-20" value="𝑖&lt;sub style=&quot;font-size: 11px;vertical-align:-0.505em;line-height:0;&quot;&gt;𝑚&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
           <mxGeometry x="81.99" y="44.39" width="13.84" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="net_current_conservation-21" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.505em;line-height:0;&quot;&gt;m&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
+        <mxCell id="net_current_conservation-21" value="𝑖&lt;sub style=&quot;font-size: 11px;vertical-align:-0.505em;line-height:0;&quot;&gt;𝑚&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
           <mxGeometry x="95.82" y="75.73" width="13.84" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="net_current_conservation-22" value="&lt;i&gt;i&lt;/i&gt;&lt;sub style=&quot;font-size: 11px;vertical-align:-0.505em;line-height:0;&quot;&gt;m&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
+        <mxCell id="net_current_conservation-22" value="𝑖&lt;sub style=&quot;font-size: 11px;vertical-align:-0.505em;line-height:0;&quot;&gt;𝑚&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="net_current_conservation-figure">
           <mxGeometry x="78.32" y="94.06" width="13.84" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="solver_compartment_neuron-label" value="solver_compartment_neuron.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
@@ -1232,10 +1232,10 @@
             <mxPoint x="678.35" y="186.66" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="neuron_model_scales-9" value="&lt;i&gt;E&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#b85450;strokeWidth=3.6;fontFamily=NewComputerModernSansMath;fontSize=16;fontStyle=0;fontColor=#000000;" vertex="1" parent="neuron_model_scales-figure">
+        <mxCell id="neuron_model_scales-9" value="𝐸" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#b85450;strokeWidth=3.6;fontFamily=NewComputerModernSansMath;fontSize=16;fontStyle=0;fontColor=#000000;" vertex="1" parent="neuron_model_scales-figure">
           <mxGeometry x="29.74" y="32.66" width="46.67" height="46.67" as="geometry" />
         </mxCell>
-        <mxCell id="neuron_model_scales-10" value="&lt;i&gt;I&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontFamily=NewComputerModernSansMath;fontSize=16;fontStyle=0;fontColor=#000000;" vertex="1" parent="neuron_model_scales-figure">
+        <mxCell id="neuron_model_scales-10" value="𝐼" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontFamily=NewComputerModernSansMath;fontSize=16;fontStyle=0;fontColor=#000000;" vertex="1" parent="neuron_model_scales-figure">
           <mxGeometry x="29.74" y="126" width="46.67" height="46.67" as="geometry" />
         </mxCell>
         <mxCell id="neuron_model_scales-11" value="" style="endArrow=classic;endFill=1;endSize=5;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="neuron_model_scales-figure">
@@ -1588,7 +1588,7 @@
         <mxCell id="compartment_rc_circuit-6" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="compartment_rc_circuit-figure">
           <mxGeometry x="165.67" y="212" width="7" height="7" as="geometry" />
         </mxCell>
-        <mxCell id="compartment_rc_circuit-7" value="&lt;i&gt;I&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-7" value="𝐼" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
           <mxGeometry x="173.27" y="0" width="11.66" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="compartment_rc_circuit-8" value="intracellular" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=Source Sans 3;fontSize=12;fontStyle=1;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
@@ -1621,10 +1621,10 @@
             <mxPoint x="51.57" y="118.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="compartment_rc_circuit-14" value="&lt;i&gt;C&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-14" value="𝐶" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
           <mxGeometry x="0" y="101.5" width="16.34" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="compartment_rc_circuit-15" value="&lt;i&gt;I&lt;/i&gt;&lt;sub&gt;C&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-15" value="𝐼&lt;sub&gt;C&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
           <mxGeometry x="4.67" y="50.4" width="21" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="compartment_rc_circuit-16" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
@@ -1670,13 +1670,13 @@
             <mxPoint x="145.37" y="69.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="compartment_rc_circuit-23" value="&lt;i&gt;R&lt;/i&gt;&lt;sub&gt;Na&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-23" value="𝑅&lt;sub&gt;Na&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
           <mxGeometry x="79.21" y="80.5" width="32.66" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="compartment_rc_circuit-24" value="&lt;i&gt;E&lt;/i&gt;&lt;sub&gt;Na&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-24" value="𝐸&lt;sub&gt;Na&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
           <mxGeometry x="79.99" y="136.5" width="31.88" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="compartment_rc_circuit-25" value="&lt;i&gt;I&lt;/i&gt;&lt;sub&gt;Na&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-25" value="𝐼&lt;sub&gt;Na&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
           <mxGeometry x="93.68" y="46.9" width="27.99" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="compartment_rc_circuit-26" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
@@ -1722,13 +1722,13 @@
             <mxPoint x="229.37" y="69.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="compartment_rc_circuit-33" value="&lt;i&gt;R&lt;/i&gt;&lt;sub&gt;K&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-33" value="𝑅&lt;sub&gt;K&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
           <mxGeometry x="169.42" y="80.5" width="26.45" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="compartment_rc_circuit-34" value="&lt;i&gt;E&lt;/i&gt;&lt;sub&gt;K&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-34" value="𝐸&lt;sub&gt;K&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
           <mxGeometry x="170.21" y="136.5" width="25.66" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="compartment_rc_circuit-35" value="&lt;i&gt;I&lt;/i&gt;&lt;sub&gt;K&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-35" value="𝐼&lt;sub&gt;K&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
           <mxGeometry x="183.9" y="46.9" width="21.77" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="compartment_rc_circuit-36" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
@@ -1774,13 +1774,13 @@
             <mxPoint x="313.37" y="69.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="compartment_rc_circuit-43" value="&lt;i&gt;R&lt;/i&gt;&lt;sub&gt;Ca&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-43" value="𝑅&lt;sub&gt;Ca&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
           <mxGeometry x="247.98" y="80.5" width="31.89" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="compartment_rc_circuit-44" value="&lt;i&gt;E&lt;/i&gt;&lt;sub&gt;Ca&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-44" value="𝐸&lt;sub&gt;Ca&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
           <mxGeometry x="248.77" y="136.5" width="31.1" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="compartment_rc_circuit-45" value="&lt;i&gt;I&lt;/i&gt;&lt;sub&gt;Ca&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-45" value="𝐼&lt;sub&gt;Ca&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
           <mxGeometry x="262.46" y="46.9" width="27.21" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="compartment_rc_circuit-46" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
@@ -1820,13 +1820,13 @@
             <mxPoint x="400.17" y="195.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="compartment_rc_circuit-52" value="&lt;i&gt;R&lt;/i&gt;&lt;sub&gt;L&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-52" value="𝑅&lt;sub&gt;L&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
           <mxGeometry x="359.98" y="80.5" width="24.89" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="compartment_rc_circuit-53" value="&lt;i&gt;E&lt;/i&gt;&lt;sub&gt;L&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-53" value="𝐸&lt;sub&gt;L&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
           <mxGeometry x="360.77" y="136.5" width="24.1" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="compartment_rc_circuit-54" value="&lt;i&gt;I&lt;/i&gt;&lt;sub&gt;L&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-54" value="𝐼&lt;sub&gt;L&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontFamily=NewComputerModernSansMath;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">
           <mxGeometry x="374.46" y="46.9" width="20.21" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="compartment_rc_circuit-55" value="..." style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontFamily=Source Sans 3;fontSize=16;fontStyle=0;fontColor=#000000;" vertex="1" parent="compartment_rc_circuit-figure">

@@ -1604,7 +1604,7 @@ In the context of fusion-heavy related work, DeepSpeed Inference aggressively fu
 DyLoRA trains dynamic, search-free models at least 4 to 7 times faster than LoRA (depending on the task), without significantly compromising performance: on GLUE with RoBERTa-base, one DyLoRA model averages 84.22 at rank 1 and 85.44 at rank 8 (82.86 and 84.35 in the frozen mode of the picture), against 85.27 for a LoRA model of rank 8, which falls to 54.90 when truncated to rank 1. The following picture illustrates the forward pass and the parameter updates of DyLoRA for two sampled ranks:
 
 {: .picture}
-<img loading="lazy" width="92.5%" height="92.5%" src="{{ site.assets }}/publications/dylora.svg"/>
+<img loading="lazy" width="92.4%" height="92.4%" src="{{ site.assets }}/publications/dylora.svg"/>
 
 {: .caption}
 The overall diagram of DyLoRA. In each iteration, a rank $$b$$ is sampled from a pre-defined random distribution $$P_B$$, which truncates the up-projection and down-projection matrices in the LoRA (Hu et al., 2021) objective: the forward pass uses only the first $$b$$ columns of $$W_{up}$$ and the first $$b$$ rows of $$W_{dw}$$, and the parameter update changes only the $$b$$-th column and row, while the others stay frozen (snowflakes). Adapted from: [DyLoRA: Parameter-Efficient Tuning of Pretrained Models using Dynamic Search-Free Low Rank Adaptation](https://arxiv.org/abs/2210.07558)
@@ -1630,7 +1630,7 @@ Section 3.1 analyzes the [collective communication](https://en.wikipedia.org/wik
 For the attention (Section 3.3), "Multihead attention can be parallelized in essentially the same ways as a feedforward layer", but its keys and values (the **KV cache**) incur significant memory capacity and bandwidth costs. [Multi-query attention](https://arxiv.org/abs/1911.02150) reduces the size of the KV cache tensors by a factor of $$n_{heads}$$, and the time spent loading them from memory. However, when it is partitioned over the heads ((b) in the picture below), its single head of keys and values "must be replicated on each chip and the memory cost savings of multiquery attention are lost". The paper instead partitions the $$Q$$, $$K$$ and $$V$$ matrices of multi-query attention over the batch dimension $$B$$, into $$n_{chips}$$ partitions. This reduces the cost of loading the KV cache per chip by a factor of $$n_{chips}$$, at the cost of resharding the input activations, and enables larger batch sizes and up to 32× longer contexts. The following picture compares the three partitioning layouts of the attention, on two devices:
 
 {: .picture}
-<img loading="lazy" width="65.2%" height="65.2%" src="{{ site.assets }}/publications/efficiently_scaling_transformer_inference_multiquery.svg"/>
+<img loading="lazy" width="65.1%" height="65.1%" src="{{ site.assets }}/publications/efficiently_scaling_transformer_inference_multiquery.svg"/>
 
 {: .caption}
 Multiquery attention has lower memory cost to load the KV cache when sharded over batch. Top: the shapes of Q and K/V in multi-head and multi-query attention. <b>(a)</b> Multi-head attention, sharded over heads: it can be sharded across heads without replication. <b>(b)</b> Multi-query attention, sharded over heads: it requires full replication of the single head for K, increasing memory access cost. <b>(c)</b> Multi-query attention, sharded over batch: only a slice of K is needed for einsum, reducing memory access cost. Adapted from: [Efficiently Scaling Transformer Inference](https://arxiv.org/abs/2211.05102)
@@ -2197,7 +2197,7 @@ The authors claim that sparsity in attention is a natural pattern, and show (by 
 Strided attention is convenient when the data has a structure that aligns with the stride, like images or some types of music. For data without a periodic structure, like text, the strided pattern can fail to route information properly, and a fixed pattern is used instead. Both patterns are compared with the full attention in the following picture:
 
 {: .picture}
-<img loading="lazy" width="87.9%" height="87.9%" src="{{ site.assets }}/publications/sparse_transformers.svg"/>
+<img loading="lazy" width="88%" height="88%" src="{{ site.assets }}/publications/sparse_transformers.svg"/>
 
 {: .caption}
 Two 2D factorized attention schemes of the Sparse Transformer, (b) strided and (c) fixed, compared with the full attention of a standard Transformer (a). The top row indicates, for an example 6x6 image, which positions two attention heads receive as input when computing a given output. The bottom row shows the connectivity matrix (not to scale) between all such outputs (rows) and inputs (columns). Sparsity in the connectivity matrix can lead to significantly faster computation. In (b) and (c), full connectivity between elements is preserved when the two heads are computed sequentially. The paper tests whether such factorizations can match the performance of the rich connectivity patterns learned by full attention (Figure 2 of the paper). Adapted from: [Generating Long Sequences with Sparse Transformers](https://arxiv.org/abs/1904.10509)
