@@ -128,7 +128,7 @@ word helps:
   search engines and link previews), and `tags:` that list its main keywords with these spellings. A page of more
   than 6,000 words has a list of contents after its opening paragraphs: the four lines `{::options
   toc_levels="2..3" /}`, a blank line, `* TOC` and `{:toc}`, which kramdown turns into links to the H2 and H3
-  headings.
+  headings. The two kernel fusion posts are the exception: they have no list of contents.
 
 ### References
 
@@ -183,13 +183,22 @@ word helps:
 - The repository is public: when CLAUDE.md, TODO.md, commit messages and pull requests write about these two posts,
   they name neither the paper repositories nor the hardware and libraries of the papers' experiments. They call the
   repositories the MoE and the FFN paper repositories.
-- The expert parallelism post shows each communication model once, in one picture each followed by its table of
-  operations, steps and relays (from the paper's appendix), in this order: AllGather-ReduceScatter; All-to-All,
+- The two kernel fusion posts are kept short, at the user's request (2026-10-30). They summarize their paper and do
+  not copy all of it:
+  - no list of contents (above);
+  - no list of the shmem (or other library) operations that the collectives are built with, and no table of the
+    one-sided operations of each communication model: the pictures and the timelines show them already, and the
+    text names an operation only where it explains a step;
+  - the discussion after the results table is short: a few paragraphs with the main speedups and the reason for
+    each, not a subsection per regime;
+  - the final remarks are a single short paragraph: the open directions and the closest related work, in one or
+    two sentences each.
+- The expert parallelism post shows each communication model once, in one picture each, in this order: AllGather-ReduceScatter; All-to-All,
   which sends each rank only the tokens it needs but needs a count exchange first; then in-network computing (INC)
   and the INC form of AllGather-ReduceScatter, which removes two steps (pack and global reduce); the INC
   all-to-all, as INC All-to-All-Dispatch and INC All-to-All-Combine, followed by its timeline; then the INC
   all-to-all phased, as INC All-to-All-Dispatch (Phased) and INC All-to-All-Combine (Phased), in the simplified
-  picture, the table and the timeline of the paper. No INC picture appears before INC is introduced. The routing
+  picture and the timeline of the paper. No INC picture appears before INC is introduced. The routing
   table of the example is a Markdown table, not a picture.
 - The specific implementation of the INC all-to-all phased is confidential, at the user's request (2026-10-26): the
   expert parallelism post follows only the public files of the paper (`main.tex` and the files it includes, never a
@@ -203,7 +212,7 @@ word helps:
   checks the paper's repository for commits after the one recorded here and, where the public files of the paper
   changed, updates the post's text, tables and captions to them (the picture rules say how the pictures follow);
   then it records the new commit here. The expert parallelism post follows the MoE paper repository at commit
-  9e8ac36 (2026-10-30), and the tensor parallelism post the FFN paper repository at commit 1076c33 (2026-10-18).
+  d5461df (2026-10-30), and the tensor parallelism post the FFN paper repository at commit 1076c33 (2026-10-18).
 
 ### Titles
 
