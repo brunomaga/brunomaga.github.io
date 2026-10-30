@@ -187,24 +187,24 @@ word helps:
   operations, steps and relays (from the paper's appendix), in this order: AllGather-ReduceScatter; All-to-All,
   which sends each rank only the tokens it needs but needs a count exchange first; then in-network computing (INC)
   and the INC form of AllGather-ReduceScatter, which removes two steps (pack and global reduce); the INC
-  All-to-All, as All-to-All-Dispatch and All-to-All-Combine, followed by its timeline. No INC picture appears before
-  INC is introduced. The routing table of the example is a Markdown table, not a picture.
-- The implementation of the partial collectives (One-to-Many-Dispatch and Many-to-One-Combine) is confidential, at
-  the user's request (2026-10-26): the expert parallelism post follows the public version of the paper (`main.tex`,
-  never `main_confidential.tex`). It says what they are (a variant of the all-to-all that multicasts the tokens and
-  reduces their expert outputs iteratively, as a sequence of partial collectives that wait only for the ranks
-  involved), their advantages and disadvantages, when to use each form, and their results, but has no picture,
-  timeline, protocol (operations, signals, flags, slots, metadata), operation table or step, relay or signal counts
-  of them, and says that their details will be released in the near future.
-- Never open, read or search any `*_confidential*` file (`main_confidential.tex`, `main_confidential.pdf` and the
-  like) in the paper repositories, at the user's request (2026-10-26): the posts use only the public files.
+  all-to-all, as INC All-to-All-Dispatch and INC All-to-All-Combine, followed by its timeline; then the INC
+  all-to-all phased, as INC All-to-All-Dispatch (Phased) and INC All-to-All-Combine (Phased), in the simplified
+  picture, the table and the timeline of the paper. No INC picture appears before INC is introduced. The routing
+  table of the example is a Markdown table, not a picture.
+- The specific implementation of the INC all-to-all phased is confidential, at the user's request (2026-10-26): the
+  expert parallelism post follows only the public files of the paper (`main.tex` and the files it includes, never a
+  confidential file). It shows the phased variant only as the public files do, in a simplified view, and says that
+  the drawing omits the details of the implementation, which will be released in the near future. At the user's
+  request (2026-10-30), it names and describes no method and no appendix of the paper that the public files do not
+  describe.
+- Never open, read or search any file of the paper repositories whose name contains `confidential`
+  (`main_confidential.tex`, `main_confidential.pdf` and the like), at the user's request (2026-10-26): the posts use
+  only the public files.
 - Each kernel fusion post follows the latest public version of its paper. Every task on one of the two posts first
   checks the paper's repository for commits after the one recorded here and, where the public files of the paper
   changed, updates the post's text, tables and captions to them (the picture rules say how the pictures follow);
   then it records the new commit here. The expert parallelism post follows the MoE paper repository at commit
-  d1b9da2 (2026-10-23), and the tensor parallelism post the FFN paper repository at commit 1076c33 (2026-10-18).
-  At the user's request (2026-10-30), the expert parallelism post stays at its commit until 1 November 2026, and is
-  synced once after that date, in a task of its own.
+  9e8ac36 (2026-10-30), and the tensor parallelism post the FFN paper repository at commit 1076c33 (2026-10-18).
 
 ### Titles
 
@@ -266,7 +266,8 @@ sections 6 and 7, and the font section 4.
   "Ours" becomes the method's name. Quoted inputs (prompts, chat turns, example sentences) keep their words.
 - The pictures of the two kernel fusion posts follow "The author's papers" in the writing rules: no hardware
   names (CCL, shmem, GPUs or ranks), and nothing that traces the work back to the company where it was
-  developed.
+  developed. A device name of a paper figure becomes rank, also where the paper uses it as a symbol (the requests
+  rank<sup>02</sup><sub>𝐴</sub> of the phased pictures of the expert parallelism post).
 
 ### 2. Sources and files
 
@@ -284,14 +285,14 @@ sections 6 and 7, and the font section 4.
   is redrawn in this repo, in a tab of assets/inference/inference.drawio named after the post, from the
   paper repository's draw.io or TikZ source. The paper repositories stay unchanged. Two pictures are the
   exception: ep_stages.svg and ep_pipeline.svg of the expert parallelism post stay the paper's own figures,
-  copied unchanged and shown at 100% width.
+  copied unchanged and shown at 100% width. When the paper repository's export of one of them is older than its
+  TikZ source in the public files, it is exported again from that source with the paper repository's own export
+  script, outside the paper repository, and the new export is copied.
 - Until 1 November 2026, at the user's request, the paper repository of the expert parallelism post gets new
   and changed figures. Every SVG revision (every picture task) in that time first pulls the latest imgs/*.svg
   and their draw.io or TikZ sources from the paper repositories, and adapts the pictures of the kernel fusion
   posts to them: a changed figure is redrawn again in this repo (copied again for ep_stages.svg and
-  ep_pipeline.svg), and a new figure that the post does not show yet is reported to the user. The expert
-  parallelism post is the exception, at the user's request (2026-10-30): its pictures stay as they are until
-  1 November 2026, and follow the paper once after that date, in the task that syncs the post.
+  ep_pipeline.svg), and a new figure that the post does not show yet is reported to the user.
 - A picture or an animation shown unchanged from Wikimedia Commons (the Newton's method and k-means GIFs)
   links to its original file on upload.wikimedia.org, with no copy in assets.
 - A picture used by a post and by the publications page is stored once, in the post's asset folder, and
