@@ -1031,6 +1031,12 @@ that is not wrong.
   (rows 1 and 3, and rows 2 and 4, repeat their colors). In the per-row panel each color is one scale, so the
   per-group panel reads as 6 scales. Fix: a black frame around each group, or 12 distinct fills.
 
+### GPT from scratch in C++ and CUDA vs. fused PyTorch (_drafts/2026-08-17-gpt-cpp-cuda.md)
+
+- Optional: the matrix multiplication section has no picture. Fix: a picture of the tiles of `tiledMultiply` (the row
+  of tiles of A and the column of tiles of B that one thread block reads for its tile of C), and one of the ring
+  algorithm (the blocks of B passed between the ranks at each step).
+
 ### Publication Summaries (publications.md)
 
 - Optional, `publications/llama_3_multi_modal.svg`: the connectors "Every 4th layer" and "Every ~3rd layer" have arrow
@@ -1256,6 +1262,21 @@ Content problems that need the author's decision, such as overlap between posts.
   validation loss, time per token, matching tokens), or present the code without the comparisons.
 - Optional: once both drafts are published, "knowledge distillation" in the introduction could link to the
   distillation post instead of Wikipedia.
+
+### GPT from scratch in C++ and CUDA vs. fused PyTorch (_drafts/2026-08-17-gpt-cpp-cuda.md)
+
+- The results that need GPUs are placeholders in bold brackets: the runtimes of `tiledMultiply` and cuBLAS, of the
+  ring on several GPUs, the benchmark table and the CPU runtime, the hardware and the versions, and the discussion of
+  the results. The CUDA, LibTorch and NCCL programs build, but have not run on a GPU: the CPU code prints the outputs
+  of PyTorch in fp32, and a CPU emulation of the CUDA kernels prints those of PyTorch in bf16. The kernels of
+  `torch.compile` were listed on the CPU, and the 5 passes over the attention weights come from the source of
+  TorchInductor. Fix: run the commands of the Benchmark section and of `assets/gpt-cpp-cuda/README.md` on a GPU
+  node, the compiled model with `TORCH_LOGS=output_code`, then fill in the placeholders and write the discussion.
+- The draft overlaps two posts. Its sections "Change of philosophy", "Kernel fusion" and "torch.compile" come from
+  the post GPT in C++ (2023-06-27-gptlite-cpp.md), whose benchmark it replaces, and its section "Kernel fusion on
+  several GPUs" covers the first section of the kernel fusion post for tensor parallelism. Fix: when the draft is
+  published, the kernel fusion post links to it and keeps only its own points in that section, and the old post
+  links to the new one in its introduction, or is removed; the user decides.
 
 ### From Mixture-of-Experts to RAG and Agentic AI Systems (_drafts/2026-10-23-moe-rag-agentic-ai.md)
 
