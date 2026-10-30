@@ -981,19 +981,11 @@ that is not wrong.
 
 ### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
 
-- `inference/imgs/ep_stages.svg` draws the eight stages on the time axis of the decode step, whose costs are
-  placeholders, not measurements, as the caption says. Fix: remove the time axis until the decode step is measured,
-  or redraw it with the measured costs.
-- `inference/imgs/ep_results.svg`: the right panel plots decode times that are placeholders, not measurements, as the
-  caption says. Fix: remove the right panel and its sentence in the caption until the decode step is measured.
 - The captions have no credit to the post's paper. `ep_stages.svg` and `ep_pipeline.svg` are the paper's own figures,
   and the other pictures redraw its figures. The paper is the author's own and not public yet. Fix: "Source: [MoeInc:
   An Expert Parallelism MegaKernel Overlapping Matrix and Vector Units with In-Network Dispatch-and-Combine](link)"
   under `ep_stages.svg` and `ep_pipeline.svg`, and "Adapted from:" with the same link under the others, once the paper
   has a public link; the user decides.
-- The paper redrew `agrs_inc.svg` and `all_to_all_inc.svg` (2026-10-26): the bracket under each INC diagram now
-  names its operation a collective. `ep_all_gather_reduce_scatter_inc.svg` and `ep_all_to_all_inc.svg` do not have
-  it yet. Fix: redraw them from the paper's draw.io in the next picture task.
 
 ### Knowledge distillation, speculative decoding and multi-token prediction (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
 
@@ -1228,15 +1220,6 @@ Content problems that need the author's decision, such as overlap between posts.
 
 ### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
 
-- The MoE paper repository moved from d1b9da2, the version that the post follows, to f2a3131 (2026-10-30). The paper
-  now reports measured prefill and decode results and ends with a summary, presents the partial collectives under
-  another name, and has new and redrawn figures. So the decode placeholders of the post (the right panel of
-  `ep_results.svg` and the time axis of `ep_stages.svg`), its One-to-Many row and its names of the partial
-  collectives are out of date. The third iteration of the text rewrite left this post as it is on master, as its
-  rewrite was written before the post followed the public version of the paper. Fix: after 1 November 2026, at the
-  user's request (2026-10-30), a task of its own syncs the text, tables, captions and pictures of the post to the
-  public files of the paper at its latest commit, in the style of CLAUDE.md, and records the commit there; the new
-  figures of the partial collectives stay out, unless the user changes the rules on them.
 - The token names are italic in 𝐴<sub>0</sub>, Σ<sub>𝐴</sub> and the packets of the communication pictures, and upright
   in the token sets AC<sub>0</sub>, BC<sub>1</sub> and AB<sub>2</sub> of the expert boxes, in the caption of
   `ep_all_gather_reduce_scatter.svg` ($$A_0$$, $$E_0(\text{AC}_0)$$) and in the four pictures. Fix: one form for the
