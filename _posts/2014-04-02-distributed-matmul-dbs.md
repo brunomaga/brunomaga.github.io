@@ -2,10 +2,13 @@
 layout: post
 title:  "Distributed Matrix Multiplication and Database Joins"
 categories: ["Distributed Algorithms"]
-tags: ["MPI", "linear algebra", "sparse matrices", "CSR", "databases", "joins"]
+tags: ["MPI", "linear algebra", "matrix multiplication", "Cannon's algorithm", "sparse matrices", "CSR", "SpMV", "SpGEMM", "databases", "joins", "semi-join"]
+description: "Distributed matrix multiplication and database joins with MPI: the ring and Cannon's algorithms for dense matrices, sparse products in the CSR format, and semi-joins, shuffles, broadcast joins and join indexes."
 ---
 
 The matrix and the table are probably the most common data structures in computing: matrices hold the data of scientific simulations and machine learning models, and tables hold the records of databases. On a single compute node, their main operations, the matrix multiplication and the database join, are well studied, with fast algorithms and libraries (e.g. [BLAS][blas] for matrices). However, when the data is spread across a network of compute nodes (i.e. a [distributed memory][dist-mem] environment), each node reads only its own memory, and any other data must arrive as a message, which is much slower.
+
+The data is spread because it is large: a dense matrix of 100,000 × 100,000 numbers in double precision takes 80 GB, and the product of two such matrices takes $$10^{15}$$ multiply-adds. On 100 nodes, the three matrices of the product take only 2.4 GB per node. However, each element of the product needs a whole row of one matrix and a whole column of the other, which are spread across all nodes. How the data is split then decides how much of it each node receives, and whether it arrives while the node computes.
 
 This post describes how to split the data of both operations so that each node works *mostly alone*, for dense matrices, sparse matrices and database tables. The algorithms use the terminology of [MPI][mpi]: they run on $$p$$ processes, called **ranks** (usually one per compute node), or **servers** in the database part.
 
@@ -62,11 +65,11 @@ where each tile $$A_{i,k}$$ has $$n/p \times n/p$$ elements, and each block $$B_
 {: .caption}
 The ring algorithm on 3 ranks. Blocks of $$B$$ shift up, and rank 0 sends to rank 2. At each step, a rank multiplies the tile of $$A$$ that has the color of its block of $$B$$.
 
-The output $$C$$ is split by rows, like $$A$$. In the *mirror* case, $$B$$ stays in place, the column blocks of $$A$$ move, and $$C$$ is split by columns. Either way, each rank stores $$3n^2/p$$ elements, but it receives $$p-1$$ blocks, i.e. almost $$n^2$$ elements, however many ranks are added.
+The output $$C$$ is split by rows, like $$A$$. In the *mirror* case, $$B$$ stays in place, the column blocks of $$A$$ move, and $$C$$ is split by columns. Either way, each rank stores $$3n^2/p$$ elements, but it receives $$p-1$$ blocks of $$n^2/p$$ elements, i.e. $$(p-1)\,n^2/p$$, almost $$n^2$$, however many ranks are added.
 
 ### Shifting two matrices: Cannon's algorithm
 
-To send less data, the matrices are cut in both dimensions, which is the idea of [Cannon's algorithm][cannon], first described by Lynn Elliot Cannon in 1969. The ranks form a $$q \times q$$ grid (with $$q = \sqrt{p}$$), and each matrix is cut into $$q \times q$$ tiles. Rank $$(i,j)$$ starts with $$A_{i,j}$$ and $$B_{i,j}$$, and computes:
+To send less data, the matrices are cut in both dimensions, which is the idea of [Cannon's algorithm][cannon], first described by Lynn Elliot Cannon in 1969. The ranks form a $$q \times q$$ **process grid** (with $$q = \sqrt{p}$$), and each matrix is cut into $$q \times q$$ tiles of $$n/q \times n/q$$ elements. Rank $$(i,j)$$ starts with $$A_{i,j}$$ and $$B_{i,j}$$, and computes:
 
 $$
 C_{i,j} = \sum_{k=0}^{q-1} A_{i,k} \, B_{k,j}.
@@ -85,7 +88,13 @@ Steps 2 and 3 are repeated until each rank has done $$q$$ multiplications, as il
 {: .caption}
 Cannon's algorithm on a $$3 \times 3$$ grid of ranks. Tiles of $$A$$ (top) shift left, and tiles of $$B$$ (bottom) shift up. The thick frame marks rank $$(1,2)$$, and colors show its three pairs: blue for $$k=0$$, green for $$k=1$$ and red for $$k=2$$.
 
-In brief, $$A$$ moves along the grid rows, $$B$$ along the grid columns, and $$C$$ stays, so that tile $$C_{i,j}$$ ends on rank $$(i,j)$$, in the same layout as the inputs. Note that, on a 2D grid, two of the three matrices must move. Each rank still stores $$3n^2/p$$ elements, but receives at most $$2q$$ tiles, or $$2n^2/\sqrt{p}$$ elements. Unlike in the ring algorithm, this volume shrinks as ranks are added, and it is the smaller of the two from 9 ranks on.
+Looking at the picture above, rank $$(1,2)$$ starts with $$A_{1,2}$$ and $$B_{1,2}$$, which do not match. The alignment shifts row 1 of $$A$$ left by one and column 2 of $$B$$ up by two: $$A_{1,0}$$ arrives from rank $$(1,0)$$ and $$B_{0,2}$$ from rank $$(0,2)$$, the pair $$k = (1+2) \bmod 3 = 0$$ (blue). The next two shifts bring the pairs $$k = 1$$ (green) and $$k = 2$$ (red), and the three products add up to $$C_{1,2}$$.
+
+In brief, $$A$$ moves along the grid rows, $$B$$ along the grid columns, and $$C$$ stays, so that tile $$C_{i,j}$$ ends on rank $$(i,j)$$, in the same layout as the inputs. Note that, on a 2D grid, two of the three matrices must move.
+
+Each rank still stores $$3n^2/p$$ elements, but receives at most $$2q$$ tiles (one pair in the alignment, and one pair at each of the $$q-1$$ shifts), or $$2n^2/\sqrt{p}$$ elements. Unlike in the ring algorithm, this volume shrinks as ranks are added, and it is the smaller of the two from 9 ranks on. On 4 ranks, a rank receives up to $$n^2$$ elements with Cannon's algorithm and $$0.75\,n^2$$ with the ring; on 9 ranks, $$0.67\,n^2$$ and $$0.89\,n^2$$; and on 64 ranks, $$0.25\,n^2$$ and $$0.98\,n^2$$.
+
+In MPI, the process grid is a communicator with a Cartesian topology, created by `MPI_Cart_create` with periodic dimensions, so that the shifts wrap around. For each shift, `MPI_Cart_shift` returns the ranks to send to and to receive from along a row or a column (at a distance of $$i$$ or $$j$$ for the alignment, and of one afterwards), and `MPI_Sendrecv_replace` sends the current tile and receives the next one into the same buffer.
 
 Cannon's algorithm needs a square grid of ranks. To find more about the topic, [SUMMA][summa] (van de Geijn and Watts, 1995) replaces the shifts with broadcasts along the grid rows and columns, and works on rectangular grids. The [2.5D algorithm][solomonik] (Solomonik and Demmel, 2011) stores extra copies of the matrices to send even less data.
 
@@ -108,13 +117,13 @@ The following picture compares the timelines with and without this overlap:
 {: .caption}
 Timeline of one rank in Cannon's algorithm on a $$3 \times 3$$ grid. **Top:** shifts and multiplications take turns. **Bottom:** each shift runs during a multiplication.
 
-This technique, called **[double buffering][buffering]**, costs one extra pair of tiles, and works for the ring algorithm too. A shift is hidden whenever the multiplication takes longer. In practice, a multiplication costs $$(n/q)^3$$ operations and a shift moves $$2(n/q)^2$$ elements, so large tiles hide the communication easily.
+This technique, called **[double buffering][buffering]**, costs one extra pair of tiles, and works for the ring algorithm too. A shift is hidden whenever the multiplication takes longer. In practice, a multiplication costs $$(n/q)^3$$ operations and a shift moves $$2(n/q)^2$$ elements, i.e. $$n/(2q)$$ operations for each element received, so large tiles hide the communication easily. As an example, with $$n = 10{,}000$$ on a $$10 \times 10$$ grid, the tiles have 1,000 × 1,000 elements, and a rank performs 500 multiply-adds for every element that it receives.
 
 [buffering]: https://en.wikipedia.org/wiki/Multiple_buffering
 
 ## Part 2: sparse matrices
 
-Many matrices are mostly zeros, e.g. in [finite element][fem] simulations, where each point of a mesh interacts only with a few neighbors. Such matrices are called **[sparse][sparse]**, and a sparse format stores only their nonzeros.
+Many matrices are mostly zeros, e.g. in [finite element][fem] simulations, where each point of a mesh interacts only with a few neighbors. As an example, on a mesh of 1,000 × 1,000 points where each point interacts with its 4 nearest neighbors, the matrix has $$10^{12}$$ entries (8 TB in double precision), of which only about 5 million (0.0005%) are nonzero. Such matrices are called **[sparse][sparse]**, and a sparse format stores only their nonzeros.
 
 [fem]: https://en.wikipedia.org/wiki/Finite_element_method
 [sparse]: https://en.wikipedia.org/wiki/Sparse_matrix
@@ -134,7 +143,7 @@ An example is displayed below:
 {: .caption}
 A sparse matrix (left) and its CSR arrays (right), colored by row. Row 3 is empty, so `row_ptr[3]` and `row_ptr[4]` are both 6.
 
-For $$n$$ rows and $$nnz$$ nonzeros, CSR stores $$2 \, nnz + n + 1$$ numbers (22 in the example above, instead of 30 for the dense layout). Reading a row is easy, but reading a column requires a search through all rows, which makes the distributed transpose hard. The product $$y = Ax$$ visits each row and each nonzero once, in $$O(n + nnz)$$ operations:
+For $$n$$ rows and $$nnz$$ nonzeros, CSR stores $$2 \, nnz + n + 1$$ numbers: 22 in the example above, instead of 30 for the dense layout, and about 11 million for the matrix of the mesh, instead of $$10^{12}$$. Reading a row is easy, but reading a column requires a search through all rows, which makes the distributed transpose hard. The product $$y = Ax$$ visits each row and each nonzero once, in $$O(n + nnz)$$ operations:
 
 ```cpp
 for (int i = 0; i < n; i++) {
@@ -146,9 +155,9 @@ for (int i = 0; i < n; i++) {
 
 ### The sparse matrix-vector product
 
-As before, $$A$$ is split by rows. An all-gather of $$x$$ would work, but a rank needs $$x_j$$ only for the columns $$j$$ where its rows have a nonzero, which is usually a small set. So only those entries are sent:
+As before, $$A$$ is split by rows for the **sparse matrix-vector product** (SpMV). An all-gather of $$x$$ would work, but a rank needs $$x_j$$ only for the columns $$j$$ where its rows have a nonzero, which is usually a small set. So only those entries are sent:
 1. once, in a setup step, each rank tells the owners of $$x$$ which of their entries it needs;
-2. before every product, an exchange (`MPI_Alltoallv`) sends these entries to the ranks that need them. The received copies are called **ghost** entries;
+2. before every product, an exchange (`MPI_Alltoallv`) sends these entries to the ranks that need them. The received copies are called **ghost** entries, or the **halo** of the rank;
 3. each rank runs the CSR loop over its own and ghost entries.
 
 The following picture illustrates the exchange on 3 ranks:
@@ -159,22 +168,24 @@ The following picture illustrates the exchange on 3 ranks:
 {: .caption}
 Sparse matrix-vector product on 3 ranks. **Left:** nonzeros colored by rank. A dot marks a nonzero whose entry of $$x$$ is on another rank. **Right:** the entries of $$x$$ on each rank after the exchange. Dashed boxes are ghost entries.
 
-In the picture above, rank 0 needs $$x_2$$ and $$x_5$$ from the other ranks, and ranks 1 and 2 need one entry each. The communication now grows with the number of ghost entries, and *not* with $$n$$. For a matrix from a mesh, these are only the entries at the border of the region of each rank. In practice, a [graph partitioning][partition] tool assigns the rows to the ranks, so that the regions have equal sizes and short borders.
+In the picture above, rank 0 needs $$x_2$$ and $$x_5$$ from the other ranks, and ranks 1 and 2 need one entry each: 4 entries cross the network, instead of the 12 of an all-gather, which sends each rank the 4 entries of the other two ranks. The communication now grows with the number of ghost entries, and *not* with $$n$$.
+
+For a matrix from a mesh, the ghost entries are only the entries at the border of the region of each rank. As an example, the mesh of 1,000 × 1,000 points on 100 ranks gives each rank at most 2,000 ghost entries for strips of 10 × 1,000 points, and at most 400 for squares of 100 × 100 points, while an all-gather would send each rank 990,000 entries. In practice, a [graph partitioning][partition] tool assigns the rows to the ranks, so that the regions have equal sizes and short borders.
 
 [partition]: https://en.wikipedia.org/wiki/Graph_partition
 
 ### The sparse matrix-matrix product
 
-Row $$i$$ of $$C = AB$$ is given by a weighted sum of rows of $$B$$:
+In the **sparse matrix-matrix product** (SpGEMM, for generalized sparse matrix-matrix multiplication), both $$A$$ and $$B$$ are sparse, and row $$i$$ of $$C = AB$$ is given by a weighted sum of rows of $$B$$:
 
 $$
 C_{i,:} = \sum_{k \, : \, A_{ik} \neq 0} A_{ik} \, B_{k,:},
 $$
 
-where $$B_{k,:}$$ is row $$k$$ of $$B$$. So a rank needs row $$k$$ of $$B$$ whenever its rows of $$A$$ have a nonzero in column $$k$$, i.e. the same indices as the ghost entries, but whole rows instead of single entries. This row-by-row formulation ([Gustavson, 1978][gustavson]) suits CSR, which stores both matrices by rows, and leads to the following algorithm:
+where $$B_{k,:}$$ is row $$k$$ of $$B$$. So a rank needs row $$k$$ of $$B$$ whenever its rows of $$A$$ have a nonzero in column $$k$$, i.e. the same indices as the ghost entries, but whole rows instead of single entries. With the matrix of the picture above as $$A$$, rank 0 needs rows 2 and 5 of $$B$$ from the other ranks, rank 1 needs row 0, and rank 2 row 1. This row-by-row formulation ([Gustavson, 1978][gustavson]) suits CSR, which stores both matrices by rows, and leads to the following algorithm:
 1. each rank requests the remote rows of $$B$$ it needs;
 2. the owners send them in CSR, with two `MPI_Alltoallv` calls: first the row sizes, so that the receiver can allocate memory, then the indices and values;
-3. each rank builds its rows of $$C$$ in a dense buffer, and compresses them into CSR.
+3. each rank builds each of its rows of $$C$$ in a **sparse accumulator**, a dense array of $$n$$ values with the list of the positions that hold a nonzero, so that the compression of the row into CSR visits only its nonzeros.
 
 The number of nonzeros of $$C$$ is *not known in advance*, so step 3 often runs twice: a **symbolic** pass counts the nonzeros and allocates memory, and a **numeric** pass computes the values. The output $$C$$ is split by rows, like $$A$$.
 
@@ -195,7 +206,7 @@ In 1970, Edgar F. Codd proposed the [relational model][relational], where the da
 
 ### Inner and outer joins
 
-A **[join][join]** pairs the rows of two tables whose keys match, as in this [SQL][sql] query:
+A **[join][join]** pairs the rows of two tables whose keys match. When the condition is the equality of the keys, the join is called an **equi-join**, as in this [SQL][sql] query:
 
 ```sql
 SELECT Person.id, name, age, msg, year
@@ -230,7 +241,7 @@ On one node, there are three classic algorithms to join tables of $$N$$ and $$M$
 
 In practice, the hash join is the usual choice for large tables, and the sort-merge join is preferred when both tables are already sorted by key. The nested loop suits small tables, or join conditions other than an equality of keys. For outer joins, each row also records whether it found a match, and the rows without one are returned with `NULL`. However, all these algorithms assume that rows with the same key are on the same node, and the following sections show how to ensure this for three layouts.
 
-### Layout 1: each table on a different server
+### Semi-join: each table on a different server
 
 Here, `Person` is on server 1, and `Messages` is on server 2.
 
@@ -238,6 +249,8 @@ Here, `Person` is on server 1, and `Messages` is on server 2.
 1. server 1 sends its keys to server 2;
 2. server 2 returns only its rows with one of these keys;
 3. server 1 joins them with its table, locally.
+
+Steps 1 and 2 follow the pattern of the setup step of the sparse matrix-vector product, with keys in place of indices: the server that needs data sends the list of what it needs, and only that data comes back.
 
 **Outer joins.** In step 3, server 1 also returns its unmatched persons, with `NULL` (the left outer join). Server 2 knows which of its messages had no match, as their keys were not in the list of step 1, so it returns them with `NULL` in a step 4. The inner join and step 4 give the right outer join, and steps 3 and 4 the full outer join, as displayed below:
 
@@ -252,7 +265,7 @@ For a long list of keys, a [Bloom filter][bloom] is a smaller substitute. It let
 [semijoin]: https://doi.org/10.1145/322234.322238
 [bloom]: https://en.wikipedia.org/wiki/Bloom_filter
 
-### Layout 2: tables split by rows
+### Shuffle and broadcast joins: tables split by rows
 
 Each server holds some rows of each table, which is called **horizontal partitioning**, or **[sharding][shard]**. Matching rows may then sit on different servers: below, John is on server 2, but his message "Bye" is on server 1. A local join misses this pair, and a local left outer join is even *wrong*, as it returns John with `NULL`.
 
@@ -266,7 +279,7 @@ Each server holds some rows of each table, which is called **horizontal partitio
 {: .caption}
 Two tables split by rows across 2 servers, colored by target server: blue for server 1 (even keys), and orange for server 2 (odd keys). **Left:** before the shuffle. **Right:** after it.
 
-**Outer joins.** After a shuffle, outer joins are local too, as a row without a match on its server has no match anywhere. Above, server 2 returns Mary and Joe for the left outer join, and "Hey" for the right outer join. However, a shuffle may cause a [load imbalance][balance], as all rows with a frequent key go to the same server.
+**Outer joins.** After a shuffle, outer joins are local too, as a row without a match on its server has no match anywhere. Above, server 2 returns Mary and Joe for the left outer join, and "Hey" for the right outer join. However, a shuffle may cause a [load imbalance][balance] when a few keys are frequent (**data skew**), as all rows with the same key go to the same server.
 
 [balance]: https://en.wikipedia.org/wiki/Load_balancing_(computing)
 
@@ -280,7 +293,7 @@ The left outer join is not: John matches on server 1 but not on server 2, so no 
 {: .caption}
 A broadcast join, for a left outer join. After the all-reduce of the match flags, only Mary and Joe have no match.
 
-### Layout 3: tables split by columns
+### Join index: tables split by columns
 
 Each server holds some columns, for all rows. This is called **vertical partitioning**, as in [column-oriented databases][column-db], and the rows are aligned by position, i.e. row $$r$$ on every server belongs to the same record. Below, server 1 holds the keys, server 2 the other columns of `Person`, and server 3 the other columns of `Messages`.
 

@@ -2,14 +2,17 @@
 layout: post
 title:  "Pipeline parallelism (1F1B, Zero Bubble, DualPipe)"
 categories: ["Distributed Training"]
-tags: ["pipeline parallelism", "1F1B", "zero bubble", "DualPipe", "DeepSpeed", "PyTorch"]
+tags: ["pipeline parallelism", "pipeline bubble", "GPipe", "PipeDream", "1F1B", "interleaved 1F1B", "Zero Bubble", "DualPipe", "DeepSpeed", "PyTorch"]
+description: "Pipeline parallelism splits a model by layers across GPUs: micro-batches and the pipeline bubble, the GPipe, PipeDream and 1F1B schedules, a PyTorch and a DeepSpeed implementation, and the newer Zero Bubble and DualPipe schedules."
 ---
 
 In 2018, the papers [PipeDream](https://arxiv.org/abs/1806.03377) and [GPipe](https://arxiv.org/abs/1811.06965) placed consecutive layers of a neural network on different accelerators, and passed several inputs through them at the same time, as in an assembly line.
 
-This post discusses and implements pipeline parallelism, first in plain PyTorch and then with DeepSpeed, and compares the newer schedules that reduce its idle time, from interleaved 1F1B to Zero Bubble and DualPipe. Pipeline parallelism is another dimension of model parallelism, in the universe of data, tensor, pipeline, context, sequence and expert parallelism.
+This post explains how pipeline parallelism works and why it leaves GPUs idle (the pipeline bubble), from the GPipe and PipeDream schedules to 1F1B. It then implements pipeline parallelism, first in plain PyTorch and then with DeepSpeed, and compares the newer schedules that reduce its idle time, from interleaved 1F1B to Zero Bubble and DualPipe. Pipeline parallelism is one of the dimensions of parallelism of large models. Data parallelism splits the batch, tensor parallelism the weights of each layer, context and sequence parallelism the sequence, expert parallelism the experts, and pipeline parallelism the layers.
 
-Imagine a model that is too large to fit in the local memory of a single process. A simple way to overcome this is to split the model across the layer dimension and delegate a subset of layers to each process. Then the forward and backward passes can be done by communicating activations and gradients between *connecting* processes.
+## Pipeline parallelism
+
+Imagine a model that is too large to fit in the local memory of a single process. As an example, the weights of [GPT-3](https://arxiv.org/abs/2005.14165) alone, 175 billion parameters in [FP16](https://en.wikipedia.org/wiki/Half-precision_floating-point_format), take 350 GB, more than four times the 80 GB of memory of an A100 GPU. A simple way to overcome this is to split the model across the layer dimension and delegate a subset of layers to each process. Then the forward and backward passes can be done by communicating activations and gradients between *connecting* processes.
 
 Each process is responsible for a subset of layers and is called a **stage**, as in the stages of a [pipeline](https://en.wikipedia.org/wiki/Pipeline_(computing)). This type of parallelism is called **pipeline parallelism**. The following picture gives a simple illustration of the process:
 
@@ -19,9 +22,11 @@ Each process is responsible for a subset of layers and is called a **stage**, as
 {: .caption}
 Training of a model split into 4 stages on 4 GPUs, without pipelining: the forward pass of a mini-batch goes from GPU 0 to GPU 3, and its backward pass, which takes twice as long, comes back, so only one GPU computes at a time. The number in each cell is the mini-batch index. Adapted from: [PipeDream: Generalized Pipeline Parallelism for DNN Training](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/)
 
-Now note that the above method would yield a low utilization of compute resources: processes would always have to wait for the connecting layers in other processes to be computed before doing their share of the forward/backward compute. So pipeline parallelism is usually combined with **micro-batching / gradient accumulation**.
+Note that this method yields a low utilization of compute resources: processes always have to wait for the connecting layers in other processes to be computed before doing their share of the forward/backward compute. In the picture above, a forward pass takes one time unit and a backward pass two. Each GPU computes for 3 of the 12 time units of a mini-batch, and idles for the other 9, i.e. 75% of the time. So pipeline parallelism is usually combined with **micro-batching / gradient accumulation**.
 
-In practice, the mini-batch is split into several micro-batches that are passed sequentially to the first process of the pipeline. When a process finishes the current micro-batch, it sends its activations to the following process and receives the activations of the next micro-batch from the previous process. This is mathematically equivalent to regular gradient accumulation. This approach is detailed in the paper [GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism (Google, 2018, arXiv)](https://arxiv.org/abs/1811.06965) and can be illustrated as:
+### GPipe and the pipeline bubble
+
+In practice, the mini-batch is split into several micro-batches that are passed sequentially to the first process of the pipeline. When a process finishes the current micro-batch, it sends its activations to the following process and receives the activations of the next micro-batch from the previous process. The gradients of all micro-batches are added, and the optimizer updates the parameters once the backward passes of all micro-batches are complete, i.e. when the pipeline is empty (a **pipeline flush**). This is mathematically equivalent to regular gradient accumulation. This approach is detailed in the paper [GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism (Google, 2018, arXiv)](https://arxiv.org/abs/1811.06965) and can be illustrated as:
 
 {: .picture}
 <img width="57.3%" height="57.3%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline_parallel.svg"/>
@@ -29,9 +34,21 @@ In practice, the mini-batch is split into several micro-batches that are passed 
 {: .caption}
 Pipeline parallelism with gradient accumulation (GPipe) on 4 GPUs: the mini-batch is split into 4 micro-batches, all forward passes run before the backward passes, and the gradients are added at the pipeline flush, before the next mini-batch starts. Adapted from: [PipeDream: Generalized Pipeline Parallelism for DNN Training](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/)
 
-Setting a high micro-batching factor can lead to high memory usage, as activations have to be stored until the backward pass for the current mini-batch finishes. This can be improved by (1) **activation offloading**, which stores and loads activations to/from the CPU when needed; and (2) **activation checkpointing** at the beginning of every stage, which recomputes activations in the backward pass instead of storing them. In brief, offloading saves memory at the cost of data transfers between the GPU and the CPU, and checkpointing at the cost of extra computation.
+Micro-batching reduces the idle time, but does not remove it. In the picture above, each GPU still idles for 9 of the 21 time units of the mini-batch, the time of 3 forward and 3 backward passes of the other GPUs. This idle time is called the **pipeline bubble**, by analogy with the [bubbles](https://en.wikipedia.org/wiki/Pipeline_stall) of a processor pipeline. With $$p$$ stages, every stage idles for the time of $$p-1$$ forward passes and $$p-1$$ backward passes in each iteration, whatever the number of micro-batches $$m$$. Therefore, the **bubble fraction**, i.e. the idle time relative to the compute time of an iteration, is given by:
 
-The other hyper-parameter to define is the number of stages. So far, the examples above used a number of stages equal to the number of GPUs, i.e. a single pipeline that spans all GPUs. However, it is possible to have multiple pipelines in parallel and to combine pipeline parallelism with other dimensions of parallelism. As an example, here are some combinations of pipeline and data parallelism on an 8-GPU network:
+$$
+\frac{(p-1)(F+B)}{m(F+B)} = \frac{p-1}{m}
+$$
+
+where $$F$$ and $$B$$ are the times of the forward and backward passes of one micro-batch on one stage.
+
+With $$p = 4$$ stages, the bubble is $$3/4$$ of the compute time with the 4 micro-batches of the picture. With 8 micro-batches, as in the pictures of the following sections, it drops to $$3/8$$, and each GPU idles for 9 of 33 time units. Thus, the bubble is small only when there are many more micro-batches than stages: the GPipe paper found its overhead negligible with at least four times as many micro-batches as stages ($$m \geq 4p$$).
+
+The price of a small bubble is memory: with a high micro-batching factor, GPipe stores the activations of all $$m$$ micro-batches until their backward passes, at the end of the mini-batch. This can be improved by (1) **activation offloading**, which stores and loads activations to/from the CPU when needed; and (2) **activation checkpointing** at the beginning of every stage, which recomputes activations in the backward pass instead of storing them, as GPipe does. In brief, offloading saves memory at the cost of data transfers between the GPU and the CPU, and checkpointing at the cost of extra computation.
+
+### Combining pipeline, data and tensor parallelism
+
+The other hyper-parameter to define is the number of stages. So far, the examples above used a number of stages equal to the number of GPUs, i.e. a single pipeline that spans all GPUs. However, it is possible to have multiple pipelines in parallel and to combine pipeline parallelism with other dimensions of parallelism. Tensor parallelism splits the weights of each layer, and its GPUs sum their partial results with an [all-reduce](https://en.wikipedia.org/wiki/Collective_operation) in every layer, while pipeline parallelism only sends point-to-point messages between neighboring stages. Thus, the [Megatron-LM paper](https://arxiv.org/abs/2104.04473) recommends tensor parallelism inside a server and pipeline parallelism across servers. As an example, here are some combinations of pipeline and data parallelism on an 8-GPU network:
 
 {: .picture}
 <img width="28%" height="28%" src="{{ site.assets }}/distributed-training/imgs/pipeline_8_stages.svg"/>
@@ -43,9 +60,11 @@ The other hyper-parameter to define is the number of stages. So far, the example
 {: .caption}
 Combinations of pipeline and data parallelism on 8 GPUs, for one micro-batch: forward passes in blue, backward passes in green, idle time in dashed boxes. Left: one pipeline of 8 stages. Center: 2 data-parallel groups of 4 pipeline stages. Right: 4 data-parallel groups of 2 pipeline stages.
 
-In the pictures above, fewer stages lead to less idle time but to more layers per GPU, so the number of stages is usually the smallest one that fits the model in memory. However, no matter which pipeline configuration is used, there are periods of idleness that cannot be removed.
+In the pictures above, fewer stages lead to less idle time but to more layers per GPU. With a single micro-batch, each GPU idles for $$(p-1)/p$$ of the time: 7/8 with 8 stages, 3/4 with 4 stages and 1/2 with 2 stages. Moreover, the 2 and 4 pipelines of the last two pictures process 2 and 4 micro-batches at the same time. So the number of stages is usually the smallest one that fits the model in memory, and the pipelines are replicated with data parallelism, which averages their gradients with an all-reduce at the end of each mini-batch. However, no matter which pipeline configuration is used, there are periods of idleness that cannot be removed.
 
-With this in mind, there is plenty of ongoing work to improve this. As an example, [PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, SOSP 2019)](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/) is a pipeline method that overlaps the forward and backward passes of different mini-batches. To do so, it keeps track of the version (mini-batch id) and stores several versions of the activations and parameters whose backward pass has not completed:
+### PipeDream and weight stashing
+
+One way to remove more idle time is to never flush the pipeline. [PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, SOSP 2019)](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/) is a pipeline method that overlaps the forward and backward passes of different mini-batches, so that the GPUs do not wait for a flush. To do so, it keeps track of the version (mini-batch id) and stores several versions of the activations and parameters whose backward pass has not completed:
 
 {: .picture}
 <img width="54.2%" height="54.2%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline_parallel_microsoft.svg"/>
@@ -53,9 +72,29 @@ With this in mind, there is plenty of ongoing work to improve this. As an exampl
 {: .caption}
 The PipeDream schedule on 4 GPUs. In the startup state, GPU 0 admits 4 mini-batches; in the steady state, each GPU alternates the forward pass of one mini-batch and the backward pass of an earlier one, so several mini-batches are in flight at the same time. Backward passes are prioritized over forward passes on each GPU. Adapted from: [PipeDream: Generalized Pipeline Parallelism for DNN Training](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/)
 
-Where is the caveat? In practice, mixing forward and backward passes from different mini-batches can lead to wrong parameter updates. Therefore, the authors perform versioning of the parameters (*weight stashing*), effectively having several versions of the same parameters in the model.
+Where is the caveat? In practice, mixing forward and backward passes from different mini-batches can lead to wrong parameter updates. Each GPU updates its weights after every backward pass, so the backward pass of a mini-batch would compute its gradients with other weights than its forward pass. Therefore, the authors perform versioning of the parameters (**weight stashing**), effectively having several versions of the same parameters in the model.
 
-Forward passes use the latest version of the model layers, and the backward pass may use a previous version of the activations and parameters to compute the gradients. This leads to a substantial increase in memory requirements.
+Forward passes use the latest version of the model layers, and the backward pass of a mini-batch uses the version of the activations and parameters of its forward pass to compute the gradients. Weight stashing keeps one version of the weights for each mini-batch **in flight**, i.e. whose forward pass is done and whose backward pass is not. In the picture above, GPU 0 keeps up to 4 versions. This leads to a substantial increase in memory requirements.
+
+### 1F1B and PipeDream-Flush
+
+PipeDream's schedule, in which each worker alternates one forward pass and one backward pass, is called **1F1B** (1 forward pass followed by 1 backward pass), as detailed in the [Microsoft Research blog on PipeDream](https://www.microsoft.com/en-us/research/blog/pipedream-a-more-effective-way-to-train-deep-neural-networks-using-pipeline-parallelism/). **PipeDream-Flush** keeps the 1F1B schedule and brings back the pipeline flush of GPipe at the end of every mini-batch. On each GPU $$i$$, from 0 to $$p-1$$, an iteration runs in three phases. In the **warm-up**, the GPU performs the forward passes of the first $$p-i-1$$ micro-batches. In the **steady state**, it alternates one forward pass and one backward pass. In the **cool-down**, it performs the backward passes of the micro-batches still in flight. It then waits for all forward and backward passes to complete before starting the next mini-batch.
+
+PipeDream-Flush was introduced in [Memory-Efficient Pipeline-Parallel DNN Training (Microsoft, ICML 2021, arXiv)](https://arxiv.org/abs/2006.09503) and, unlike PipeDream, keeps a single version of the parameters, as all micro-batches of a mini-batch use the same weights. The regular (GPipe) and 1F1B algorithms are compared below, on 4 GPUs with 8 micro-batches:
+
+{: .picture}
+<img width="86.5%" height="86.5%" src="{{ site.assets }}/distributed-training/imgs/pipeline_gpipe.svg"/>
+
+{: .caption}
+GPipe on 4 GPUs with 8 micro-batches: all forward passes, then all backward passes. Each GPU keeps the activations of the 8 micro-batches until their backward passes. Adapted from: [Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM](https://arxiv.org/abs/2104.04473)
+
+{: .picture}
+<img width="86.5%" height="86.5%" src="{{ site.assets }}/distributed-training/imgs/pipeline_1f1b.svg"/>
+
+{: .caption}
+1F1B on 4 GPUs with 8 micro-batches: after a warm-up of forward passes, each GPU alternates one forward and one backward pass. The iteration takes as long as with GPipe, but each GPU keeps the activations of at most 4 micro-batches instead of 8. Adapted from: [Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM](https://arxiv.org/abs/2104.04473)
+
+Both schedules take 33 time units, and each GPU idles for 9 of them, the bubble of $$3/8$$ of the compute time computed above: 1F1B does not reduce the bubble. Its gain is memory. In the steady state, each forward pass, which stores the activations of a new micro-batch, is followed by a backward pass, which releases those of the oldest one. Thus, GPU $$i$$ keeps at most $$p-i$$ micro-batches in flight (4, 3, 2 and 1 on GPUs 0 to 3), whatever the number of micro-batches. GPipe, instead, keeps the activations of all 8 micro-batches on every GPU. 1F1B is therefore the default schedule of DeepSpeed and Megatron-LM, and the base of the newer schedules at the end of this post.
 
 ## Implementing pipeline parallelism with PyTorch
 
@@ -66,7 +105,7 @@ Before jumping into DeepSpeed's 1F1B pipeline engine, it is helpful to implement
 - sending activation gradients backward stage-by-stage,
 - and performing one optimizer step per mini-batch (optionally using micro-batches).
 
-To match the scheduling shown in the first picture (no overlapping micro-batches between stages), the implementation uses a **non-overlapped schedule**. An entire micro-batch runs through all forward stages, then its backward pass runs all the way back, and only then does the next micro-batch start. This is the simplest schedule, but it leaves many bubbles (idle time) and is mainly useful for learning and debugging.
+To match the scheduling shown in the first picture (no overlapping micro-batches between stages), the implementation uses a **non-overlapped schedule**. An entire micro-batch runs through all forward stages, then its backward pass runs all the way back, and only then does the next micro-batch start. This is the simplest schedule, but it leaves each stage idle for $$(p-1)/p$$ of the time, as in the first picture, and is mainly useful for learning and debugging.
 
 Below is a minimal example. It assumes:
 
@@ -151,25 +190,11 @@ def train_one_minibatch(model_layers, num_stages, optimizer, criterion, x, y, mi
     return loss_out
 ```
 
-And that is all: **activations flow forward, gradients flow backward**. The remaining sections use DeepSpeed to do the same thing, but efficiently and with better schedules (1F1B), load-balancing, activation checkpointing, and integration with other forms of parallelism.
+And that is all: **activations flow forward, gradients flow backward**. The next section uses DeepSpeed to do the same thing, but efficiently and with a better schedule (1F1B), load balancing, activation checkpointing, and integration with other forms of parallelism.
 
 ## Implementing pipeline parallelism with DeepSpeed
 
-The pipeline parallelism algorithm implemented in DeepSpeed is the [PipeDream-Flush implementation with default 1F1B scheduling](https://www.microsoft.com/en-us/research/blog/pipedream-a-more-effective-way-to-train-deep-neural-networks-using-pipeline-parallelism/) (1 forward pass followed by 1 backward pass), but it is possible to [extend pipeline parallelism](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule) to other algorithms. The **1F1B** algorithm performs a sequence of forward passes, and asynchronously starts the backward pass of each micro-batch whose forward pass has completed. It then waits for all forward and backward passes to complete before starting the next mini-batch.
-
-PipeDream-Flush was introduced in [Memory-Efficient Pipeline-Parallel DNN Training (Microsoft, ICML 2021, arXiv)](https://arxiv.org/abs/2006.09503) and, unlike PipeDream, keeps a single version of the parameters. The regular (GPipe) and 1F1B algorithms are compared below:
-
-{: .picture}
-<img width="86.5%" height="86.5%" src="{{ site.assets }}/distributed-training/imgs/pipeline_gpipe.svg"/>
-
-{: .caption}
-GPipe on 4 GPUs with 8 micro-batches: all forward passes, then all backward passes. Each GPU keeps the activations of the 8 micro-batches until their backward passes. Adapted from: [Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM](https://arxiv.org/abs/2104.04473)
-
-{: .picture}
-<img width="86.5%" height="86.5%" src="{{ site.assets }}/distributed-training/imgs/pipeline_1f1b.svg"/>
-
-{: .caption}
-1F1B on 4 GPUs with 8 micro-batches: after a warm-up of forward passes, each GPU alternates one forward and one backward pass. The iteration takes as long as with GPipe, but each GPU keeps the activations of at most 4 micro-batches instead of 8. Adapted from: [Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM](https://arxiv.org/abs/2104.04473)
+DeepSpeed implements the PipeDream-Flush algorithm with the 1F1B schedule described above, but it is possible to [extend pipeline parallelism](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule) to other algorithms.
 
 Pipeline parallelism is added to the `GPTlite` model implemented in the previous post, and enabled by passing the number of stages as the `--pipeline_num_stages` argument (default: 0, no pipelining) on the command line:
 
@@ -256,7 +281,7 @@ def main_deepspeed(n_epochs=100, random_seed=42):
       # ... forward, backward, and update step as before
 ```
 
-An important nuance: by default, pipeline parallelism expects all mini-batches of the dataset (i.e. in every call to `train_batch()`) to be of the same shape. If this is not the case, the shapes can be reset at the onset of every mini-batch by running `engine.reset_activation_shape()`. This introduces an additional communication step to send the shape of the first micro-batch as the default for the remaining micro-batches.
+An important nuance: by default, pipeline parallelism expects all mini-batches of the dataset (i.e. in every call to `train_batch()`) to be of the same shape, as each stage receives the shape of its input only once, with the first micro-batch, and allocates its receive buffers with it. If this is not the case, the shapes can be reset at the onset of every mini-batch by running `engine.reset_activation_shape()`. This introduces an additional communication step to send the shape of the first micro-batch as the default for the remaining micro-batches.
 
 However, up to DeepSpeed 0.14, it is not possible to have different shapes across micro-batches, and the only workaround is to trim or pad all micro-batches of a mini-batch to the same shape beforehand. Since version 0.15, with the argument `dynamic_shape=True` of `PipelineModule`, the shape of every micro-batch is sent instead, at some cost in performance.
 
@@ -348,7 +373,7 @@ However, activation checkpointing is also tricky to configure when using pipelin
 
 ### Gradient accumulation and micro-batching
 
-The micro-batching level can be defined by setting the fields `train_micro_batch_size_per_gpu` (defaults to `train_batch_size`) or `gradient_accumulation_steps` (defaults to `1`) in the [DeepSpeed config file](https://www.deepspeed.ai/docs/config-json/). At runtime, the number of micro-batches can be retrieved by `engine.gradient_accumulation_steps()`.
+The micro-batching level can be defined by setting the fields `train_micro_batch_size_per_gpu` (defaults to `train_batch_size`) or `gradient_accumulation_steps` (defaults to `1`) in the [DeepSpeed config file](https://www.deepspeed.ai/docs/config-json/). At runtime, the number of micro-batches $$m$$, which sets the size of the bubble, can be retrieved by `engine.gradient_accumulation_steps()`.
 
 ## Results
 
@@ -368,12 +393,11 @@ RANK=6 STAGE=3 LAYERS=6 [10, 16) STAGE_PARAMS=21308160 (21.308M)
 
 This disparity in memory usage on GPU 0 determines the maximum memory required, and balancing it would bring that value down. A [bug report](https://github.com/microsoft/DeepSpeed/issues/4477) was opened with DeepSpeed, and this analysis will be corrected after their feedback or fix.
 
-This code is available in the [distributed-training repo](https://github.com/{{ site.repository }}/tree/master/assets/distributed-training). Detailed results for pipeline parallelism may be added in the future, when time allows.
-
+This code is available in the [distributed-training repo](https://github.com/{{ site.repository }}/tree/master/assets/distributed-training).
 
 ## Beyond 1F1B: reducing the pipeline bubble
 
-Even with 1F1B, every stage idles for $$(p-1)(F+B)$$ per iteration (the **pipeline bubble**), where $$p$$ is the number of stages and $$F$$ and $$B$$ are the times of the forward and backward passes of one micro-batch on one stage. Relative to the compute of $$m$$ micro-batches, $$m(F+B)$$, this is a bubble fraction of $$(p-1)/m$$, so 1F1B can only reduce it with more micro-batches per iteration (i.e. a larger batch or smaller micro-batches) or with fewer stages. Newer schedules reduce the bubble directly, and matter most when there are few micro-batches per pipeline. They are not part of the DeepSpeed releases, where they would require a [custom schedule](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule), but they are available in [Megatron-LM](https://github.com/NVIDIA/Megatron-LM), in [PyTorch's `torch.distributed.pipelining`](https://docs.pytorch.org/docs/stable/distributed.pipelining.html) and in [DeepSeek's DualPipe repository](https://github.com/deepseek-ai/DualPipe).
+1F1B keeps the bubble of GPipe, a fraction $$(p-1)/m$$ of the compute time, so it can only reduce it with more micro-batches per iteration (i.e. a larger batch or smaller micro-batches) or with fewer stages. Each of these has a cost: the batch size is limited by the convergence of training, smaller micro-batches use the GPU less efficiently, and fewer stages need more memory per GPU. Newer schedules reduce the bubble directly, and matter most when there are few micro-batches per pipeline. They are not part of the DeepSpeed releases, where they would require a [custom schedule](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule), but they are available in [Megatron-LM](https://github.com/NVIDIA/Megatron-LM), in [PyTorch's `torch.distributed.pipelining`](https://docs.pytorch.org/docs/stable/distributed.pipelining.html) and in [DeepSeek's DualPipe repository](https://github.com/deepseek-ai/DualPipe).
 
 The diagrams in this section, like the GPipe and 1F1B diagrams above, were generated from the reference implementation of each schedule, for 4 GPUs and 8 micro-batches (8 GPUs and 16 micro-batches for DualPipe). Time is normalized so that every GPU performs the same amount of compute in all diagrams on 4 GPUs, drawn on the same time scale.
 
@@ -395,7 +419,7 @@ Interleaved 1F1B with 2 model chunks per GPU. Light and dark cells refer to the 
 
 [Zero Bubble Pipeline Parallelism (Sea AI Lab, ICLR 2024, arXiv)](https://arxiv.org/abs/2401.10241) builds on the observation that the backward pass consists of two independent computations. For a linear layer $$y = xA$$ and a loss $$L$$, the gradient with respect to the input, $$\partial L / \partial x = (\partial L / \partial y) A^T$$, is needed right away by the previous stage, so it is on the critical path. The gradient with respect to the weights, $$\partial L / \partial A = x^T (\partial L / \partial y)$$, is only needed by the optimizer step, so it can be postponed.
 
-Zero Bubble therefore splits every backward pass in two: the *backward for inputs* is computed and sent upstream immediately, and the *backward for weights* is deferred to fill the bubbles. The paper proposes two handcrafted schedules:
+Zero Bubble therefore splits every backward pass in two: the **backward for inputs** is computed and sent upstream immediately, and the **backward for weights** is deferred to fill the bubbles. The paper proposes two handcrafted schedules:
 
 - **ZB-H1** keeps the peak activation memory of 1F1B. Gradients travel back through the pipeline faster, and the deferred backward for weights passes fill the end of the iteration, reducing the bubble to $$(p-1)(F+B-2W)$$, where $$W$$ is the time of the backward for weights ($$B$$ is still the time of the whole backward pass). When the forward, backward for inputs and backward for weights take the same time, this is a third of the 1F1B bubble.
 - **ZB-H2** allows up to $$2p-1$$ micro-batches in flight on the first stage, about twice the activation memory of 1F1B. The extra forward passes fill the warm-up bubble, and the backward for weights passes are reordered at the end of the iteration. This turns the schedule into a parallelogram that interlocks with the previous and next iterations, so the bubble disappears.
@@ -458,7 +482,7 @@ As for ZB-V, the price is twice the point-to-point communication of 1F1B. DeepSe
 {: .caption}
 DualPipeV with 8 model chunks on 4 GPUs. Light cells refer to the first chunk on each GPU (going down) and dark cells to the second chunk (going back up). Cells with a shared black border are overlapped forward and backward passes of two different micro-batches. Adapted from: [DualPipe](https://github.com/deepseek-ai/DualPipe)
 
-### Summary
+## Comparison of pipeline schedules
 
 The table below compares the schedules in the diagrams above, on 4 GPUs and 8 micro-batches (also for DualPipe). Idle time is measured in forward passes. Activation memory is measured in units of the activations of one micro-batch on one 1F1B stage, on the GPU that needs the most, assuming the backward for inputs and the backward for weights each release half of a micro-batch's activations.
 
@@ -475,7 +499,7 @@ The table below compares the schedules in the diagrams above, on 4 GPUs and 8 mi
 
 For ZB-H2 and ZB-V, the value in parentheses is the idle time when the optimizer step synchronizes all stages. DualPipe and DualPipeV also hide the all-to-all communication of expert parallelism behind computation, which is not captured in this table.
 
-In practice, ZB-H1 reduces the bubble of 1F1B without extra activation memory, while ZB-H2 and ZB-V remove it when there is spare memory or bandwidth, and when the optimizer step can be validated after the update. On the same GPUs, DualPipeV runs twice as many stages as DualPipe, each of half the size, and trades a larger bubble for half of the parameter memory.
+In practice, 1F1B is the baseline: it has the bubble of GPipe, but the activation memory of at most $$p$$ micro-batches instead of $$m$$. Interleaved 1F1B halves the bubble of 1F1B with 2 chunks per GPU, for twice the point-to-point communication and a little more activation memory. ZB-H1 reduces the bubble of 1F1B without extra activation memory, while ZB-H2 and ZB-V remove it when there is spare memory or bandwidth, and when the optimizer step can be validated after the update. DualPipe and DualPipeV are thus best for Mixture-of-Experts models trained with expert parallelism. On the same GPUs, DualPipeV runs twice as many stages as DualPipe, each of half the size, and trades a larger bubble for half of the parameter memory.
 
 To find more about the topic, [The Ultra-Scale Playbook](https://huggingface.co/spaces/nanotron/ultrascale-playbook) of Hugging Face describes these schedules, and how to combine pipeline parallelism with data, tensor, context and expert parallelism.
 

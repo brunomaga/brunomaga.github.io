@@ -2,13 +2,19 @@
 layout: post
 title:  "Data parallelism, sharding and CPU offloading"
 categories: ["Distributed Training"]
-tags: ["data parallelism", "ZeRO", "FSDP", "CPU offloading", "activation checkpointing", "DeepSpeed", "PyTorch"]
+tags: ["data parallelism", "ZeRO", "FSDP", "CPU offloading", "mixed precision", "ZeRO++", "activation checkpointing", "DeepSpeed", "PyTorch"]
+description: "Data parallelism (DDP), sharding (ZeRO and FSDP) and CPU offloading: what each GPU stores and sends, and how to train a GPT model with them in PyTorch and DeepSpeed."
 ---
 
+Training a model of 7.5 billion parameters with the [Adam](https://en.wikipedia.org/wiki/Stochastic_gradient_descent#Adam) optimizer in [mixed precision](https://en.wikipedia.org/wiki/Mixed-precision_arithmetic) takes 16 bytes per parameter for its weights, gradients and optimizer states. For the whole model, that is 120 GB before a single activation is stored, more than the 80 GB of memory of an A100 GPU. Training on many GPUs helps in two ways: each GPU processes a part of the data, so a training step takes less time, and, with sharding, each GPU stores only a part of the model.
 
-In 2012, the paper [Large Scale Distributed Deep Networks](https://papers.nips.cc/paper/2012/hash/6aca97005c68f1206823815f66102863-Abstract.html) addressed the training of neural networks with billions of parameters on tens of thousands of CPU cores, by running copies (*replicas*) of the model on different subsets of the training data. The replicas sent their updates to a *parameter server* split across many machines, while modern frameworks such as PyTorch exchange the gradients directly between processes, with a collective communication at every training step.
+In 2012, the paper [Large Scale Distributed Deep Networks](https://papers.nips.cc/paper/2012/hash/6aca97005c68f1206823815f66102863-Abstract.html) trained neural networks with billions of parameters on tens of thousands of CPU cores, by running copies (*replicas*) of the model on different subsets of the training data. The replicas sent their updates to a *parameter server* split across many machines. Modern frameworks such as PyTorch exchange the gradients directly between the processes instead, with a collective communication at every training step.
 
-Distributed [data parallelism](https://en.wikipedia.org/wiki/Data_parallelism) (DDP) refers to the parallel execution of different input samples across processors. Consider any data input of shape $$B \times S \times E$$ (batch size, sequence/temporal size and embedding/feature size): data parallelism refers to the use case where the data is split across $$P$$ processes, leading to a local input of shape $$B/P \times S \times E$$:
+This post explains how data parallelism works, how sharding (ZeRO and FSDP) removes the redundant copies of the model that data parallelism keeps on every GPU, and how CPU offloading moves part of what is left to the CPU memory. It applies them to the training of the [GPTlite model built in the previous post]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}), on a network of 8 GPUs, with [PyTorch DDP](https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) (Distributed Data Parallel) and [DeepSpeed ZeRO](https://arxiv.org/abs/1910.02054) (the Zero Redundancy Optimizer of DeepSpeed, a library built on PyTorch). The DeepSpeed implementation also covers mixed precision, gradient accumulation, communication quantization (ZeRO++) and activation checkpointing.
+
+## Data parallelism
+
+[Data parallelism](https://en.wikipedia.org/wiki/Data_parallelism) refers to the parallel execution of different input samples across processors. Consider any data input of shape $$B \times S \times E$$ (batch size, sequence/temporal size and embedding/feature size): data parallelism refers to the use case where the data is split across $$P$$ processes along the batch dimension, leading to a local input of shape $$B/P \times S \times E$$:
 
 {: .picture}
 <img width="24.1%" height="24.1%" src="{{ site.assets }}/distributed-training/imgs/data_parallelism.svg"/>
@@ -16,11 +22,11 @@ Distributed [data parallelism](https://en.wikipedia.org/wiki/Data_parallelism) (
 {: .caption}
 An illustration of the DDP data layout, split across 4 processes color-coded as blue, yellow, red and green.
 
-This post applies distributed data parallelism, sharding and CPU offloading to the training of the [GPTlite model built in the previous post]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}), on a network of 8 GPUs. The implementations use [PyTorch DDP](https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) (Distributed Data Parallel) and [DeepSpeed ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer, a lightweight wrapper on PyTorch).
+There are two main data parallelism approaches, which differ in what each process stores: a full copy of the model, or only a part of it.
 
-There are two main data parallelism approaches:
+### Distributed Data Parallel (DDP)
 
-**Distributed Data Parallelism** keeps a full copy of the model (weights, optimizer states and gradients) on each processor. All models are initialized equally. Each processor takes a different mini-batch as input and performs a forward pass to compute the loss of that batch.
+**Distributed Data Parallel (DDP)** keeps a full copy of the model (weights, optimizer states and gradients) on each processor. All copies are initialized equally. Each processor takes a different mini-batch as input and performs a forward pass to compute the loss of that batch.
 
 On the backward pass, at every layer of the model, all processes compute the gradients of their batch and perform an [all-reduce](https://en.wikipedia.org/wiki/Collective_operation) to get the mean gradients across all processors. These are then used to update the parameters and the optimizer states. Because parameters are initialized equally, gradients are mean-reduced and all processes perform the same updates, the models across all processors are kept in an identical state throughout the execution. The following diagram illustrates this workflow:
 
@@ -30,19 +36,21 @@ On the backward pass, at every layer of the model, all processes compute the gra
 {: .caption}
 Distributed data parallelism (DDP) on 4 processes. Each process holds a full copy of a 4-layer model (the parameters, optimizer states and gradients of every layer), initialized identically, and takes its own input. The forward pass (left arrow) computes the activations and the loss of each process. In the backward pass (right arrow), each process computes the local gradients of every layer, and an all-reduce averages them across the processes. The optimizer then applies the same mean gradients on every process, so all copies stay identical.
 
-The backward pass **overlaps computation and communication**: it computes the gradients of some layers while the gradients of other layers are sent across the network, which *hides* the communication latency behind the computation.
+The backward pass **overlaps computation and communication**: it computes the gradients of some layers while the gradients of other layers are sent across the network, which *hides* the communication latency behind the computation. This is possible because the gradients of a layer are final as soon as the backward pass leaves that layer, while the layers before it are still being computed.
 
-The diagram above shows that each processor holds a copy of the model, so the model states are stored $$P$$ times, which leads to superfluous memory usage. That is where sharding comes into play.
+The diagram above shows that each processor holds a copy of the model, so the **model states** (the parameters, gradients and optimizer states) are stored $$P$$ times, which leads to superfluous memory usage. That is where sharding comes into play.
 
-**(Fully-)Sharded Data Parallelism (FSDP)**, a.k.a. **sharding**, is a distributed setup where processors do not hold a full copy of the model, but only the parameters, optimizer states and gradients of a subset of layers. As before, each processor takes a different mini-batch as input.
+### Sharding with FSDP and ZeRO
 
-In DeepSpeed terminology, sharding goes by the name of **ZeRO (Zero Redundancy Optimizer)**. ZeRO has several alternative execution modes (**stages**). Each stage represents a different level of memory redundancy, corresponding to different variable types being distributed or replicated across processes:
-- **ZeRO stage 0**: no sharding of any variables, equivalent to Distributed Data Parallelism.
-- **ZeRO stage 1 (ZeRO-1)**: the optimizer states (e.g., for the [Adam](https://en.wikipedia.org/wiki/Stochastic_gradient_descent#Adam) optimizer in [mixed precision](https://en.wikipedia.org/wiki/Mixed-precision_arithmetic), an fp32 copy of the weights and the first and second moment estimates) are partitioned across the processes. Affects only the backward pass.
-- **ZeRO stage 2 (ZeRO-2)**: the gradients used to update the model weights are also partitioned, so that each process retains only the gradients corresponding to its portion of the optimizer states. Also relevant only for the backward pass.
-- **ZeRO stage 3 (ZeRO-3)**: the model parameters are also partitioned across the processes. Adds a communication overhead to both the forward and backward passes. 
+**Fully Sharded Data Parallel (FSDP)**, a.k.a. **sharding**, is a distributed setup where processors do not hold a full copy of the model, but only a part (a *shard*) of its parameters, optimizer states and gradients, e.g. those of a subset of layers. As before, each processor takes a different mini-batch as input.
 
-An important remark is that activations are not sharded, i.e. they are kept in *full shape* on each processor. And in modern models, **a huge chunk of memory is allocated to residual memory (activations, temporary buffers, fragmented memory, buffers of normalization layers, etc.), which is not sharded by FSDP**. With that in mind, the following diagram illustrates the workflow of stage 3 sharding (of parameters, gradients and optimizer states):
+In DeepSpeed terminology, sharding goes by the name of **ZeRO (Zero Redundancy Optimizer)**, introduced in the paper [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054). ZeRO has several alternative execution modes (**stages**). Each stage represents a different level of memory redundancy, corresponding to different variable types being distributed or replicated across processes:
+- **ZeRO stage 0**: no sharding of any variables, equivalent to DDP.
+- **ZeRO stage 1 (ZeRO-1)**: the optimizer states (e.g., for Adam in mixed precision, an FP32 copy of the weights and the first and second moment estimates) are partitioned across the processes, so that each process updates only its part of the parameters. The forward pass does not change.
+- **ZeRO stage 2 (ZeRO-2)**: the gradients used to update the model weights are also partitioned, so that each process retains only the gradients corresponding to its portion of the optimizer states. The forward pass does not change either.
+- **ZeRO stage 3 (ZeRO-3)**: the model parameters are also partitioned across the processes. Adds a communication overhead to both the forward and backward passes.
+
+An important remark is that activations are not sharded, i.e. they are kept in *full shape* on each processor. In modern models, **a huge chunk of memory is allocated to the residual states, as the ZeRO paper calls them (activations, temporary buffers, fragmented memory, buffers of normalization layers, etc.), which FSDP does not shard**. With that in mind, the following diagram illustrates the workflow of stage 3 sharding (of parameters, gradients and optimizer states):
 
 {: .picture}
 <img width="92.2%" height="92.2%" src="{{ site.assets }}/distributed-training/imgs/workflow_sharding.svg"/>
@@ -52,7 +60,11 @@ Stage 3 sharding (ZeRO-3) on 4 processes. Process k holds the parameters, optimi
 
 Instead of a single all-reduce of the gradients, sharding uses two collective operations. The **all-gather** temporarily brings together the shards of the parameters, so that each process rebuilds the full weights of the layer it computes, in the forward and in the backward pass. The **reduce-scatter**, in the backward pass, sums the gradients across all processes and scatters the result, so that each process only stores and updates the gradient shard of its optimizer states. Note that DeepSpeed ZeRO-3 and [PyTorch FSDP](https://arxiv.org/abs/2304.11277) split the parameters of every layer into $$P$$ shards, one per process, while the diagram assigns whole layers to processes: there, the all-gather of a layer is a broadcast from the process that holds it, and the reduce-scatter is a reduction on that process.
 
-The higher the stage, the less memory is consumed. Stages 1 and 2 communicate as much as regular data parallelism, and stage 3 communicates 1.5x as much, as it gathers the parameters in both the forward and the backward passes. These memory improvements are summarized in the [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/) as:
+### Memory and communication of the ZeRO stages
+
+The higher the stage, the less memory is consumed, and the memory of each stage follows from counting bytes. With mixed-precision Adam, each parameter takes 2 bytes of FP16 weights, 2 bytes of FP16 gradients and $$K = 12$$ bytes of optimizer states (an FP32 copy of the weight and the two moments of Adam), so a model of $$\Psi$$ parameters needs $$(2 + 2 + K)\Psi = 16\Psi$$ bytes on every GPU. Each ZeRO stage divides one more of these terms by the number of processes $$P$$, called the data-parallel degree $$N_d$$ in the picture below. For $$\Psi = 7.5$$ billion parameters and $$N_d = 64$$ GPUs, a GPU holds 120 GB with plain data parallelism, 31.4 GB with ZeRO-1, 16.6 GB with ZeRO-2 and 1.9 GB with ZeRO-3.
+
+The savings are not free: stages 1 and 2 communicate as much as regular data parallelism, $$2\Psi$$ elements per process and training step. An all-reduce of the gradients is a reduce-scatter followed by an all-gather, as in a ring all-reduce, each of which moves about $$\Psi$$ elements per process; ZeRO-1 and ZeRO-2 run the same two collectives, on the gradients and then on the updated parameters (ZeRO paper, section 7). Stage 3 communicates 1.5 times as much, $$3\Psi$$, as it gathers the parameters in both the forward and the backward passes. These memory improvements are summarized in the [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/) as:
 
 {: .picture}
 <img width="92.4%" height="92.4%" src="{{ site.assets }}/distributed-training/imgs/deepspeed_stages.svg"/>
@@ -60,9 +72,9 @@ The higher the stage, the less memory is consumed. Stages 1 and 2 communicate as
 {: .caption}
 Per-GPU memory of the model states (parameters, gradients and optimizer states) with plain data parallelism (baseline) and with the three ZeRO stages: $$P_{os}$$ partitions the optimizer states across the GPUs, $$P_{os+g}$$ also the gradients, and $$P_{os+g+p}$$ also the parameters. $$\Psi$$ is the number of parameters, $$K$$ the memory multiplier of the optimizer states and $$N_d$$ the data-parallel degree; the example uses $$K=12$$ (mixed-precision Adam), $$\Psi=7.5B$$ and $$N_d=64$$. The last column is the communication volume relative to the baseline. Adapted from: [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) and the [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
 
-## CPU Offloading
+## CPU offloading
 
-Sometimes the model is so big that, even with sharding, it will not fit in a single process. A common technique to handle such memory limitations is **CPU offloading**, also referred to as virtualized Deep Neural Networks by [vDNN (Rhu et al.)](https://arxiv.org/pdf/1602.08124.pdf) and [vDNN+ (Shriram et al.)](https://ieeexplore.ieee.org/document/8820980).
+Sometimes the model is so big that, even with sharding, it does not fit in the memory of the GPUs. A common technique to handle such memory limitations is **CPU offloading**, also referred to as virtualized Deep Neural Networks by [vDNN (Rhu et al.)](https://arxiv.org/pdf/1602.08124.pdf) and [vDNN+ (Shriram et al.)](https://ieeexplore.ieee.org/document/8820980).
 
 The main goal of this method is to iteratively move to the GPU only the portions of activations and model that are required for the current and next computation steps. Previously processed layers are moved from GPU to CPU, while upcoming layers are moved from CPU to GPU. vDNN offloads only the activations (the feature maps), as they take most of the GPU memory of convolutional neural networks.
 
@@ -74,7 +86,9 @@ $$
 
 where $$f^{(l)}$$ is the function implemented by layer $$l$$, $$L$$ is the number of hidden layers, $$y$$ is the ground truth, $$x_n^{(0)}$$ is the input of sample $$n$$ and $$N$$ is the number of samples.
 
-The important concept here is the **composition** of the functions $$f$$ across layers. The computation of a layer needs only its weights, its input and its output (and, in the backward pass, the gradient coming from the next layer), so the data of all other layers can be kept in CPU memory. To reduce the time spent waiting to push (pull) a layer to (from) the GPU, the computation of the current layers can be overlapped with the communication of the upcoming ones. The forward pass can be illustrated as:
+The important concept here is the **composition** of the functions $$f$$ across layers. The computation of a layer needs only its weights, its input and its output (and, in the backward pass, the gradient coming from the next layer), so the data of all other layers can be kept in CPU memory.
+
+To reduce the time spent waiting to push (pull) a layer to (from) the GPU, the computation of the current layers can be overlapped with the communication of the upcoming ones. This overlap matters, as the link between the CPU and the GPU is much slower than the memory of the GPU: a [PCI Express](https://en.wikipedia.org/wiki/PCI_Express) 4.0 x16 link moves about 32 GB/s, while the memory of an A100 GPU of 80 GB moves about 2 TB/s. The forward pass can be illustrated as:
 
 {: .picture}
 <img width="88.9%" height="88.9%" src="{{ site.assets }}/distributed-training/imgs/vdnn2.svg"/>
@@ -162,7 +176,7 @@ def get_model(num_classes):
 
 ## PyTorch implementation
 
-This section implements data parallelism in PyTorch. First, the code collects the environment variables that are set by the [`torchrun`](https://pytorch.org/docs/stable/elastic/run.html) launcher (detailed below), as they uniquely identify processes in the network and GPU devices within a node:
+This section implements data parallelism in PyTorch. First, the code collects the environment variables that are set by the [`torchrun`](https://pytorch.org/docs/stable/elastic/run.html) launcher (detailed below), as they uniquely identify each process in the network (its **rank**, from 0 to the **world size**, the number of processes, minus 1) and its GPU device within a node (its local rank):
 
 ```python
 import os
@@ -223,9 +237,7 @@ for step, data in enumerate(dataloader):
   optimizer.zero_grad(set_to_none=True)
 ```  
 
-During the backward pass, gradients are computed and mean-reduced from the top to the bottom layer of the model. Therefore, the computation of the gradients of the lower layers can be overlapped with the communication of the gradients of the upper layers.
-
-According to the [PyTorch DDP documentation](https://pytorch.org/docs/master/notes/ddp.html#internal-design) and the [PyTorch DDP paper](https://arxiv.org/abs/2006.15704), the backward pass iteratively computes gradients (from last to first layer) and collects blocks of gradients (*buckets*) to be communicated. These blocks are mean-reduced asynchronously during the backward pass, while the computation for the backward pass proceeds. At the end of the backward pass, all GPUs wait for all gradient all-reduces to finish, and then the optimizer updates the parameters.
+The [PyTorch DDP documentation](https://pytorch.org/docs/master/notes/ddp.html#internal-design) and the [PyTorch DDP paper](https://arxiv.org/abs/2006.15704) describe how DDP overlaps the communication of the gradients with the backward pass. The backward pass computes the gradients from the last to the first layer, and DDP collects them into blocks (*buckets*), of 25 MiB by default (the argument `bucket_cap_mb`). Each bucket is mean-reduced with an asynchronous all-reduce as soon as all its gradients are computed, while the computation of the backward pass proceeds. At the end of the backward pass, all GPUs wait for all gradient all-reduces to finish, and then the optimizer updates the parameters.
 
 For extra memory savings, tensors can also be offloaded in PyTorch by using custom [hooks for autograd saved tensors](https://pytorch.org/tutorials/intermediate/autograd_saved_tensors_hooks_tutorial.html).
 
@@ -265,9 +277,18 @@ Note that, in DeepSpeed terminology, `train_micro_batch_size_per_gpu` refers to 
 train_batch_size = train_micro_batch_size_per_gpu * num_gpus * num_nodes * gradient_accumulation_steps
 ```
 
-Therefore, as `train_batch_size` is already set, **gradient accumulation** (a technique that simulates a large mini-batch as an iteration across several micro-batches) can be enabled by setting `train_micro_batch_size_per_gpu`.
+Therefore, as `train_batch_size` is already set, **gradient accumulation** can be enabled by setting `train_micro_batch_size_per_gpu`, or `gradient_accumulation_steps` (1 by default). Gradient accumulation, also known as micro-batching, simulates a large mini-batch as an iteration across several micro-batches: each micro-batch runs a forward and a backward pass, its gradients are added to those of the previous ones, and the optimizer updates the parameters once, after the last micro-batch. It is particularly relevant when the whole mini-batch does not fit into memory.
 
-**ZeRO Fully-Sharded Data Parallelism** can be activated by specifying the relevant stage in the config file. If omitted, or when passing stage 0, ZeRO is disabled and the execution follows a regular distributed data parallel workflow:
+The configs of this post use a micro-batch of 1 sample per GPU, which accumulates up to the batch of 256 samples across the 8 GPUs in $$256 / (1 \times 8) = 32$$ gradient accumulation steps, the value that `engine.gradient_accumulation_steps()` returns at runtime:
+
+```json
+{
+  "train_batch_size": 256,
+  "train_micro_batch_size_per_gpu": 1
+}
+```
+
+Sharding with **ZeRO** is enabled by setting its stage in the config file. If omitted, or when passing stage 0, ZeRO is disabled and the execution follows a regular distributed data parallel workflow:
 
 ```json
 {
@@ -275,7 +296,7 @@ Therefore, as `train_batch_size` is already set, **gradient accumulation** (a te
 }
 ```
 
-CPU offloading in DeepSpeed is called [**ZeRO-Offload**](https://www.deepspeed.ai/tutorials/zero-offload/), a system for offloading optimizer and gradient states to CPU memory, introduced in the [ZeRO-Offload paper](https://arxiv.org/abs/2101.06840). On top of stage 3, it is possible to enable [**ZeRO-Infinity**](https://arxiv.org/abs/2104.07857), also an offloading engine, which extends ZeRO-Offload with support for [NVMe](https://en.wikipedia.org/wiki/NVM_Express) memory. According to the [ZeRO-3 documentation](https://deepspeed.readthedocs.io/en/stable/zero3.html#zero), "ZeRO-Infinity has all of the savings of ZeRO-Offload, plus is able to offload more the model weights and has more effective bandwidth utilization and overlapping of computation and communication". They can be enabled via:
+CPU offloading in DeepSpeed is called [**ZeRO-Offload**](https://www.deepspeed.ai/tutorials/zero-offload/), introduced in the [ZeRO-Offload paper](https://arxiv.org/abs/2101.06840): it offloads the optimizer states and the gradients to the CPU memory, and runs the optimizer step on the CPU. On top of stage 3, [**ZeRO-Infinity**](https://arxiv.org/abs/2104.07857), also an offloading engine, extends ZeRO-Offload with the offloading of the parameters and with support for [NVMe](https://en.wikipedia.org/wiki/NVM_Express) memory. According to the [ZeRO-3 documentation](https://deepspeed.readthedocs.io/en/stable/zero3.html#zero), "ZeRO-Infinity has all of the savings of ZeRO-Offload, plus is able to offload more the model weights and has more effective bandwidth utilization and overlapping of computation and communication". They are enabled with the entries `offload_optimizer` and `offload_param`, where `pin_memory` places the offloaded data in **pinned** (page-locked) CPU memory, from which the GPU copies data faster and asynchronously:
 
 ```json
 {
@@ -324,8 +345,13 @@ Finally, the run is launched with the `torchrun` launcher as before, or with the
 $ deepspeed --num_gpus=8 train.py --deepspeed --deepspeed_config ds_config.json
 ```
 
-<!--
-[**Mixed precision representation**](https://arxiv.org/abs/1710.03740) allows for calculus with value types (parameters, activations, accumulators) stored with different numerical representations, leading to a reduction of memory and compute time. It can be enabledd by adding the `fp16` entry [in the config](https://www.deepspeed.ai/docs/config-json/#fp16-training-options). As a side note, the `amp` config entry also enables mixed precision training that follows the [NVIDIA Apex](https://nvidia.github.io/apex/) implementation i.e. with the `O0` to `O3` opimization levels. However, [it is not compatible with ZeRO](https://www.deepspeed.ai/docs/config-json/#automatic-mixed-precision-amp-training-options), therefore we won't use it. The [`fp16` is equivalent to APEX optimization level O2](https://www.deepspeed.ai/docs/config-json/#fp16-training-options), and according to the [documentation](https://www.deepspeed.ai/docs/config-json/#fp16-training-options), "if you want to use ZeRO (currently) you must use this mode". We can enable it with the entry `"fp16: { enabled: true }` that is equivalent to the following default values:
+The config file also sets the numerical precision, the communication buffers and the communication quantization of ZeRO, and DeepSpeed provides activation checkpointing. The following sections cover these options, which save memory or communication.
+
+### Mixed precision
+
+[**Mixed precision training**](https://arxiv.org/abs/1710.03740) stores the parameters, activations and gradients in a 16-bit floating-point format, and keeps an FP32 copy of the weights for the optimizer step, which is part of the $$K = 12$$ bytes of optimizer states counted above. It reduces the memory of the activations and the compute time. In DeepSpeed, it is enabled by the `fp16` entry of the [config](https://www.deepspeed.ai/docs/config-json/#fp16-training-options).
+
+To keep small gradients from underflowing in FP16, the loss is multiplied by a scale factor before the backward pass (**loss scaling**), and the gradients are divided by it before the optimizer step. With `"loss_scale": 0`, DeepSpeed adjusts this factor dynamically, starting from $$2^{16}$$ (`initial_scale_power`). The entry `"fp16": {"enabled": true}` is equivalent to the following default values:
 
 ```json
 {
@@ -342,57 +368,57 @@ $ deepspeed --num_gpus=8 train.py --deepspeed --deepspeed_config ds_config.json
 }
 ```
 
-However, if your hardware supports bfloat16 (brain floating point), this should be used in lieu of float16, as it has a longer integer (exponent) representation: 8 bits instead of the 5 in float16, i.e. the same 8 bits as in float32. This makes it more numerically stable and does not require loss scaling. bfloat16 can be activated by adding to the config `bf16 { "enabled": true }`.
+If the hardware supports bfloat16 (brain floating point, BF16), it should be used instead of FP16: it has 8 exponent bits, the same as FP32, instead of the 5 of FP16. This gives BF16 the range of FP32, which makes it more numerically stable and removes the need for loss scaling. BF16 is enabled with `"bf16": {"enabled": true}`, which cannot be combined with the `fp16` mode.
 
-**Limiting the size of communication buffers** is important when activating ZeRO. In practice, enabling ZeRO leads to the distribution of parameters across all processors. This in practice will add a communication overhead, that requires memory to be allocated for all buffers responsible for the data to be sent or received. This is an issue as these buffers may be large. To overcome this issue, we can decrease the maximum size of the communication buffers so that communication is performed in parcels of smaller buffers. We can also enable **communication overlap** that attempts to overlap the reduction of the gradients with backward computation. To enable these 2 optimizations, we add to the config:
+### Communication buffers and overlap
+
+**Limiting the size of the communication buffers** is important when ZeRO is enabled. ZeRO spreads the gradients, and in stage 3 the parameters, across the processes, and each collective that gathers or reduces them needs buffers for the data that it sends and receives. By default, DeepSpeed communicates up to `5e8` elements at a time (`reduce_bucket_size`, `allgather_bucket_size` and `stage3_prefetch_bucket_size`), i.e. buffers of 1 GB for 16-bit values. Smaller buckets split each collective into several smaller ones, which need less memory but use the network less efficiently.
+
+The config can also enable **communication overlap** (`overlap_comm`), which overlaps the reduction of the gradients with the computation of the backward pass. The configs of this post set buckets of `5e4` elements and enable the overlap:
 
 ```json
 {
   "zero_optimization": {
-    "reduce_bucket_size": 4e5,
-    "allgather_bucket_size": 4e5,
-    "stage3_prefetch_bucket_size": 4e5,
-    "overlap_comm": true,
+    "reduce_bucket_size": 5e4,
+    "allgather_bucket_size": 5e4,
+    "stage3_prefetch_bucket_size": 5e4,
+    "overlap_comm": true
   }
 }
 ```
 
+### Communication quantization with ZeRO++
 
-**Gradient accumulation** - also known as **micro-batching** - is a technique that simulates a large mini-batch as an iteration across several micro-batches. This is particularly relevant when the whole mini-batch does not fit into memory, and using an accumulation of micro-batches will overcome that limitation. This method is enabled by setting `train_micro_batch_size_per_gpu` (defaulted to `train_batch_size`) or `gradient_accumulation_steps` (defaulted to `1`). At runtime, the micro-batch size can be retrieved by `engine.gradient_accumulation_steps()`. In our case, we will start with a micro-batch of 1 single input per GPU, that accummulate up to a batch size of 256 across all 8 GPUs, therefore resulting in 32 gradient accumulation steps: 
+**[Communication quantization (ZeRO++)](https://www.microsoft.com/en-us/research/publication/zero-extremely-efficient-collective-communication-for-giant-model-training/)** reduces the communication of ZeRO-3 by sending the communicated tensors in fewer bits. To understand the gains of ZeRO++, the communication workflow of ZeRO comes first. The authors of the [ZeRO++ paper](https://arxiv.org/abs/2306.10209) describe it as:
 
-```json
-{
-  "train_batch_size": 256,
-  "train_micro_batch_size_per_gpu": 1
-}
-```
+> Assume the model size as $$M$$. During the forward pass, ZeRO conducts an all-gather operation to collect all the parameters ($$M$$) needed to train for all model layers. In the backward pass, ZeRO re-collects parameters ($$M$$) with all-gather first, then each GPU can compute local gradients. After that, ZeRO operates reducescatter function to aggregate and redistribute gradients ($$M$$) across accelerators. In total, ZeRO has a total communication volume of $$3M$$, spreads evenly across 2 all-gather and 1 reduce-scatter.
 
-**[Communication quantization (ZeRO++)](https://www.microsoft.com/en-us/research/publication/zero-extremely-efficient-collective-communication-for-giant-model-training/)** allows for optimization and compression of communication tensors by reducing its floating point representation. To understand ZeRO++'s gains, we should understand the communication workflow first (from the [ZeRO++ paper](https://arxiv.org/abs/2306.10209)): "Assume the model size as 𝑀. During the forward pass, ZeRO conducts an all-gather operation to collect all the parameters (𝑀) needed to train for all model layers. In the backward pass, ZeRO re-collects parameters (𝑀) with all-gather first, then each GPU can compute local gradients. After that, ZeRO operates reducescatter function to aggregate and redistribute gradients (𝑀) across accelerators. In total, ZeRO has a total communication volume of 3𝑀, spreads evenly across 2 all-gather and 1 reduce-scatter."
+This is the $$3\Psi$$ of ZeRO-3 above. ZeRO++ introduces three communication improvements, which together cut the communication between nodes from $$3\Psi$$ to $$0.75\Psi$$, i.e. by 4 times:
+1. **Quantized Weight Communication for ZeRO (qwZ)**: the all-gather of the forward pass sends the weights in INT8 (1 byte) instead of FP16 (2 bytes), which halves its volume. Instead of one scale for the whole tensor, the weights are quantized by blocks (subsets of parameters), each with its own scale, which reduces the quantization error;
+2. **Hierarchical Weight Partition for ZeRO (hpZ)**: each node keeps a full copy of the FP16 weights, partitioned across its GPUs, so that the all-gather of the weights in the backward pass runs inside the node, over its faster links, instead of across nodes. It trades memory for communication;
+3. **Quantized Gradient Communication for ZeRO (qgZ)**: replaces the reduce-scatter of the gradients with an all-to-all of gradients quantized to INT4 by blocks, and recovers the full precision before the reduction, to preserve the training accuracy.
 
-ZeRO++ introduces three new communication improvements:
-1. **Quantized Weight Communication for ZeRO (qwZ)**: perform block quantization of the forward all-gather, converting weights  from `FP16` (2 bytes) to `INT8` (1 byte). The main improvement is to replace the typical quantization algorithm (multiplying all parameters by a scalar), by a quantization per block (ie per parameter subset) that includes multiplication by a factor and shifting values by another factor;
-2. **Hierarchical Weight Partition for ZeRO (hpZ)**: data remapping that trades-off communication for more memory and reduces communication overhead of all-gather on weights during backward. Instead of having weights distributed across GPUs, we maintain a full copy on each machine, allowing us to replace the expensive cross-machine all-gather on weights with a faster intra-machine all-gather.
-3. **Quantized Gradient Communication for ZeRO (qgZ)**: replaces the gradients reduce-scatter collective, by doing (1) block-based quantization of gradients to `INT4` during communication to reduce the communication size, and recovering the full precision before the reduction operator to preserve training accuracy.
+ZeRO++ is particularly relevant for clusters with a low-bandwidth network between the nodes, where collective communications are responsible for a large fraction of the overall runtime. It also helps with a small batch size per GPU, as when training on thousands of GPUs, where the computation of each GPU is too short to hide its communication. Its price is the memory of hpZ: in the paper's example of a model of 100 billion parameters on 1,024 GPUs, hpZ takes 8.9 times the memory of ZeRO-3 for the model states, which is still 114 times less than plain data parallelism.
 
-ZeRO++ is particularly relevant for clusters with a low-latency network where collective communications are responsible for a large fraction of the overall runtime. It is also important for executions with a small batch size per GPU, where the memory increase of **qgZ** has no impact on scaling.
-
-To set the hierarchical Weight partition for ZeRO (hpZ), quantized weight communication for ZeRO (qwZ) and quantized gradient Communication for ZeRO (qgZ) in the config file, add the following :
+The three methods are set inside the `zero_optimization` entry of the config, as in the [ZeRO++ tutorial](https://www.deepspeed.ai/tutorials/zeropp/):
 
 ```json
 {
-  "zero_hpz_partition_size": 8,
-  "zero_quantized_weights": true,
-  "zero_quantized_gradients": true,
+  "zero_optimization": {
+    "zero_hpz_partition_size": 8,
+    "zero_quantized_weights": true,
+    "zero_quantized_gradients": true
+  }
 }
 ```
 
-Note that the according to documentation, the ideal value for `zero_hpz_partition_size` is the number of ranks (GPUs) per node. As a good engineering practice, it should be dynamically set with the API at runtime - not with the config file - to allow for a variable GPU count.
+According to the documentation, the ideal value of `zero_hpz_partition_size` is the number of ranks (GPUs) per node, and its default, 1, disables hpZ. As a good engineering practice, it should be set at runtime, in a config passed to `deepspeed.initialize()` as a dictionary, and not in the config file, to allow for a variable GPU count.
 
-## Activation Checkpointing
+### Activation checkpointing
 
-[**Activation Checkpointing**](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html) allows for a large reduction in memory requirements by not storing all the forward pass activations that are required for the backward propagation. The rationale is simply: instead of storing the output of every layer after the forward pass, only a small subset of (checkpoint) layer outputs are kept in memory, and the remaining are computed on-the-fly - during the backward pass - with a forward pass from the closest lower layer. Activation checkpointing is extremelly relevant for DeepSpeed, as activations are not sharded, therefore not storing all layer activations in memory reduces substantially the memory footprint.
+[**Activation checkpointing**](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html) reduces the memory of the activations, which, unlike the model states, ZeRO does not shard. Instead of storing the output of every layer for the backward pass, only a few layers (the *checkpoints*) keep their inputs, and the activations of the others are computed again during the backward pass, with a forward pass from the closest checkpoint. The paper [Training Deep Nets with Sublinear Memory Cost](https://arxiv.org/abs/1604.06174) showed that checkpointing an $$n$$-layer network every $$\sqrt{n}$$ layers stores $$O(\sqrt{n})$$ activations, at the cost of one extra forward pass per mini-batch.
 
-In our use case, and for simplicity, we will store layer activations at a user-specified interval. For that, we create the command line argument `--activation_checkpoint_interval` that specifies how often to store layer checkpoints:
+In this implementation, and for simplicity, the layers are checkpointed at a user-specified interval, given by the command line argument `--activation_checkpoint_interval`:
 
 ```python
 ## train.py
@@ -404,7 +430,7 @@ def get_cmd_line_args(description='GPT lite on DeepSpeed'):
   # ...
 ```
 
-We have to manually specify which layers to checkpoint, by calling [`deepspeed.checkpointing.checkpoint`](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html#using-activation-checkpointing) at the checkpoint layers. We will use the previous `lo_layers()` method to iterate over the layers of a model and assign the relevant checkpointing in the `forward()` pass of `GPTlite` as:
+The layers to checkpoint are wrapped with [`deepspeed.checkpointing.checkpoint`](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html#using-activation-checkpointing), which keeps only the input of the layer and computes its activations again in the backward pass. The `forward()` pass of `GPTlite` iterates over the layers of the model with the `to_layers()` method and checkpoints one layer in every `activation_checkpoint_interval`:
 
 ```python
 ## gptlite.py
@@ -422,18 +448,15 @@ class GPTlite(nn.Module):
       return x
 ```
 
-where `self.activation_checkpoint_interval` is a value set during initialization of the class. Finally, when doing model parallelism, we can reduce memory substantially by partitioning activations and offloading those checkpoints to the CPU instead of saving them in memory. DeepSpeed does not support model/tensor parallelism natively so we will skip this, but check the [json documentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing) if you are interested.
+where `self.activation_checkpoint_interval` is set when the class is initialized. Note that this scheme recomputes only the checkpointed layers, one in every interval, while the other layers keep all their activations, as without checkpointing. DeepSpeed can also offload the checkpointed inputs to the CPU (`cpu_checkpointing`) and, with model parallelism, partition them across the processes (`partition_activations`), as detailed in the [config documentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing). This post skips these options, and its benchmarks run without activation checkpointing (`run.sh` sets the interval to 0).
 
-Finally, **activation checkpoint currently has two implementations: a reentrant and non-reentrant**. The non-reentrant will be the future default in PyTorch and is implemented via PyTorch saved variable hooks (as detailed [here](https://medium.com/pytorch/how-activation-checkpointing-enables-scaling-up-training-deep-learning-models-7a93ae01ff2d)). Non-checkpointed activations are not stored in memory, and instead replaced by a reference. Thus, the computation graph is not altered. The non-reentrant checkpointing allows for nested checkpointing (calling one checkpoint from another checkpoint function), allowing for **higher memory savings**.
-The non-reentrant equivalent in deepspeed in implemented by [`deepspeed.checkpointing.non_reentrant_checkpoint`](https://github.com/microsoft/DeepSpeed/blob/42a8eaa705ed30b4a656ac71bdb400772df2cb21/deepspeed/runtime/activation_checkpointing/checkpointing.py).
+Activation checkpointing has two implementations in PyTorch, **reentrant** and **non-reentrant**, and PyTorch recommends the non-reentrant one (`use_reentrant=False`). The non-reentrant version is implemented with saved tensor hooks, as detailed in [this PyTorch blog post](https://medium.com/pytorch/how-activation-checkpointing-enables-scaling-up-training-deep-learning-models-7a93ae01ff2d): the activations of a checkpointed function are not stored in memory, but replaced by a reference, and computed again when the backward pass needs them. Thus, the computation graph is not altered. It also allows for nested checkpointing (a checkpointed function that calls another one), which leads to **higher memory savings**, and its DeepSpeed equivalent is [`deepspeed.checkpointing.non_reentrant_checkpoint`](https://github.com/microsoft/DeepSpeed/blob/42a8eaa705ed30b4a656ac71bdb400772df2cb21/deepspeed/runtime/activation_checkpointing/checkpointing.py).
 
-The reentrant does not use hooks but calls the [`forward` autograd function](https://github.com/pytorch/pytorch/blob/670c5cf96249db28cde757da5a6aa97569760102/torch/utils/checkpoint.py#L75) instead. The gradient calculations are not part of the main computational graph anymore, and every checkpoint creates a mini-computational graph during the backward pass. One of the downsides, is that the whole `forward` function is computed for every call, while the non-reentrant counterpart can stop when the relevant activations are computed. Moreover, the whole graph is not stored (contrarily to non-reentrant) thus not allowing the backward to be run in the whole computational graph. More details in the [torch checkpoint documentation](https://pytorch.org/docs/stable/checkpoint.html).
+The reentrant version does not use hooks. It runs the checkpointed function inside a custom [autograd function](https://github.com/pytorch/pytorch/blob/670c5cf96249db28cde757da5a6aa97569760102/torch/utils/checkpoint.py#L75), without storing its activations, and runs it again in the backward pass, where every checkpoint creates a small computational graph of its own. One of its downsides is that the whole function is computed again at every call, while the non-reentrant version can stop once the activations it needs are computed.
 
+Moreover, the graph of each checkpoint is not part of the main graph, so the backward pass cannot run over the whole computational graph (e.g. with `torch.autograd.grad`), and at least one input of the checkpointed function must require gradients, or that part of the model gets no gradients. `deepspeed.checkpointing.checkpoint`, used above, is a reentrant implementation. More details are in the [torch checkpoint documentation](https://pytorch.org/docs/stable/checkpoint.html).
 
-### About activation checkpointing with parameters sharding
-
-Combining activation checkpointing with sharded model parameters (ZeRO stage-3) may lead to a substantial runtime overhead. The problem is that, if you need to perform a forward pass from the closest checkpoint layer to collect the parameters required for the back propagation, and if those parameters are distributed (stage 3), then there has to be an extra collective communication step at every layer (from checkpoint layer to current back-prop layer) to collect those weights. This adds an extra communication overhead.
--->
+Combining activation checkpointing with sharded parameters (ZeRO-3) may lead to a substantial runtime overhead. In the backward pass, the recomputation of a checkpointed layer needs the parameters of that layer, which ZeRO-3 spreads across the processes: they are all-gathered for the recomputation, and gathered again for the backward pass of the layer if they were released in between. DeepSpeed does not release a parameter that will be reused within `stage3_max_reuse_distance` parameters (`1e9` in the configs of this post): smaller values use less memory, but perform more communication.
 
 ### Detour: measuring memory allocated to parameters
 
@@ -452,17 +475,19 @@ def measure_parameters_memory(model):
 ```
 
 The output shows that:
-- the base model requires about 0.323GB per GPU to store its parameters;
+- the base model requires about 0.323GB per GPU to store its parameters, i.e. its 86.7 million parameters in FP32, at 4 bytes each;
 - DeepSpeed ZeRO-2 requires 0.161GB and 0.484GB with and without offloading, respectively;
 - DeepSpeed ZeRO-3 requires 0.009GB and 0.190GB with and without offloading, respectively.
 
-This metric is very useful as it gives a quick overview of scaling and is very fast to compute. However, it has many limitations: it only measures the memory of the parameters, gradients and optimizer states, and it does not take activations or other residual buffers (e.g. normalization variables) into account. The batch size and numerical precision (or any field in the config file) and the temporary (e.g. communication) buffers are also ignored.
+These estimates follow the formulas of the [DeepSpeed memory documentation](https://deepspeed.readthedocs.io/en/latest/memory.html), which assume mixed-precision Adam on the 8 GPUs. Without offloading, ZeRO-2 keeps 4 bytes per parameter for the 16-bit parameters and gradients, plus one eighth of the 16 bytes per parameter of the FP32 parameters, gradients and moments of Adam; with offloading, it keeps only the 16-bit parameters, 2 bytes per parameter. ZeRO-3 divides 18 bytes per parameter (the same 16 bytes and the 16-bit parameters) by the 8 GPUs, and adds the 16-bit parameters and gradients of the largest layer, which a GPU gathers to compute it: 2.4 million parameters, in the first linear layer of the feed-forward network of a block. With offloading, only this largest layer stays on the GPU.
+
+This metric is very useful as it gives a quick overview of scaling and is very fast to compute. However, it has many limitations: it only measures the memory of the model states, and it does not take the residual states (activations, temporary buffers, normalization variables) into account. The batch size and numerical precision (or any field in the config file) and the temporary (e.g. communication) buffers are also ignored.
 
 ## Results
 
 To measure performance, the DeepSpeed logger was used to extract the following metrics from different runs every 10 steps: model throughput as the average number of samples per second, the average allocated memory, and the maximum allocated memory. The runs used `pytorch==2.0.1`, CUDA `11.7` and `deepspeed==0.10.3`.
 
-All implementations use the same numerical precision (fp32), communication bucket sizes, and other config parameters. The following implementations (and configs) were benchmarked:
+All implementations use the same numerical precision, communication bucket sizes, and other config parameters, and none uses activation checkpointing. The following implementations (and configs) were benchmarked:
 
 1. The distributed data parallel (DDP) implementation, i.e. no DeepSpeed (<a href="{{ site.assets }}/distributed-training/ds_config.json">`ds_config.json`</a> with `'stage': 0`);
 2. The fully-sharded data parallel implementation with ZeRO 1, 2 and 3 (<a href="{{ site.assets }}/distributed-training/ds_config.json">`ds_config.json`</a> with `'stage' :1`, `2` or `3`);
@@ -476,16 +501,27 @@ The GPTlite model was tested with a micro-batch size of 1 sample per GPU, and th
 {: .caption}
 Maximum and average memory allocated, and throughput, of GPTlite (GPT-3 small) with distributed data parallelism, DeepSpeed ZeRO-1 to ZeRO-3, and ZeRO-3 with CPU offloading, at a micro-batch size of 1 sample per GPU.
 
+**Memory overhead from communication buffers.** Looking at the max vs average memory, note that, in theory, the max memory should be much higher at high ZeRO stages than at low ZeRO stages and DDP. This is because more parameters are communicated, which requires more communication buffers. However, setting the communication bucket sizes (the number of elements communicated at a time) to a low value in the config file overcomes this effect: the max memory stays between 9.16 GB and 10.16 GB in all runs, and it is lowest with ZeRO-3 and offloading. In fact, several runs were also benchmarked with the default communication bucket sizes (`5e8`), which led to higher memory usage, as expected (approximately double in stages 2 and 3), and became prohibitive for some runs.
 
-**Memory overhead from communication buffers.** Looking at the max vs average memory, note that, in theory, the max memory should be much higher at high ZeRO stages than at low ZeRO stages and DDP. This is because more parameters are communicated, which requires more communication buffers. However, setting the communication bucket sizes (the number of elements communicated at a time) to a low value in the config file overcomes this effect. In fact, several runs were also benchmarked with the default communication bucket sizes (`5e8`), which led to higher memory usage, as expected (approximately double in stages 2 and 3), and became prohibitive for some runs.
+**Communication vs computation trade-off from different stages in ZeRO.** As expected, as the execution moves from DDP to ZeRO-1, ZeRO-2, ZeRO-3 and ZeRO-Infinity, both the memory consumption and the throughput are reduced. Compared to DDP, ZeRO-1 and ZeRO-2 reduce the average memory by 16% (from 3.24 GB to 2.71 GB) for 3% and 9% of the throughput, while ZeRO-3 reduces it by 21% (to 2.55 GB) for 38% of the throughput (from 11.45 to 7.1 samples per second). Data locality is traded for communication of parameters, and a price in performance is paid for the communication and offloading of parameters. In practice, the fastest choice is therefore the lowest stage that fits the model in memory.
 
-**Communication vs computation trade-off from different stages in ZeRO.** In ideal scenarios, as the execution moves from DDP to ZeRO-1, ZeRO-2, ZeRO-3 and ZeRO-Infinity, the memory consumption and throughput are reduced. As expected, data locality is traded for communication of parameters, and a price in performance is paid for the communication/offloading of parameters. In practice, the fastest choice is therefore the lowest stage that fits the model in memory.
+**Offloaded vs in-memory parameters.** Offloading proved to be a consistent way to reduce memory usage, with the drawback of a reduction in throughput, as expected: compared to ZeRO-3 without offloading, it reduces the average memory by 8% (from 2.55 GB to 2.35 GB) and the throughput by 13% (from 7.1 to 6.2 samples per second).
 
-**Offloaded vs in-memory parameters.** Offloading proved to be a consistent way to reduce memory usage, with the drawback of a small reduction in throughput, as expected.
+**Lack of superlinear speedup.** A small improvement in memory efficiency was observed, but still far from the claims of the original DeepSpeed team. One explanation is that a small network of 8 GPUs was used, compared to the 64 to 400 GPUs used by the authors in their benchmarks, so the memory reduction is much smaller. Moreover, most of the memory of a model as small as GPTlite is taken by its activations, which are not sharded: its model states take about 1.3 GB per GPU with DDP (16 bytes for each of its 86.7 million parameters), out of a peak of 10.16 GB. A large network of GPUs also underlies their claim of [superlinear speedup](https://en.wikipedia.org/wiki/Speedup) (with more GPUs, each GPU holds fewer model states and fits a larger batch, at a higher throughput), which was not observed here.
 
-**Lack of superlinear speedup.** A small improvement in memory efficiency was observed, but still far from the claims of the original DeepSpeed team. One explanation is that a small network of 8 GPUs was used, compared to the 64 to 400 GPUs used by the authors in their benchmarks, so the memory reduction is much smaller. Moreover, most of the memory of a model as small as GPTlite is taken by its activations, which are not sharded. A large network of GPUs also underlies their claim of [superlinear speedup](https://en.wikipedia.org/wiki/Speedup) (with more GPUs, each GPU holds fewer model states and fits a larger batch, at a higher throughput), which was not observed here.
+Finally, **communication quantization** (ZeRO++) was not used, as it did not result in any improvement. This is in line with the [ZeRO++ paper](https://arxiv.org/abs/2306.10209), which claims this method is applicable to small batch sizes per GPU or low-bandwidth networks.
 
-Finally, **communication quantization**, which reduces the floating-point representation of the communicated tensors, was not used, as it did not result in any improvement. This is in line with the [ZeRO++ paper](https://arxiv.org/abs/2306.10209), which claims this method is applicable to small batch sizes or low-bandwidth networks.
+## Comparison of DDP, ZeRO and offloading
+
+The following table sums up the memory of the model states and the communication of each method, per process and training step, for a model of $$\Psi$$ parameters trained with mixed-precision Adam on $$P$$ processes:
+
+| Method | Model states per process (bytes) | Communication per process and step (elements) | When to use it |
+|---|---|---|---|
+| DDP (ZeRO-0) | $$16\Psi$$ | $$2\Psi$$: an all-reduce of the gradients | The model states fit on every GPU: the fastest method |
+| ZeRO-1 | $$4\Psi + 12\Psi/P$$ | $$2\Psi$$: a reduce-scatter of the gradients and an all-gather of the parameters | DDP does not fit: most of the memory of the model states goes, with no extra communication |
+| ZeRO-2 | $$2\Psi + 14\Psi/P$$ | $$2\Psi$$, as ZeRO-1 | ZeRO-1 does not fit: the gradients are sharded too, with no extra communication |
+| ZeRO-3, FSDP | $$16\Psi/P$$ | $$3\Psi$$: also an all-gather of the parameters in each pass | ZeRO-2 does not fit: 1.5 times the communication of DDP |
+| ZeRO-Offload, ZeRO-Infinity | Less: the offloaded states move to the CPU memory (or NVMe) | As above, plus the copies between the CPU and the GPU | ZeRO-3 does not fit: the slowest, limited by the link between the CPU and the GPU |
 
 ## Resources and code
 
@@ -501,7 +537,4 @@ This post only scratched the surface of the capabilities of DeepSpeed. There are
 - [**monitor**](https://www.deepspeed.ai/training/#monitor) to log live training metrics to TensorBoard, csv file or other backend;
 - [**model compression**](https://www.deepspeed.ai/compression/) ([API](https://www.deepspeed.ai/docs/config-json/#compression)) via layer reduction, weight quantization, activation quantization, sparse pruning, row pruning, head pruning and channel pruning, to deliver faster speed and smaller model size.
 
-There are a lot of results and food for thought here. The code of all experiments is available in the [distributed-training repo](https://github.com/{{ site.repository }}/tree/master/assets/distributed-training).
-
-
-
+The code of all experiments is available in the [distributed-training repo](https://github.com/{{ site.repository }}/tree/master/assets/distributed-training).
