@@ -399,7 +399,7 @@
             <mxPoint x="116.15" y="49.16" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rc-10" value="&lt;i&gt;I&lt;/i&gt; (&lt;i&gt;t&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rc-figure">
+        <mxCell id="rc-10" value="𝐼 (𝑡)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rc-figure">
           <mxGeometry x="149.14" y="0" width="27.43" height="23.2" as="geometry" />
         </mxCell>
         <mxCell id="rc-11" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="rc-figure">
@@ -791,19 +791,19 @@
             <mxPoint x="130.85" y="275.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rc-90" value="&lt;i&gt;I&lt;/i&gt; (&lt;i&gt;t&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rc-figure">
+        <mxCell id="rc-90" value="𝐼 (𝑡)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rc-figure">
           <mxGeometry x="88.63" y="166.32" width="27.43" height="23.2" as="geometry" />
         </mxCell>
-        <mxCell id="rc-91" value="&lt;i&gt;R&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rc-figure">
+        <mxCell id="rc-91" value="𝑅" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rc-figure">
           <mxGeometry x="55.02" y="215.68" width="17.67" height="23.2" as="geometry" />
         </mxCell>
-        <mxCell id="rc-92" value="&lt;i&gt;C&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rc-figure">
+        <mxCell id="rc-92" value="𝐶" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rc-figure">
           <mxGeometry x="97.22" y="215.68" width="17.67" height="23.2" as="geometry" />
         </mxCell>
-        <mxCell id="rc-93" value="&lt;i&gt;u&lt;/i&gt;(&lt;i&gt;t&lt;/i&gt;)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rc-figure">
+        <mxCell id="rc-93" value="𝑢(𝑡)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rc-figure">
           <mxGeometry x="138.79" y="225.07" width="30.1" height="23.2" as="geometry" />
         </mxCell>
-        <mxCell id="rc-94" value="&lt;i&gt;u&lt;/i&gt;&lt;sub style=&quot;font-size: 14px;&quot;&gt;rest&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rc-figure">
+        <mxCell id="rc-94" value="𝑢&lt;sub style=&quot;font-size: 14px;&quot;&gt;rest&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rc-figure">
           <mxGeometry x="34.8" y="248.61" width="38.1" height="23.2" as="geometry" />
         </mxCell>
         <mxCell id="network-label" value="network.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
@@ -866,10 +866,10 @@
         <mxCell id="network-26" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="network-figure">
           <mxGeometry x="177.25" y="63.77" width="2" height="2" as="geometry" />
         </mxCell>
-        <mxCell id="network-27" value="&lt;i&gt;N&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;E&lt;/sub&gt;+&lt;i&gt;N&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;I&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-27" value="𝑁&lt;sub style=&quot;line-height:0;&quot;&gt;𝐸&lt;/sub&gt;+𝑁&lt;sub style=&quot;line-height:0;&quot;&gt;𝐼&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="130.09" y="0" width="48.33" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="network-28" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;E&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-28" value="𝐶&lt;sub style=&quot;line-height:0;&quot;&gt;𝐸&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="89.92" y="46.82" width="22.33" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="network-29" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="network-figure">
@@ -896,10 +896,10 @@
             <mxPoint x="225.45" y="168.87" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="network-35" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;E&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-35" value="𝐶&lt;sub style=&quot;line-height:0;&quot;&gt;𝐸&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="104.31" y="91.06" width="24.89" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="network-36" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;E&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-36" value="𝐶&lt;sub style=&quot;line-height:0;&quot;&gt;𝐸&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="183.31" y="92.06" width="24.89" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="network-37" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">
@@ -914,7 +914,7 @@
             <mxPoint x="206.05" y="183.8" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="network-40" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;E&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-40" value="𝐶&lt;sub style=&quot;line-height:0;&quot;&gt;𝐸&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="113.97" y="162.06" width="24.89" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="network-41" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">
@@ -929,7 +929,7 @@
         <mxCell id="network-43" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="110.75" y="222.56" width="14" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="network-44" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;I&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-44" value="𝐶&lt;sub style=&quot;line-height:0;&quot;&gt;𝐼&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="190.75" y="219.06" width="21" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="network-45" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;endFill=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="network-figure">
@@ -1004,7 +1004,7 @@
         <mxCell id="network-47" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="27.25" y="156.56" width="14" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="network-48" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;E&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-48" value="𝐶&lt;sub style=&quot;line-height:0;&quot;&gt;𝐸&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="9.3" y="218.06" width="24.89" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="network-49" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;endFill=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="network-figure">
@@ -1080,7 +1080,7 @@
         <mxCell id="network-51" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="257.25" y="157.56" width="14" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="network-52" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;I&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-52" value="𝐶&lt;sub style=&quot;line-height:0;&quot;&gt;𝐼&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="247.75" y="219.06" width="21" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="diagram_class-label" value="diagram_class.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">

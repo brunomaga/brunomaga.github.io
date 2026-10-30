@@ -46,16 +46,16 @@
         <mxCell id="directed_graph-7" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="directed_graph-figure">
           <mxGeometry x="61.71" y="61.71" width="28.79" height="28.79" as="geometry" />
         </mxCell>
-        <mxCell id="directed_graph-2" value="&lt;i&gt;A&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="directed_graph-figure">
+        <mxCell id="directed_graph-2" value="𝐴" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="directed_graph-figure">
           <mxGeometry x="8.91" y="6.08" width="11.11" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="directed_graph-4" value="&lt;i&gt;B&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="directed_graph-figure">
+        <mxCell id="directed_graph-4" value="𝐵" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="directed_graph-figure">
           <mxGeometry x="71.01" y="6.08" width="10.34" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="directed_graph-6" value="&lt;i&gt;C&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="directed_graph-figure">
+        <mxCell id="directed_graph-6" value="𝐶" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="directed_graph-figure">
           <mxGeometry x="9.29" y="67.8" width="10.34" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="directed_graph-8" value="&lt;i&gt;D&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="directed_graph-figure">
+        <mxCell id="directed_graph-8" value="𝐷" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="directed_graph-figure">
           <mxGeometry x="70.62" y="67.8" width="11.11" height="16.8" as="geometry" />
         </mxCell>
       </root>

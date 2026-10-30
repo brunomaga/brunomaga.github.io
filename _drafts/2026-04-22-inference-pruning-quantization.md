@@ -193,7 +193,7 @@ def taylor_importance(model, data, n_batches, batch_size, seqlen):
 ShortGPT measures how much each block changes its input. The **Block Influence** of a block is one minus the cosine similarity between its input and its output hidden states, averaged over the tokens of a calibration set. The blocks with the lowest influence are removed first. In deep models, these are often the later blocks, but not the last one, as in the following example with 6 blocks:
 
 {: .picture}
-<img width="33.3%" height="33.3%" src="{{ site.assets }}/inference/imgs/shortgpt.svg"/>
+<img width="33.1%" height="33.1%" src="{{ site.assets }}/inference/imgs/shortgpt.svg"/>
 
 {: .caption}
 The blocks whose output is most similar to their input change the hidden state the least, and are removed first.
@@ -355,7 +355,7 @@ where $$q_\text{min}$$ and $$q_\text{max}$$ are the smallest and the largest int
 The picture below quantizes the same values to 4 bits both ways. Symmetric quantization wastes the levels on the side without values:
 
 {: .picture}
-<img width="54.1%" height="54.1%" src="{{ site.assets }}/inference/imgs/quantization_mapping.svg"/>
+<img width="54%" height="54%" src="{{ site.assets }}/inference/imgs/quantization_mapping.svg"/>
 
 {: .caption}
 **Symmetric (absmax):** $$s = \max \lvert x \rvert / 7$$ and $$z = 0$$, so the levels $$-7$$ to $$-3$$, for values below $$-1$$, are never used. **Asymmetric (min-max):** $$s = (\max x - \min x) / 15$$ and $$z = \text{round}(-\min x / s) = 4$$, so all 16 levels are used.

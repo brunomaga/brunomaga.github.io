@@ -113,7 +113,7 @@ $$
 Note that a step that calls no agents, such as the last one, adds no fan-out time. The following picture illustrates Eq. 4 on a run of three steps:
 
 {: .picture}
-<img width="92.3%" height="92.3%" src="{{ site.assets }}/inference/imgs/aai_timeline.svg"/>
+<img width="92.2%" height="92.2%" src="{{ site.assets }}/inference/imgs/aai_timeline.svg"/>
 
 {: .caption}
 A run of a dynamic AAI over $$S = 3$$ steps. In step 1, the orchestrator calls two agents and continues with the first result ($$K_1 = 2$$, $$k_1 = 1$$), so the result of agent 2 is not used. In step 2, it calls agent 2 alone, which misses the TTLT deadline, so the orchestrator continues without its result. In step 3, it decodes the final answer. The idle boxes are the time in which the orchestrator waits for the agents.

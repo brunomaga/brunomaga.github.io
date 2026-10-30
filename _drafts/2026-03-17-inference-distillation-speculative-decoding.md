@@ -516,7 +516,7 @@ Unlike multi-token prediction (below), which only helps models pre-trained with 
 At inference, the draft exits after the first $$E$$ layers, and the verification runs only the remaining layers, reusing the computation and the cache of the first $$E$$. There is no second model to store, and the reported speedups reach up to 2.16 times on summarization and 1.82 times on coding tasks. The following diagram illustrates a model of 8 layers that drafts with its first 4 layers, together with the layer dropout rate of each layer in training (left):
 
 {: .picture}
-<img width="90.2%" height="90.2%" src="{{ site.assets }}/inference/imgs/layerskip.svg"/>
+<img width="90.3%" height="90.3%" src="{{ site.assets }}/inference/imgs/layerskip.svg"/>
 
 {: .caption}
 Every layer also learns to predict through the shared head (early exit loss). The layer dropout rate grows linearly with depth, as in the code; in the paper, it grows exponentially. Inspired by: [LayerSkip: Enabling Early Exit Inference and Self-Speculative Decoding](https://arxiv.org/abs/2404.16710)
