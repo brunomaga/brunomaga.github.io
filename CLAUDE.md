@@ -195,8 +195,7 @@ word helps:
   expert parallelism post follows only the public files of the paper (`main.tex` and the files it includes, never a
   confidential file). It shows the phased variant only as the public files do, in a simplified view, and says that
   the drawing omits the details of the implementation, which will be released in the near future. At the user's
-  request (2026-10-30), it names and describes no method and no appendix of the paper that the public files do not
-  describe.
+  request (2026-10-30), it names and describes only the methods of the public files.
 - Never open, read or search any file of the paper repositories whose name contains `confidential`
   (`main_confidential.tex`, `main_confidential.pdf` and the like), at the user's request (2026-10-26): the posts use
   only the public files.
