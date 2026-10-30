@@ -2,12 +2,20 @@
 layout: post
 title:  "Mixture-of-Experts and Expert Parallelism"
 categories: ["Distributed Training"]
-tags: ["MoE", "expert parallelism", "load balancing", "Switch Transformer", "PyTorch"]
+tags: ["MoE", "expert parallelism", "load balancing", "Switch Transformer", "PyTorch", "top-k gating", "expert capacity", "GShard", "router z-loss", "Mixtral"]
+description: "Mixture-of-Experts (MoE) from the 1991 gating networks to sparse top-k routing, GShard, Switch Transformers and Mixtral: load balancing losses, the router z-loss, expert capacity, expert parallelism and an all-to-all implementation in PyTorch."
 ---
 
-Details of [GPT-4](https://en.wikipedia.org/wiki/GPT-4) have been the subject of much speculation and reporting, including a widely shared [leak report](https://the-decoder.com/gpt-4-architecture-datasets-costs-and-more-leaked/) that mentions the possible use of [Mixture-of-Experts](https://en.wikipedia.org/wiki/Mixture_of_experts) (MoEs): 16 experts of ~110B parameters each (≈1.8T total parameters). In practice, MoEs are attractive because they can increase *model capacity per FLOP*: only a small subset of experts is activated per token, which can improve scaling, efficiency, and quality compared to similarly expensive dense models.
+Details of [GPT-4](https://en.wikipedia.org/wiki/GPT-4) have been the subject of much speculation and reporting, including a widely shared [leak report](https://the-decoder.com/gpt-4-architecture-datasets-costs-and-more-leaked/) that mentions the possible use of [Mixture-of-Experts](https://en.wikipedia.org/wiki/Mixture_of_experts) (MoEs): 16 experts of ~111B parameters each in the feed-forward (MLP) layers, two of which are used for each token (≈1.8T total parameters). In practice, MoEs are attractive because they can increase *model capacity per FLOP*: only a small subset of experts is activated per token, which can improve scaling, efficiency, and quality compared to similarly expensive dense models.
 
-So this post discusses the development of MoEs since the early days, and provides implementations of MoEs on single and multiple nodes using the PyTorch distributed API. It covers key concepts such as routing, sparsity, load imbalance (and the corresponding loss terms), parallelism, expert capacity, numerical instabilities, overfitting and finetuning.
+In a **dense** model, every parameter processes every token, and a forward pass takes about 2 FLOPs per parameter and token (one multiplication and one addition). A **sparse** MoE layer replaces a feed-forward network with $$N$$ feed-forward networks, the experts, and a small router network that sends each token to only $$k$$ of them. An MoE model is thus described by two numbers: its **total parameters**, which set its memory, and its **active parameters**, used for each token, which set its compute. As an example, Mixtral 8x7B, detailed later, has 47B total parameters but only 13B active parameters, so its forward pass takes about 26 GFLOPs per token, instead of 94 GFLOPs for a dense model of the same size.
+
+This post discusses the development of MoEs since the early days, and provides implementations of MoEs on single and multiple nodes using the PyTorch distributed API. It covers key concepts such as routing, sparsity, load imbalance (and the corresponding loss terms), expert parallelism, expert capacity, numerical instabilities, overfitting and finetuning.
+
+{::options toc_levels="2..3" /}
+
+* TOC
+{:toc}
 
 ## Early days: small MoEs as a weighted sum of expert outputs
 
@@ -19,9 +27,9 @@ In 1991, the papers [Adaptive Mixtures of Local Experts](https://www.cs.toronto.
 {: .caption}
 **Left:** a Mixture of Experts. **Right:** a Deep Mixture of Experts (with 2 layers). Adapted from: [Learning Factored Representations in a Deep Mixture of Experts](https://arxiv.org/abs/1312.4314)
 
-The MoE was defined as a set of independent **experts** ([feed-forward networks](https://en.wikipedia.org/wiki/Feedforward_neural_network), $$f_i(x)$$ in the picture) alongside a **gating network** (also a feed-forward network, $$g(x)$$). All the experts and the gating network receive the same input $$x$$. The gating network outputs a distribution of each expert's relevance/importance for the given input and can be defined in its simplest form with a [softmax](https://en.wikipedia.org/wiki/Softmax_function), as $$g(x) = \mathrm{Softmax}(x \cdot W_g)$$, where $$W_g$$ is a learnable transformation. Finally, the output of the system ($$z$$) is the sum of the outputs of all experts weighted by the output of the gating network.
+The MoE was defined as a set of independent **experts** ([feed-forward networks](https://en.wikipedia.org/wiki/Feedforward_neural_network), $$f_i(x)$$ in the picture) alongside a **gating network** (also a feed-forward network, $$g(x)$$). All the experts and the gating network receive the same input $$x$$. The gating network outputs a distribution of each expert's relevance/importance for the given input and can be defined in its simplest form with a [softmax](https://en.wikipedia.org/wiki/Softmax_function), as $$g(x) = \mathrm{Softmax}(x \cdot W_g)$$, where $$W_g$$ is a learnable transformation. Finally, the output of the system is the sum of the outputs of all experts weighted by the output of the gating network, $$z = \sum_i g_i(x) \, f_i(x)$$, where $$g_i(x)$$ is the gate value (the probability) of expert $$i$$.
 
-The implementation of an MoE module is straightforward. The router (the gating network) is a small feed-forward network that outputs, for every token, a probability per expert, and each expert is a regular feed-forward network:
+The implementation of an MoE module is straightforward. The router (the gating network) is a small feed-forward network that outputs, for every token, a probability per expert, and each expert is a regular feed-forward network. The input `x` holds $$B$$ sequences of $$S$$ tokens, each token an embedding of $$E$$ elements (`B*S*E` in the comments of the code, where `n_experts` is the number of experts $$N$$):
 
 ```python
 class Router(nn.Module):
@@ -56,9 +64,11 @@ class MoE(nn.Module):
     return weighted_sum, probs, outputs
 ```
 
-A major difference between the two 1991 approaches is the loss function. One uses the error function $$E = \| d - \sum_i g_i(x) \, f_i(x) \| ^2$$, where $$f_i(x)$$ is the output *vector* of expert $$i$$, $$g_i(x)$$ is the router's probability for expert $$i$$, and $$d$$ is the correct label for the input.
+A major difference between the two 1991 approaches is the loss function. One uses the error function $$L = \lVert d - \sum_i g_i(x) \, f_i(x) \rVert^2$$, the squared error of the output $$z$$, where $$f_i(x)$$ is the output *vector* of expert $$i$$, $$g_i(x)$$ is the router's probability for expert $$i$$, and $$d$$ is the correct label for the input.
 
-The other argues that this form makes the experts *cooperate*: each expert must cancel the residual error left by the others, so many experts are used for each input. It suggests instead the error function $$E = \sum_i g_i(x) \| d - f_i(x) \| ^2$$ (and variants based on the negative log-likelihood), in which each expert produces the whole output, so that the experts *compete* and a single expert tends to be used for each input. The following code implements the second error function:
+The other argues that this form makes the experts *cooperate*: each expert must cancel the residual error left by the others, so many experts are used for each input. It suggests instead the error function $$L = \sum_i g_i(x) \lVert d - f_i(x) \rVert^2$$ (and variants based on the negative log-likelihood), in which each expert produces the whole output, so that the experts *compete* and a single expert tends to be used for each input.
+
+As an example, take a target $$d = 1$$ and two experts with outputs $$f_1(x) = 0.5$$ and $$f_2(x) = 1.5$$ and gate values $$g_1(x) = g_2(x) = 0.5$$. The first error is $$(1 - 0.5 \cdot 0.5 - 0.5 \cdot 1.5)^2 = 0$$: the errors of the two experts cancel each other, and its gradient with respect to each expert output is zero, so neither expert is trained toward the target. The second error is $$0.5 \cdot 0.5^2 + 0.5 \cdot 0.5^2 = 0.25$$, as each expert is penalized for its own error, so each one learns to produce the whole output on its own. The following code implements the second error function:
 
 ```python
 def loss_per_token_Adaptive_Mixture_1991(probs, outputs, labels):
@@ -78,7 +88,7 @@ The authors made an important observation about the behavior of MoEs:
 
 > the learning procedure divides up a vowel discrimination task into appropriate subtasks, each of which can be solved by a very simple expert network.
 
-## Deep Mixture of Experts
+## Deep Mixture-of-Experts
 
 With the rise of deep neural networks, [Learning Factored Representations in a Deep Mixture of Experts (2014)](https://arxiv.org/abs/1312.4314) extended the “Mixture of Experts” to a stacked model (“Deep Mixture of Experts”) with multiple sets of gating networks and experts.
 
@@ -112,8 +122,7 @@ An important result emphasizes the relevance of stacking MoEs into a deep model:
 
 This led to follow-up work that explored using the gating not only to weight the sum of the experts' outputs, but also to route the input to individual experts, as described in the following section.
 
-
-## Sparsely-Gated Mixture of Experts
+## Sparsely-Gated Mixture-of-Experts
 
 The previous MoE implementations had a big drawback: all experts process all inputs, which leads to high training costs, even when some experts are of little relevance to some inputs. This led to **conditional computation** / **sparsity**, where only a subset of experts is picked per input. In practice, the distribution output by the gating mechanism is now used to pick only the most relevant experts for each token and to route the token only to those top-$$k$$ experts, effectively working as a **routing mechanism**. $$k$$ is a [hyper-parameter](https://en.wikipedia.org/wiki/Hyperparameter_(machine_learning)) that drives the trade-off between computation and *expertise*.
 
@@ -127,23 +136,9 @@ Towards better scaling, the 2017 paper [Outrageously Large Neural Networks: The 
 {: .caption}
 A Mixture of Experts (MoE) layer embedded within a recurrent language model. In this case, the sparse gating function selects two experts to perform computations. Their outputs are modulated by the outputs of the gating network. Adapted from: [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538)
 
-### Processing and batching
+### Noisy top-k gating
 
-**The MoE is called once for each position in the text, selecting a potentially different combination of experts at each position**. Because this can lead to very small effective per-expert batches (**the “shrinking batch problem”**), they suggest using a very large global batch size to overcome it.
-
-### Parallelism and Hierarchical MoEs
-
-To enable parallelism, the authors implement **data and model parallelism**: they “distribute the standard layers of the model and the gating network according to conventional data-parallel schemes, but keep only one shared copy of each expert”. Thus, the experts are sharded rather than replicated, so that each expert receives a combined batch with the relevant tokens of all devices. This scheme is now called **expert parallelism**.
-
-When the number of experts is very large (they tested thousands), they also reduce the branching factor by using a two-level **hierarchical MoE**. A hierarchical MoE is a structure where a primary gating network chooses a sparse weighted combination of experts, and each selected expert is itself an MoE with its own gating network. In the case of their hierarchical MoE, the primary gating network employs data parallelism, and the secondary MoEs employ model parallelism; each secondary MoE resides on one device.
-
-### Improvements specific to language models: convolutionality 
-
-In language tasks, they take advantage of **convolutionality**: each expert is applied in the same way to every time step. This allows the MoE to be applied to all time steps together as one big batch, increasing effective utilization.
-
-### Gating and Sparsity 
-
-Instead of the typical softmax gating $$g(x) = \mathrm{Softmax}(x \cdot W_g)$$, the paper proposes **sparsity** via **noisy top-k gating**, where they add tunable [Gaussian](https://en.wikipedia.org/wiki/Normal_distribution) noise, controlled by $$W_{noise}$$, to the gating logits, which gives $$H(x)$$. To enforce sparsity, the logits of the non-top-$$k$$ experts are set to $$-\infty$$ before the softmax, so that their post-softmax value is 0:
+Instead of the typical softmax gating $$g(x) = \mathrm{Softmax}(x \cdot W_g)$$, the paper proposes **noisy top-k gating**: tunable [Gaussian](https://en.wikipedia.org/wiki/Normal_distribution) noise, controlled by $$W_{noise}$$, is added to the gating logits, which gives $$H(x)$$. To enforce sparsity, the logits of the non-top-$$k$$ experts are set to $$-\infty$$ before the softmax, so that their post-softmax value is 0:
 
 $$
 G(x) = \mathrm{softmax}(\, \mathrm{KeepTopK}(\, H(x), k) \;)
@@ -153,7 +148,25 @@ $$
 H(x)_i = (x \cdot W_g)_i + \mathrm{StandardNormal}() \cdot \mathrm{Softplus}((x \cdot W_{noise})_i)
 $$
 
-Note: $$\mathrm{Softplus}$$ keeps the noise scale positive, and the noise helps with load balancing (see the load loss below).
+Note: the [softplus](https://en.wikipedia.org/wiki/Softplus) function, $$\mathrm{Softplus}(x) = \log(1 + e^x)$$, keeps the noise scale positive, and the noise helps with load balancing (see the load loss below).
+
+As an example, take $$N = 4$$ experts ($$n$$ in the picture above), $$k = 2$$ and, without the noise, the logits $$x \cdot W_g = (2.0, 1.0, 0.5, -1.0)$$. $$\mathrm{KeepTopK}$$ gives $$(2.0, 1.0, -\infty, -\infty)$$, and the softmax gives $$G(x) = (0.73, 0.27, 0, 0)$$: only experts 1 and 2 are computed, and their gate values sum to 1. A dense softmax over the same logits gives $$(0.61, 0.22, 0.14, 0.03)$$, and all four experts would be computed.
+
+The paper routes each token to $$k > 1$$ experts. With $$k = 1$$, the softmax over the single kept logit always gives a gate value of 1, whatever the logit, so the gating network would receive no gradient. With $$k > 1$$, the gate values of the selected experts depend on their logits, so they have nonzero derivatives with respect to the weights of the gating network (section 2.1 of the paper). Learning to route was therefore thought not to work without the ability to compare at least two experts, a conjecture that Switch Transformers revisited later.
+
+### The shrinking batch problem
+
+The MoE is called once for each position in the text, selecting a potentially different combination of experts at each position. With a batch of $$T$$ tokens and $$k$$ of the $$N$$ experts per token, each expert receives on average only $$kT/N$$ tokens, a much smaller batch. This is the **shrinking batch problem**: GPUs need large batches to amortize the cost of loading and updating the parameters, so a naive MoE becomes very inefficient as the number of experts grows. The paper suggests using a very large global batch size to overcome it. As an example, in the language models of the paper (Appendix C), a batch of about 300,000 words on 16 GPUs gives 18,750 words per GPU, and, with $$k = 4$$ and 256 experts, each expert receives only about 293 words from each GPU.
+
+### Expert parallelism and hierarchical MoEs
+
+To enable parallelism, the authors implement **data and model parallelism**: they “distribute the standard layers of the model and the gating network according to conventional data-parallel schemes, but keep only one shared copy of each expert”. Thus, the experts are sharded rather than replicated, so that each expert receives a combined batch with the relevant tokens of all devices. This scheme is now called **expert parallelism**. So the batch of each expert grows with the number of devices: in the example above, each expert receives about 4,688 words from the 16 GPUs, instead of 293.
+
+When the number of experts is very large (they tested thousands), they also reduce the branching factor by using a two-level **hierarchical MoE**. A hierarchical MoE is a structure where a primary gating network chooses a sparse weighted combination of experts, and each selected expert is itself an MoE with its own gating network. In the case of their hierarchical MoE, the primary gating network employs data parallelism, and the secondary MoEs employ model parallelism; each secondary MoE resides on one device.
+
+### Convolutionality
+
+In language tasks, they take advantage of **convolutionality**: the same MoE is applied in the same way to every time step. Once the previous layer has processed all time steps, the MoE is applied to all of them together as one big batch, which multiplies the batch of each expert by the number of unrolled time steps.
 
 ### Importance loss
 
@@ -163,10 +176,10 @@ $$
 L_{importance} = w_{importance} \cdot CV(\, \mathrm{Importance}(X)\,)^2
 $$
 
-where $$CV = \sigma/\mu$$ is the ratio of the standard deviation to the mean. The **importance** of an expert is computed as the batchwise sum of the gate values for that expert, and $$w_{importance}$$ is a hand-tuned scaling factor. As an example, take a batch of 4 samples $$x_i$$ assigned across 5 experts $$E_j$$, with the following distribution:
+where $$CV = \sigma/\mu$$ is the ratio of the standard deviation to the mean. The **importance** of an expert is computed as the batchwise sum of the gate values for that expert, $$\mathrm{Importance}(X)_i = \sum_{x \in X} G(x)_i$$ for a batch $$X$$ (Eq. 6 in the paper), and $$w_{importance}$$ is a hand-tuned scaling factor. As an example, take a batch of 4 samples $$x_1$$ to $$x_4$$, with the following gate values for 5 experts:
 
 |-|-|-|-|-|-|
-| | $$E_1$$ | $$E_2$$ | $$E_3$$ | $$E_4$$ | $$E_5$$ |
+| | Expert 1 | Expert 2 | Expert 3 | Expert 4 | Expert 5 |
 |-|-|-|-|-|-|
 | $$x_1$$ | 0.1 | 0.1 | 0 | 0.8 | 0 |
 | $$x_2$$ | 0 | 0 | 0.2 | 0.7 | 0.1 |
@@ -175,7 +188,7 @@ where $$CV = \sigma/\mu$$ is the ratio of the standard deviation to the mean. Th
 | **Importance (sum)** | **0.2** | **0.1** | **0.2** | **3.4** | **0.1** |
 |-|-|-|-|-|-|
 
-In this example, the mean of the importance is $$\mu = 0.8$$ and the population standard deviation is $$\sigma \approx 1.30$$, thus $$CV \approx 1.63$$. If experts were assigned similar importance, the variance would be smaller and the CV also smaller, thus reducing the importance loss. 
+In this example, the mean of the importance is $$\mu = 0.8$$ and the population standard deviation is $$\sigma \approx 1.30$$, thus $$CV \approx 1.63$$ and $$L_{importance} \approx 2.64 \, w_{importance}$$. If experts were assigned similar importance, the variance would be smaller and the CV also smaller, thus reducing the importance loss: with an importance of 0.8 for every expert, the loss is 0.
 
 ### Load loss
 
@@ -193,7 +206,6 @@ The experiments fixed a compute budget and compared a baseline model with severa
 - MoE models beat baseline LSTM models, with hierarchical MoEs beating non-hierarchical ones (with a higher parameter count but similar compute per example).
 - [Perplexity](https://en.wikipedia.org/wiki/Perplexity) improved significantly when increasing the data size (from 10B to 100B words of the Google News Corpus). In a machine translation task, on the Google Production dataset, the model achieved a 1.01 higher test [BLEU](https://en.wikipedia.org/wiki/BLEU) score even after training for only one sixth of the time.
 - In terms of scalability, the authors claim "greater than 1000x improvements in model capacity with only minor losses in computational efficiency".
-- Learning to route does not work without the ability to compare at least two experts (with $$k = 1$$, the gate value of the selected expert is always 1, so it has no gradient), motivating routing to $$k > 1$$ experts in that work.
 
 Finally, they look at input-to-expert assignments, which show that **different experts specialize in different tasks based on syntax and semantics** (Appendix E, Table 9):
 
@@ -216,21 +228,13 @@ Contexts corresponding to a few of the 2048 experts in the MoE layer in the enco
 
 This post does not provide an implementation, but for the record, a simple Python implementation of this model is available in [this repo](https://github.com/lucidrains/mixture-of-experts).
 
-## Conditional Computation for improved scaling
+## GShard: conditional computation for improved scaling
 
-In 2020, [GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding](https://arxiv.org/abs/2006.16668) explored the scaling of [Transformer](https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture))-based sparsely-gated MoEs up to 600B parameters on a sequence-to-sequence (machine translation) task. They claim sub-linear compute growth with model capacity and essentially constant compilation time on large [TPU](https://en.wikipedia.org/wiki/Tensor_Processing_Unit) pods.
+In 2020, [GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding](https://arxiv.org/abs/2006.16668) explored the scaling of [Transformer](https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture))-based sparsely-gated MoEs up to 600B parameters on a sequence-to-sequence (machine translation) task, trained on 2048 [TPU](https://en.wikipedia.org/wiki/Tensor_Processing_Unit) v3 accelerators in 4 days. They claim sub-linear compute growth with model capacity and essentially constant compilation time on large TPU pods.
 
 It reuses some efficiency techniques from the previous paper. The first is **position-wise Sparsely-Gated MoEs for language tasks** (section 2.2), which deliver sub-linear scaling. The second is **parallel partitioning as a combination of data parallelism and sharding**: (1) "the attention layer is parallelized by splitting along the batch dimension and replicating its weights to all devices". On the other hand, (2) "experts in the MoE layer are infeasible to be replicated in all the devices due to its sheer size and the only viable strategy is to shard experts into many devices". 
 
-The main improvements come from compiler optimizations with [Accelerated Linear Algebra (XLA)](https://en.wikipedia.org/wiki/Accelerated_Linear_Algebra) and user-flagged parallelism of tensors, as described next.
-
-### Compiler and SPMD optimizations
-
-GShard provides a **module that separates the model description from the parallel partitioning**, consisting "of a set of simple APIs for annotations, and a compiler extension in XLA for automatic parallelization". In practice, GShard "**requires the user to annotate a few critical tensors in the model with partitioning policies**". This allows developers to write the module, while the compiler **automatically partitions it across compute units**. This enables a **compiler technique for [Single Program Multiple Data](https://en.wikipedia.org/wiki/Single_program,_multiple_data) (SPMD) transformation** that generates a single program to run on all devices, keeping compilation time largely independent of the device count (see Figure 2 in the paper).
-
-The XLA SPMD partitioner for GShard "automatically partitions a computation graph
-based on sharding annotations. Sharding annotations inform the compiler about how each tensor
-should be distributed across devices".
+The main improvements come from compiler optimizations with [Accelerated Linear Algebra (XLA)](https://en.wikipedia.org/wiki/Accelerated_Linear_Algebra) and user-flagged parallelism of tensors. GShard separates the model description from the parallel partitioning, with "a set of simple APIs for annotations, and a compiler extension in XLA for automatic parallelization". The user annotates "a few critical tensors in the model with partitioning policies", and the compiler partitions the computation graph from these annotations, with a **[Single Program Multiple Data](https://en.wikipedia.org/wiki/Single_program,_multiple_data) (SPMD)** transformation: it generates a single program to run on all devices, which keeps the compilation time largely independent of the device count (see Figure 2 in the paper).
 
 ### Model architecture
 
@@ -242,21 +246,25 @@ The model tested was a Transformer-based stack of encoder and decoder layers. Th
 {: .caption}
 Illustration of scaling of Transformer Encoder with MoE Layers. The MoE layer replaces every other Transformer feed-forward layer. Decoder modification is similar. (a) The encoder of a standard Transformer model is a stack of self-attention and feed forward layers interleaved with residual connections and layer normalization. (b) Replacing every other feed-forward layer with an MoE layer gives the MoE Transformer Encoder. (c) When scaling to multiple devices, the MoE layer is sharded across devices, while all other layers are replicated. Adapted from: [GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding](https://arxiv.org/abs/2006.16668)
 
+In the picture, $$E$$ is the number of experts, which is also the number of devices, and $$N$$ is the number of layers; this post keeps $$N$$ for the number of experts. Each device holds a shard of the input and a copy of the attention and dense feed-forward layers, as in data parallelism, and one expert of each MoE layer. In each MoE layer, an all-to-all **dispatch** (All-to-All Dispatch in the picture) sends each token from its device to the devices of its experts, and an all-to-all **combine** sends the outputs of the experts back to the device of the token, where they are weighted by the gate values and summed.
+
 ### Random routing and expert capacity
 
-The paper introduces the concept of **expert capacity**, which is the maximum number of tokens that can be assigned to an expert per iteration, set to be of order $$O(T/E)$$ for $$T$$ tokens and $$E$$ experts. Tokens whose selected experts are all at maximum capacity are considered **overflow** tokens and are passed to the next layer via a [residual connection](https://en.wikipedia.org/wiki/Residual_neural_network).
+The paper introduces the concept of **expert capacity**, which is the maximum number of tokens that can be assigned to an expert per iteration, set to be of order $$O(T/N)$$ for $$T$$ tokens and $$N$$ experts. In practice, GShard routes the tokens in independent groups of $$S$$ tokens (in the implementation at the end of this post, each sequence of $$S$$ tokens is a group), and each expert takes at most $$2S/N$$ tokens from each group (section 2.2 of the paper): $$S/N$$ is the average number of tokens per expert, doubled because each token goes to up to two experts. Tokens whose selected experts are all at maximum capacity are considered **overflow** tokens and are passed to the next layer via a [residual connection](https://en.wikipedia.org/wiki/Residual_neural_network).
 
 The routing mechanism applies **random routing**: in the top-2 setup, the top expert always receives the token, but the second expert only receives it with a probability proportional to its routing weight. In other words, it is effectively a top-1 or top-2 setup, depending on whether the 2nd expert is picked. The rationale is that if the 2nd expert has a very small routing weight, its contribution is negligible, so the token only needs to be passed to the first expert, which reduces compute and overflow.
+
+In detail, the gate values $$g_1$$ and $$g_2$$ of the two experts are normalized to sum to 1, and the second expert receives the token with probability $$2 g_2$$ (Algorithm 1 in the paper). As an example, gate values of 0.6 and 0.2 are normalized to 0.75 and 0.25, so the second expert receives the token half of the time, while two equal gate values always send the token to both experts.
 
 ### Auxiliary loss and load balancing
 
 The total loss is described as $$L = l_{nll} + \alpha \cdot l_{aux}$$, where $$l_{nll}$$ is the negative log-likelihood loss, $$\alpha$$ is a constant, and $$l_{aux}$$ is an **auxiliary loss** that helps prevent a few experts from stealing most tokens early in training. This auxiliary loss is formulated as:
 
 $$
-l_{aux} = \frac{1}{E} \sum^E_{e=1} \frac{c_e}{S} \, m_e
+l_{aux} = \frac{1}{N} \sum^N_{e=1} \frac{c_e}{S} \, m_e
 $$
 
-where $$c_e/S$$ represents the fraction of the input routed to each expert (out of the $$S$$ tokens of a group, as GShard routes the tokens in independent groups), and $$m_e$$ is the mean gate value of each expert. The loss approximates the mean square of $$c_e/S$$, which is smallest when the tokens are spread evenly across the experts (note that $$m_e$$ replaces one factor $$c_e/S$$ because $$c_e/S$$ comes from the top-2 selection, which is not differentiable).
+where $$c_e/S$$ is the fraction of the $$S$$ tokens of a group whose first choice is expert $$e$$, and $$m_e$$ is the mean gate value of expert $$e$$ over the group. The loss approximates the mean square of $$c_e/S$$, which is smallest when the tokens are spread evenly across the experts (note that $$m_e$$ replaces one factor $$c_e/S$$ because $$c_e/S$$ comes from the selection of the experts, which is not differentiable).
 
 ## Switch Transformers
 
@@ -277,9 +285,9 @@ The claim is that this simplification preserves model quality while reducing rou
 {: .caption}
 Illustration of a Switch Transformer encoder block. The dense feed forward network (FFN) layer of the Transformer is replaced by a sparse Switch FFN layer (light blue). The layer operates independently on the tokens in the sequence. Two tokens (<i>x</i><sub>1</sub> = “More” and <i>x</i><sub>2</sub> = “Parameters” below) are routed (solid lines) across four FFN experts; the router routes each token independently. The switch FFN layer returns the output of the selected FFN multiplied by the router gate value (dotted-line). Adapted from: [Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961)
 
-### Expert Capacity
+### Expert capacity
 
-They introduce the **expert capacity factor**: the number of tokens that each expert computes (its expert capacity) is the average number of tokens per expert times this capacity factor. If the capacity is exceeded (i.e. if the router sends too many inputs to a given expert), the extra tokens skip the computation and are instead passed to the next layer via a residual connection. The routing of six tokens to three experts, one per device, with capacity factors of 1.0 and 1.5, is displayed below:
+They introduce the **expert capacity factor**: the number of tokens that each expert computes (its expert capacity) is the average number of tokens per expert, $$T/N$$ for a batch of $$T$$ tokens, times this capacity factor (Eq. 3 in the paper). If the capacity is exceeded (i.e. if the router sends too many inputs to a given expert), the extra tokens skip the computation and are instead passed to the next layer via a residual connection. The routing of six tokens to three experts, one per device, with capacity factors of 1.0 and 1.5, is displayed below:
 
 {: .picture}
 <img width="92.2%" height="92.2%" src="{{ site.assets }}/distributed-training/imgs/moe_switch_transformers_2.svg"/>
@@ -287,20 +295,23 @@ They introduce the **expert capacity factor**: the number of tokens that each ex
 {: .caption}
 Illustration of token routing dynamics. Each expert processes a fixed batch-size of tokens modulated by the <i>capacity factor</i>. Each token is routed to the expert with the highest router probability, but each expert has a fixed batch size of (total\_tokens / num\_experts) × capacity\_factor. If the tokens are unevenly dispatched then certain experts will overflow (denoted by dotted red lines), resulting in these tokens not being processed by this layer. A larger capacity factor alleviates this overflow issue, but also increases computation and communication costs (depicted by the empty white slots). Adapted from: [Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961)
 
+With six tokens and three experts, the average is two tokens per expert. With a capacity factor of 1.0, each expert takes at most 2 tokens: expert 1 receives 3 tokens and drops one (the dotted red line), while expert 3 receives a single token and leaves a slot empty. With a capacity factor of 1.5, each expert takes up to 3 tokens and no token is dropped, but 3 of the 9 slots stay empty, so a third of the compute and of the communication of the experts is spent on padding.
+
 On the choice of the capacity factor, the paper finds that Switch Transformers perform better at lower capacity factors (1.0, 1.25), where they reach a better quality than top-2 MoEs, and in less time (Table 1 in the paper). Such small expert capacities are the scenario of large models, where memory is very scarce and the capacity factor is kept as small as possible.
 
-
-### Load Balancing loss
+### Load balancing loss
 
 The loss function includes a simplified version of the auxiliary loss from [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](#sparsely-gated-mixture-of-experts), which originally had separate load-balancing and importance-weighting losses. This auxiliary loss is added to the total model loss, **for every Switch layer**.
 
-Given $$N$$ experts and a batch $$B$$ with $$T$$ tokens, the vector $$f$$ holds the fraction of tokens dispatched to each expert, and the vector $$P$$ the fraction of the router probability allocated to each expert. The auxiliary loss is computed as their scaled dot product:
+Given $$N$$ experts and a batch of $$T$$ tokens, the vector $$f$$ holds the fraction of tokens dispatched to each expert, and the vector $$P$$ the fraction of the router probability allocated to each expert, i.e. $$P_i$$ is the mean router probability of expert $$i$$ over the $$T$$ tokens. The auxiliary loss is computed as their scaled dot product (Eq. 4 to 6 in the paper):
 
 $$
 loss = \alpha \cdot N \cdot \sum_{i=1}^{N} f_i \cdot P_i
 $$
 
-where $$\alpha$$ is a user-picked hyper-parameter ($$10^{-2}$$ in the paper). Both the $$P$$ and $$f$$ vectors should ideally be uniform, i.e. have all values equal to $$1/N$$, and the factor $$N$$ keeps the loss constant as the number of experts varies. This loss has the same form as the auxiliary loss of GShard, with $$f_i$$ in the role of $$c_e/S$$ and $$P_i$$ in the role of $$m_e$$.
+where $$\alpha$$ is a user-picked hyper-parameter ($$10^{-2}$$ in the paper). Both the $$P$$ and $$f$$ vectors should ideally be uniform, i.e. have all values equal to $$1/N$$: the sum is then $$N \cdot (1/N)^2 = 1/N$$, so the factor $$N$$ makes the loss equal to $$\alpha$$ for any number of experts. This loss has the same form as the auxiliary loss of GShard, with $$f_i$$ in the role of $$c_e/S$$ and $$P_i$$ in the role of $$m_e$$.
+
+As an example, take the gate values of the importance example above as the router probabilities of a Switch layer with $$N = 5$$ experts. With top-1 routing, the four tokens all go to expert 4, so $$f = (0, 0, 0, 1, 0)$$, and the mean router probabilities are $$P = (0.05, 0.025, 0.05, 0.85, 0.025)$$. The loss is $$\alpha \cdot 5 \cdot 0.85 = 4.25 \, \alpha$$, more than four times the loss of a uniform routing. Only $$P$$ is differentiable (the dispatch that gives $$f$$ is not), so the gradient of the loss lowers the router probability of expert 4, the only expert with $$f_i > 0$$, and moves probability to the other experts.
 
 ### Model size reduction via distillation
 
@@ -312,7 +323,7 @@ the quality gains of the large sparse teacher.
 
 Finally, the paper includes several details on training techniques and experiments, which are omitted here for brevity. A single-device implementation of Switch Transformers is available on [this page](https://nn.labml.ai/transformers/switch/index.html). 
 
-### Comparison of the routing schemes
+## Comparison of the routing schemes
 
 The four routing schemes of the previous sections store the parameters of all $$N$$ experts, so their memory grows with $$N$$. They differ in the number of experts that process each token, which sets the compute per token, and in the way they balance the load across experts. With $$F$$ the compute of one expert for one token, the following table compares them:
 
@@ -323,7 +334,41 @@ The four routing schemes of the previous sections store the parameters of all $$
 | Top-2 gating with random routing (GShard) | 1 or 2 | $$F$$ or $$2F$$ | auxiliary loss and expert capacity |
 | Top-1 Switch routing (Switch Transformers) | 1 | $$F$$ | auxiliary loss and capacity factor |
 
-In practice, softmax gating over all experts suits only a few experts, since its compute grows with $$N$$, while sparse routing makes thousands of experts affordable. With expert parallelism, the communication also grows with the number of experts per token, as each token travels to the device of each of its experts. Top-1 routing has the lowest compute and communication per token, while top-2 routing costs more for a small gain in quality, as found in the [ST-MoE paper](https://arxiv.org/abs/2202.08906) (detailed later), and is used by Mixtral.
+In practice, softmax gating over all experts suits only a few experts, since its compute grows with $$N$$, while sparse routing makes thousands of experts affordable. With expert parallelism, the communication also grows with the number of experts per token, as each token travels to the device of each of its experts and back: up to $$2kE$$ elements per token and MoE layer in the forward pass, for an embedding of $$E$$ elements. Top-1 routing has the lowest compute and communication per token. However, for a fixed capacity factor, the [ST-MoE paper](https://arxiv.org/abs/2202.08906) (detailed below) found small gains in quality for top-2 over top-1 routing and, at its larger scale, a negligible difference in speed, as the router computation is a small fraction of the total; Mixtral also uses top-2 routing.
+
+All the schemes above are **token-choice routing**: each token picks its experts, so the load of each expert depends on the choices of the tokens, and auxiliary losses and capacities are needed to balance it. The 2022 paper [Mixture-of-Experts with Expert Choice Routing](https://arxiv.org/abs/2202.09368) reverses the choice: with **expert-choice routing**, each expert picks a fixed number of tokens, those with the highest router scores, so the load is balanced by construction. A token may then be processed by a variable number of experts, or by none. For the same computational resources, the paper reports a training convergence more than twice as fast as with the top-1 and top-2 gating of Switch Transformers and GShard. The Mixture-of-Depths paper, in the further reading below, uses expert-choice routing too.
+
+## Stable training with the router z-loss
+
+Even with the simpler routing of Switch Transformers, sparse models remained hard to train. In the words of the 2022 paper [ST-MoE: Designing Stable and Transferable Sparse Expert Models](https://arxiv.org/abs/2202.08906), "advancing the state-of-the-art across a broad set of natural language tasks has been hindered by training instabilities and uncertain quality during fine-tuning". The paper studies these issues and introduces the **router z-loss**, which resolves instability issues and slightly improves model quality. It concludes with ST-MoE-32B (the **Stable and Transferable Mixture-of-Experts**), a sparse model of 269B parameters with a compute cost comparable to a dense model of 32B parameters. ST-MoE-32B is the first sparse model to achieve state-of-the-art performance in transfer learning, across a diverse set of NLP tasks.
+
+The paper explains the benefit of the z-loss with [roundoff errors](https://en.wikipedia.org/wiki/Round-off_error) (Section 3.4). Sparse expert models are sensitive to them because the routers add more exponential functions, and an exponential turns a small error of its input into a large error of its output. The paper gives an example (footnote 7): a softmax over ten logits of value 128 and one logit of value 128.5. In BF16 (`bfloat16`), the representable numbers between 128 and 256 are 1 apart, so 128.5 is rounded to 128 and all logits become equal: the probability of the largest logit drops from 0.142 to 1/11 ≈ 0.091, a change of 36%.
+
+The z-loss is computed as:
+
+$$
+L_z = \frac{1}{T} \sum_{i=1}^{T} \left( \log \sum_{j=1}^{N} e^{\ell_j^{(i)}} \right)^2
+$$
+
+where $$T$$ is the number of tokens, $$N$$ is the number of experts, and $$\ell^{(i)} = x^{(i)} \cdot W_g$$ are the $$N$$ logits of the router for the token $$x^{(i)}$$ (Eq. 5 in the paper, which writes $$B$$ for the number of tokens and $$x$$ for the logits). The rationale behind z-loss is that it penalizes large logits into the gating network. It is added to the loss of the model with a weight $$c_z = 0.001$$, which the paper chose with a hyper-parameter sweep.
+
+The term in the square is the [LogSumExp](https://en.wikipedia.org/wiki/LogSumExp) of the logits, a smooth approximation of their maximum, so the z-loss is small only when the largest logit is close to 0, whatever the probabilities of the softmax. As an example, for a single token, the logits $$(2, 1, 0, -1)$$ have a log-sum-exp of 2.44 and a z-loss of 5.95. Adding 10 to every logit leaves the softmax unchanged, at $$(0.64, 0.24, 0.09, 0.03)$$, but raises the z-loss to 155. The z-loss thus keeps the logits close to 0, where BF16 is precise: its representable numbers are $$2^{-7} \approx 0.008$$ apart between 1 and 2, but 1 apart between 128 and 256.
+
+## Mixtral 8x7B: total and active parameters
+
+At the time of writing, the state-of-the-art MoE model was Mixtral 8x7B, presented in the 2024 paper [Mixtral of Experts](https://arxiv.org/abs/2401.04088). It is a sparse MoE with the same architecture as Mistral 7B, except that it supports a fully dense context length of 32k tokens and its feed-forward blocks are replaced by a mixture of 8 feed-forward network experts. The model architecture is detailed in Table 1 of the paper. It performs top-2 routing, and because tokens can be allocated to different experts, "each token has access to 47B parameters, but only uses 13B active parameters during inference".
+
+The formulation of the model, in section 2.1, matches the GShard architecture, except that the MoE is in every layer instead of every second one, and that the second expert is not picked at random. It is a sparse top-$$k$$ MoE with gating $$G(x) = \mathrm{Softmax}(\mathrm{TopK}(x \cdot W_g))$$, where $$\mathrm{TopK}(\ell)_i = -\infty$$ if the logit $$\ell_i$$ is not among the top-$$k$$, i.e. the noisy top-$$k$$ gating of 2017 without the noise. As before, "in a Transformer model, the MoE layer is applied independently per token and replaces the feed-forward (FFN) sub-block of the transformer block". They use the [SwiGLU activation function](https://arxiv.org/abs/2002.05202v1) (same as Llama-2), and therefore, for a given input $$x$$, the output is computed as:
+
+$$
+y = \sum_{i=1}^{N} \mathrm{Softmax}(\mathrm{Top2}(x \cdot W_g))_i\cdot \mathrm{SwiGLU}_i(x),
+$$
+
+where $$N = 8$$ is the number of experts and $$\mathrm{SwiGLU}_i$$ is expert $$i$$, a feed-forward network with the SwiGLU activation.
+
+The name 8x7B suggests 56B parameters, but only the feed-forward blocks are replicated. With the dimensions of Table 1 of the paper, each expert is a SwiGLU feed-forward network with three matrices of $$4096 \times 14336$$ elements, i.e. 176M parameters, so the 8 experts of the 32 layers hold 45.1B parameters. The attention layers, the routers, the normalization layers and the embeddings add 1.6B parameters, shared by all tokens, for 46.7B total parameters. Each token uses only 2 experts per layer, i.e. 11.3B expert parameters, plus the 1.6B shared ones: 12.9B active parameters. The paper calls the first number the total (or sparse) parameter count, which grows with the number of experts, and the second the active parameter count, which grows with $$k$$: the memory of the model is set by its 47B parameters, and its compute per token by 13B.
+
+With expert parallelism, the experts are spread across GPUs, and, as the paper notes, "EP introduces challenges in load balancing, as it is essential to distribute the workload evenly across the GPUs to prevent overloading individual GPUs or hitting computational bottlenecks". The next section implements expert parallelism in PyTorch.
 
 ## Distributed implementation in PyTorch
 
@@ -356,7 +401,7 @@ class AllToAll(torch.autograd.Function):
     return grad_x, None, None
 ```
 
-The distributed mixture-of-experts block is then defined as `MoE_dist`, with a replicated (data-parallel) router and a local expert. For the sake of simplicity, there is a single expert per GPU and no load balancing loss, and the tokens that exceed each expert's capacity are dropped:
+The distributed MoE block is then defined as `MoE_dist`, with a replicated (data-parallel) router and a local expert. For the sake of simplicity, there is a single expert per GPU and no load balancing loss, and the tokens that exceed each expert's capacity are dropped:
 
 ```python
 class MoE_dist(nn.Module):
@@ -390,7 +435,7 @@ The **routing step** computes the top-`k` expert assignments of each token, i.e.
     probs_per_expert = [ topk_probs[topk_experts==expert] for expert in range(self.num_experts) ]
 ```
 
-The following **permutation step** selectively sends the tokens to each expert's processor. It uses collective communication, in two steps. First, an `all_to_all` operation exchanges the number of items to send/receive, needed to allocate the receive buffers. Then, based on those counts, an `all_to_all_single` call exchanges the metadata of the tokens, and an `AllToAll` call exchanges the tokens themselves: 
+The following **permutation step**, the all-to-all dispatch of the GShard picture, selectively sends the tokens to each expert's processor. It uses collective communication, in two steps. First, an `all_to_all` operation exchanges the number of items to send/receive, needed to allocate the receive buffers. Then, based on those counts, an `all_to_all_single` call exchanges the metadata of the tokens, and an `AllToAll` call exchanges the tokens themselves:
 
 ```python
     device = x.device
@@ -440,7 +485,7 @@ The **computation step** reshuffles the received data into a 3D batch of size `R
       batch_toks = self.expert(batch_toks) # Rows * Capacity * E
 ``` 
 
-The output of the expert is stored in `batch_toks`. The following **un-permutation step** performs an `AllToAll` with the opposite communication of the permutation step. This populates the all-to-all output buffer with the partial results of all experts.
+The output of the expert is stored in `batch_toks`. The following **un-permutation step**, the all-to-all combine of the GShard picture, performs an `AllToAll` with the opposite communication of the permutation step. This populates the all-to-all output buffer with the partial results of all experts.
 
 ```python
     # scatter computed outputs back into recv_toks (only for the non-padding part). out_flat is computed from recv_toks
@@ -468,7 +513,7 @@ Finally, the un-permutation step also **scales** the outputs: it computes, for e
 
 ### Applying the MoE to an existing LLM
 
-Remember that the MoE module can replace the feed-forward module in existing architectures. So here it is applied to the [GPT2-based `GPTlite` model built in a previous post]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}). This is straightforward: all that is needed is to distribute its modules in a Distributed Data Parallel fashion, except the feed-forward module of the transformer block, which is replaced with the model-parallel mixture of experts:
+Remember that the MoE module can replace the feed-forward module in existing architectures. So here it is applied to the [GPT2-based `GPTlite` model built in a previous post]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}). This is straightforward: all that is needed is to distribute its modules in a Distributed Data Parallel fashion, except the feed-forward module of the transformer block, which is replaced with the expert-parallel MoE:
 
 ```python
   # ddp function takes a torch module and distributes it in a data parallel fashion
@@ -526,21 +571,13 @@ Results were collected by training several variants of GLaM to study the behavio
 </details>
 {::options parse_block_html="false" /}
 
-
 {::options parse_block_html="true" /}
 <details> <summary markdown="span">2022 [ST-MoE: Designing Stable and Transferable Sparse Expert Models](https://arxiv.org/abs/2202.08906)</summary>
-The paper presents a study with experiments, results and techniques related to the stability of training and fine-tuning of very large sparse MoEs. It also introduces the **router z-loss**, which resolves instability issues and slightly improves model quality, and a 269B sparse model, **the Stable Transferable Mixture-of-Experts** or ST-MoE-32B, which achieves state-of-the-art performance across several NLP benchmarks. The z-loss formulation is:
-
-$$
-L_z(x) = \frac{1}{B} \sum_{i=1}^B \left( \log \sum_{j=1}^N e^{x_j^{(i)}} \right)^2
-$$
-
-where $$B$$ is the number of tokens, $$N$$ is the number of experts, and $$x \in \mathbb{R}^{B\times N}$$ are the logits going into the router. The rationale behind z-loss is that it penalizes large logits into the gating network. The paper also contains a very extensive analysis of quality-stability trade-off techniques and results:
+Besides the router z-loss and the ST-MoE-32B model, detailed in the section on stable training above, the paper contains a very extensive analysis of quality-stability trade-off techniques and results:
 
 - "Sparse models often suffer from training instabilities (Figure 1) worse than those observed in standard densely-activated Transformers. [...] Some architectural improvements involve more multiplications than additions or do not sum many items at once": the paper studies GELU Gated Linear Units (GEGLU) and Root Mean Square Scale Parameters.
 - Adding noise (input-jitter) and adding dropout improve stability, but lead to a significant loss of model quality (Section 3.2).
 - Constraining the update clipping (in the Adafactor optimizer) improves stability, but at a high cost in quality (Section 3.3).
-- Sparse expert models are sensitive to [roundoff errors](https://en.wikipedia.org/wiki/Round-off_error) (e.g. due to lower-precision representations) because the routers add more exponential functions (Section 3.4).
 - Sparse models are prone to overfitting (Fig. 3).
 - Adding dropout at 0.1 provides modest boosts, while higher rates penalize performance; selectively increasing the dropout of the experts increases accuracy (Fig. 4).
 - Updating the non-MoE parameters (while freezing the others) yields an accuracy similar to updating all the parameters, and updating only the FFN parameters works a bit better (Fig. 5).
@@ -568,12 +605,10 @@ decoder.
 </details>
 {::options parse_block_html="false" /}
 
-
-
 {::options parse_block_html="true" /}
 <details> <summary markdown="span"> 2022 [Tutel: Adaptive Mixture-of-Experts at Scale](https://arxiv.org/abs/2206.03382)</summary>
-According to the authors, existing sparsely-gated mixture-of-experts (MoE) systems "suffer inefficient computation due to their
-static execution, namely static parallelism and pipelining, which does not adapt to the dynamic workload". To that end, they present Tutel, a system that delivers two main novelties: adaptive parallelism for optimal expert execution and adaptive pipelining for tackling inefficient and non-scalable dispatch/combine operations in MoE layers. The following table compares the communication complexity of data (DP), model (MP) and expert (EP) parallelism, for $$P$$ expert parameters, a token capacity $$C_g$$ per GPU, $$W$$ GPUs, $$E$$ experts and a degree $$r$$ of model parallelism:
+According to the authors, existing sparsely-gated Mixture-of-Experts (MoE) systems "suffer inefficient computation due to their
+static execution, namely static parallelism and pipelining, which does not adapt to the dynamic workload". To that end, they present Tutel, a system that delivers two main novelties: adaptive parallelism for optimal expert execution and adaptive pipelining for tackling inefficient and non-scalable dispatch/combine operations in MoE layers. The following table compares the communication complexity of data (DP), model (MP) and expert (EP) parallelism, in the notation of the paper: $$P$$ expert parameters, a token capacity $$C_g$$ per GPU, $$W$$ GPUs, $$E$$ experts (the $$N$$ of this post) and a degree $$r$$ of model parallelism:
 
 | Parallelism Method | Communication Complexity | Limitation | Comment |
 |:--|:--|:-:|:--|
@@ -623,19 +658,6 @@ In the benchmark, Soft MoEs greatly outperform dense Transformers ([ViTs](https:
 {::options parse_block_html="false" /}
 
 {::options parse_block_html="true" /}
-<details> <summary markdown="span"> 2024 [Mixtral of Experts](https://arxiv.org/abs/2401.04088)</summary>
-At the time of writing, the state-of-the-art MoE model was Mixtral 8x7B, a sparse mixture of experts with the same architecture as Mistral 7B, except that it supports a fully dense context length of 32k tokens and its feed-forward blocks are replaced by a mixture of 8 feed-forward network experts. The model architecture is detailed in Table 1. It performs top-2 routing, and because tokens can be allocated to different experts, "each token has access to 47B parameters, but only uses 13B active parameters during inference". 
-
-The formulation of the model, in section 2.1, matches the GShard architecture, except that the MoE is in every layer instead of every second one, and that the second expert is not picked at random. It is a sparse top-$$k$$ MoE with gating $$G(x) = \mathrm{Softmax}(\mathrm{TopK}(x \cdot W_g))$$, where $$\mathrm{TopK}(\ell)_i = -\infty$$ if the logit $$\ell_i$$ is not among the top-$$k$$. As before, "in a Transformer model, the MoE layer is applied independently per token and replaces the feed-forward (FFN) sub-block of the transformer block". They use the [SwiGLU activation function](https://arxiv.org/abs/2002.05202v1) (same as Llama-2), and therefore, for a given input $$x$$, the output is computed as:
-
-$$
-y = \sum_{i=0}^{n-1} \mathrm{Softmax}(\mathrm{Top2}(x \cdot W_g))_i\cdot \mathrm{SwiGLU}_i(x).
-$$
-
-</details>
-{::options parse_block_html="false" /}
-
-{::options parse_block_html="true" /}
 <details> <summary markdown="span"> 2024 [Mixture-of-Depths: Dynamically allocating compute in transformer-based language models](https://arxiv.org/abs/2404.02258)</summary>
 
 Remember that MoEs work by subdividing the problem domain into smaller problems that are solved individually by different experts. In this paper, the authors claim that not all tokens require the same amount of effort to accurately make a prediction. To that end, they use **conditional computation**, a technique that "tries to reduce total compute by expending it only when needed". Here, "the network must learn how to dynamically allocate the available compute by making decisions per-token, in each layer, about where to spend compute from the available budget", where this compute budget is a total number of FLOPs.
@@ -650,7 +672,7 @@ In practice, during training, for every input, the router produces a scalar weig
 {: .caption}
 <b>Mixture-of-Depths Transformer.</b> As in mixture-of-experts (MoE) transformers, a router chooses among potential computational paths. But unlike in MoE transformers the possible choices are a standard block’s computation (i.e., self-attention and MLP) or a residual connection. Since some tokens take this second route, Mixture-of-Depths (MoD) transformers have a smaller total FLOP footprint compared to vanilla or MoE transformers. On the top right is depicted a trained model’s routing decisions for a short sequence truncated to 64 tokens for visualization purposes. When examining the choices one can find tokens processed by later blocks’ layers, despite passing through relatively few total blocks throughout the model’s depth. This is a unique feature of MoD compared to conventional halting-based, or "early-exit" conditional computation, which instead engage blocks serially, or vanilla transformers, which engage every block. Adapted from: [Mixture-of-Depths: Dynamically allocating compute in transformer-based language models](https://arxiv.org/abs/2404.02258)
 
-The big challenge is the routing scheme. The authors considered (1) **token-choice routing**, where a router produces per-token probability distributions across computational paths (experts), and (2) **expert-choice routing** ([Mixture-of-Experts with Expert Choice Routing (2022)](https://arxiv.org/abs/2202.09368)), where each expert picks its top-$$k$$ tokens instead, based on the tokens’ preferences. They ultimately adopted expert-choice routing because it does not require a load balancing loss, and "routers can try to ensure that the most critical tokens are among the
+The big challenge is the routing scheme. The authors considered (1) token-choice routing, where a router produces per-token probability distributions across computational paths (experts), and (2) expert-choice routing ([Mixture-of-Experts with Expert Choice Routing (2022)](https://arxiv.org/abs/2202.09368)), where each expert picks its top-$$k$$ tokens instead, based on the tokens’ preferences (both defined in the comparison of the routing schemes above). They ultimately adopted expert-choice routing because it does not require a load balancing loss, and "routers can try to ensure that the most critical tokens are among the
 top-$$k$$ by setting their weight appropriately". The following picture illustrates both routing schemes, and the expert-choice routing of MoD:
 
 {: .picture}

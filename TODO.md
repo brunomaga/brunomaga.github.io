@@ -36,6 +36,11 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
   `clock()`, i.e. the CPU time of rank 0, and the loop over `scale` never frees `cell_counts` (a leak per iteration).
   Fix: time with `MPI_Wtime()`, and add `delete [] cell_counts;` next to the other `delete []` calls at the end of the
   loop.
+- Optional, `assets/matrix-transpose/matrix-transposer.zip`, `MatrixTransposer.hpp`: `QSortCompare` returns
+  `a->row - b->row`, a difference of unsigned ids, as an `int`, which gives the wrong order when two ids differ by
+  2^31 or more; and the MPI counts are `int` numbers of bytes, so one call cannot send more than 2 GB to a rank. Fix:
+  `return (a->row > b->row) - (a->row < b->row);`, and the same for `col`; for the counts, send the cells with a
+  derived datatype (`MPI_Type_contiguous`) or with the large-count calls of MPI 4.0 (`MPI_Alltoallv_c`).
 
 ### Distributed Load Balancing and Spatial Slicing (2015-12-01-slicing.md)
 
@@ -133,12 +138,12 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
 
 ### Building a GPT model in PyTorch from scratch (2023-02-28-gptlite.md)
 
-- Post, section "Multi-Head Masked Attention": the uniform attention matrix is created on `device`, but `x` and
+- Post, section "The Causal Mask": the uniform attention matrix is created on `device`, but `x` and
   `tril` on the CPU, so on a GPU machine `wei @ x` and `wei.masked_fill(tril==0, ...)` fail with a device mismatch.
   The alternative notation applies the mask and the softmax to the `wei` of the previous snippet, which gives the
   uniform matrix only because the unmasked entries of each row are equal. Fix: drop `device=device` from the first
   snippet, and start the second one with `wei = torch.zeros((S,S))`.
-- Post, section "Training Loop": `eval_loss` runs with dropout on, since the model never switches to eval mode, and
+- Post, section "Train loop": `eval_loss` runs with dropout on, since the model never switches to eval mode, and
   the loop defines the function again at every step. Fix: define `eval_loss` once before the loop, and call
   `m.eval()` at its start and `m.train()` before it returns, as `assets/gptlite/main.py` does.
 - Post, section "Final Model": the comment "one layer normalization layer after transformer blocks and one before
@@ -146,6 +151,8 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
   normalization after the transformer blocks, before the linear layer that outputs the vocabulary".
 - Post, section "Tokenization": the code block that lists the 65 characters is marked `python`, so the highlighter
   marks "!" as an error. Fix: remove the language tag `python` from the opening fence.
+- Post, section "Tokenization": the same listing leaves out the space, the character after the line break, which the
+  text counts among the 65 characters. Fix: start the second line of the listing with a space (" !$&',-.3:;?ABC...").
 - `assets/gptlite/gptlite.py`, `GPTlite.__init__`: the comment `# Add this` after `self.ln = nn.LayerNorm(d_model)`
   is a leftover editing note. Fix: remove it.
 - `assets/gptlite/utils.py`, `sin_cos_positional_embeddings`: no code calls it, and it differs from the formula of
@@ -161,7 +168,7 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
   decorate `generate` with `@torch.no_grad()`, and call `m.eval()` before `print(decode(m.generate(idx,
   max_new_tokens=500).tolist()[0]))`, as `assets/gptlite/main.py` does (`model.eval()` and `torch.inference_mode()`
   before its generation loop).
-- Building a GPT model (gptlite), section "Multi-Head Masked Attention": the comment of `out = wei @ x` gives the
+- Building a GPT model (gptlite), section "The Causal Mask": the comment of `out = wei @ x` gives the
   shapes "(B,S,S) @ (B,S,E)", while `wei` has the shape (S,S) and is broadcast over the batch. Proposed fix: `# dot
   product shape: (S,S) @ (B,S,E) = (B,S,E), with wei broadcast over the batch, i.e. ([4, 8, 2])`.
 
@@ -268,7 +275,7 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
   `gptlite_ds.py`, without the seed call, with `device_str = _get_device_str()` and `GPTlite(...)`, and label the
   snippets with `gptlite_ds.py`, the file that holds this code.
 
-### Tensor parallelism (2023-09-02-tensor-parallelism.md)
+### Tensor parallelism like Megatron-LM (2023-09-02-tensor-parallelism.md)
 
 - `Megatron_FeedForward.__init__` builds `nn.Dropout(dropout)`, but `dropout` is not one of its arguments, while
   `Megatron_MHA` takes it as an argument. The class only works with a global `dropout`. Fix: add a `dropout`
@@ -313,6 +320,8 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
 - Optional: the comment `# We return the collated batch over all dataset samples referenced in the microbatches.` in
   `collate_fn_wrapper` is in the first person, which the text of the posts avoids. Fix: `# Return the collated batch
   of all dataset samples referenced in the micro-batches.`
+- Optional: the comments of `VariableBatchSizeLR.step` use `-->` arrows. They are plain text in a code block, but
+  they end an HTML comment early, e.g. one that hides the code. Fix: `->` in the three comments.
 
 ### Sequence and context parallelism with Ulysses and Ring attention (2024-08-30-sequence-context-parallelism.md)
 
@@ -334,6 +343,10 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
 - The docstring of `dist_view_swap` and its line `H, B, S, E = full_shape` call the last dimension E, but
   `MultiHeadAttention` calls the function on tensors whose last dimension is the head size. Fix: `(H, B, S, d)` in the
   docstring, and `H, B, S, d = full_shape`.
+- Optional: the forward pass of `RingAttention` sends k and v at its last step too, only to get its own block back
+  for `save_for_backward`, and the backward pass sends k and v at its last step as well. Fix: save the local k and v
+  before the loop and skip the last send, as ring-flash-attention does (`step + 1 != world_size`), and the same at
+  the last step of the backward pass.
 
 ### Diffusion models, from DDPMs to DiTs (2025-02-25-diffusion.md)
 
@@ -354,6 +367,9 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
   keys and values. So for such a prompt, the two functions differ from the first generated token. Fix: prefill only
   the last `seqlen` tokens when no cache is given, as `generate` does: `logits, kv_cache = model(prompt if kv_cache is
   not None else prompt[:, -seqlen:], kv_cache, max_seqlen=seqlen)`.
+- Optional: the roofline plotting code labels the point of the vector sum "Your Code" (`label="Your Code"` and
+  `f"Your Code ({code_x:.3f}, {code_y:.1f})"`), in the second person, while the text calls it the vector sum. Fix:
+  `label="Vector sum"` and `f"Vector sum ({code_x:.3f}, {code_y:.1f})"`.
 
 ### Faster attention (GQA, FlashAttention, sparse, linear and latent attention) (2025-12-30-inference-attention.md)
 
@@ -460,6 +476,8 @@ that is not wrong.
   = 84.69 for `spmv-1` and x = 403.26 for `spmv-52` in the draw.io file.
 - `distributed-matmul-dbs/csr_format.svg`: the array names "values", "col_idx" and "row_ptr" are 16 px regular, while
   `matvec_row1d.svg` and `spmv.svg` name their matrices at 14 px bold. Fix: 14 px bold.
+- Caption of `distributed-matmul-dbs/joins.svg`: it says "Dark grey cells are `NULL`", but the picture draws the
+  `NULL` cells white, as CLAUDE.md draws unused elements. Fix: "White cells are `NULL`.", or drop the sentence.
 
 ### Distributed Matrix Transpose Algorithms (2015-04-21-matrix-transpose.md)
 
@@ -612,12 +630,17 @@ that is not wrong.
   before them describes the three maps. Fix: one caption under the three pictures, e.g. "The weights of the 6x6
   neurons of the SOM, each drawn as a 28x28 image, for the digits 0 to 3: a tuned SOM (left), a high learning rate
   (center) and a large neighbourhood width (right)." (no credit: the pictures come from the post's own code).
+- The captions of `unsupervised-learning/gaussianscatterpca.svg` and `kohonen.svg`, and the label "Input fibres" of
+  `kohonen.svg` (draw.io cell kohonen-13), use British spellings, while the text uses American ones. Fix: "centered",
+  "fibers", "neighbors" and "Input fibers", and "neighborhood" in the caption proposed above for kohonen_1 to
+  kohonen_3.
 
 ### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-deep-neural-networks.md)
 
-- `deep-neural-networks/fully_sparse_connectivity.svg` and its caption keep the symbols of Figure 9.2 of the Deep
-  Learning book: inputs x1 to x5 and outputs s1 to s5. The text writes the input of a layer as $$x^{(0)}$$ and its
-  output as $$x^{(1)}$$, as `dnn.svg` does. Fix: inputs x₁⁽⁰⁾ to x₅⁽⁰⁾ and outputs x₁⁽¹⁾ to x₅⁽¹⁾ in both rows, and
+- Optional, `deep-neural-networks/fully_sparse_connectivity.svg` and its caption keep the symbols of Figure 9.2 of
+  the Deep Learning book: inputs x1 to x5 and outputs s1 to s5. The text writes the input of a layer as $$x^{(0)}$$
+  and its output as $$x^{(1)}$$, as `dnn.svg` does, and says that the $$x_i$$ and $$s_i$$ of the picture stand for
+  them. Fix: inputs x₁⁽⁰⁾ to x₅⁽⁰⁾ and outputs x₁⁽¹⁾ to x₅⁽¹⁾ in both rows, and
   the caption "... where the input $$x_3^{(0)}$$ affects only the outputs $$x_2^{(1)}$$, $$x_3^{(1)}$$ and
   $$x_4^{(1)}$$. Bottom: a fully connected layer, where $$x_3^{(0)}$$ affects every output."
 - Optional, `deep-neural-networks/fully_sparse_connectivity.svg`, dense panel: the arrows from the far inputs reach
@@ -661,15 +684,9 @@ that is not wrong.
   0.25. After 25 samples, the band is thus 0.76 to 0.88 wide on each side of the mean, three times the scatter of the
   samples. Fix: redraw with beta = 16 (band 0.27 to 0.32), see the code issues above, and change the caption.
 - Caption of `bayesian-linear-regression/linear_bayesian_predictive_distribution_*.svg`: it gives the prior precision
-  $$\alpha = 10^{-3}$$ and the noise precision $$\beta = 2$$. The text now ties $$\alpha$$ to the prior (the $$L_2$$
-  constant $$\alpha$$ equals $$1/b^2$$, the prior precision, as the notebook's `alpha`), but it never defines the
-  noise precision $$\beta = 1/\sigma^2$$. Fix (in a picture task): "a prior precision $$\alpha = 1/b^2 = 10^{-3}$$ and
-  a noise precision $$\beta = 1/\sigma^2 = 2$$" (or 16 after the redraw with beta = 16).
-- Caption of `bayesian-linear-regression/linear_bayesian_predictive_distribution_*.svg`: the text now names the prior
-  standard deviation $$\sigma_w$$ (prior $$\mathcal{N}(0, \sigma_w^2 I)$$, $$\alpha = 1/\sigma_w^2$$), so the caption
-  proposed in the existing item, "a prior precision $$\alpha = 1/b^2 = 10^{-3}$$", is stale. Proposed fix: replace the
-  proposed caption of that item by "a prior precision $$\alpha = 1/\sigma_w^2 = 10^{-3}$$ and a noise precision
-  $$\beta = 1/\sigma^2 = 2$$" (or 16 after the redraw with beta = 16).
+  $$\alpha = 10^{-3}$$ and the noise precision $$\beta = 2$$, which the text now defines as $$\alpha = 1/\sigma_w^2$$
+  and $$\beta = 1/\sigma^2$$. Fix (in a picture task): "a prior precision $$\alpha = 1/\sigma_w^2 = 10^{-3}$$ and a
+  noise precision $$\beta = 1/\sigma^2 = 2$$" (or 16 after the redraw with beta = 16).
 
 ### Exponential Family of Distributions (2019-03-20-exponential-family.md)
 
@@ -710,6 +727,10 @@ that is not wrong.
   outputs $$A_{q,k}$$ the attention scores. Fix: "Attention scores of one attention head ..." in the first caption,
   and in the second "Attention scores of the masked attention of the decoder ... Masking sets the dot products of
   unseen words to $$-\infty$$ before the softmax, which gives them an attention score of zero."
+- Caption of the table of the computational complexity of the layer types (after Table 1 of the paper): "four
+  different learning models" and "size of neighbourhood". Fix: "four layer types" and "size of the neighborhood in
+  restricted self-attention", as in Table 1 of the paper.
+- Optional, `learning-from-sequences/encoder_decoder.svg`: the label "hidden space t−1". Fix: "hidden state t−1".
 
 ### Building a GPT model in PyTorch from scratch (2023-02-28-gptlite.md)
 
@@ -779,7 +800,7 @@ that is not wrong.
   it 2 units. Fix: backward cells twice as long as the forward cells, each picture keeping its width (the 8-stage
   one goes from about 12.9 to 8.6 px per unit).
 
-### Tensor parallelism (2023-09-02-tensor-parallelism.md)
+### Tensor parallelism like Megatron-LM (2023-09-02-tensor-parallelism.md)
 
 - `distributed-training/imgs/tp_megatron_lm.svg`, moved here from the kernel fusion post, labels the reduction
   "sum-reduce", as its caption and the text of the post do ("[*sum-reduce*]" in the quote of option 1, and "the
@@ -906,11 +927,9 @@ that is not wrong.
   1/4. There, moving right and moving up both raise the attainable performance, as the two lists of the text describe.
   Another fix is to keep the ❌ and drop the right arrow and its label.
 - Optional, `inference/imgs/roofline.svg` keeps the axis titles of the author's original, "Operational Intensity
-  [FLOPs / byte]" and "Performance [GFLOPs / sec 10⁹]", as the user decided on 2026-10-22, while its note says
-  "increase Arithmetic Intensity" (the original said Operational), and the list above the picture and the plotting
-  code of the post name the axes "Arithmetic Intensity" and "Attainable Performance". Fix: "X-Axis (Arithmetic
-  Intensity, or Operational Intensity)" in the text, as Step 3 does, and "Operational Intensity" again in the note,
-  so that the picture uses one term; the axis titles stay.
+  [FLOPs / byte]" and "Performance [GFLOPs / sec 10⁹]", as the user decided on 2026-10-22, and the text names the
+  operational intensity too, while the note of the picture says "increase Arithmetic Intensity" (the original said
+  Operational). Fix: "Operational Intensity" again in the note, so that the picture uses one term.
 - `inference/imgs/disaggregation.svg`: the "requests" box is data but has the 5 px corners of an operation, and the
   five GPU boxes, which are devices, have 5 px corners instead of the 10 px corners of a frame. Fix: square corners
   for "requests", and 10 px corners for the GPU boxes.
@@ -928,8 +947,11 @@ that is not wrong.
 - Optional, `inference/imgs/mla.svg`: the absorb = True panel shows a whole sequence, while weight absorption serves
   decode, with one new token (H x 1 x (P+1) scores over P+1 latent vectors). The panels are labeled "usually prefill"
   and "usually decode". Fix: redraw the absorb = True panel for one decode token.
+- The captions of `inference/imgs/csa.svg` and `inference/imgs/hca.svg` call the entry of the query's own block
+  (entry 3 in CSA, entry 2 in HCA) "dark grey", but both pictures draw it white with a grey outline, as CLAUDE.md
+  draws unused elements. Fix: "(white)" instead of "(dark grey)" in both captions.
 
-### Kernel Fusion for Megatron-LM Tensor Parallelism and MoE Expert Sharding (2026-08-18-kernel-fusion-tensor-parallelism.md)
+### Kernel Fusion for Tensor Parallelism and MoE Expert Sharding (2026-08-18-kernel-fusion-tensor-parallelism.md)
 
 - `inference/imgs/tp_expert_sharding.svg` labels the reduction "sum-reduce", and its caption says "a sum-reduce adds
   their partial outputs", while the text calls the sum of the partial outputs of all GPUs an all-reduce, as in
@@ -956,6 +978,8 @@ that is not wrong.
   reduce steps, while the text and `tp_block_specialization.svg` apply them to each band, right after the all-reduce
   of that band. The figure of the paper has the same simplification. Fix: a small bias and activation step after
   each reduce step, or keep the picture as a schematic.
+- Optional, `inference/imgs/tp_expert_sharding.svg` comes after the results, while the text now explains expert
+  sharding before them. Fix: move the picture and its caption up to the expert sharding section.
 
 ### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
 
@@ -1071,49 +1095,39 @@ Content problems that need the author's decision, such as overlap between posts.
   exchanged and sorted). The step numbers of the caption fit both. Fix: leave as is, or renumber the text list into
   the four steps of the picture.
 
-### Distributed Matrix Transpose Algorithms (2015-04-21-matrix-transpose.md)
+### Distributed Load Balancing and Spatial Slicing (2015-12-01-slicing.md)
 
-- Optional: the definitions of the concatenations index rows and columns from 1 ("if $$j \leq m$$", "if $$i \leq
-  n$$"), while the row interval $$\big[ \sum^{r-1}_{s=0} \vert V_s \vert, \,\, \sum^{r}_{s=0} \vert V_s \vert \big)$$
-  and the pictures number rows and columns from 0. Fix: say once, after the two definitions, that the formulas index
-  the cells of a matrix from 1, or write the conditions as $$j < m$$ and $$i < n$$ with indices from 0.
+- The table of the slicing layouts lists Sort Tile Recursive before Orthogonal Recursive Bisection, while the
+  pictures above it and the text number ORB as layout 3 and STR as layout 4; the worked example of the costs follows
+  the table. Fix: swap the last two rows of the table, with their thumbnails, in a picture task; then name ORB before
+  STR in the worked example.
 
-### Numerical Simulation of Detailed Neuron Models (2016-08-15-neuron-electrical-activity.md)
+### The Leaky Integrate-and-Fire Neuron and the Brunel Network (2016-02-08-lif-brunel.md)
 
-- The membrane time constant has two symbols in the post: $$\tau = R_m C_m$$ in the scaling of the cable equation ($$t
-  = T \tau$$, end of "Mathematical Basis"), and $$\tau_m = c/g$$ in the rate constant $$k_{nm}$$ ("Fixed Time Step
-  Integration"), the same quantity ($$c/g = R_m C_m$$); the paragraph between them also uses $$\tau = RC$$ for a
-  generic capacitor. Fix: write $$\tau_m = R_m C_m$$ and $$t = T \tau_m$$ at the end of "Mathematical Basis", and keep
-  $$\tau = RC$$ for the capacitor.
-- The renames of the item "Symbols that the author uses" bring two letters that the post also uses elsewhere: the
-  order of accuracy $$p$$ in $$\varepsilon(\Delta t) = K \Delta t^p$$, also the parent vector $$p$$ and the parent
-  index $$p_j$$ of the Hines solver, and the constant $$K$$, also potassium ($$K^+$$, $$g_K$$, $$E_K$$, $$P_K$$). Fix:
-  keep them, as each is standard notation in its own section; or write the order as $$q$$ and the constant as
-  $$c_\varepsilon$$.
+- The spike counts of the three raster plots point to 12,500 neurons, the default of the code (see the code issues),
+  while the text and the paper use 10,000. SR has 12,383 spikes per 3 ms cycle, i.e. one spike per neuron and cycle
+  with 12,500 neurons; AI gives 46.3 Hz with 10,000 neurons, or about 37 Hz with 12,500; SI slow gives 13.1 or
+  10.5 Hz, against the 5.5 Hz of the paper (its mean-field rate at g = 4 is 15.5 Hz, which supports the code item on
+  the truncation of g). The text quotes only the numbers that do not depend on the number of neurons: the burst
+  intervals, the first spikes and the 3 ms period. Proposed fix: run the three plots again with `-n 10000` and g as a
+  double (the two code items), then add their firing rates to the text.
+- The link to the PDF of the paper (web.stanford.edu/group/brainsinsilicon/documents/BrunelSparselyConnectedNets.pdf)
+  could not be fetched from here, while the site of the lab loads. Proposed fix: open it in a browser; if it is
+  gone, remove the "pdf" link and keep the link to the Springer page.
 
 ### Variable Timestep Simulation of the Electrical Activity of Neurons (2017-02-17-neuron-variable-timestep.md)
 
-- Optional: the references `[cvode]` (https://aip.scitation.org/doi/pdf/10.1063/1.4822377) and
-  `[lytton2005independent]` (on mitpressjournals.org) point to old publisher domains. Proposed fix: link the DOIs,
-  https://doi.org/10.1063/1.4822377 and https://doi.org/10.1162/0899766053429453, after a check that both resolve.
-- Optional: the step size has two symbols, $$h$$ and $$h_n$$ in the formulas of the CVODE section, and $$\Delta t$$ in
-  "The solver then adjusts $$\Delta t$$" and in the fixed-step values of the later sections. Proposed fix: write "The
-  solver then adjusts the step size $$h_n$$", and keep $$\Delta t$$ for the fixed step of Backward Euler.
-
-### Linear Regression, Matrix Factorization and Loss Functions (2017-08-17-linear-regression-matrix-factorization.md)
-
-- Optional, other symbols with two meanings: $$\gamma$$ is the step size of gradient descent and the focusing
-  parameter of the focal loss; $$\Omega$$ is the regularization term and the set of observed ratings of matrix
-  factorization; $$x$$ is the input everywhere, but the class in the multi-class cross-entropy $$H(q,p) = -\sum_x q(x)
-  \log(p(x))$$. Proposed fix: name the step size $$\eta$$ in the three update rules of gradient descent (the focal
-  loss keeps the $$\gamma$$ of its paper); write the regularizer as $$\mathcal{R}(w)$$ in the section Regularization;
-  write the multi-class cross-entropy as $$H(q,p) = -\sum_{c=1}^{C} q_c \log p_c$$, over the $$C$$ classes, as in the
-  Dice section.
-- Optional, Dice loss: the link on "Dice loss" points to the Generalised Dice Loss of Sudre et al. (2017), which
-  weights each class $$l$$ by $$w_l = 1/(\sum_n r_{ln})^2$$, the inverse of the square of its number of ground truth
-  pixels, while the multi-class formula of the post is the unweighted mean over the classes. Proposed fix: add after
-  the multi-class formula "The Generalised Dice Loss of Sudre et al. also weights each class by the inverse of the
-  square of its number of ground truth pixels, so that small structures count as much as large ones."
+- Optional: the reference `[lytton2005independent]` points to mitpressjournals.org, an old publisher domain. Crossref
+  and NEURON's list of publications give https://doi.org/10.1162/0899766053429453 for Lytton and Hines (2005), Neural
+  Computation 17(4), 903–921, but the link could not be checked from here. Proposed fix: link the DOI after opening
+  it in a browser.
+- The pulse test has two break-even rates. The preprint (section 3.3) puts the runtime break-even of the weakest
+  pulses at "circa 1600 events per second (10^3.2 Hz)", while its Fig. 7 and
+  `cvode_dependency_on_events_arrival.svg` show CVODE as fast as Backward Euler at about 3,100 pulses per second, and
+  990 for the strongest pulses. The post says 1,000 and 3,000, from the picture. Proposed fix: check the simulation
+  data; if the preprint's 1,600 is right, write it in the text and correct the picture.
+- The page is now over 6,000 words, but has no list of contents, which CLAUDE.md gives to the pages over 6,000 words.
+  Proposed fix: add it after the opening paragraphs.
 
 ### Unsupervised Learning basics and Principal Component Analysis (2017-11-01-unsupervised-learning.md)
 
@@ -1122,92 +1136,40 @@ Content problems that need the author's decision, such as overlap between posts.
   them as $$x_u$$, $$j^*$$ and $$w_{j^*}$$. The caption bridges the two ("In the algorithm below, $$v$$ is the input
   $$x_u$$ and $$s$$ is the winner $$j^*$$"). Fix, in a text task: keep the bridge, or write the algorithm with the
   source's v, s and w_s.
+- Optional, symbols with two meanings: $$E$$ is the expectation in ICA and the error of k-means, $$K$$ the kernel
+  matrix and the number of components of a GMM, $$d$$ the degree of a polynomial kernel and a distance, and $$k$$ has
+  several uses. Proposed fix: write the expectation as $$\mathbb{E}$$ in ICA, as the statistics posts do, and keep the
+  others, which each section defines.
 
-### Statistics for ML (2018-06-15-statistics-for-ml.md)
+### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-deep-neural-networks.md)
 
-- `\mathbb{Var}` and `\mathbb{Cov}` render in MathJax 4 as double-struck letters, lowercase included (𝕍𝕒𝕣, ℂ𝕠𝕧): 42
-  times in 18 formulas of this post, 6 times in 2 formulas of the algebra post (2018-04-20-algebra-for-ml.md) and 15
-  times in 7 formulas of the Bayesian linear regression post (2018-08-20-bayesian-linear-regression.md); the
-  correlation of this post is written $$corr[x,y]$$, in italics like a product of variables. Proposed fix:
-  $$\mathrm{Var}$$ and $$\mathrm{Cov}$$ in the three posts (and $$\mathrm{corr}$$ here), keeping $$\mathbb{E}$$ for
-  the expectation; or $$\mathbb{V}$$ for the variance, as the MML book writes it; formula changes that the author
-  reviews.
-- Optional: one symbol for three quantities: $$\phi$$ is the convex function of Jensen's inequality, $$ϕ(x)$$ the
-  sufficient statistics of the exponential family, and $$\phi$$ the variational parameters of $$q_{\phi}$$ in the ELBO
-  inequality. Proposed fix: $$f$$ for the convex function of Jensen's inequality ($$f(\mathbb{E}[X]) \le
-  \mathbb{E}[f(X)]$$), as the MML book writes convex functions (section 7.3); the other two keep their usual symbols.
-- Optional: the Gaussian section repeats the mean and the covariance of an affine transformation ($$\mathbb{E}[Ax] =
-  A\mu$$, $$\mathbb{Var}[Ax] = A \Sigma A^{\intercal}$$), which the Rules of transformations section gives just
-  before. Proposed fix: replace the formula block of the Gaussian section with a reference to those rules ("With the
-  rules of transformations above, $$y = Ax$$ has the distribution $$p(y) = \mathcal{N}(y \mid A\mu, A \Sigma
-  A^{\intercal})$$."); or keep both, as in the author's original reference sheet.
-
-### Bayesian Linear Regression, Maximum Likelihood and Maximum a Posteriori (2018-08-20-bayesian-linear-regression.md)
-
-- Section Maximum Likelihood Estimator, the coordinate ascent paragraph: "When the prior and posterior distributions
-  are computationally tractable, the optimization of the parameters that define them can be performed using the
-  coordinate ascent method ... each iteration computes the partial derivative of the prior/posterior with respect to
-  one model parameter". The section is about the likelihood (the prior only comes with the MAP section), the MLE of
-  the post has a closed form, and coordinate ascent is used when there is no closed-form maximum, not because the
-  distributions are tractable. Proposed fix: "When the likelihood (or, with a prior, the posterior) has no closed-form
-  maximum, its parameters can be optimized with the coordinate ascent method. ... In practice, each iteration computes
-  the partial derivative of the log-likelihood (or log-posterior) with respect to one model parameter ...", or move
-  the paragraph to the MAP section.
-- Formulas: 14 formulas of the post write `log` without a backslash (26 times, e.g. $$log \,\, p(w \mid X, y)$$,
-  $$-\frac{N}{2} log \sigma^2$$), which MathJax sets in italics as the product of $$l$$, $$o$$ and $$g$$, while two
-  formulas write $$\log$$. Proposed fix: write `\log` in all formulas of the post (a mechanical change, with no change
-  of meaning).
+- `deep-neural-networks/cnn.svg` gives no filter size, so the text assumes 3×3 filters: the first layer has 896
+  parameters, 7,000 times fewer than a dense layer, and the fully connected layers hold 96.4% of the 545,218
+  parameters. With 5×5 filters, these numbers become 2,432 parameters, 2,600 times fewer, and 90.7% of 579,522.
+  Proposed fix: confirm the filter size of the network of the picture, and keep or change the numbers; "more than all
+  the convolutional layers together" holds either way.
 
 ### Exponential Family of Distributions (2019-03-20-exponential-family.md)
 
-- `assets/exponential-family/chapter8.pdf` is a copy of chapter 8 of M. I. Jordan's unpublished book draft, which no
-  page links but which the site serves to anyone. The course page that lists the chapters of the same draft (Berkeley
-  CS 281A, 2003) asks readers not to distribute the chapters or link to them from public sites. The post names the
-  chapter without a link, as the course page asks. Proposed fix: delete the copy from the repository, or keep it
-  outside the published folders. The other unlinked file of the folder, `lec-10-5.pdf` (scribe notes of lecture 11 of
-  Jordan's Stat 241A course, Fall 2004), can stay or go with it.
-
-### Variational Inference (ELBO, CAVI) and Gaussian Mixture Models (2019-07-01-variational-inference-gmm.md)
-
-- End of the ELBO section: "There are several options to solve the previous optimization problem: coordinate descent
-  in all variables $$z_i$$ (...), Stochastic Variational Inference (faster), Mean-field approximation, etc." lists the
-  mean-field approximation, which is a choice of the variational family, next to two optimization methods. Proposed
-  fix: "... coordinate ascent over the variational factors (slow, ...), as in CAVI below, or stochastic optimization,
-  as in Stochastic Variational Inference (faster)", with the mean-field approximation introduced as the family that
-  both methods optimize over.
-- Start of the Mean-field approximation section: "So far, the focus was on a single posterior defined by a family with
-  a single distribution $$q$$, whose posterior $$p(z \mid x)$$ is tractable" contradicts the Variational Inference
-  section, which approximates an intractable posterior. Proposed fix: "So far, $$q(z)$$ was a single distribution over
-  all latent variables. The analysis now restricts it to a family that makes the optimization tractable."
-
-### Variational Autoencoders (VAEs) and Generative Adversarial Networks (GANs) (2019-10-12-vae-gan.md)
-
-- Optional, one symbol per quantity: $$\sigma$$ is the standard deviation of the encoder in the reparameterization
-  trick ($$z = \mu + \sigma \cdot \epsilon$$), a parameter of the prior in the KL paragraph ($$p(z)=\mathcal{N}(\mu=0,
-  \sigma^2=1)$$, where $$\mu$$ is reused too) and the sigmoid of the discriminator in the saturation section
-  ($$\sigma(a)$$, $$\log(1 - \sigma(a))$$, $$\log \sigma(a)$$). Proposed fix: write the prior as $$p(z)=\mathcal{N}(0,
-  I)$$, as in the paper, and the sigmoid as $$\text{sigmoid}(a)$$ in the three formulas of the saturation section; or
-  leave it, since each section defines its symbols.
+- Seven formulas hold hidden `%% source: <url>` comments, which do not render but show in the source of the page.
+  Three point to chapter 8 of Jordan's draft on the Berkeley server, whose course page asks readers not to link the
+  chapters from public sites, and four to Columbia lecture notes (cs.columbia.edu/~jebara/4771/tutorials/lecture12.pdf).
+  Proposed fix: delete the three Berkeley comments, as the copy of the chapter was deleted for the same reason; keep
+  or delete the Columbia ones.
+- The table of distributions has eight columns and is wider than the text column: in a 900 px window, its last
+  columns are cut at the right edge. Proposed fix: wrap it in `<div style="overflow-x: auto;">`, an HTML change for
+  the author to approve.
 
 ### Data parallelism, sharding and CPU offloading (2023-08-18-data-parallelism.md)
 
-- Hidden text in the source of the post: about 110 lines inside an HTML comment (`<!--` ... `-->`), between the end of
-  the section DeepSpeed implementation and the detour on measuring the memory of the parameters, which the site does
-  not show. It is an early draft of three sections: mixed precision (with an `fp16` DeepSpeed config), communication
-  quantization with ZeRO++, and activation checkpointing (with its `train.py` and `gptlite.py` code). The draft is in
-  the first and second person ("we will store", "if you need to"), sets buckets of `4e5` elements while the configs of
-  the post use `5e4`, and calls `to_layers()` `lo_layers()`. The front matter has the tag "activation checkpointing",
-  which only this hidden text covers. Proposed fix, for the author to pick in the next iteration: delete the hidden
-  text and the tag (git keeps the text), or rewrite the three sections in the author's voice, check them against the
-  code, and show them on the page.
-- The precision of the benchmark: the post says that all implementations use fp32, as both configuration files of the
-  post set `"fp16": {"enabled": false}`, while the original text said mixed precision. The history of the
-  configuration does not settle it: `fp16` was enabled in the commit of the first results (4ade5d7, 2023-10-08 02:31),
-  disabled at 12:02 (75ac452), and the benchmark pictures were updated again at 17:20 (0beddf7). The author thinks
-  that the runs used fp16, but is not sure (2026-10-19). Proposed fix, in the next iteration: confirm the precision of
-  the runs (from their logs, or by running one configuration again); if they used fp16, write "mixed precision (fp16)"
-  in the text, set `fp16` in the configuration files, and add "in fp16" to the caption of the benchmark (diagram
-  item); otherwise add "in fp32" to the caption.
+- The precision of the benchmark: the post says that all implementations use the same numerical precision, and both
+  configuration files of the post set `"fp16": {"enabled": false}`, i.e. fp32, while the original text said mixed
+  precision. The history of the configuration does not settle it: `fp16` was enabled in the commit of the first
+  results (4ade5d7, 2023-10-08 02:31), disabled at 12:02 (75ac452), and the benchmark pictures were updated again at
+  17:20 (0beddf7). The author thinks that the runs used fp16, but is not sure (2026-10-19). Proposed fix: confirm the
+  precision of the runs (from their logs, or by running one configuration again); if they used fp16, write "mixed
+  precision (fp16)" in the text, set `fp16` in the configuration files, and add "in fp16" to the caption of the
+  benchmark (diagram item); otherwise add "in fp32" to the caption.
 
 ### Pipeline parallelism (1F1B, Zero Bubble, DualPipe) (2023-08-30-pipeline-parallelism.md)
 
@@ -1219,15 +1181,13 @@ Content problems that need the author's decision, such as overlap between posts.
   model. The text now says that 1F1B explains only a few MB of this gap for that model, and the cause of the rest is
   not known. Fix: measure the peak memory of every GPU (`torch.cuda.max_memory_allocated()` on each rank, and
   `nvidia-smi` for the CUDA contexts on GPU 0), and give the numbers and the cause in the post.
+- The post keeps the symbols of the papers: $$p$$ stages, $$m$$ micro-batches, $$v$$ chunks per GPU, and the times
+  $$F$$, $$B$$ (a backward pass) and $$W$$, while the other posts of the series write $$P$$ for the number of GPUs and
+  $$B$$ for the batch size. Proposed fix: keep them, and say once in the text that the post follows the notation of
+  the papers; or write the times as $$T_F$$, $$T_B$$ and $$T_W$$.
 
 ### Variable sequence lengths, curriculum learning, adaptive batch size and LR (2024-05-10-training-variable-length-curriculum.md)
 
-- The pipeline parallelism section says that its picture compares DDP and pipeline parallelism "for 2 processes and 2
-  gradient accumulation steps (4 micro-batches total)". For DDP, 2 processes with 2 accumulation steps give 4
-  micro-batches. For pipeline parallelism, 2 processes are the 2 stages of one pipeline, which processes every
-  micro-batch of the batch, so 4 micro-batches need 4 accumulation steps, or 2 data-parallel pipelines of several GPUs
-  each. Fix: "for 2 data-parallel ranks (each a whole pipeline in the right panel) and 2 gradient accumulation steps
-  (4 micro-batches total)", or "for a batch of 4 micro-batches" without the processes.
 - Bruno, in the picture review of 2026-10-22, on torch_compile_dataset: the section "Static compilation of
   variable-shaped inputs" "makes no more sense anymore". Fix: remove that subsection of "Kernels compilation",
   with its picture (torch_compile_dataset.svg and its draw.io group), and check that the rest of "Kernels
@@ -1247,30 +1207,34 @@ Content problems that need the author's decision, such as overlap between posts.
   pass 2 code items (ring comments, `dist_view_swap`) and diagram items (`ulysses_sequence_parallelism.svg`,
   `context_parallelism.svg`) on this symbol; optionally write the video shape as `(B, C, T, X, Y)` for `XxY` pixels
   per frame.
+- When the code item on the causal mask is fixed, the sentence "The implementations above compute attention without a
+  mask" must change in the same commit. Fix: say that both implementations apply the causal mask of the GPTlite
+  blocks.
 
 ### Diffusion models, from DDPMs to DiTs (2025-02-25-diffusion.md)
 
-- The Animate Anyone entry of the further reading repeats, with the same shapes, the definition of the spatial and
-  temporal attentions given in the first item of the section "Video diffusion and 3D attention" ("a spatial attention
-  that converts an input $$B \times T \times H \times W \times C$$ into ..."). Fix: shorten it to "Spatio-temporal
-  attention is achieved by a spatial attention followed by a temporal attention, the first approach of the section
-  Video diffusion and 3D attention.", or keep it so that the entry reads on its own.
 - Optional: `diffusion/masked_autoencoders_cropped.svg` is shown twice, with two different captions, in the section
   "Video diffusion and 3D attention" and in the further reading entry on masked autoencoders. Fix: show it once, and
   refer to it from the other place, or keep both.
 
-### Prefill vs decode, roofline, KV cache, batching and disaggregation (2025-06-07-inference-prefill-decode-roofline-cache.md)
+### Kernel Fusion for Tensor Parallelism and MoE Expert Sharding (2026-08-18-kernel-fusion-tensor-parallelism.md)
 
-- Optional: the heading "Vector Sum (real use case)" names a worked example whose execution time is assumed ("If the
-  GPU runs the vector loop above in exactly 0.0001 seconds"), not measured. Fix: "Vector sum (example)".
+- The post quotes the 19% that Table 2 of the paper prints for GPT-4 and GPT-3 175B without INC, but the latencies of
+  the table (52.078 and 63.860 ms) give 18.45%; for Llama 3 8B without block specialization, the table prints 23.12%,
+  while its latencies give 29.64%. The "at least 17%" of the post holds either way. Proposed fix: check the
+  percentages of the paper, and write the corrected values in the post.
 
 ### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
 
-- The paper has not measured the decode step (the right panel of its runtime figure, and its decode timeline), the
-  partial collective operations (the One-to-Many row of its table of collective and partial collective results) and
-  the number of microbatches in flight with the memory each one takes. The post shows the two decode placeholders
-  with a note in their captions, the One-to-Many row as not measured, and leaves the rest out. Fix: add these results
-  to the post once the paper has them.
+- The MoE paper repository moved from d1b9da2, the version that the post follows, to f2a3131 (2026-10-30). The paper
+  now reports measured prefill and decode results and ends with a summary, presents the partial collectives under
+  another name, and has new and redrawn figures. So the decode placeholders of the post (the right panel of
+  `ep_results.svg` and the time axis of `ep_stages.svg`), its One-to-Many row and its names of the partial
+  collectives are out of date. The third iteration of the text rewrite left this post as it is on master, as its
+  rewrite was written before the post followed the public version of the paper. Fix: a task on the post syncs its
+  text, tables, captions and pictures to the public files of the paper at the new commit, in the style of
+  CLAUDE.md, and records the commit there; the new figures of the partial collectives stay out, unless the user
+  changes the rules on them.
 
 ### Knowledge distillation, speculative decoding and multi-token prediction (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
 
@@ -1278,6 +1242,11 @@ Content problems that need the author's decision, such as overlap between posts.
   relies on `causal_mask` from the post on attention, which the text no longer links (#69). Fix: in the code pass,
   write the mask in the comment as `torch.ones(S, S, dtype=torch.bool).tril()` (True where a token may attend, as in
   `tree_attention_mask`) and drop "of the post on attention", or keep the mention without a link.
+- One symbol for two quantities, as in the author's original: the logits of the temperature formula of the
+  distillation section are $$z$$, as in Hinton et al., and so is the output $$z_t$$ of the trunk of the parallel
+  heads, as in Gloeckle et al. (also `z` in `inference/imgs/mtp_parallel.svg` and in the code of `MultiTokenHeads`).
+  Proposed fix: write the logits as $$u$$ in the temperature sentence and formula, which changes no code or picture;
+  or keep the notations of the two papers.
 
 ### Pruning and quantization (_drafts/2026-04-22-inference-pruning-quantization.md)
 
@@ -1303,21 +1272,20 @@ Content problems that need the author's decision, such as overlap between posts.
 
 ### Publication Summaries (publications.md)
 
-- DeepSeek-V2 (entry 038): the last sentence of item 2 of DeepSeekMoE, "Finely segmenting the experts into $$mN$$ ones
-  and activating $$mK$$ from them allows for a more flexible combination of activated experts", restates the sentence
-  before it ("far more *combinations* of experts per token"). Proposed fix: remove the sentence (a text pass that
-  removes math must report it as a formula change, so iteration 2 left it).
-- Optional, ZeRO-Offload++ (entry 052): the entry title links the blog on the branch `offloadpp-news` of
-  microsoft/DeepSpeed, and the caption links it on `master`; both copies exist today, and the repository has moved to
-  deepspeedai/DeepSpeed. Proposed fix: link
-  https://github.com/deepspeedai/DeepSpeed/tree/master/blogs/deepspeed-offloadpp in both places, after a check that it
-  opens.
-- RoFormer (entry 076) and LoRA (entry 079): the formulas write the same quantities with Unicode mathematical italic
-  letters ($$𝜃_𝑝$$, $$Δ𝑊$$, $$𝑊$$) and with TeX letters ($$\theta$$, $$ΔW$$, $$W$$). In RoFormer, $$R(x)$$ is the
-  rotated pair while $$R_m$$ is the rotation matrix of position $$m$$, and the angle $$𝜃_𝑝 = p \, w_i$$ depends on the
-  pair $$i$$, which its symbol does not show. Proposed fix: write the letters in TeX ($$\theta$$, $$W$$, $$\Delta
-  W$$), write the angle of the $$i$$-th pair at position $$p$$ as $$\theta_{p,i} = p \, w_i$$, and the rotation of a
-  pair as $$R_p x$$, so that $$R_p$$ is the rotation matrix of position $$p$$ in both formulas.
+- ZeRO-Offload++ (entry 052): the entry title links the blog on the branch `offloadpp-news` of microsoft/DeepSpeed,
+  and the caption links it on `master`; both copies exist today, and the repository has moved to deepspeedai/DeepSpeed,
+  where the README of the blog opens. The decision is to fix the two links, but they are in the summary line of the
+  entry and in a caption, which a text task does not change. Proposed fix: link
+  https://github.com/deepspeedai/DeepSpeed/tree/master/blogs/deepspeed-offloadpp in both places, after a check that
+  the page opens in a browser.
+- LatentMoE: the accuracy configuration $$(N', K') = (512, 22)$$ is the one that the Nemotron 3 white paper reports,
+  while the rule of the LatentMoE paper ($$K' = K\,d/\ell$$, with $$K = 6$$ and $$d/\ell = 4$$) gives 24, and the
+  LatentMoE paper never mentions 22. Proposed fix: keep 22 and add "(the rule $$K' = K\,d/\ell$$ of the LatentMoE
+  paper would give 24)", or leave the sentence as it is.
+- Multi-Head LatentMoE: the sentence "HP also composes with EP to scale beyond $$N_h$$ GPUs" follows section 3.2 of
+  the paper, while its conclusion says that Head Parallel "is bounded by the number of heads", and section 3.2
+  requires $$P \le N_h$$ for HP alone. Proposed fix: leave the sentence, or add "(HP alone needs at most $$N_h$$
+  GPUs)".
 
 ## Title issues
 
@@ -1328,17 +1296,27 @@ category that the home page puts before it, fits on one line of the home page on
 
 - The capitalization is mixed: the posts up to 2019 use title case, most posts since 2023 use sentence case, and
   a few titles mix both. Fix: one style for all titles.
-- With the 880 px page, nine post titles are longer than 690 px on the home page (they still fit its 735 px
-  column in the site's font, but may wrap with a wider system font): kernel fusion for Megatron-LM (722 px),
-  faster attention (693 px), variable sequence lengths (725 px), learning from sequences (694 px), VAEs and GANs
-  (729 px), Bayesian linear regression (718 px), deep neural networks (708 px), variable timestep (720 px) and
-  the LIF neuron and Brunel network (694 px). Fix: shorter titles, under 690 px.
+- With the 880 px page, eight post titles are longer than 690 px on the home page (they still fit its 735 px
+  column in the site's font, but may wrap with a wider system font): faster attention (693 px), variable sequence
+  lengths (725 px), learning from sequences (694 px), VAEs and GANs (729 px), Bayesian linear regression (718 px),
+  deep neural networks (708 px), variable timestep (720 px) and the LIF neuron and Brunel network (694 px). Fix:
+  shorter titles, under 690 px.
 
 ### Unsupervised Learning basics and Principal Component Analysis (2017-11-01-unsupervised-learning.md)
 
 - To do later. The title names only PCA, but the post also covers ICA, k-means, Gaussian mixtures, hierarchical
   clustering, DBSCAN, spectral clustering, self-organizing maps, t-SNE, UMAP and self-supervised learning.
   Proposed: "Dimensionality Reduction, Clustering and Self-Supervised Learning" (652 px).
+
+### Variational Autoencoders (VAEs) and Generative Adversarial Networks (GANs) (2019-10-12-vae-gan.md)
+
+- The title is 729 px wide on the home page, the widest of the posts. Fix: "Variational Autoencoders and Generative
+  Adversarial Networks" (615 px with the category), as the opening spells out both acronyms.
+
+### Sequence and context parallelism with Ulysses and Ring attention (2024-08-30-sequence-context-parallelism.md)
+
+- The title writes "Ring attention", while the text writes the method as Ring Attention. Fix: "Sequence and context
+  parallelism with Ulysses and Ring Attention" (656 px with the category).
 
 ### Pruning and quantization (_drafts/2026-04-22-inference-pruning-quantization.md)
 

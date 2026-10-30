@@ -2,10 +2,11 @@
 layout: post
 title:  "Variable sequence lengths, curriculum learning, adaptive batch size and LR"
 categories: ["Distributed Training"]
-tags: ["curriculum learning", "variable sequence length", "adaptive batch size", "CUDA graphs", "DeepSpeed"]
+tags: ["curriculum learning", "variable sequence length", "padding", "sample sort", "adaptive batch size", "learning rate scaling", "torch.compile", "CUDA graphs", "DeepSpeed"]
+description: "Training on samples of variable length: curriculum learning with a distributed sample sort, adaptive batch size with linear and square-root learning rate scaling, padding and attention masks, and static compilation with torch.compile."
 ---
 
-Many datasets include samples of variable length: for example, audio tracks of different durations, text sentences with different numbers of tokens, and videos with different numbers of frames. To train a machine learning model on such data, it is common to trim and pad all samples to a fixed length so that batch shapes are consistent across training iterations. Alternatively, the model can be trained on the original sample sizes, which adds complexity, especially in distributed (multi-node, multi-GPU) environments.
+Many datasets include samples of variable length: for example, audio tracks of different durations, text sentences with different numbers of tokens, and videos with different numbers of frames. To train a machine learning model on such data, it is common to trim the long samples and to pad the short ones with *padding tokens* to a fixed length (**padding**), so that batch shapes are consistent across training iterations, at the cost of the compute and memory spent on the padding tokens. Alternatively, the model can be trained on the original sample sizes, which adds complexity, especially in distributed (multi-node, multi-GPU) environments.
 
 This post introduces and implements three techniques that accelerate training with variable-length inputs in multi-process runs:
 
@@ -17,7 +18,7 @@ This post introduces and implements three techniques that accelerate training wi
 
 [Curriculum learning](https://arxiv.org/abs/2101.10382) ([Bengio et al., 2009](https://doi.org/10.1145/1553374.1553380)) is a training method that presents samples to the model in order of increasing difficulty (e.g., increasing noise level, increasing human score, or increasing length). This can improve stability and final performance. The rationale is that presenting very difficult samples early in training can produce large gradients and abrupt parameter updates, which may destabilize learning. Presenting samples in order of increasing difficulty tends to yield a smoother and more stable learning process.
 
-Curriculum learning can also improve efficiency for variable-length data. Mixing short and long sequences in the same batch forces padding up to the longest sequence, which adds substantial compute and memory overhead. A curriculum ordered by length instead puts samples of similar lengths in the same batch, with little padding.
+Curriculum learning can also improve efficiency for variable-length data. Mixing short and long sequences in the same batch forces padding up to the longest sequence, which adds substantial compute and memory overhead. A curriculum ordered by length instead puts samples of similar lengths in the same batch, with little padding. This is also the idea of **bucketing**, which groups samples of similar lengths into the same batches, without ordering the batches. As an example, take the 16 samples of 3 to 11 tokens of the left panel of the pipeline picture below, in 4 batches of 4 samples. In their original order, the batches hold 114 tokens in 152 token slots, so 25% of the slots are padding; sorted by length, they take 128 slots, and only 11% are padding.
 
 At a high level, curriculum learning is simple: (1) define a difficulty metric per sample, (2) sort samples by increasing difficulty, and (3) iterate through the sorted dataset. In distributed runs with large datasets, however, this becomes non-trivial. Samples are typically assigned to ranks in an interleaved fashion (e.g., via PyTorch’s `DistributedSampler`; see (a) and (b) below), which can lead to [load imbalance](https://en.wikipedia.org/wiki/Load_balancing_(computing)) if each rank sorts only its local shard. The following picture illustrates this problem and the two approaches detailed next:
 
@@ -34,9 +35,15 @@ There are two main approaches:
 
 In practice, the simple approach needs no communication, while the complex one needs a distributed sort of the whole dataset, which runs once, before training. The next sections detail the latter option.
 
-### Distributed Sorting
+### Distributed sample sort
 
-The tricky part is the distributed sort that transforms (b) into (d). There are other distributed sorting algorithms one could use, but here the **Distributed [Sample Sort](https://en.wikipedia.org/wiki/Samplesort)** algorithm is implemented because it scales well to many processes (each element is sent only once, in a single [all-to-all](https://en.wikipedia.org/wiki/All-to-all_(parallel_pattern)) exchange). The workflow is:
+The tricky part is the distributed sort that transforms (b) into (d). There are other distributed sorting algorithms one could use, but here the **Distributed [Sample Sort](https://en.wikipedia.org/wiki/Samplesort)** algorithm is implemented because it scales well to many processes (each element is sent only once, in a single [all-to-all](https://en.wikipedia.org/wiki/All-to-all_(parallel_pattern)) exchange). On $$p$$ ranks, it runs in four steps:
+1. each rank sorts its local data;
+2. each rank picks $$p-1$$ equally spaced samples of its sorted data, and sends them to rank 0;
+3. rank 0 sorts the samples, takes every $$p$$-th one as a *splitter*, and broadcasts the $$p-1$$ splitters to all ranks, which divide the range of values into $$p$$ intervals, one per rank;
+4. each rank sends each element to the rank of its interval (the all-to-all), and sorts the elements it receives.
+
+As the intervals follow the order of the ranks, the data is then sorted across all ranks. The workflow is illustrated below:
 
 {: .picture}
 <img width="57%" height="57%" src="{{ site.assets }}/distributed-sort/sample_sort.svg"> 
@@ -44,7 +51,7 @@ The tricky part is the distributed sort that transforms (b) into (d). There are 
 {: .caption}
 Sample sort of 21 elements on $$p = 3$$ ranks, colored by rank. Each rank sends $$p-1 = 2$$ samples to rank 0, which sorts them and picks every $$p$$-th one as a splitter (yellow): 4 and 10. The last interval is open: rank 2 receives every element from 10 upwards.
 
-A Python implementation is provided below. Unlike the picture, it takes 100 samples per rank by default, and uses an all-gather instead of a gather and a broadcast, so that every rank computes the same range boundaries:
+A Python implementation is provided below. Unlike the picture, it takes 100 samples per rank by default, which brings the splitters closer to the quantiles of the data, and thus balances the ranks better than the 9, 4 and 8 elements of the picture. It also uses an all-gather instead of a gather and a broadcast, so that every rank computes the same range boundaries:
 
 ```python
 def sample_sort(tensor, comm_group, num_workers, n_samples=100):
@@ -108,8 +115,8 @@ This helps equalize work across batches (and across ranks). It is also particula
 
 However, varying the batch size `B` typically requires adjusting the [learning rate](https://en.wikipedia.org/wiki/Learning_rate) (LR). Two widely used scaling rules are:
 
-1. **Linear scaling:** when the minibatch size is multiplied by `k`, multiply the LR by `k`, so that one step on the large batch gives about the same update as `k` steps on the small ones (e.g., [Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour, Goyal et al.](https://arxiv.org/abs/1706.02677)).
-2. **Square-root scaling:** when the minibatch size is multiplied by `k`, multiply the LR by `sqrt(k)` to keep gradient noise roughly constant (e.g., [One weird trick for parallelizing convolutional neural networks, Krizhevsky](https://arxiv.org/abs/1404.5997), although that paper finds linear scaling to work better with [SGD](https://en.wikipedia.org/wiki/Stochastic_gradient_descent)). It is also the rule that [Malladi et al.](https://arxiv.org/abs/2205.10287) derive for adaptive optimizers such as [Adam](https://en.wikipedia.org/wiki/Stochastic_gradient_descent#Adam).
+1. **Linear scaling:** when the mini-batch size is multiplied by `k`, multiply the LR by `k`, so that one step on the large batch gives about the same update as `k` steps on the small ones (e.g., [Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour, Goyal et al.](https://arxiv.org/abs/1706.02677)).
+2. **Square-root scaling:** when the mini-batch size is multiplied by `k`, multiply the LR by `sqrt(k)` to keep gradient noise roughly constant (e.g., [One weird trick for parallelizing convolutional neural networks, Krizhevsky](https://arxiv.org/abs/1404.5997), although that paper finds linear scaling to work better with [SGD](https://en.wikipedia.org/wiki/Stochastic_gradient_descent)). The variance of a mini-batch gradient is inversely proportional to the batch size, so its standard deviation, the gradient noise, falls by `sqrt(k)`, and the larger LR keeps the noise of each update the same. It is also the rule that [Malladi et al.](https://arxiv.org/abs/2205.10287) derive for adaptive optimizers such as [Adam](https://en.wikipedia.org/wiki/Stochastic_gradient_descent#Adam).
 
 In brief, the works above favor linear scaling for SGD, and square-root scaling for adaptive optimizers such as Adam. In practice, the hyperparameters are: (1) a target token count per batch, (2) a reference learning rate, and (3) a reference batch size. During training, each batch is packed until it reaches the token budget, and the LR is scaled based on the realized batch size.
 
@@ -123,18 +130,18 @@ Assume a limit of $$30$$ tokens per batch, a reference LR of $$10^{-3}$$, and a 
 {: .caption}
 Batches of at most 30 tokens, of shape BxSxE (batch size x sequence length x embedding size), with a reference batch size of 2 and a reference learning rate (LR) of 1e-3. Short sentences (left) give a larger batch, and thus a larger LR, than long sentences (right). White cells are padding tokens.
 
-Here, samples are collected until the batch reaches (at most) 30 tokens. The batch sizes (number of samples) become $$10$$ and $$4$$ in the left and right examples, respectively. Using linear scaling, the corresponding LRs are $$5 \times 10^{-3}$$ and $$2 \times 10^{-3}$$.
+Here, samples are collected until the batch reaches (at most) 30 tokens. The batch sizes (number of samples) become $$10$$ and $$4$$ in the left and right examples, respectively. Using linear scaling, the corresponding LRs are $$5 \times 10^{-3}$$ and $$2 \times 10^{-3}$$. With square-root scaling, as for Adam, they are $${\sqrt{5} \times 10^{-3} \approx 2.2 \times 10^{-3}}$$ and $${\sqrt{2} \times 10^{-3} \approx 1.4 \times 10^{-3}}$$.
 
 ### Pipeline parallelism
 
-Pipeline parallelism requires the same batch size and sequence length across all micro-batches within a batch, because activation shapes must stay fixed during gradient accumulation. Enforcing a consistent `B x S x E` across micro-batches can lead to smaller micro-batches and additional padding. Since version 0.15, DeepSpeed lifts this constraint with the option `PipelineModule(dynamic_shape=True)`, at a possible cost in performance. The figure below contrasts standard Distributed Data Parallel (DDP, left) with pipeline parallelism (right) for 2 processes and 2 gradient accumulation steps (4 micro-batches total):
+Pipeline parallelism requires the same batch size and sequence length across all micro-batches within a batch, because activation shapes must stay fixed during gradient accumulation. Enforcing a consistent `B x S x E` across micro-batches can lead to smaller micro-batches and additional padding. Since version 0.15, DeepSpeed lifts this constraint with the option `PipelineModule(dynamic_shape=True)`, at a possible cost in performance. The figure below contrasts standard Distributed Data Parallel (DDP, left) with pipeline parallelism (right) for 2 data-parallel ranks (each a whole pipeline) and 2 gradient accumulation steps (4 micro-batches total):
 
 {: .picture}
 <img width="92%" height="92%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr_pipeline.svg"/>
 
-In the pipeline case (right), all micro-batches in the batch have the same `B x S x E` shape. To satisfy this constraint, fewer samples are packed per micro-batch compared to the non-pipeline case (left), and padding is used when needed.
+In the pipeline case (right), all micro-batches in the batch have the same `B x S x E` shape. To satisfy this constraint, fewer samples are packed per micro-batch compared to the non-pipeline case (left), and padding is used when needed. In the picture, the 4 pipeline micro-batches of shape `3 x 11 x E` hold 88 tokens in 132 token slots (33% of padding), while the 4 DDP micro-batches hold 114 tokens in 149 slots (23% of padding).
 
-### Attention matrix
+### Attention masks and sequence packing
 
 [Attention](https://en.wikipedia.org/wiki/Attention_(machine_learning)) is a particular challenge in variable-length training. With fixed shapes, an input of shape `B x S x E` often uses a 2D attention mask of shape `S x S`, broadcast over the batch dimension. With variable lengths, a *per-sample* mask is needed, which is naturally represented as a `B x S x S` tensor. For example, for the non-pipeline micro-batch 1 above (top-left; 4 sentences), the mask can be illustrated as:
 
@@ -144,7 +151,9 @@ In the pipeline case (right), all micro-batches in the batch have the same `B x 
 {: .caption}
 3D attention mask (BxSxS) of the non-pipeline micro-batch 1 above: its 4 samples of lengths 9, 7, 8 and 6 give a mask of size 4x9x9, with one causal mask per sample, padded to the length of the longest sample.
 
-A useful way to think about the cost is that attention scales linearly with `B` and quadratically with the maximum `S` in the batch. Allowing `S` to vary (and adapting `B` accordingly) can therefore improve utilization by avoiding padding to an unnecessarily large `S`.
+A useful way to think about the cost is that attention scales linearly with `B` and quadratically with the maximum `S` in the batch. As an example, the two batches of the illustrative example hold 30 tokens each, but the batch of short sentences computes $$10 \times 4^2 = 160$$ attention scores per head, and the batch of long sentences $$4 \times 9^2 = 324$$. In the mask above, 94 of these 324 scores (29%) belong to padding tokens. Allowing `S` to vary (and adapting `B` accordingly) can therefore improve utilization by avoiding padding to an unnecessarily large `S`.
+
+Two related methods remove the padding tokens altogether. **Sequence packing** concatenates the samples of a batch into one sequence, e.g., the 4 samples above into one sequence of 30 tokens, with a block-diagonal attention mask (one causal mask per sample), so that each token attends only to the tokens of its own sample. With a dense mask, however, the packed sequence computes $$30^2 = 900$$ attention scores per head, more than the 324 of the padded batch. **Variable-length (varlen) attention** kernels compute only the blocks of the mask: the function `flash_attn_varlen_func` of the [FlashAttention](https://arxiv.org/abs/2205.14135) library takes the concatenated tokens and the cumulative lengths of the samples (`cu_seqlens`), and computes the attention of each sample on its own tokens, i.e., at most the 230 scores of the 4 blocks.
 
 ### Implementation
 
@@ -238,13 +247,13 @@ def dataloader_for_variable_batch_size(dataset, microbatch_ids, batch_max_seqlen
 
 A complete example can be found in [DeepSpeed PR 7104](https://github.com/microsoft/DeepSpeed/pull/7104/).
 
-## Kernels compilation
+## Kernel compilation
 
-[Just-in-time compilation](https://en.wikipedia.org/wiki/Just-in-time_compilation) of ML kernels via `torch.compile` can lead to substantial speedups. This section focuses on two aspects: (1) compilation on distributed runs and CUDA graphs, and (2) static vs dynamic compilation.
+[Just-in-time compilation](https://en.wikipedia.org/wiki/Just-in-time_compilation) of ML kernels via `torch.compile` can lead to substantial speedups. This section focuses on two aspects: (1) compilation on distributed runs and CUDA graphs, and (2) static vs dynamic compilation. Both depend on the shapes of the inputs, the topic of this post: with static shapes, `torch.compile` specializes the compiled code to the shapes it sees, and a CUDA graph replays its kernels on fixed shapes and memory addresses, so a new batch size or sequence length needs a new compilation and a new graph.
 
-### CUDA graphs compilation on single- vs multi-process runs
+### CUDA graphs on single- vs multi-process runs
 
-Compilation via [`torch.compile`](https://pytorch.org/docs/stable/generated/torch.compile.html) uses a `mode` that controls optimization aggressiveness. One important optimization is compiling into a CUDA graph. [CUDA graphs](https://developer.nvidia.com/blog/cuda-graphs/) can capture and replay a sequence of kernels entirely on the GPU, reducing CPU overhead from kernel launches.
+Compilation via [`torch.compile`](https://pytorch.org/docs/stable/generated/torch.compile.html) uses a `mode` that controls optimization aggressiveness. One important optimization, in the modes `reduce-overhead` and `max-autotune`, is to capture the compiled kernels in a CUDA graph. [CUDA graphs](https://developer.nvidia.com/blog/cuda-graphs/) capture a sequence of kernels once and replay it entirely on the GPU, reducing CPU overhead from kernel launches.
 
 Consider a [feed-forward network](https://en.wikipedia.org/wiki/Feedforward_neural_network) with 3 linear layers and 3 activations on a single GPU. The data loading, forward pass, backward pass, and optimizer step can be illustrated as:
 

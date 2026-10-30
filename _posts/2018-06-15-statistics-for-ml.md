@@ -3,25 +3,23 @@ layout: post
 title:  "Statistics for ML"
 redirect_from: /statistics
 categories: ["Machine Learning"]
-tags: ["statistics", "probability", "Bayes rule", "Gaussian distribution", "KL divergence"]
+tags: ["statistics", "probability", "Bayes rule", "Gaussian distribution", "exponential family", "central limit theorem", "ELBO", "entropy", "cross-entropy", "KL divergence", "kernel density estimation"]
+description: "A summary of probability and statistics for machine learning: Bayes rule, moments, the Gaussian and exponential family distributions, limit theorems and inequalities, the ELBO, confidence intervals, entropy, cross-entropy, KL divergence and kernel density estimation."
 ---
 
-In 1763, two years after the death of Thomas Bayes, his essay [An Essay Towards Solving a Problem in the Doctrine of Chances](https://en.wikipedia.org/wiki/An_Essay_Towards_Solving_a_Problem_in_the_Doctrine_of_Chances) was edited and published by his friend Richard Price. It used conditional probability to compute limits on an unknown parameter from evidence, the idea behind [Bayes rule](https://en.wikipedia.org/wiki/Bayes%27_theorem). In 1933, Andrey Kolmogorov founded modern probability theory on three [axioms](https://en.wikipedia.org/wiki/Probability_axioms).
+In 1763, two years after the death of Thomas Bayes, his essay [An Essay Towards Solving a Problem in the Doctrine of Chances](https://en.wikipedia.org/wiki/An_Essay_Towards_Solving_a_Problem_in_the_Doctrine_of_Chances) was edited and published by his friend Richard Price. Its problem was to find, from the number of times that an event has happened and failed, the probability that the unknown chance of the event lies between two given values. For a coin that showed 7 heads in 10 tosses, it is the probability that the chance of heads lies between 0.5 and 0.8.
+
+The essay used conditional probability to compute such limits on an unknown parameter from evidence, the idea behind [Bayes rule](https://en.wikipedia.org/wiki/Bayes%27_theorem). In 1933, Andrey Kolmogorov founded modern probability theory on three [axioms](https://en.wikipedia.org/wiki/Probability_axioms).
 
 This post is a brief summary of the topics in statistics and probability that are relevant to ML engineers on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. It covers the rules of probability, moments, independence, Gaussian and exponential family distributions, limit theorems, inequalities, testing, information theory, combinatorics, sets, Bayesian networks and kernel density estimation.
+
+## Probability
 
 ### Basic definitions
 
 The **sample space $$Ω$$** is the set of all *possible* outcomes of an experiment. The **event space $$\mathcal{A}$$** is the space of *potential* results of the experiment, i.e. a [σ-algebra](https://en.wikipedia.org/wiki/%CE%A3-algebra) of subsets of $$Ω$$ (the events) to which probabilities are assigned. The **probability of $$A$$**, or $$P(A)$$, is the degree of belief that the event $$A$$ will occur, in the interval $$[0,1]$$.
 
-A **random variable** is a function $$X : Ω → T$$ that takes an outcome in $$Ω$$ and returns a particular quantity of interest $$x$$ in the target space $$T$$. Note: the name "random variable" creates confusion because it is neither random nor a variable: it is a function! For example, in the case of tossing two coins and counting the number of heads, a random variable $$X$$ maps to the three possible outcomes: $$X(hh) = 2$$, $$X(ht) = 1$$, $$X(th) = 1$$, and $$X(tt) = 0$$.
-
-The pdf of the **sum of independent random variables** is the **[convolution](https://en.wikipedia.org/wiki/Convolution_of_probability_distributions)** of their pdfs:
-
-$$
-p_{X+Y}(u) = \int_{-\infty}^{+\infty} p_X(u-v) \, p_Y(v) \, dv
-$$
-
+A **random variable** is a function $$X : Ω → T$$ that takes an outcome in $$Ω$$ and returns a particular quantity of interest $$x$$ in the target space $$T$$. Note: the name "random variable" creates confusion because it is neither random nor a variable: it is a function! For example, in the case of tossing two coins and counting the number of heads, a random variable $$X$$ maps the four possible outcomes to three values: $$X(hh) = 2$$, $$X(ht) = 1$$, $$X(th) = 1$$, and $$X(tt) = 0$$.
 
 ### Statistical distributions
 
@@ -35,8 +33,13 @@ $$
 
 and there are cdfs which do not have a corresponding pdf. The probability of a subset/range of values is the sum of the probabilities of all its values, i.e. $$P( a \le X \le b) = \int^b_a p(t) dt$$, or the equivalent sum for the discrete case.
 
-For discrete probabilities, the **joint probability** of $$x \in X$$ and $$y \in Y$$ (not necessarily independent) is $$P(X=x_i, Y=y_j) = \frac{n_{ij}}{N}$$ for $$N$$ observations, where $$n_{ij}$$ can be taken as the $$ij$$-cell in the confusion matrix.
+The pdf of the **sum of independent random variables** is the **[convolution](https://en.wikipedia.org/wiki/Convolution_of_probability_distributions)** of their pdfs. For each value $$v$$ of $$Y$$, the sum $$X+Y$$ equals $$u$$ only when $$X = u-v$$. The pdf of the sum at $$u$$ is then the integral, over all values of $$v$$, of the pdf of $$Y$$ at $$v$$ times the pdf of $$X$$ at $$u-v$$:
 
+$$
+p_{X+Y}(u) = \int_{-\infty}^{+\infty} p_X(u-v) \, p_Y(v) \, dv
+$$
+
+For discrete probabilities, the **joint probability** of $$x \in X$$ and $$y \in Y$$ (not necessarily independent) is $$P(X=x_i, Y=y_j) = \frac{n_{ij}}{N}$$ for $$N$$ observations, where $$n_{ij}$$ is the number of observations with $$X = x_i$$ and $$Y = y_j$$, i.e. the $$ij$$-cell of their [contingency table](https://en.wikipedia.org/wiki/Contingency_table).
 
 ### Sum rule
 
@@ -66,10 +69,17 @@ $$
 p(y \mid x) p(x) = p(x \mid y) p(y) \Leftrightarrow p(x \mid y) = \frac{p(y \mid x) p(x)}{p(y)}
 $$
 
-The **evidence** is the **marginal likelihood** $$p(y) = \int p(y \mid x) p(x) dx = \mathbb{E}[ p(y \mid x)]$$. In ML, the posterior $$p(\theta \mid x)$$ is the quantity of interest, as it tells what is known about the parameters $$\theta$$ (i.e. their distribution) after observing the population $$x$$ (given its likelihood and a known/estimated prior).
+The **evidence** is the **marginal likelihood** $$p(y) = \int p(y \mid x) p(x) dx = \mathbb{E}_{x \sim p(x)}[ p(y \mid x)]$$, i.e. the likelihood averaged over the prior. In ML, the posterior $$p(\theta \mid x)$$ is the quantity of interest, as it tells what is known about the parameters $$\theta$$ (i.e. their distribution) after observing the data $$x$$, a sample of the population (given its likelihood and a known/estimated prior).
 
----
+As an example, take a test for a disease that 1% of the population has. The test is positive for 99% of the sick people and, wrongly, for 5% of the healthy ones. By the sum and product rules, the evidence is $$p(+) = 0.99 \times 0.01 + 0.05 \times 0.99 = 0.0594$$, and Bayes rule gives the probability of the disease after a positive test:
 
+$$
+p(\text{sick} \mid +) = \frac{p(+ \mid \text{sick}) \, p(\text{sick})}{p(+)} = \frac{0.99 \times 0.01}{0.0594} = \frac{1}{6}
+$$
+
+So a positive test is right only 1 time in 6. As the healthy people are 99 times more numerous than the sick ones, their false positives outnumber the true positives five to one. Ignoring the prior in such a case is known as the [base rate fallacy](https://en.wikipedia.org/wiki/Base_rate_fallacy).
+
+## Moments and Independence
 
 ### Expected Value
 
@@ -86,7 +96,7 @@ The covariance of two random variables is the expected product of their deviatio
 
 $$
 \begin{align*}
-\mathbb{Cov}[X,Y] & = \mathbb{E} \left[ (X- \mathbb{E}[X]) \, (Y- \mathbb{E}[Y]) \right] \\
+\operatorname{Cov}[X,Y] & = \mathbb{E} \left[ (X- \mathbb{E}[X]) \, (Y- \mathbb{E}[Y]) \right] \\
 & = \mathbb{E}\left[ XY -  X\mathbb{E}[Y] - \mathbb{E}[X]Y +  \mathbb{E}[X]\,\mathbb{E}[Y] \right] \\
 & = \mathbb{E}[XY] - \mathbb{E}[X] \,\mathbb{E}[Y] - \mathbb{E}[X] \,\mathbb{E}[Y] +  \mathbb{E}[X] \, \mathbb{E}[Y] \\
 & = \mathbb{E}[XY] -  \mathbb{E}[X] \,\mathbb{E}[Y]
@@ -96,48 +106,48 @@ $$
 In the univariate case:
 
 $$
-\mathbb{Cov}_{X,Y}[x,y] = \mathbb{E}_{X,Y} \left[ (x-\mathbb{E}_X[x]) (y-\mathbb{E}_Y[y]) \right] = \mathbb{Cov}_{Y,X}[y,x]
+\operatorname{Cov}_{X,Y}[x,y] = \mathbb{E}_{X,Y} \left[ (x-\mathbb{E}_X[x]) (y-\mathbb{E}_Y[y]) \right] = \operatorname{Cov}_{Y,X}[y,x]
 $$
 
 and for multivariate random variables $$X$$ and $$Y$$ with states $$x \in \mathbb{R}^D$$ and $$y \in \mathbb{R}^E$$:
 
 $$
-\mathbb{Cov}_{X,Y}[x,y] = \mathbb{E}[xy^{\intercal}] - \mathbb{E}[x] \,\mathbb{E}[y]^{\intercal} = \mathbb{Cov}[y,x]^{\intercal} \in \mathbb{R}^{D \times E}
+\operatorname{Cov}_{X,Y}[x,y] = \mathbb{E}[xy^{\intercal}] - \mathbb{E}[x] \,\mathbb{E}[y]^{\intercal} = \operatorname{Cov}[y,x]^{\intercal} \in \mathbb{R}^{D \times E}
 $$
-
 
 ### Variance
 
 In the univariate case:
 
 $$
-\mathbb{Var}_X[x] = \mathbb{Cov}_X[x,x] = \mathbb{E}_{X} \left[ (x-\mathbb{E}_X[x])^2 \right] = \mathbb{E}_X[x^2] - \mathbb{E}_X[x]^2
+\operatorname{Var}_X[x] = \operatorname{Cov}_X[x,x] = \mathbb{E}_{X} \left[ (x-\mathbb{E}_X[x])^2 \right] = \mathbb{E}_X[x^2] - \mathbb{E}_X[x]^2
 $$
 
 and in the multivariate case:
 
 $$
-\mathbb{Var}_X[x] = \mathbb{Cov}_X[x,x] = \mathbb{E}_X[(x-\mu)(x-\mu)^{\intercal} ] = \mathbb{E}_X[xx^{\intercal}] - \mathbb{E}_X[x] \, \mathbb{E}_X[x]^{\intercal}
+\operatorname{Var}_X[x] = \operatorname{Cov}_X[x,x] = \mathbb{E}_X[(x-\mu)(x-\mu)^{\intercal} ] = \mathbb{E}_X[xx^{\intercal}] - \mathbb{E}_X[x] \, \mathbb{E}_X[x]^{\intercal}
 $$
 
 This is a $$D \times D$$ matrix also called the **Covariance Matrix** of the multivariate random variable $$X$$:
 - it is symmetric and positive semidefinite;
-- the diagonal terms are the variances $$\mathbb{Var}[x_i]$$, i.e. the covariance of each random variable with itself;
-- the off-diagonal terms are $$\mathbb{Cov}[x_i, x_j]$$ for $$i,j = 1, ..., D$$ and $$i \neq j$$.
+- the diagonal terms are the variances $$\operatorname{Var}[x_i]$$, i.e. the covariance of each random variable with itself;
+- the off-diagonal terms are $$\operatorname{Cov}[x_i, x_j]$$ for $$i,j = 1, ..., D$$ and $$i \neq j$$.
 
 [Law of total variance](https://en.wikipedia.org/wiki/Law_of_total_variance):
 
 $$
-\mathbb{Var}[Y] = \mathbb{E} \left [ \mathbb{Var}[Y \mid X] \right] + \mathbb{Var}\left[ \mathbb{E}[Y \mid X] \right]
+\operatorname{Var}[Y] = \mathbb{E} \left [ \operatorname{Var}[Y \mid X] \right] + \operatorname{Var}\left[ \mathbb{E}[Y \mid X] \right]
 $$
 
+In practice, the law splits the variance of $$Y$$ into two parts. The first is the spread of $$Y$$ for a given value of $$X$$, averaged over $$X$$, and the second is the spread of the conditional mean $$\mathbb{E}[Y \mid X]$$ when $$X$$ changes.
 
 ### Correlation
 
 [Correlation](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient) between random variables is a measure of covariance standardized to a limited interval $$[-1,1]$$. It is computed from the covariance (matrix) as:
 
 $$
-corr[x,y] = \frac{\mathbb{Cov}[x,y]}{\sqrt{\mathbb{Var}[x] \mathbb{Var}[y]}}  \in [-1, 1]
+\operatorname{corr}[x,y] = \frac{\operatorname{Cov}[x,y]}{\sqrt{\operatorname{Var}[x] \operatorname{Var}[y]}}  \in [-1, 1]
 $$
 
 Positive correlation means $$y$$ tends to increase as $$x$$ increases (1=perfect correlation). Negative means $$y$$ tends to decrease as $$x$$ increases. Zero means no linear correlation.
@@ -151,8 +161,8 @@ $$
 \begin{align*}
 \mathbb{E}[x+y] & = \mathbb{E}[x] + \mathbb{E}[y] \\
 \mathbb{E}[x-y] & = \mathbb{E}[x] - \mathbb{E}[y] \\
-\mathbb{Var}[x+y] & = \mathbb{Var}[x] + \mathbb{Var}[y] + \mathbb{Cov}[x,y] + \mathbb{Cov}[y,x] \\
-\mathbb{Var}[x-y] & = \mathbb{Var}[x] + \mathbb{Var}[y] - \mathbb{Cov}[x,y] - \mathbb{Cov}[y,x]
+\operatorname{Var}[x+y] & = \operatorname{Var}[x] + \operatorname{Var}[y] + \operatorname{Cov}[x,y] + \operatorname{Cov}[y,x] \\
+\operatorname{Var}[x-y] & = \operatorname{Var}[x] + \operatorname{Var}[y] - \operatorname{Cov}[x,y] - \operatorname{Cov}[y,x]
 \end{align*}
 $$
 
@@ -161,34 +171,33 @@ For the affine transformation $$y = Ax + b$$ of $$x$$, where $$\mu$$ is the mean
 $$
 \begin{align*}
 \mathbb{E}[Ax+b] & = A \mathbb{E}[x] + b = A \mu + b \\
-\mathbb{Var}[Ax+b] & = \mathbb{Var}[Ax] = A \mathbb{Var}[x] A^{\intercal} = A \Sigma A^{\intercal}
+\operatorname{Var}[Ax+b] & = \operatorname{Var}[Ax] = A \operatorname{Var}[x] A^{\intercal} = A \Sigma A^{\intercal}
 \end{align*}
 $$
-
 
 ### Statistical Independence
 
 Statistical independence of random variables $$X$$ and $$Y$$ holds iff $$p(x,y)=p(x)p(y)$$. Independence implies $$p(y \mid x) = p(y)$$, $$p(x \mid y) = p(x)$$ and $$\mathbb{E}[xy] = \mathbb{E}[x] \, \mathbb{E}[y]$$, thus:
 
 $$
-\mathbb{Cov}_{X,Y}[x,y] = \mathbb{E}[xy] - \mathbb{E}[x] \, \mathbb{E}[y] = 0
+\operatorname{Cov}_{X,Y}[x,y] = \mathbb{E}[xy] - \mathbb{E}[x] \, \mathbb{E}[y] = 0
 $$
 
 and thus:
 
 $$
-\mathbb{Var}_{X,Y}[x+y] = \mathbb{Var}_X[x] + \mathbb{Var}_Y[y]
+\operatorname{Var}_{X,Y}[x+y] = \operatorname{Var}_X[x] + \operatorname{Var}_Y[y]
 $$
 
-Important: the converse does not hold, i.e. zero covariance ($$\mathbb{Cov}_{X,Y}[x,y]=0$$) does not mean independence!
+Important: the converse does not hold, i.e. zero covariance ($$\operatorname{Cov}_{X,Y}[x,y]=0$$) does not mean independence!
 
+As an example, take $$X$$ uniform on $$\{-1, 0, 1\}$$ and $$Y = X^2$$. As $$\mathbb{E}[X] = \mathbb{E}[X^3] = 0$$, the covariance $$\operatorname{Cov}[X,Y] = \mathbb{E}[X^3] - \mathbb{E}[X] \, \mathbb{E}[X^2]$$ is zero. Yet $$Y$$ is a function of $$X$$, e.g. $$p(Y=0) = 1/3$$ but $$p(Y=0 \mid X=0) = 1$$. Covariance only measures a linear dependence, and the dependence of $$Y$$ on $$X$$ is quadratic.
 
 ### Conditional Independence
 
-Conditional independence of random variables $$X$$ and $$Y$$ given $$Z$$, i.e. $$X \perp Y \mid Z$$, holds iff $$p(x,y \mid z) = p(x \mid z) \, p(y \mid z)$$ for all $$z \in Z$$.
+Conditional independence of random variables $$X$$ and $$Y$$ given $$Z$$, i.e. $$X \perp Y \mid Z$$, holds iff $$p(x,y \mid z) = p(x \mid z) \, p(y \mid z)$$ for all $$z \in Z$$. Once $$z$$ is known, $$y$$ then gives no further information about $$x$$, i.e. $$p(x \mid y, z) = p(x \mid z)$$.
 
----
-
+## Distributions
 
 ### Gaussian Distribution
 
@@ -220,26 +229,18 @@ A bivariate Gaussian with mean $$\mu = (0, 0)$$ and covariance entries $$\Sigma_
 
 The product of two Gaussian pdfs $$\mathcal{N} (x \mid a, A) \, \mathcal{N}(x \mid b, B)$$ is a Gaussian scaled by a constant $$c \in \mathbb{R}$$.
 
-If $$X,Y$$ are independent univariate Gaussian random variables, then $$p(x,y)=p(x) p(y)$$, and $$p(x+y) = \mathcal{N}(\mu_x + \mu_y, \Sigma_x + \Sigma_y)$$. For the weighted sum, $$p(ax + by) = \mathcal{N}(a\mu_x + b\mu_y, a^2 \Sigma_x + b^2 \Sigma_y)$$.
+If $$X,Y$$ are independent univariate Gaussian random variables with means $$\mu_x, \mu_y$$ and variances $$\sigma_x^2, \sigma_y^2$$, then $$p(x,y)=p(x) p(y)$$, and $$x+y \sim \mathcal{N}(\mu_x + \mu_y, \sigma_x^2 + \sigma_y^2)$$. For the weighted sum, $$ax + by \sim \mathcal{N}(a\mu_x + b\mu_y, a^2 \sigma_x^2 + b^2 \sigma_y^2)$$.
 
-Any linear/affine transformation of a Gaussian random variable is also Gaussian. Take $$y=Ax$$ to be the transformed version of $$x$$:
-
-$$
-\begin{align*}
-\mathbb{E}[y] & = \mathbb{E}[Ax] = A \mathbb{E}[x] = A\mu \\
-\mathbb{Var}[y] & = \mathbb{Var}[Ax] = A \mathbb{Var}[x]A^{\intercal} = A \Sigma A^{\intercal}
-\end{align*}
-$$
-
-thus $$p(y) = \mathcal{N}(y \mid A\mu, A \Sigma A^{\intercal})$$.
+Any linear/affine transformation of a Gaussian random variable is also Gaussian. With the rules of transformations above, $$y = Ax$$ has the distribution $$p(y) = \mathcal{N}(y \mid A\mu, A \Sigma A^{\intercal})$$.
 
 The sum of the squares of $$n$$ independent standard Gaussians $$Z_i \sim \mathcal{N}(0,1)$$ follows a [Chi-Square distribution](https://en.wikipedia.org/wiki/Chi-squared_distribution) with $$n$$ degrees of freedom: $$Z_1^2 + Z_2^2 + ... + Z_n^2 \sim \chi_n^2 $$.
 
 
 ### Conjugacy
 
-If the posterior distribution $$p(\theta \mid x)$$ is in the same probability distribution *family* (not necessarily the same distribution) as the prior $$p(\theta )$$, the prior and posterior are called **conjugate distributions**. The prior is then called a **[conjugate prior](https://en.wikipedia.org/wiki/Conjugate_prior)** for the likelihood function $$p(x\mid \theta )$$. A conjugate prior is an algebraic convenience, giving a closed-form expression for the posterior; otherwise, numerical integration may be necessary. Every member of the exponential family has a conjugate prior, e.g. the Beta distribution for the Bernoulli distribution (MML book, Example 6.12).
+If the posterior distribution $$p(\theta \mid x)$$ is in the same probability distribution *family* (not necessarily the same distribution) as the prior $$p(\theta )$$, the prior and posterior are called **conjugate distributions**. The prior is then called a **[conjugate prior](https://en.wikipedia.org/wiki/Conjugate_prior)** for the likelihood function $$p(x\mid \theta )$$. A conjugate prior is an algebraic convenience, giving a closed-form expression for the posterior; otherwise, numerical integration may be necessary. Every member of the exponential family has a conjugate prior, e.g. the [Beta distribution](https://en.wikipedia.org/wiki/Beta_distribution) for the Bernoulli distribution (MML book, Example 6.12).
 
+As an example, take a $$\text{Beta}(\alpha, \beta)$$ prior for the probability $$\theta$$ of heads of a coin. After $$h$$ heads and $$t$$ tails, the posterior is $$\text{Beta}(\alpha + h, \beta + t)$$: the data only add their counts to the parameters of the prior. Bayes's essay assumed a uniform prior, i.e. $$\text{Beta}(1, 1)$$, so 7 heads in 10 tosses give the posterior $$\text{Beta}(8, 4)$$. Its mean, $$8/12 = 2/3$$, lies between the frequency of heads, 0.7, and the mean of the prior, 0.5. The probability that $$\theta$$ lies between 0.5 and 0.8, i.e. the integral of the posterior over $$[0.5, 0.8]$$, is 0.73: the answer to the problem of the essay in the opening.
 
 ### Exponential Family
 
@@ -276,10 +277,9 @@ $$
 M(t) = \mathbb{E} \left[ e^{tX} \right]
 $$
 
-i.e. $$\sum_{x \in S} e^{tx}\, p(x)$$ for a pmf, or $$\int e^{tx}\, p(x) \, dx$$ for a pdf. If the random variables are independent, $$M_{X+Y}(t) = M_X(t) \, M_Y(t)$$. It can be used to show e.g. that the sum of independent Gaussians is a Gaussian.
+i.e. $$\sum_{x \in S} e^{tx}\, p(x)$$ for a pmf, or $$\int e^{tx}\, p(x) \, dx$$ for a pdf. Its name comes from its derivatives at $$t=0$$, which are the **moments** $$\mathbb{E}[X^k]$$ of $$X$$, e.g. the mean for $$k=1$$. As the derivative of order $$k$$ of $$e^{tX}$$ with respect to $$t$$ is $$X^k e^{tX}$$, it follows that $$M^{(k)}(0) = \mathbb{E}[X^k]$$. If the random variables are independent, $$M_{X+Y}(t) = M_X(t) \, M_Y(t)$$. It can be used to show e.g. that the sum of independent Gaussians is a Gaussian.
 
----
-
+## Limit Theorems and Inequalities
 
 ### Law of Large Numbers
 
@@ -294,16 +294,17 @@ $$
 \sqrt{n} \left( \frac{1}{n} \sum_{i=1}^n (Y_i - \mu) \right) \rightarrow \mathcal{N}(0, \sigma^2)
 $$
 
-Thus, the mean of many iid samples is approximately Gaussian, whatever their distribution, which is the basis of the confidence intervals of the Testing section.
-
+Thus, the mean of $$n$$ iid samples is approximately Gaussian, whatever their distribution, with mean $$\mu$$ and standard deviation $$\sigma / \sqrt{n}$$, the [standard error](https://en.wikipedia.org/wiki/Standard_error) of the mean. As an example, the mean of 100 samples has a standard deviation 10 times smaller than that of a single sample. This is the basis of the confidence intervals of the Testing section.
 
 ### Inequality rules
 
-**[Jensen's inequality](https://en.wikipedia.org/wiki/Jensen%27s_inequality)**, where $$\phi$$ is a convex function:
+**[Jensen's inequality](https://en.wikipedia.org/wiki/Jensen%27s_inequality)**, where $$f$$ is a convex function:
 
 $$
-\phi (\mathbb{E}[X]) \le \mathbb{E}[ \phi(X)]
+f (\mathbb{E}[X]) \le \mathbb{E}[ f(X)]
 $$
+
+As an example, for $$f(x) = x^2$$ it gives $$\mathbb{E}[X]^2 \le \mathbb{E}[X^2]$$, which is why the variance $$\operatorname{Var}[X] = \mathbb{E}[X^2] - \mathbb{E}[X]^2$$ is never negative.
 
 **[Markov's inequality](https://en.wikipedia.org/wiki/Markov%27s_inequality)**, where $$X$$ is non-negative and $$\epsilon \gt 0$$:
 
@@ -314,44 +315,26 @@ $$
 **[Chebyshev's inequality](https://en.wikipedia.org/wiki/Chebyshev%27s_inequality)**:
 
 $$
-P \left( \mid X - \mathbb{E}[X] \mid \ge \epsilon \right) \le \frac{\mathbb{Var}[X]}{\epsilon^2}
+P \left( \vert X - \mathbb{E}[X] \vert \ge \epsilon \right) \le \frac{\operatorname{Var}[X]}{\epsilon^2}
 $$
+
+As an example, for $$\epsilon = 2\sigma$$, where $$\sigma^2 = \operatorname{Var}[X]$$, the inequality bounds the probability of a value at least two standard deviations away from the mean by $$1/4$$, i.e. 25%, for any distribution. For a Gaussian, this probability is only 4.6%: a bound that holds for every distribution is loose for most of them.
 
 **[Cauchy-Schwarz inequality](https://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality)**:
 
 $$
-\mathbb{Var}[X] \, \mathbb{Var}[Y] \ge \mathbb{Cov}^2[X,Y]
+\operatorname{Var}[X] \, \operatorname{Var}[Y] \ge \operatorname{Cov}^2[X,Y]
 $$
 
-**ELBO inequality**, for any distribution $$q_{\phi}(z)$$ of the latent variables $$z$$, where the left-hand side is the log evidence $$\ln p_{\theta}(x)$$, and the right-hand side is the [evidence lower bound](https://en.wikipedia.org/wiki/Evidence_lower_bound) (ELBO) for $$x$$:
+**ELBO inequality**, for any distribution $$q_{\phi}(z)$$ of the latent variables $$z$$, where the left-hand side is the log evidence $$\ln p_{\theta}(x)$$, and the right-hand side is the [evidence lower bound](https://en.wikipedia.org/wiki/Evidence_lower_bound) (ELBO) for $$x$$. Here, $$\theta$$ are the parameters of the model and $$\phi$$ the variational parameters of $$q_{\phi}$$. This bound follows from Jensen's inequality with the convex function $$f(t) = -\ln t$$, once the evidence is written as an expectation over $$q_{\phi}$$:
 
 $$
-\ln p_{\theta }(x)\geq \mathbb {\mathbb {E} } _{z\sim q_{\phi }}\left[\ln {\frac {p_{\theta }(x,z)}{q_{\phi }(z)}}\right]
+\ln p_{\theta}(x) = \ln \int p_{\theta}(x, z) \, dz = \ln \mathbb{E}_{z \sim q_{\phi}} \left[ \frac{p_{\theta}(x, z)}{q_{\phi}(z)} \right] \ge \mathbb{E}_{z \sim q_{\phi}} \left[ \ln \frac{p_{\theta}(x, z)}{q_{\phi}(z)} \right]
 $$
 
+## Testing
 
-### Kullback–Leibler / KL divergence
-
-The [KL divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) measures how much a distribution $$q$$ differs from a reference distribution $$p$$, and is defined as:
-
-$$
-KL ( p \| q ) =  \int_\mathbb{R} p(x) \log \frac{p(x)}{q(x)} dx
-$$
-
-From Jensen's inequality, it follows that:
-
-$$
-KL ( p \| q ) = \mathbb{E} \left[ - \log \frac{q(X)}{p(X)} \right] \ge -\log \mathbb{E} \left[ \frac{q(X)}{p(X)} \right] =0
-$$
-
-The KL divergence is not a metric because it is not symmetric: $$  KL ( q \| p ) \neq  KL ( p \| q )$$. Also, $$p=q \Leftrightarrow KL ( q \| p ) = 0$$.
-
----
-
-
-### Testing
-
-The **[quantile](https://en.wikipedia.org/wiki/Quantile_function)** is the inverse of the cdf. It gives the point at which the cdf (or the integral of the pdf) equals a given value $$u \in [0,1]$$. The **[p-value](https://en.wikipedia.org/wiki/P-value)** (or observed significance level) is the smallest value of $$α$$ for which the [null hypothesis](https://en.wikipedia.org/wiki/Null_hypothesis) would be rejected at level $$α$$.
+The **[quantile](https://en.wikipedia.org/wiki/Quantile_function)** is the inverse of the cdf. It gives the point at which the cdf (or the integral of the pdf) equals a given value $$u \in [0,1]$$, e.g. the median for $$u = 0.5$$. The **[p-value](https://en.wikipedia.org/wiki/P-value)** (or observed significance level) is the smallest value of $$α$$ for which the [null hypothesis](https://en.wikipedia.org/wiki/Null_hypothesis) would be rejected at level $$α$$ (the probability of rejecting the null hypothesis when it is true). In practice, the p-value is the probability, under the null hypothesis, of a result at least as extreme as the one observed.
 
 The **[confidence interval](https://en.wikipedia.org/wiki/Confidence_interval)** refers to a set of values, computed from the data, that contains the population parameter for a certain proportion of times when the experiment is repeated. For example, for a $$95\%$$ **confidence level**:
 
@@ -361,8 +344,9 @@ The **[confidence interval](https://en.wikipedia.org/wiki/Confidence_interval)**
 {: .caption}
 A 95% confidence interval for a normally distributed estimate centred at $$\bar{X}$$: the lower and upper limits lie 1.96 standard errors either side of $$\bar{X}$$, so the interval holds a probability of 0.95, and each tail 0.025.
 
----
+As an example, a classifier that labels 900 of $$n = 1{,}000$$ test samples correctly has an accuracy $$\hat{a} = 0.9$$. Each test sample is a Bernoulli trial with variance $$\hat{a}(1-\hat{a})$$, so the standard error of the accuracy is $$\sqrt{\hat{a}(1-\hat{a})/n} = \sqrt{0.9 \times 0.1 / 1{,}000} = 0.0095$$. The 95% confidence interval is then $$0.9 \pm 1.96 \times 0.0095 = 0.9 \pm 0.019$$, i.e. 90% ± 1.9 points. As the standard error falls with $$\sqrt{n}$$, a test set of 4,000 samples halves the interval, to ±0.93 points.
 
+## Information Theory
 
 ### Entropy
 
@@ -371,6 +355,8 @@ A 95% confidence interval for a normally distributed estimate centred at $$\bar{
 $$
 H(X) = -\int_{x} p(x)\log p(x) dx=\mathbb {E} [-\log p(x)]
 $$
+
+For a discrete random variable, the integral is a sum, $$H(X) = -\sum_x p(x) \log p(x)$$. With the logarithm in base 2, the entropy is measured in bits. A fair coin has an entropy of 1 bit, and a coin that shows heads 90% of the time has 0.469 bits, as its outcome is less of a surprise. With the natural logarithm, the unit is the nat.
 
 Conditional Entropy:
 
@@ -390,6 +376,41 @@ $$
 H(X,Y) = H(X) + H(Y \mid X) = H(Y) + H(X \mid Y)
 $$
 
+### Kullback–Leibler (KL) divergence
+
+The [KL divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) measures how much a distribution $$q$$ differs from a reference distribution $$p$$, and is defined as:
+
+$$
+KL ( p \| q ) =  \int_\mathbb{R} p(x) \log \frac{p(x)}{q(x)} dx
+$$
+
+From Jensen's inequality, it follows that:
+
+$$
+KL ( p \| q ) = \mathbb{E} \left[ - \log \frac{q(X)}{p(X)} \right] \ge -\log \mathbb{E} \left[ \frac{q(X)}{p(X)} \right] =0
+$$
+
+The KL divergence is not a metric because it is not symmetric: $$  KL ( q \| p ) \neq  KL ( p \| q )$$. Also, $$p=q \Leftrightarrow KL ( q \| p ) = 0$$.
+
+As an example, take the coin that shows heads 90% of the time, $$p = (0.9, 0.1)$$, and a fair coin, $$q = (0.5, 0.5)$$. Then $$KL(p \Vert q) = 0.368$$ nats, while $$KL(q \Vert p) = 0.511$$ nats. The second is larger because it averages $$\log (q/p)$$ under $$q$$, which gives tails a probability of 0.5, five times the 0.1 of $$p$$.
+
+By the product rule, $$p_{\theta}(x,z) = p_{\theta}(z \mid x) \, p_{\theta}(x)$$, so the gap between the two sides of the ELBO inequality is a KL divergence:
+
+$$
+\ln p_{\theta}(x) - \text{ELBO} = \mathbb{E}_{z \sim q_{\phi}} \left[ \ln \frac{q_{\phi}(z)}{p_{\theta}(z \mid x)} \right] = KL \left( q_{\phi}(z) \Vert p_{\theta}(z \mid x) \right)
+$$
+
+Thus, the ELBO equals the log evidence only when $$q_{\phi}(z)$$ is the posterior $$p_{\theta}(z \mid x)$$, and maximizing the ELBO over $$\phi$$ brings $$q_{\phi}$$ closer to the posterior. This is the idea behind [variational inference](https://en.wikipedia.org/wiki/Variational_Bayesian_methods).
+
+### Cross-Entropy
+
+The **[cross-entropy](https://en.wikipedia.org/wiki/Cross-entropy)** of a distribution $$q$$ relative to a reference distribution $$p$$ is the expected value, under $$p$$, of the surprise $$-\log q(x)$$. It splits into the entropy of $$p$$ and the KL divergence:
+
+$$
+H(p, q) = -\mathbb{E}_{x \sim p} \left[ \log q(x) \right] = -\mathbb{E}_{x \sim p} \left[ \log p(x) \right] + \mathbb{E}_{x \sim p} \left[ \log \frac{p(x)}{q(x)} \right] = H(p) + KL(p \Vert q)
+$$
+
+Note that $$H(p, q)$$, a function of two distributions, differs from the joint entropy $$H(X, Y)$$ of two random variables. As $$H(p)$$ does not depend on $$q$$, minimizing the cross-entropy over $$q$$ minimizes $$KL(p \Vert q)$$. This is why the cross-entropy is the loss of classification models, where $$p$$ is the distribution of the labels and $$q$$ the prediction of the model. For the two coins above, $$H(p, q) = \ln 2 = 0.693$$ nats, i.e. the entropy of $$p$$, 0.325 nats (0.469 bits), plus $$KL(p \Vert q) = 0.368$$ nats.
 
 ### Mutual Information
 
@@ -402,8 +423,9 @@ I(X,Y) & = H(Y) - H(Y \mid X) = H(X) - H(X \mid Y)
 \end{align*}
 $$
 
----
+The first integral is the KL divergence between the joint distribution and the product of the marginals, $$I(X,Y) = KL \left( p(x,y) \Vert p(x) \, p(y) \right)$$. Thus, the mutual information is non-negative, and zero only when $$X$$ and $$Y$$ are independent.
 
+## Combinatorics and Sets
 
 ### Arrangements
 
@@ -411,9 +433,6 @@ Arrangements of $$k$$ items out of a set of size $$n$$:
 - **Arrangement** is the arrangement of *some* items in which order matters: $$^nA_k=n^k$$ with replacement or $$\frac{n!}{(n-k)!}$$ without.
 - **Permutation** is the arrangement of *all* items in which order matters: $$^nP_n = n!$$, the case $$k=n$$ of $$^nP_k=\frac{n!}{(n-k)!}$$.
 - **Combination** is the arrangement of *some* items in which order *does not* matter (without replacement): $$\binom nk = \, ^nC_k = \frac{1}{k!} ^nP_k = \frac{n!}{k!(n-k)!}$$.
-
----
-
 
 ### Sets
 
@@ -441,10 +460,7 @@ $$
 \end{align*}
 $$
 
----
-
-
-### Causal Inference
+## Bayesian Networks
 
 A **[Bayesian network](https://en.wikipedia.org/wiki/Bayesian_network)** is a probabilistic model for which a directed acyclic graph (DAG) expresses the conditional dependence structure between random variables (a [causal model](https://en.wikipedia.org/wiki/Causal_model) when the edges represent direct causes). The model represents a factorization of the joint probability of all random variables:
 
@@ -466,10 +482,7 @@ The following diagram illustrates the corresponding graph, with an arrow from ea
 {: .caption}
 A directed acyclic graph of the factorization $$p(A,B,C,D) = p(A) \cdot p(B \mid A) \cdot p(C \mid A) \cdot p(D \mid A,C)$$: each node depends only on its parents. Adapted from: [Graphical model](https://en.wikipedia.org/wiki/Graphical_model)
 
----
-
-
-### Extra: Non-parametric statistics (Smoothing)
+## Non-parametric Statistics (Smoothing)
 
 A **[Kernel Density Estimator](https://en.wikipedia.org/wiki/Kernel_density_estimation)** is used to convert a discrete distribution into a continuous distribution. Formulation: given a discrete cumulative distribution function (the [empirical distribution function](https://en.wikipedia.org/wiki/Empirical_distribution_function)) with $$n$$ steps at $$Y_1, ..., Y_n$$, defined as:
 
@@ -499,5 +512,7 @@ The following table summarizes the method used for each use case:
 | **Distribution / function $$g$$** | **parametric $$g(x_i) = x_i^{\intercal} \beta$$** | **non-parametric $$g$$** |
 | Gaussian | Linear Regression | Smoothing (e.g. [kernel regression](https://en.wikipedia.org/wiki/Kernel_regression)) |
 | Exponential Family | [Generalized Linear Models](https://en.wikipedia.org/wiki/Generalized_linear_model) | [Generalized Additive Models](https://en.wikipedia.org/wiki/Generalized_additive_model) |
+
+## Further Reading
 
 To find more about the topic, the book [Mathematics for Machine Learning](https://mml-book.github.io/) by Deisenroth, Faisal and Ong covers probability and distributions in chapter 6. The book [Pattern Recognition and Machine Learning](https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf) by Bishop covers information theory (section 1.6), the Gaussian distribution and the exponential family (sections 2.3 and 2.4), kernel density estimators (section 2.5.1) and Bayesian networks (section 8.1).

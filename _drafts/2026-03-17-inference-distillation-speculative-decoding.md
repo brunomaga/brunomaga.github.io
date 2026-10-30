@@ -3,14 +3,20 @@ layout: post
 title:  "Knowledge distillation, speculative decoding and multi-token prediction"
 redirect_from: /speculative-multitoken-decoding
 categories: ["Efficient Inference"]
-tags: ["LLM", "distillation", "speculative decoding", "multi-token prediction", "EAGLE", "Medusa"]
+tags: ["LLM", "knowledge distillation", "speculative decoding", "speculative sampling", "multi-token prediction", "EAGLE", "Medusa", "DFlash", "LayerSkip", "prompt lookup decoding"]
+description: "Knowledge distillation, speculative decoding and multi-token prediction for faster LLM inference: soft labels and temperature, the acceptance rate, Medusa, EAGLE, DFlash, LayerSkip and the MTP modules of DeepSeek-V3, with PyTorch code."
 ---
 
 In 2015, the paper [Distilling the Knowledge in a Neural Network](https://arxiv.org/abs/1503.02531) showed that the knowledge of a large model, or of an ensemble of models, can be transferred to a small model through their output probabilities. In 2022, [Leviathan et al.](https://arxiv.org/abs/2211.17192) used a small model to make a large one faster: the small model drafts a few tokens, and the large model verifies them in a single forward pass, without changing the distribution of its output.
 
-This post looks at [knowledge distillation](https://en.wikipedia.org/wiki/Knowledge_distillation), which trains a small model to behave like a large one, and at two techniques that generate several tokens per forward pass of the model, speculative decoding and multi-token prediction. In speculative decoding, the drafts come from a small model (ideally a distilled one), the context, extra heads, the features or early layers of the model, or a block [diffusion model](https://en.wikipedia.org/wiki/Diffusion_model). Multi-token prediction builds the drafter into the model during pre-training.
+This post looks at [knowledge distillation](https://en.wikipedia.org/wiki/Knowledge_distillation), which trains a small model to behave like a large one, and at two techniques that generate several tokens per forward pass of the model, [speculative decoding](https://en.wikipedia.org/wiki/Speculative_decoding) and multi-token prediction. In speculative decoding, the drafts come from a small model (ideally a distilled one), the context, extra heads, the features or early layers of the model, or a block [diffusion model](https://en.wikipedia.org/wiki/Diffusion_model). Multi-token prediction builds the drafter into the model during pre-training.
 
 Most methods come with a short PyTorch snippet, which assumes `import torch`, `import torch.nn as nn` and `import torch.nn.functional as F`. The models and the transformer blocks take an optional KV cache and return it, with the new tokens appended, together with their output.
+
+{::options toc_levels="2..3" /}
+
+* TOC
+{:toc}
 
 ## Knowledge distillation
 
@@ -42,7 +48,7 @@ The categories of knowledge distillation methods, and the branches within each c
 
 The teacher is a pre-trained model, and the student a smaller one, e.g., with fewer layers and a smaller embedding. The teacher is frozen: it runs in evaluation mode (no dropout), and its forward pass runs inside `torch.no_grad()`, so that no computation graph or gradients are created for it. At every training step, both models process the same batch, and the student learns to match the teacher's output distribution at every position of the sequence.
 
-The teacher's soft labels are computed on the fly instead of being stored on disk, where they would take batch size × sequence length × vocabulary size values per batch. Storing them only pays off when the teacher is too large to run next to the student (in that case, one usually stores only the top-k logits, together with the inputs they belong to).
+The teacher's soft labels are computed on the fly instead of being stored on disk, where they would take batch size × sequence length × vocabulary size values per batch. With a vocabulary of 128,000 tokens, as in Llama 3, the soft labels of a batch of 8 sequences of 2,048 tokens take 4.2 GB in [BF16](https://en.wikipedia.org/wiki/Bfloat16_floating-point_format). Those of one billion training tokens take about 256 TB. Storing them only pays off when the teacher is too large to run next to the student (in that case, one usually stores only the top-k logits, together with the inputs they belong to).
 
 The loss is the [Kullback-Leibler (KL) divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) between the teacher's distribution $$q$$ and the student's distribution $$p$$:
 
@@ -66,7 +72,9 @@ $$
 y_i (x \mid T) = \frac{ \exp\frac{z_i(x)}{T} }{ \sum_j \, \exp\frac{z_j(x)}{T} }
 $$
 
-A temperature above 1 flattens the distribution and reveals the relative probabilities of the unlikely tokens, which carry most of the extra information. Since the gradients of the softened loss scale with $$1/T^2$$, the loss is multiplied by $$T^2$$, as proposed by [Hinton et al.](https://arxiv.org/abs/1503.02531), so that the size of the gradients does not depend on the temperature.
+A temperature above 1 flattens the distribution and reveals the relative probabilities of the unlikely tokens, which carry most of the extra information. As an example, take a vocabulary of three tokens, *mat*, *sofa* and *moon*, and the logits (4, 2, 0) of the teacher after the context *The cat sat on the*. At $$T = 1$$, the softmax gives the probabilities (0.867, 0.117, 0.016), and *moon* contributes almost nothing to the loss. At $$T = 2$$, they become (0.665, 0.245, 0.090), and the two unlikely tokens get 33% of the probability instead of 13%. The student then also learns their relative probabilities, e.g. that *sofa* is a more plausible continuation than *moon*.
+
+Since the gradients of the softened loss scale with $$1/T^2$$, the loss is multiplied by $$T^2$$, as proposed by [Hinton et al.](https://arxiv.org/abs/1503.02531), so that the size of the gradients does not depend on the temperature.
 
 A common variant adds the regular cross entropy with the ground-truth labels, weighted by a smaller factor than the distillation loss. There are also claims that the [mean squared error](https://en.wikipedia.org/wiki/Mean_squared_error) between logits works better than the KL divergence ([Kim et al.](https://arxiv.org/abs/2105.08919)). For LLMs, recent methods also train the student on sequences it generated itself, scored by the teacher (*on-policy* distillation, [Agarwal et al.](https://arxiv.org/abs/2306.13649)), which removes the mismatch between the sequences seen in training and in generation.
 
@@ -105,27 +113,17 @@ def distillation_step(student, teacher, tokens, optimizer, temperature=2.0):
 #     loss = distillation_step(student, teacher, tokens, optimizer)
 ```
 
+The student runs faster than its teacher, as every forward pass reads fewer weights and performs fewer operations. However, it is a smaller model, which usually does not match the quality of its teacher. Speculative decoding, in the next section, keeps the output distribution of the large model, and uses a small model, such as the student, only to guess the next tokens.
+
 ## Speculative decoding: more than one token per forward pass
 
-### The idea
+### Drafting and verification
 
-Decode is memory-bound: a forward pass over one token costs about the same as a forward pass over a handful of tokens, because the time goes into reading the weights. **Speculative decoding**, inspired by the [speculative execution](https://en.wikipedia.org/wiki/Speculative_execution) of processors, exploits this. A cheap method *drafts* $$K$$ tokens, and the large *target* model checks all of them in a single forward pass. Every draft token the target agrees with is a token generated almost for free.
+Decode is memory-bound: a forward pass over one token costs about the same as a forward pass over a handful of tokens, because the time goes into reading the weights. As an example, an A100 GPU of 80 GB reads about 2 TB/s from its memory and computes 312 TFLOP/s in BF16 (from NVIDIA's data sheet). A model of 7 billion parameters in BF16 reads its 14 GB of weights in about 7 ms at every forward pass, while it computes one token, about 2 FLOPs per parameter, in 0.05 ms. A forward pass over 5 tokens therefore takes about the same 7 ms as over one token, and the computation only becomes the bottleneck at about 150 tokens (not counting the reads of the KV cache).
+
+**Speculative decoding**, inspired by the [speculative execution](https://en.wikipedia.org/wiki/Speculative_execution) of processors, exploits this. A cheap method, the **drafter**, *drafts* $$K$$ tokens, and the large **target model** checks all of them in a single forward pass. Every draft token that the target agrees with is a token generated almost for free.
 
 When the target disagrees, the tokens before the disagreement are kept, the target's own token is used at the disagreement, and drafting starts again. With the right acceptance rule, the output has exactly the same distribution as with the target model alone: speculative decoding is lossless.
-
-If each draft token is accepted independently with probability $$\alpha$$, the expected number of tokens produced per forward pass of the target model, including the target's own token after the last accepted draft, is:
-
-$$
-\frac{1 - \alpha^{K+1}}{1 - \alpha}
-$$
-
-Drafting is not free. If drafting one token costs a fraction $$c$$ of a forward pass of the target, and a verification costs about as much as a regular decoding step (decode is memory-bound), an iteration costs $$cK + 1$$ forward passes of the target. The expected speedup over decoding with the target alone is then given by (Theorem 3.8 in [Leviathan et al.](https://arxiv.org/abs/2211.17192)):
-
-$$
-\frac{1 - \alpha^{K+1}}{(1 - \alpha)(cK + 1)}
-$$
-
-The speedup therefore depends on how often the drafts are right and on how cheap they are. As an example, with $$\alpha = 0.8$$, $$K = 4$$ and $$c = 0.05$$, each forward pass of the target produces 3.36 tokens on average, and the speedup is 2.8. Speculative decoding helps most at small batch sizes, where decode is most memory-bound; at large batch sizes, the GPU is already busy, and the extra verification work competes with useful work. The methods below differ in where the drafts come from.
 
 ### Draft-model speculative decoding
 
@@ -153,6 +151,46 @@ The rule holds for any $$p$$, as long as it is the distribution the drafts were 
 
 {: .caption}
 The draft b is accepted with probability $$\min(1, q(b) / p(b)) = 0.3 / 0.5 = 0.6$$; otherwise, it is replaced by a or c, sampled from the residual.
+
+### Acceptance rate and speedup
+
+At a given position, the rule of speculative sampling accepts a draft $$x$$, sampled from $$p$$, with probability $$\min(1, q(x) / p(x))$$. Averaged over the tokens that the draft model may sample, a draft is accepted with probability (Theorem 3.5 in [Leviathan et al.](https://arxiv.org/abs/2211.17192)):
+
+$$
+\sum_x p(x) \min\left(1, \frac{q(x)}{p(x)}\right) = \sum_x \min\left(p(x), q(x)\right) = 1 - \text{TV}(p, q)
+$$
+
+where $$\text{TV}(p, q) = \frac{1}{2} \sum_x \vert p(x) - q(x) \vert$$ is the [total variation distance](https://en.wikipedia.org/wiki/Total_variation_distance_of_probability_measures) between the distributions of the draft model and of the target ($$D_{LK}$$ in the paper, which writes $$p$$ for the target and $$q$$ for the draft model). The average of this probability over the positions of a text is the **acceptance rate** $$\alpha$$ (Corollary 3.6 in the paper). It measures how close the draft model is to the target: the closer the two distributions, the more drafts are accepted. In the example above, a draft is accepted with probability $$0.1 + 0.3 + 0.2 + 0.1 + 0.1 = 0.8$$, and the total variation distance is 0.2. With greedy decoding, the acceptance rate is the probability that the most likely token of the draft model is also the most likely token of the target.
+
+The probability of a rejection, 0.2 in the example, is also the probability mass of the residual $$\max(0, q - p)$$ before it is normalized. This shows why the output is distributed exactly as $$q$$. A token $$x$$ comes out either as an accepted draft, with probability $$\min(p(x), q(x))$$, or as a replacement after a rejection, with probability $$\max(0, q(x) - p(x))$$, and the two add up to $$q(x)$$. In the example, the token *a* comes out with probability $$0.1 + 0.1 = 0.2 = q(a)$$, and the token *b* with probability $$0.3 + 0 = 0.3 = q(b)$$.
+
+If each draft token is accepted independently with probability $$\alpha$$, the first $$i$$ drafts are all accepted with probability $$\alpha^i$$. The expected number of tokens produced per forward pass of the target model, including the target's own token after the last accepted draft, is then the **acceptance length** (Eq. 1 in Leviathan et al.):
+
+$$
+1 + \alpha + \alpha^2 + \dots + \alpha^K = \frac{1 - \alpha^{K+1}}{1 - \alpha}
+$$
+
+Drafting is not free. If drafting one token costs a fraction $$c$$ of a forward pass of the target, and a verification costs about as much as a regular decoding step (decode is memory-bound), an iteration costs $$cK + 1$$ forward passes of the target. The expected speedup over decoding with the target alone is then given by (Theorem 3.8 in [Leviathan et al.](https://arxiv.org/abs/2211.17192)):
+
+$$
+\frac{1 - \alpha^{K+1}}{(1 - \alpha)(cK + 1)}
+$$
+
+The speedup therefore depends on how often the drafts are right and on how cheap they are. As an example, with the acceptance rate of the example above, $$\alpha = 0.8$$, $$K = 4$$ drafts and $$c = 0.05$$, each forward pass of the target produces 3.36 tokens on average, and the speedup is 2.8. More drafts bring less and less, as the acceptance length never exceeds $$1 / (1 - \alpha) = 5$$ tokens, however many tokens are drafted. With these values, the best speedup, 3.1, comes with $$K = 8$$ drafts: twice as many drafts for 10% more speed.
+
+Speculative decoding helps most at small batch sizes, where decode is most memory-bound; at large batch sizes, the GPU is already busy, and the extra verification work competes with useful work.
+
+The acceptance rate is where distillation comes in, with the draft model as the student and the target as its teacher. At every position, [Pinsker's inequality](https://en.wikipedia.org/wiki/Pinsker%27s_inequality) bounds the total variation distance by the KL divergence that the distillation loss minimizes, $$\text{TV}(p, q) \le \sqrt{D_{KL}(q \parallel p) / 2}$$, so that a draft is accepted with probability:
+
+$$
+\sum_x \min\left(p(x), q(x)\right) \ge 1 - \sqrt{\frac{D_{KL}(q \parallel p)}{2}}
+$$
+
+In practice, the closer the student is to its teacher in KL divergence, the higher the guaranteed acceptance rate of its drafts. In the example above, $$D_{KL}(q \parallel p) = 0.107$$ [nats](https://en.wikipedia.org/wiki/Nat_(unit)), which guarantees an acceptance probability of at least 0.77, for an actual 0.8.
+
+[DistillSpec](https://arxiv.org/abs/2310.08461) applies this idea: it distills the draft model from the target, and is 10 to 45% faster than standard speculative decoding, whose draft model is not distilled. As in on-policy distillation, it trains the draft model on its own sequences, and finds that the best divergence depends on the task and on the decoding method. The total variation distance, which the acceptance rate measures directly, is not the best loss in most of its experiments.
+
+### Implementing speculative decoding
 
 In a batch, each sequence accepts a different number of tokens, so the sequences progress at different speeds, and engines track their lengths separately, as in continuous batching.
 
@@ -253,7 +291,7 @@ def accept_sampling(drafts, p, q):
 
 ### Prompt lookup decoding
 
-[Prompt lookup decoding](https://github.com/apoorvumang/prompt-lookup-decoding) needs no draft model at all. It takes the last few generated tokens (an [n-gram](https://en.wikipedia.org/wiki/N-gram)), searches for the same n-gram earlier in the prompt or in the generated text, and proposes the tokens that followed it as drafts; the verification is the same as above. It costs almost nothing, and gives large speedups when the output copies from the input, as in summarization, code editing, question answering over documents, or rewriting a previous answer. Related methods draft from other sources: [lookahead decoding](https://arxiv.org/abs/2402.02057) collects n-grams from [Jacobi iterations](https://en.wikipedia.org/wiki/Jacobi_method) of the model itself, and [REST](https://arxiv.org/abs/2311.08252) retrieves continuations from a datastore of text.
+[Prompt lookup decoding](https://github.com/apoorvumang/prompt-lookup-decoding) needs no draft model at all. It takes the last few generated tokens (an [n-gram](https://en.wikipedia.org/wiki/N-gram)), searches for the same n-gram earlier in the prompt or in the generated text, and proposes the tokens that followed it as drafts; the verification is the same as above. It costs almost nothing, and its README reports speedups of 2 to 4 times when the output copies from the input, as in summarization, code editing, question answering over documents, or rewriting a previous answer. Related methods draft from other sources: [lookahead decoding](https://arxiv.org/abs/2402.02057) collects n-grams from [Jacobi iterations](https://en.wikipedia.org/wiki/Jacobi_method) of the model itself, and [REST](https://arxiv.org/abs/2311.08252) retrieves continuations from a datastore of text.
 
 In the following example, the last two tokens, *the cat*, also occur at the start of the text, so the four tokens that follow them there become the drafts:
 
@@ -396,7 +434,7 @@ def medusa_step(model, heads, tokens, kv_cache, next_token, head_logits, top_k=2
 
 [EAGLE-2](https://arxiv.org/abs/2406.16858) shapes the draft tree dynamically, expanding the branches where the draft model is confident. [EAGLE-3](https://arxiv.org/abs/2503.01840) (NeurIPS 2025) noticed that EAGLE barely improved with more training data, and traced this to its feature prediction objective. It drops feature prediction and predicts tokens directly, and fuses low-, mid- and high-level features of the target instead of the top layer only. It also uses *training-time test*: during training, the draft model is fed its own predictions, to simulate multi-step drafting.
 
-EAGLE-3 reaches speedups of up to 6.5 times, about 1.4 times more than EAGLE-2, and 1.38 times higher throughput at a batch size of 64 in SGLang. EAGLE-style drafting is supported by vLLM, SGLang and TensorRT-LLM. The following picture illustrates an EAGLE draft step, which combines the features of the target with the embeddings of the tokens one position ahead:
+EAGLE-3 reaches speedups of up to 6.5 times, about 1.4 times more than EAGLE-2, and 1.38 times higher throughput at a batch size of 64 in SGLang. The following picture illustrates an EAGLE draft step, which combines the features of the target with the embeddings of the tokens one position ahead:
 
 {: .picture}
 <img width="92.5%" height="92.5%" src="{{ site.assets }}/inference/imgs/eagle.svg"/>
@@ -451,7 +489,9 @@ def draft_with_features(drafter, features, tokens, n_drafts):
 
 ### DFlash
 
-[DFlash](https://arxiv.org/abs/2602.06036) (Chen, Liang and Liu, UC San Diego, ICML 2026) replaces the autoregressive drafter with a small *block diffusion* model. Autoregressive drafters such as EAGLE-3 need one forward pass per drafted token, so they are kept very shallow (a single transformer layer for EAGLE-3), which, according to the authors, limits their acceptance length and keeps practical speedups around 2-3 times. DFlash instead takes the last verified token, appends 15 mask tokens, and fills the whole block in a single forward pass, so its drafting cost barely grows with the block size (in the speedup formula above, $$cK$$ becomes about $$c$$). It can therefore afford a deeper drafter: a 5-layer DFlash fills a 16-token block faster than a 1-layer EAGLE-3 drafts 8 tokens, and gets more of them accepted.
+[DFlash](https://arxiv.org/abs/2602.06036) (Chen, Liang and Liu, UC San Diego, ICML 2026) replaces the autoregressive drafter with a small **block diffusion** model. A diffusion language model starts from a sequence of *mask* tokens and replaces them with text in a few denoising steps, at all positions in parallel. A block diffusion model ([Arriola et al.](https://arxiv.org/abs/2503.09573)) generates one block of tokens at a time, and the blocks follow each other from left to right, as in an autoregressive model. Inside a block, as in a diffusion model, the tokens attend to each other in both directions and are generated together.
+
+Autoregressive drafters such as EAGLE-3 need one forward pass per drafted token, so they are kept very shallow (a single transformer layer for EAGLE-3), which, according to the authors, limits their acceptance length and keeps practical speedups around 2-3 times. DFlash instead takes the last verified token, appends 15 mask tokens, and fills the whole block of 16 tokens in a single forward pass, so its drafting cost barely grows with the block size (in the speedup formula above, $$cK$$ becomes about $$c$$). It can therefore afford a deeper drafter: a 5-layer DFlash fills a 16-token block faster than a 1-layer EAGLE-3 drafts 8 tokens, and gets more of them accepted.
 
 A drafter this small predicts poorly on its own: without target features, a 5-layer diffusion drafter only reaches a speedup of about 2-3 times. DFlash therefore conditions it on the target. The hidden states of 5 target layers, spread from shallow to deep, are concatenated, projected, and injected into the keys and values of every draft layer, instead of only into the drafter's input as in EAGLE-3. As a result, the acceptance length keeps improving as draft layers are added.
 
@@ -467,7 +507,7 @@ The hidden states of 5 layers of the frozen target, spread from shallow to deep,
 
 On Qwen3-8B with greedy decoding, the paper reports about 6.5 tokens committed per verification step on average, and up to 6.1 times faster decoding than the baseline, about 2.5 times the speedup of EAGLE-3. The gains are largest on math and code, and smallest on open-ended chat (about 2.8 times). In SGLang on a B200, the speedup drops from about 4-5 times for a single request to about 2.4-2.8 times at 32 concurrent requests, as verifying 16-token blocks becomes compute-bound. Drafters trained on 4K-token contexts also lose acceptance on longer inputs, which a short long-context fine-tune recovers.
 
-Unlike multi-token prediction (below), which only helps models pre-trained with MTP modules, a DFlash drafter is trained after the fact against a frozen target, so it can be added to almost any model. However, at the time of writing its training recipe is not public, so in practice one uses the drafters released by [z-lab](https://github.com/z-lab/dflash), for Qwen3.5/3.6, gpt-oss, Gemma 4 and Kimi K2.5, among others. DFlash runs in vLLM and SGLang, with an MLX version for Apple Silicon.
+Unlike multi-token prediction (below), which only helps models pre-trained with MTP modules, a DFlash drafter is trained after the fact against a frozen target, so it can be added to almost any model. At the time of writing, its training recipe is not public, and the drafters in use are those released by its authors at [z-lab](https://github.com/z-lab/dflash).
 
 ### Self-speculative decoding: LayerSkip
 
@@ -530,11 +570,11 @@ class LayerSkip(nn.Module):
 # tokens = generate_speculative(model, prompt, n_tokens, DraftModel(early_exit), n_drafts=4)
 ```
 
-### Multi-token prediction
+## Multi-token prediction
 
-**Multi-token prediction** (MTP) trains the model itself, during pre-training, to predict several future tokens at every position, instead of only the next one. This has two benefits. During training, every position gets a denser learning signal, which can improve the representations learned by the model. At inference, the extra predictions are drafts: the model drafts for itself, without a separate draft model, and the verification is the same as in speculative decoding.
+Next-token prediction trains a model to predict, at every position, only the token that follows. **Multi-token prediction** (MTP) trains the model itself, during pre-training, to predict several future tokens at every position. This has two benefits. During training, every position gets a denser learning signal, which can improve the representations learned by the model. At inference, the extra predictions are drafts: the model drafts for itself, without a separate draft model, and the verification is the same as in speculative decoding.
 
-#### Parallel heads
+### Parallel heads
 
 [Gloeckle et al.](https://arxiv.org/abs/2404.19737) (Meta, 2024) add $$n$$ output heads on top of a shared trunk. The trunk $$f_s$$ computes a representation $$z_t = f_s(x_{1:t})$$ of the context, and head $$i$$, a transformer layer $$f_{h_i}$$ followed by the unembedding $$f_u$$ shared by all heads, predicts the token $$i$$ positions ahead:
 
@@ -548,7 +588,7 @@ $$
 L_n = - \sum_t \sum_{i=1}^{n} \log P_\theta(x_{t+i} \mid x_{1:t})
 $$
 
-As the vocabulary is large, holding the logits of all heads at once would dominate the memory of training. Instead, after the forward pass of the trunk, the forward and backward passes of the heads run one after the other, accumulating their gradients at the output of the trunk. This way, only the logits of one head are in memory at a time.
+As the vocabulary is large, holding the logits of all heads at once would dominate the memory of training. For a batch of 8 sequences of 2,048 tokens and a vocabulary of 128,000 tokens, the logits of 4 heads take 16.8 GB in BF16, and their gradients as much again. Instead, after the forward pass of the trunk, the forward and backward passes of the heads run one after the other, accumulating their gradients at the output of the trunk. This way, only the logits of one head, 4.2 GB in the example, are in memory at a time.
 
 The benefits grow with the model size, and small models can even get worse: the 13B model of the paper solves 12% more problems on HumanEval and 17% more on MBPP than a comparable next-token model. At inference, the extra heads are drafts for self-speculative decoding, making a model trained to predict 4 tokens up to 3 times faster. However, as in Medusa, each head predicts its token without seeing the tokens predicted by the other heads. The architecture with four heads is displayed below:
 
@@ -592,7 +632,7 @@ class MultiTokenHeads(nn.Module):
         return total
 ```
 
-#### Sequential modules
+### Sequential modules
 
 [DeepSeek-V3](https://arxiv.org/abs/2412.19437) predicts the extra tokens *sequentially* instead, keeping the complete causal chain at each prediction depth. It adds $$D$$ MTP modules, where module $$k$$ has its own transformer block $$\text{TRM}_k$$ and projection matrix $$M_k$$, and shares the embedding layer and the output head with the main model. For the token at position $$i$$, module $$k$$ combines the representation $$h_i^{k-1}$$ of the previous depth (the output of the main model, for $$k=1$$) with the embedding of the token $$t_{i+k}$$ (Eq. 21 in the paper):
 
@@ -659,22 +699,22 @@ def mtp_loss(modules, h, tokens, lam=0.3):
 # propose = lambda tokens, k: draft_with_features(module, features(tokens[:, :-1]), tokens[:, 1:], k)
 ```
 
-#### Drafting with MTP modules
+### Drafting with MTP modules
 
 With a single module, the model drafts one extra token per forward pass. To draft more tokens, inference engines run the same module again on its own output hidden state and draft token, as with EAGLE. However, the module was only trained to look one token ahead, so the acceptance drops for the later drafts.
 
 SGLang serves DeepSeek-V3 and R1 this way, with their MTP module (called NextN) as the drafter. In a deployment of DeepSeek-V3 on 16 H200 GPUs, [LMSYS](https://www.lmsys.org/blog/2025-07-17-mtp) reported an average acceptance length of 2.18 tokens with a 3-token MTP window, and of 2.44 tokens with a 4-token window.
 
-Other models train more modules for inference. [MiMo-7B](https://arxiv.org/abs/2505.07608) (Xiaomi) uses a single MTP layer during pre-training, as more layers did not help, and then copies it to fine-tune two more MTP layers, with the main model and the first MTP layer frozen. On AIME24, the drafts of the first MTP layer are accepted about 90% of the time, and those of the third layer more than 75%. Native MTP modules are now common in recent models, such as Qwen3-Next and Qwen3.5: vLLM uses them as drafters, and its [speculators](https://docs.vllm.ai/projects/speculators/en/latest/user_guide/algorithms/mtp/) library can fine-tune them for multi-step drafting.
+Other models train more modules for inference. [MiMo-7B](https://arxiv.org/abs/2505.07608) (Xiaomi) uses a single MTP layer during pre-training, as more layers did not help, and then copies it to fine-tune two more MTP layers, with the main model and the first MTP layer frozen. On AIME24, the drafts of the first MTP layer are accepted about 90% of the time, and those of the third layer more than 75%. Models such as Qwen3-Next also ship with native MTP modules, and the [speculators](https://docs.vllm.ai/projects/speculators/en/latest/user_guide/algorithms/mtp/) library of vLLM can fine-tune them for multi-step drafting.
 
 Medusa, EAGLE and DFlash add a drafter to an existing model, and LayerSkip trains the model so that its own early layers can draft. MTP builds the drafter in during pre-training: its drafts are cheap and accurate, and it may even improve the model, but only models pre-trained with it can use it.
 
-### Summary of speculative decoding methods
+## Summary of speculative decoding methods
 
 | Method | Source of the drafts | Extra training | Extra memory | Reported speedup |
 |---|---|---|---|---|
 | Draft model | a separate small model | none, or distilling a draft | a second model | about 2-3x |
-| Prompt lookup | n-grams of the context | none | none | large on copy-heavy tasks |
+| Prompt lookup | n-grams of the context | none | none | 2-4x on copy-heavy tasks |
 | Medusa | extra heads | the heads (or joint fine-tuning) | small | 2.2-3.6x |
 | EAGLE-3 | a feature-level draft layer | the draft layer | small | up to 6.5x |
 | DFlash | a block-diffusion drafter conditioned on the target's hidden states | the drafter (target frozen) | small (a few layers) | over 6x, about 2.5x EAGLE-3's speedup |
@@ -682,6 +722,8 @@ Medusa, EAGLE and DFlash add a drafter to an existing model, and LayerSkip train
 | Multi-token prediction | the model's own MTP heads (parallel) or modules (sequential) | pre-training | small (about 2% of DeepSeek-V3) | 1.8x (DeepSeek-V3) to 3x |
 
 The reported speedups come from the respective papers, with different models, tasks and hardware, and they shrink as the batch size grows. All these methods are lossless, except Medusa with typical acceptance.
+
+In practice, the choice of a method depends on what is available. A model pre-trained with MTP modules, such as DeepSeek-V3, drafts with them. For other models, prompt lookup costs nothing and helps when the output copies from the input, and a draft model needs a smaller model of the same family, with the same tokenizer. Medusa adds simple heads, but their independent guesses are accepted less often than the drafts of EAGLE-3 or DFlash, which give the highest reported speedups for a small extra memory. LayerSkip needs no extra memory, but the model must be trained or fine-tuned with layer dropout and the early exit loss.
 
 To find more about the topic, the survey [Unlocking Efficiency in Large Language Model Inference: A Comprehensive Survey of Speculative Decoding](https://arxiv.org/abs/2401.07851) reviews the methods of drafting and verification. Its benchmark, Spec-Bench, compares the draft model, prompt lookup, lookahead decoding, REST, Medusa and EAGLE on the same model and device.
 

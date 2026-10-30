@@ -2,12 +2,13 @@
 layout: post
 title:  "Numerical Simulation of Detailed Neuron Models"
 categories: ["Computational Neuroscience"]
-tags: ["Hodgkin-Huxley", "cable theory", "NEURON", "numerical methods", "simulation"]
+tags: ["Hodgkin-Huxley", "cable theory", "NEURON", "numerical methods", "simulation", "compartmental model", "Hines solver", "Euler method", "Crank-Nicolson method"]
+description: "How detailed neuron models are simulated: the cable equation of a compartmental neuron, Hodgkin-Huxley ion channels, the Hines solver for branched trees, and Euler and Crank-Nicolson time stepping in NEURON."
 ---
 
 [number-of-neurons]: https://en.wikipedia.org/wiki/List_of_animals_by_number_of_neurons
 
-Neurons are very complex structures of the human body that govern behaviour, pain, feelings, motion, and most factors that affect human life. The human brain has approximately $$8.6 \times 10^{10}$$ neurons, connected by $$1.5 \times 10^{14}$$ synapses. For the sake of comparison, the larva of the sea squirt *Ciona intestinalis* has 231 neurons, mice have approximately $$71$$ million neurons, and the African elephant has almost three times as many neurons as humans, with $$25.7 \times 10^{10}$$ neurons. The Wikipedia entry [List of animals by number of neurons][number-of-neurons] gives a longer list of neuron counts per animal.
+Neurons are very complex structures of the human body that govern behavior, pain, feelings, motion, and most factors that affect human life. The human brain has approximately $$8.6 \times 10^{10}$$ neurons, connected by $$1.5 \times 10^{14}$$ synapses. For the sake of comparison, the larva of the sea squirt *Ciona intestinalis* has 231 neurons, mice have approximately $$71$$ million neurons, and the African elephant has almost three times as many neurons as humans, with $$25.7 \times 10^{10}$$ neurons. The Wikipedia entry [List of animals by number of neurons][number-of-neurons] gives a longer list of neuron counts per animal.
 
 The brain can be studied at many scales, as illustrated in the picture below. At the largest scale, the brain is divided into regions, each with a different role (a), and each region is made of many neurons. A neuron is a cell with a body, many branched dendrites that receive signals, and a long axon that sends signals to other neurons (b). Neurons pass signals to each other through [synapses](https://en.wikipedia.org/wiki/Synapse), where chemical messengers cross a small gap between two cells (c).
 
@@ -19,9 +20,11 @@ At the smallest scale, [ion channels](https://en.wikipedia.org/wiki/Ion_channel)
 {: .caption}
 The scales of the brain: (a) brain regions, (b) neuron, (c) synapse, and (d) ion channels in the neuron membrane. Adapted from: Mariana Villarreal (LadyofHats), Wikimedia Commons; and Blausen.com staff, [Medical gallery of Blausen Medical 2014, WikiJournal of Medicine](https://doi.org/10.15347/wjm/2014.010)
 
-Due to the very sophisticated anatomical structure and behaviour of neurons, numerical methods are used to approximate neuron models and simulate the electrical activity of neural networks. This post focuses on the electrical activity at the level of the neuron: how the flow of ions changes the membrane voltage, and how it is simulated with the numerical methods of the NEURON simulator.
+Due to the very sophisticated anatomical structure and behavior of neurons, numerical methods are used to approximate neuron models and simulate the electrical activity of neural networks. Detailed neuron models go back to 1952, when Hodgkin and Huxley described with differential equations how sodium and potassium currents through the membrane of a nerve cell create its spikes.
 
-### Levels of Detail in Brain Simulation
+This post focuses on the electrical activity at the level of the neuron: how the flow of ions changes the membrane voltage, and how the cable theory turns a branched neuron into a tree of small compartments. It then shows how the NEURON simulator solves the resulting equations, with the Hines solver for the tree and with the Euler and Crank-Nicolson methods for the time steps.
+
+## Levels of Detail in Brain Simulation
 
 [lif-post]: {{ site.baseurl }}{% post_url 2016-02-08-lif-brunel %}
 
@@ -41,22 +44,26 @@ Levels of detail in brain simulation. Each red outline marks the part that the n
 
 Most simulators support only point neurons, with LIF or simple [Hodgkin-Huxley](https://en.wikipedia.org/wiki/Hodgkin%E2%80%93Huxley_model) dynamics. These models run the same few equations on every neuron, and are therefore well suited to vector ([SIMD](https://en.wikipedia.org/wiki/Single_instruction,_multiple_data)) architectures. Compartmental models are harder to simulate, as each neuron is a tree of compartments with many types of ion channels, and each compartment depends on its neighbors. In practice, point neurons are used to simulate large networks, and compartmental models when the morphology and the ion channels of each neuron matter.
 
+## The Compartmental Neuron Model
+
 ### Hodgkin-Huxley Model and Cable Theory
 
 [hodgkin1952quantitative]: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1392413/
 [cable-theory]: http://www.scholarpedia.org/article/Neuronal_cable_theory
 
-The Hodgkin-Huxley (HH) model ([A. L. Hodgkin and A. F. Huxley, 1952][hodgkin1952quantitative]), derived from measurements on the [giant axon of the squid](https://en.wikipedia.org/wiki/Squid_giant_axon), is built on several assumptions that disregard various features of the living cell. It reduces the multidimensional complexity of the propagation and interaction of electrical signals in spatially extended nerve cells to a set of one-dimensional constraints. These constraints fit the [Cable Theory][cable-theory], a mathematical model that describes the changes in electric current and voltage along passive neurites.
+The Hodgkin-Huxley (HH) model ([A. L. Hodgkin and A. F. Huxley, 1952][hodgkin1952quantitative]), derived from measurements on the [giant axon of the squid](https://en.wikipedia.org/wiki/Squid_giant_axon), is built on several assumptions that disregard various features of the living cell. It reduces the multidimensional complexity of the propagation and interaction of electrical signals in spatially extended nerve cells to a set of one-dimensional constraints. These constraints fit the [cable theory][cable-theory], a mathematical model that describes the changes in electric current and voltage along passive neurites.
 
-A neuron's membrane is formed by a [phospholipid bilayer](https://en.wikipedia.org/wiki/Lipid_bilayer), a dielectric material that acts as a leaky capacitor. The cytoplasm inside the neurite (a part of a dendrite or axon) is considered to be an excellent ohmic conductor, and the voltage within its membrane is assumed to be constant over each cross-section. The neurites are considered to be long and thin, so that the voltage is assumed to vary much more along the long axis of the neural process than perpendicular to it. Therefore, the diffusion of ions along the membrane surface and the dynamics of current perpendicular to the membrane inside the neurite are deemed irrelevant.
+A neuron's membrane is formed by a [phospholipid bilayer](https://en.wikipedia.org/wiki/Lipid_bilayer), a dielectric material that acts as a leaky capacitor. The cytoplasm inside the neurite (a part of a dendrite or axon) is considered to be an ohmic conductor with a constant resistivity. The neurites are considered to be long and thin, so that the voltage varies much more along the long axis of the neural process than perpendicular to it, and is assumed to be constant over each cross-section. Therefore, the diffusion of ions along the membrane surface and the dynamics of current perpendicular to the membrane inside the neurite are deemed irrelevant.
 
 The neuron morphology is simplified to a branched tree of interconnected neurites, each short enough to accept that the voltage across it is constant. External to the neuron's morphology, certain mechanisms lead to electrical and chemical reactions that affect the potential of each individual capacitor. These mechanisms are typically gating channels, and allow the in/outflux of molecules (ions) that depolarize or hyperpolarize the membrane accordingly.
 
-Other important mechanisms are the synapses, which represent the interneural connections of the circuit. Synapses can drive the post-synaptic membrane potential upwards or downwards based on the excitatory or inhibitory properties of the pre-synaptic cell. Spikes are initiated when the potential of a membrane hits a particular [Action Potential](https://en.wikipedia.org/wiki/Action_potential) (AP) threshold, and are characterized by a stiff change of membrane potential.
+### Synapses and Action Potentials
 
-The lowest AP threshold on a neuron is typically at the beginning of the axon (the [Axon Initial Segment](https://en.wikipedia.org/wiki/Axon#Axonal_initial_segment)), where spikes are first initiated. Other APs may happen throughout the axonal arborization as a current propagation mechanism. Spikes are driven by a fast influx of Sodium ($$Na^+$$) ions, and by the slow outflux of Potassium ($$K^+$$) ions. The chloride ($$Cl^-$$) conductance helps to bring the membrane potential back to the rest state following an activation.
+Besides the gating channels, other important mechanisms are the synapses, which represent the interneural connections of the circuit. Synapses can drive the postsynaptic membrane potential upwards or downwards based on the excitatory or inhibitory properties of the presynaptic cell. Spikes are initiated when the potential of a membrane hits a particular [action potential](https://en.wikipedia.org/wiki/Action_potential) (AP) threshold, and are characterized by a steep change of membrane potential.
 
-Several other mechanisms, such as gap junctions ([electrical synapses](https://en.wikipedia.org/wiki/Electrical_synapse)), extracellular space mechanisms, or [second messengers](https://en.wikipedia.org/wiki/Second_messenger_system), also exist. In the cable approximation model, the complexity of these mechanisms is reduced to the measurement of their ionic conductance. When the conductance of these molecules is constant, it is called a **leak** (passive) conductance. A compartment in ionic equilibrium, i.e. where the influx and outflux of ions cause no variation of its potential, is said to be at its **[reversal potential](https://en.wikipedia.org/wiki/Reversal_potential)**.
+The lowest AP threshold on a neuron is typically at the beginning of the axon (the [axon initial segment](https://en.wikipedia.org/wiki/Axon#Axonal_initial_segment)), where spikes are first initiated. Other APs may happen throughout the axonal arborization as a current propagation mechanism. Spikes are driven by a fast influx of sodium ($$Na^+$$) ions, and by the slow outflux of potassium ($$K^+$$) ions. The chloride ($$Cl^-$$) conductance helps to bring the membrane potential back to the rest state following an activation.
+
+Several other mechanisms, such as gap junctions ([electrical synapses](https://en.wikipedia.org/wiki/Electrical_synapse)), extracellular space mechanisms, or [second messengers](https://en.wikipedia.org/wiki/Second_messenger_system), also exist. In the cable approximation model, the complexity of these mechanisms is reduced to the measurement of their ionic conductance. When the conductance of these molecules is constant, it is called a **leak** (passive) conductance. The **[reversal potential](https://en.wikipedia.org/wiki/Reversal_potential)** of an ion is the membrane potential at which its current changes direction: there, the influx and outflux of this ion balance, and its net current is zero. A compartment in which the currents of all ions add up to zero, so that its potential does not vary, is at its **[resting potential](https://en.wikipedia.org/wiki/Resting_potential)**.
 
 Once a stimulus brings the membrane potential above the threshold, the potential rises steeply, then falls below its resting value, before it returns to rest. This voltage trajectory of a spike is illustrated in the following picture:
 
@@ -66,9 +73,13 @@ Once a stimulus brings the membrane potential above the threshold, the potential
 {: .caption}
 The voltage trajectory during an action potential (spike). Adapted from: [OpenStax, Anatomy and Physiology, Fig. 12.24](https://openstax.org/books/anatomy-and-physiology/pages/12-4-the-action-potential)
 
-### Mathematical Basis
+### The Cable Equation
 
-The application of cable theory to the calculation of electrical signaling throughout neurons reduces the activity of a neuron compartment to a second-order [partial differential equation](https://en.wikipedia.org/wiki/Partial_differential_equation) that governs the change of axial current with time and distance. It models the relationship between current and voltage as a one-dimensional cable, described by the **cable equation**:
+The cable theory treats a neurite as an electrical circuit. Each short piece of the neurite is an RC circuit. Its membrane is a capacitor, charged by the currents that flow into the piece, and its ion channels are resistors, through which part of these currents leaks out of the cell. The cytoplasm joins each piece to its neighbors through an axial resistance. Thus, a current injected at one point charges the membrane there, and spreads along the neurite while it leaks out through the membrane.
+
+Two constants describe this behavior. The **membrane time constant** $$\tau_m$$ is the time in which the voltage of the membrane decays to 37% ($$1/e$$) of its initial value. The **[length constant](https://en.wikipedia.org/wiki/Length_constant)** (or space constant) $$\lambda$$ is the distance over which a steady voltage decays to 37% of its value. As an example, chapter 5 of [The NEURON book][neuron-book] considers a dendrite of 1 µm diameter, with a specific membrane resistance of 16,000 Ω cm², a specific membrane capacitance of 1 µF/cm² and a cytoplasmic resistivity of 180 Ω cm. Its membrane time constant is $$\tau_m = 16$$ ms, and its length constant is $$\lambda \approx 0.5$$ mm.
+
+The application of cable theory to the calculation of electrical signaling throughout neurons reduces the activity of a neurite to a second-order [partial differential equation](https://en.wikipedia.org/wiki/Partial_differential_equation) that governs the change of its membrane potential with time and distance. It models the relationship between current and voltage as a one-dimensional cable, described by the **cable equation**:
 
 $$
 \frac{\partial V}{\partial T} + F(V) = \frac{\partial^2 V}{\partial X^2}.
@@ -93,7 +104,7 @@ where $$i_a$$ is the axial current [mA] flowing through the compartment's region
 {: .caption}
 The net current entering a region, bounded by the membrane (blue) and the thin black lines, is zero: the axial currents $$i_a$$ balance the membrane current $$i_m$$. Adapted from: [Hines and Carnevale (1997), The NEURON simulation environment, Fig. 3.1](https://neuron.yale.edu/neuron/static/papers/nc97/nc3p1.htm)
 
-A common assumption is that a neuron is spatially divided into small compartments, at most $$40 \, \mu m$$ long in the cell models of the [Blue Brain Project](https://en.wikipedia.org/wiki/Blue_Brain_Project). The spatially varying $$i_m$$ in any compartment $$j$$ is then well approximated by its value at the center, therefore
+A common assumption is that a neuron is spatially divided into small compartments, at most $$40 \, \mu m$$ long in the cell models of the [Blue Brain Project](https://en.wikipedia.org/wiki/Blue_Brain_Project). For the dendrite of the example above, this is less than a tenth of its length constant, so that a steady voltage falls by about 8% along a compartment. The spatially varying $$i_m$$ in any compartment $$j$$ is then well approximated by its value at the center, therefore
 
 $$
 \int_A i_{m_j} dA_j = i_{m_j} A_j = \sum_k i_{a_{kj}}
@@ -133,7 +144,7 @@ C_m \frac{dv_j}{dt}+i_{ion_j} (v_j, t) = \frac{d}{4R_a} \frac{v_{j+1} - 2 v_j + 
 \label{equation347_neuronbook}
 $$
 
-If the discretization variable is assumed to be small enough, i.e. $$\Delta x \rightarrow 0$$, using [finite differences](https://en.wikipedia.org/wiki/Finite_difference) the first derivative at the point $$j$$ is given by $$\frac{v_j - v_{j-1}}{\Delta x}$$ and $$\frac{v_{j+1} - v_j}{\Delta x}$$, and the second-order correct approximation of the second derivative by
+If the discretization variable is assumed to be small enough, i.e. $$\Delta x \rightarrow 0$$, the derivatives are approximated by [finite differences](https://en.wikipedia.org/wiki/Finite_difference). The first derivatives at the midpoints $$j - 1/2$$ and $$j + 1/2$$, between the point $$j$$ and its neighbors, are given by $$\frac{v_j - v_{j-1}}{\Delta x}$$ and $$\frac{v_{j+1} - v_j}{\Delta x}$$, and the second-order correct approximation of the second derivative at the point $$j$$ by their difference divided by $$\Delta x$$:
 
 $$
 \frac{\partial^2v}{\partial x^2} = \left( \frac{v_{j+1} - v_j}{\Delta x} - \frac{v_j - v_{j-1}}{\Delta x} \right) \frac{1}{\Delta x} = \frac {v_{j+1} - 2v_j + v_{j-1}}{ \Delta x^2}
@@ -154,7 +165,7 @@ R_m C_m \frac{dv_j}{dt} + v = \frac{d R_m}{4R_a} \frac{\partial^2v}{\partial x^2
 \label{equation349_neuronbook}
 $$
 
-By substituting $$t = T \tau$$ and $$x = X \lambda$$, equation \ref{equation349_neuronbook} is scaled to the time constant $$\tau = R_m C_m$$ and the [space constant](https://en.wikipedia.org/wiki/Length_constant) (or length constant) $$\lambda = (1/2) \sqrt{d R_m / R_a}$$, leading to the final formulation in the form of the Cable equation \ref{equation338_neuronbook}.
+By substituting $$t = T \tau_m$$ and $$x = X \lambda$$, equation \ref{equation349_neuronbook} is scaled to the membrane time constant $$\tau_m = R_m C_m$$ and the length constant $$\lambda = (1/2) \sqrt{d R_m / R_a}$$, leading to the final formulation in the form of the cable equation \ref{equation338_neuronbook}.
 
 ### Ionic Currents
 
@@ -164,7 +175,13 @@ $$
 \sum_k I_k = g_{Na} m^3 h (v - E_{Na}) + g_K n^4 (v - E_K) + g_L (v - E_L)
 $$
 
-where $$v$$ is the membrane potential, $$E$$ represents the reversal potentials and $$m$$, $$n$$ and $$h$$ the gating variables (see the original HH paper for details of the individual ODEs and reported values). The leak generalizes any other voltage-independent conductance and is represented by $$L$$.
+where $$v$$ is the membrane potential, $$E$$ represents the reversal potentials, $$m$$, $$n$$ and $$h$$ the gating variables, and $$L$$ the leak, which generalizes any other voltage-independent conductance. Each gating variable is a probability between 0 and 1 (that a gate of its channel is open), and follows a first-order ODE, given for the potassium gate $$n$$ by:
+
+$$
+\frac{dn}{dt} = \alpha_n(v) \, (1 - n) - \beta_n(v) \, n
+$$
+
+where $$\alpha_n(v)$$ and $$\beta_n(v)$$ are the voltage-dependent rates at which the gate opens and closes, and similarly for $$m$$ and $$h$$ (see the original HH paper for details of the individual ODEs and reported values). For a fixed voltage, $$n$$ relaxes exponentially towards its steady state $$\alpha_n / (\alpha_n + \beta_n)$$, with a time constant $$1 / (\alpha_n + \beta_n)$$.
 
 [channelpedia]: https://channelpedia.epfl.ch/
 
@@ -182,7 +199,7 @@ where each channel type $$i$$ has a maximum conductance $$g_i$$, a gating term $
 {: .caption}
 The electrical circuit of one compartment. The membrane is the capacitor $$C$$. Each ion channel is a resistor $$R$$ in series with a battery $$E$$, its reversal potential. Arrows mark gated channels, whose resistance changes over time. The leak $$L$$ has a constant resistance. $$I$$ is the total current through the membrane
 
-### Reversal Potential
+### Reversal and Resting Potentials
 
 The reversal potential for a particular ion flux in a compartment is given by the [Nernst equation](https://en.wikipedia.org/wiki/Nernst_equation)
 
@@ -196,7 +213,7 @@ where $$\text{[ion]}_{out}$$ and $$\text{[ion]}_{in}$$ denote the ionic concentr
 - $$E_{Na^+}=66 mV$$ with $$[Na^+]_{in}=12 mM$$ and $$[Na^+]_{out}=145 mM$$; and
 - $$E_{Ca^{2+}}=122 mV$$ with $$[Ca^{2+}]_{in}=0.1 \mu M$$ and $$[Ca^{2+}]_{out}=1 mM$$.
 
-The reversal potential of a typical HH compartment with $$Na^+$$, $$K^+$$ and $$Cl^-$$ ion channels, i.e. its [resting membrane potential](https://en.wikipedia.org/wiki/Resting_potential), is given by the [Goldman–Hodgkin–Katz voltage equation](https://en.wikipedia.org/wiki/Goldman_equation) as:
+The resting potential of a typical HH compartment with $$Na^+$$, $$K^+$$ and $$Cl^-$$ ion channels, where the currents of the three ions add up to zero, is given by the [Goldman–Hodgkin–Katz voltage equation](https://en.wikipedia.org/wiki/Goldman_equation) as:
 
 $$
 V = \frac{RT}{F} \ln \frac{P_{Na} [Na^+]_{out} + P_{K} [K^+]_{out} + P_{Cl} [Cl^-]_{in}} {P_{Na} [Na^+]_{in} + P_{K} [K^+]_{in} + P_{Cl} [Cl^-]_{out}}
@@ -204,11 +221,9 @@ $$
 
 where $$P_{Na}$$, $$P_{K}$$ and $$P_{Cl}$$ are the permeabilities of the membrane to each ion. With the concentrations above and the permeability ratio $$P_K : P_{Na} : P_{Cl} = 1 : 0.04 : 0.45$$ of the resting squid giant axon ([Hodgkin and Katz, 1949](https://pmc.ncbi.nlm.nih.gov/articles/PMC1392331/)), the resting potential is about $$-75 mV$$.
 
-### Boundary Conditions 
+### Boundary Conditions and Branching Points
 
-A neurite with a *free* ending point follows a [Neumann boundary condition](https://en.wikipedia.org/wiki/Neumann_boundary_condition) (which specifies the value of the normal derivative of the function at the boundary) of the form $$\frac{\partial v}{\partial x}=0$$, i.e. no current flows through the terminal of a cable.
-
-### Branching Points
+A neurite with a *free* (or sealed) ending point follows a [Neumann boundary condition](https://en.wikipedia.org/wiki/Neumann_boundary_condition) (which specifies the value of the normal derivative of the function at the boundary) of the form $$\frac{\partial v}{\partial x}=0$$, i.e. no current flows through the terminal of a cable.
 
 Branching points are modeled as *idealized* portions of the neurite that do not have membrane properties yet have axial current. Spatial discretization is equivalent to reducing the spatially distributed neuron to a set of connected compartments, and results in a set of ordinary differential equations that respect [Kirchhoff's current law](https://en.wikipedia.org/wiki/Kirchhoff%27s_circuit_laws). Kirchhoff's current law, based on the principle of conservation of electric charge, states that the sum of currents entering any junction is equal to the sum of currents leaving that junction.
 
@@ -231,7 +246,7 @@ Most equations that govern brain mechanisms do not have an analytic solution. Th
 
 Due to the unique morphology of a cable model representation of a discretized neuron, NEURON implements an optimized linear solver for bifurcated trees, called the **Hines Algorithm** ([Efficient computation of branched nerve equations, Hines, Elsevier, 1984][hines1984efficient]). Data is represented as a sparse matrix ([tridiagonal](https://en.wikipedia.org/wiki/Tridiagonal_matrix), except for the entries of the branching points) where the indices of the parent nodes (the ones immediately above in the tree structure) are provided by an extra vector $$p$$.
 
-The coefficient of the membrane potential of each compartment in its own equation is represented by the main diagonal. The contributions from a parent to its children compartments (and vice versa) are represented by all cells on the same row (column) of the upper (lower) triangle of the matrix. As each compartment can have only one parent, this enforces only one cell per row on the lower triangle, and one cell per column on the upper triangle. For completeness, the following pictures present a neuron's dendritic arborization spatially discretized based on the cable model (left) and its sparse matrix representation according to the Hines algorithm (right).
+The coefficient of the membrane potential of each compartment in its own equation is represented by the main diagonal. The compartments are numbered so that each one has a greater index than its parent. Thus, the voltages of the children in the equation of their parent are represented by the cells on the parent's row in the upper triangle of the matrix. The voltage of the parent in the equation of each child is represented by the cell on the parent's column in the lower triangle. As each compartment can have only one parent, this enforces only one cell per row on the lower triangle, and one cell per column on the upper triangle. For completeness, the following pictures present a neuron's dendritic arborization spatially discretized based on the cable model (left) and its sparse matrix representation according to the Hines algorithm (right).
 
 {: .picture}
 <img width="44.1%" height="44.1%" src="{{ site.assets }}/neuron-electrical-activity/solver_compartment_neuron.svg"> <img width="34.2%" height="34.2%" src="{{ site.assets }}/neuron-electrical-activity/solver_grid_neuron.svg">
@@ -239,7 +254,11 @@ The coefficient of the membrane potential of each compartment in its own equatio
 
 In the pictures above, compartments 6 and 9 start new branches, so the entries that link them to their parents, 2 and 1, lie outside the three diagonals of the matrix (joined to the diagonal by dashed lines).
 
-The main rationale behind the Hines algorithm is that the compartments can be numbered sequentially, so that each one has an index greater than its parent's. The computational complexity of the solver is then reduced from the $$O(n^3)$$ of a typical [Gaussian elimination](https://en.wikipedia.org/wiki/Gaussian_elimination) to $$O(n)$$. Given a tridiagonal matrix with vectors $$D$$ (main diagonal), $$b$$ (lower diagonal) and $$a$$ (upper diagonal), representing a single cable without branching, it can be shown that the Hines algorithm is an inverted Gaussian elimination adapted for branched structures:
+The main rationale behind the Hines algorithm is that the compartments can be numbered sequentially, so that each one has an index greater than its parent's. The elimination then works as the [Thomas algorithm](https://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm), the Gaussian elimination of a tridiagonal matrix, but runs from the leaves of the tree to its root. The equation of a leaf compartment holds only its own voltage and the voltage of its parent. It is used to eliminate the leaf's voltage from the equation of the parent, which leaves a tree with one compartment less ([Hines and Carnevale, 1997, section 3.3.1](https://neuron.yale.edu/neuron/static/papers/nc97/nc3p3.htm)). Each elimination changes only the diagonal and the right-hand side of the parent's row, and creates no **fill-in**, i.e. no new nonzero entry in the matrix. Once the root is reached, its voltage is computed, and the voltages are substituted back from the root to the leaves.
+
+For the tree of the pictures above, the elimination runs from compartment 12 down to compartment 1, and compartments 9 and 6 update the rows of their parents 1 and 2, without any new entry. An elimination that started at the root would instead couple the branches below each branch point, and create 20 new nonzero entries in this matrix. As each elimination takes a fixed number of operations, the computational complexity of the solver for a tree of $$N$$ compartments is reduced from the $$O(N^3)$$ of a typical [Gaussian elimination](https://en.wikipedia.org/wiki/Gaussian_elimination) to $$O(N)$$. This is the same number of operations as for an unbranched cable with the same number of compartments.
+
+Given a tridiagonal matrix with vectors $$D$$ (main diagonal), $$b$$ (lower diagonal) and $$a$$ (upper diagonal), representing a single cable without branching, it can be shown that the Hines algorithm is an inverted Gaussian elimination adapted for branched structures:
 
 - Starting with the forward triangulation process on each $$cell_i$$ on row $$i$$:
   - $$cell_i \leftarrow cell_i - \frac{b_i}{D_{i-1}} row_{i-1}$$;
@@ -281,6 +300,8 @@ $$
 
 The numerical resolution of the aforementioned equations raises several concerns about stability, accuracy and efficiency, caused by the errors of the spatial discretization of the cable theory model and by the algorithms used to solve it numerically. This has been analyzed in [The NEURON book][neuron-book], where the authors compare its numerical accuracy against the spatial discretization of the Fourier cosine terms $$\cos ( \pi n x / L)$$ of a cable of length $$L$$.
 
+### Spatial and Temporal Discretization
+
 NEURON performs a spatial discretization of a cable by placing $$m$$ points at the centers of equidistant intervals of size $$ \Delta x = L/m$$, thus each point is placed at $$x = (i+0.5) L/m$$, for $$0 \leq i < m$$. This is known (from numerical methods theory) to have higher accuracy than the traditional method, which places the $$m$$ points at positions $$x = i \,\, L/(m-1)$$ for $$0 \leq i \leq (m-1)$$. In either case, $$m$$ points are placed in a given cable, and $$m=1$$ corresponds to a spatial frequency of $$0$$, i.e. a uniform membrane potential along the entire cable.
 
 Also, the highest number of half waves that can be represented by the discretized system is $$n = m-1$$, which is valid according to the [Nyquist–Shannon sampling theorem](https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem). The Nyquist–Shannon sampling theorem establishes a condition for a sampling rate sufficient for a discrete sequence of samples (digital information) to capture all the information from a continuous-time signal of finite bandwidth (analog information). In practice, it states that more than two samples must be captured per cycle to measure the frequency of a signal.
@@ -304,7 +325,15 @@ $$
 k_{nm} = \frac{1}{\tau_m} \left( 1 + \left( \frac{2 m \lambda}{L} \right)^2 \sin^2 \frac{n \pi}{2m} \right)
 $$
 
-where $$\tau _m = c/g$$ is the membrane time constant. For $$n=0$$ (uniform potential), the rate constant is the inverse of the membrane time constant, $$k_{nm} = 1/\tau_m$$. The temporal discretization of a fixed time step approach follows the basic approximation principle for stepping between two time instants:
+where $$\tau_m$$ and $$\lambda$$ are the membrane time constant and the length constant of the cable equation. For $$n=0$$ (uniform potential), the rate constant is the inverse of the membrane time constant, $$k_{nm} = 1/\tau_m$$. In the continuous cable, the same spatial frequency decays with the rate constant:
+
+$$
+k_n = \frac{1}{\tau_m} \left( 1 + \left( \frac{n \pi \lambda}{L} \right)^2 \right)
+$$
+
+which is the limit of $$k_{nm}$$ for $$m \rightarrow \infty$$, as $$\sin x \approx x$$ for small $$x$$. The gap between the two rate constants measures the error of the spatial discretization. As an example, for a cable as long as its length constant ($$L = \lambda$$), the rate constant of the first spatial frequency ($$n = 1$$) is 8% too small with $$m = 3$$ points, 0.74% with $$m = 10$$ and 0.19% with $$m = 20$$. The error is proportional to $$\Delta x^2$$, so doubling the number of points divides it by about four ([Hines and Carnevale, 1997](https://neuron.yale.edu/neuron/static/papers/nc97/nc3p1.htm)).
+
+The temporal discretization of a fixed time step approach follows the basic approximation principle for stepping between two time instants:
 
 $$
 \frac{d V}{d t} \approx \frac{V(t + \Delta t) - V(t)}{ \Delta t}
@@ -313,9 +342,13 @@ $$
 [euler]: https://en.wikipedia.org/wiki/Euler_method
 [cn]: https://en.wikipedia.org/wiki/Crank%E2%80%93Nicolson_method
 
+### Euler and Crank-Nicolson Methods
+
 Fixed time step integration is typically performed with either the [Euler][euler] or the [Crank-Nicolson][cn] method. The explicit Forward Euler provides [first-order accuracy](https://en.wikipedia.org/wiki/Order_of_accuracy), and its time step must never be more than twice the smallest time constant in the system. As a reminder, a numerical solution to a differential equation is said to be of $$p^{th}$$-order if the error $$\varepsilon$$ is proportional to the $$p^{th}$$ power of the step size $$\Delta t$$: $$\varepsilon(\Delta t) = K \Delta t^p$$.
 
-The gap between the analytic and the numerical solutions is particularly large when the system's voltage is changing rapidly, making it unstable. This has been described in detail in [The NEURON book][neuron-book], for two coupled compartments with time constants of 1 s and 1/41 s. With a time step of $$\Delta t = 0.001 s$$, the numerical solution comes close to the analytic one, but a step of 0.2 s, chosen to follow the slow decay at a lower cost, makes the solution unstable. Therefore, in such [stiff](https://en.wikipedia.org/wiki/Stiff_equation) systems, which mix fast and slow time constants, Forward Euler needs a small time step during the whole simulation, at the cost of a very high computational load, and is not applied in NEURON.
+When the time step exceeds this limit, the gap between the analytic and the numerical solutions grows at each step. For each spatial frequency of equation \ref{eq_310_neuronbook}, Forward Euler computes $$V_{nm}(t + \Delta t) = (1 - k_{nm} \Delta t) \, V_{nm}(t)$$. With a step longer than twice the time constant $$1/k_{nm}$$, the factor $$1 - k_{nm} \Delta t$$ is smaller than $$-1$$. This frequency then changes sign and grows geometrically at each step instead of decaying, however small it is at first.
+
+This has been described in detail in [The NEURON book][neuron-book], for two coupled compartments with time constants of 1 s and 1/41 s. With a time step of $$\Delta t = 0.001$$ s, the numerical solution comes close to the analytic one. However, a step of 0.2 s, chosen to follow the slow decay at a lower cost, is about four times the limit of $$2/41 \approx 0.049$$ s. The fast component is then multiplied by $$1 - 41 \times 0.2 = -7.2$$ at each step, and the solution becomes unstable. Therefore, in such [stiff](https://en.wikipedia.org/wiki/Stiff_equation) systems, which mix fast and slow time constants, Forward Euler needs a small time step during the whole simulation, at the cost of a very high computational load, and is not applied in NEURON.
 
 The [Backward Euler](https://en.wikipedia.org/wiki/Backward_Euler_method) method computes the solution of a set of nonlinear simultaneous equations at each step, therefore requiring a step size as large as possible to compensate for the extra work. For *reasonable* values of $$\Delta t$$, it produces fast simulations that are generally correct, explained by the fact that tightly coupled compartments do not generate large error oscillations and approach the system's equilibrium quickly. As its numerical error is proportional to $$\Delta t$$ anyway, the Backward Euler in NEURON does not resort to iterations to deal with non-linearities.
 
@@ -348,6 +381,17 @@ $$
 
 In NEURON, the Backward Euler is the default method, as it is very stable, and the Crank-Nicolson method is an option for second-order accuracy, with a time step small enough to avoid large error oscillations.
 
+The following table sums up the three methods. Its last columns give the factor by which each method multiplies the two components of the two-compartment example above at each step of $$\Delta t = 0.2$$ s, next to the factor of the analytic solution:
+
+| Method | Error | Stability | Work per step | Fast component (1/41 s) | Slow component (1 s) | In NEURON |
+|---|---|---|---|---|---|---|
+| Forward Euler | $$\propto \Delta t$$ | only for $$\Delta t$$ under twice the smallest time constant | no linear system | −7.2 (unstable) | 0.800 | not used |
+| Backward Euler | $$\propto \Delta t$$ | for any $$\Delta t$$ | one linear system | 0.109 | 0.833 | default |
+| Crank-Nicolson | $$\propto \Delta t^2$$ | for any $$\Delta t$$, with oscillations that decay | one linear system | −0.608 (oscillates) | 0.818 | option |
+| Analytic solution | | | | 0.0003 | 0.819 | |
+
+Notice how Crank-Nicolson follows the slow component most closely (0.818 against 0.819), but lets the fast one oscillate, while Backward Euler damps the fast component strongly, without oscillations.
+
 ### Computational Implementation
 
 NEURON's workflow for the resolution based on interleaved time stepping is defined by a set of iterations that run sequentially for every computation and communication time step, of duration $$\Delta t$$ and $$\Delta t_{comm}$$ respectively:
@@ -372,16 +416,15 @@ NEURON's implementation of fixed time step integrates the equation over the $$\D
 
 A strong argument supporting a fixed time step approach is the possibility of data vectorization. At every time step, several instances of the same mechanism run the same operations with different inputs, therefore allowing for a data layout in memory that takes advantage of the vectorization (SIMD) units of modern architectures.
 
-
-### Handling of non-linearity
+### Handling of Nonlinearity
 
 Although nonlinear equations generally require an iterative resolution to maintain second-order correctness, the HH membrane properties allow the cable equation to be described linearly and solved without iterations, while keeping second-order accuracy. NEURON's variant of Crank-Nicolson with staggered time stepping applies the [Strang splitting](https://en.wikipedia.org/wiki/Strang_splitting) method to calculate the values of the compartment voltage and Hodgkin-Huxley gating states on interleaved time intervals ([Error Analysis and Quantification in NEURON Simulations, Casalegno et al., 2016](https://www.eccomas2016.org/proceedings/pdf/7366.pdf)). Therefore, it converts a large non-linear system into two linear systems, and the problem now has second-order accuracy, with a computation cost *almost* identical to the Backward Euler method.
 
 As a side note, a direct solution of the voltage equation using a linearized membrane current $$I(V,t)=g(V-E)$$ at a time step $$t \rightarrow t + \Delta t$$ is possible. It requires the conductance $$g$$ and the reversal potential $$E$$ to have second-order accuracy at time $$t+\Delta t/2$$, as detailed in [The NEURON book][neuron-book].
 
-The conductance of HH-type channels is given by a function of the state variables $$n$$ ($$K^+$$), $$m$$ and $$h$$ ($$Na^+$$). Therefore, this second-order accuracy at $$t+\Delta t/2$$ is achieved by performing a calculation with a time step offset of $$\Delta t/2$$ from the current voltage time step. In brief, to calculate the second-order accurate integration between $$t-\Delta t/2$$ and $$t+\Delta t/2$$, only the second-order correct value of voltage-dependent rates at the instant $$t$$ is needed.
+The conductance of HH-type channels is given by a function of the state variables $$n$$ ($$K^+$$), $$m$$ and $$h$$ ($$Na^+$$). Therefore, this second-order accuracy at $$t+\Delta t/2$$ is achieved by performing a calculation with a time step offset of $$\Delta t/2$$ from the current voltage time step. In brief, to calculate the second-order accurate integration between $$t-\Delta t/2$$ and $$t+\Delta t/2$$, only the second-order correct value of voltage-dependent rates at the instant $$t$$ is needed. As the gating equation is linear in its state once the voltage is fixed, the [cnexp method](https://www.neuronsimulator.org/en/9.0.1/nmodl/transpiler/notebooks/nmodl-odes-overview.html) of NMODL integrates it analytically over this interval, with the rates of the instant $$t$$.
 
-An important message here is that this resolution as a system of linear equations is only possible for *simple* models. Neuron models with non-linear state variable ODEs and correlation between states require a fully-implicit resolution, which is possible with Backward Euler with [Newton iterations](https://en.wikipedia.org/wiki/Newton%27s_method). This is a common use case, and underlies the resolution of extra-cellular mechanisms, capacitors between nodes, and other mechanisms that connect neurons' evolution over time. For such use cases, the regular Euler and Crank-Nicolson methods described previously have to be used, at the cost of a computationally heavier simulation.
+An important message here is that this resolution as a system of linear equations is only possible for *simple* models. Neuron models whose state variables follow nonlinear ODEs that are coupled to each other require a fully implicit resolution of these states. It is possible with Backward Euler with [Newton iterations](https://en.wikipedia.org/wiki/Newton%27s_method) (the derivimplicit method of NMODL), with an error proportional to $$\Delta t$$. Similarly, mechanisms that connect the evolution of several compartments over time, such as extra-cellular mechanisms and capacitors between nodes, add equations that are solved together with the voltage equations. For instance, adding such linear equations with a [LinearMechanism](https://www.neuronsimulator.org/en/8.0.0/hoc/modelspec/programmatic/linmod.html) switches NEURON from the Hines solver to a general sparse solver, which takes more than twice as long to solve each linear system. Both use cases come at the cost of a computationally heavier simulation.
 
 To find more about the topic, [The NEURON book][neuron-book] explains how to express neuron models in mathematical terms (chapter 3), the numerical methods of NEURON (chapter 4) and how to add new mechanisms with NMODL (chapter 9).
 

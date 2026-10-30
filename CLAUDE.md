@@ -9,9 +9,13 @@ Read this section before any task that writes or edits text in `_posts`, `_draft
 
 - The posts are written in the author's voice: an HPC and ML engineer who moved from writing a blog to teaching
   a university course, an enthusiastic young lecturer who wants students to read the posts. The text reads
-  like a college lecture for HPC and ML readers, written as in a textbook: third person, sentences that flow and
-  explain why each step is needed, Wikipedia links for technical terms at first use, and methods compared where
-  they appear.
+  like a technical blog that college students can read, follow and understand, or a college lecture for HPC and
+  ML readers written as in a textbook: warm, approachable and interesting, and always technical. Third person,
+  sentences that flow and explain why each step is needed, Wikipedia links for technical terms at first use, and
+  methods compared where they appear.
+- Technical keywords are important: each post names every method, algorithm, library and quantity by its exact,
+  standard term, and does not replace it with a vaguer word. The two kernel fusion posts keep the generic names
+  that "The author's papers" below gives them (CCL, shmem).
 - The text reads as the author's own writing, not as an LLM's. Each page keeps the author's explanations,
   examples, derivations and order of ideas, and as much of the author's wording as the other rules allow: a
   reader who knows the original post recognizes it paragraph by paragraph.
@@ -108,6 +112,23 @@ word helps:
 - When a post presents several methods, compare them where they appear, or in a table at the end of the post.
   A simple comparison is enough ("A needs less memory than B"). Say when to use each method, and the idea
   behind it.
+- One spelling across all posts, in the text (code, configuration keys, quotes and paper titles keep their own):
+  all-reduce, all-gather, reduce-scatter, all-to-all (the kernel fusion posts keep the names that their paper gives
+  to its collectives); micro-batch, mini-batch; KV cache; FP32, FP16, BF16, FP8, FP4, INT8, INT4;
+  Mixture-of-Experts (MoE); backpropagation. American spelling (optimize, normalize, behavior, neighbor, modeling,
+  labeled, analyze), except in quotes, paper titles and names.
+- One notation within a series, where the code and the pictures allow it. The training posts write $$P$$ GPUs
+  (processes, ranks), $$B$$ batch size, $$S$$ sequence length, $$E$$ embedding size, $$H$$ heads of size $$d$$,
+  $$N$$ experts and $$T$$ tokens. The Bayesian, variational, VAE and diffusion posts, with the statistics post as
+  their reference, write $$x$$ data, $$z$$ latent variables, $$\theta$$ model parameters, $$\phi$$ variational
+  parameters, $$\epsilon$$ noise, $$\sigma$$ standard deviation, $$\mathbb{E}$$ for the expectation, and an upright
+  $$\operatorname{Var}$$ and $$\operatorname{Cov}$$. Where a picture or the code uses another symbol, the text keeps
+  the picture's symbol or says the mapping once ("$$N_d$$ in the picture").
+- The front matter of every post and draft has a one-sentence `description:` with its keywords (20 to 35 words, for
+  search engines and link previews), and `tags:` that list its main keywords with these spellings. A page of more
+  than 6,000 words has a list of contents after its opening paragraphs: the four lines `{::options
+  toc_levels="2..3" /}`, a blank line, `* TOC` and `{:toc}`, which kramdown turns into links to the H2 and H3
+  headings.
 
 ### References
 
@@ -135,6 +156,8 @@ word helps:
   them go to the diagram issues of `TODO.md`.
 - Math is written in `$$...$$`, inline and on its own lines, as in the existing posts. In inline math, write
   `\vert` instead of `|`: kramdown reads a paragraph line that holds a `|` as a table row.
+- Keep the line endings of each file (many posts use CRLF).
+- Build the site with `bundle exec jekyll build --drafts` and check that every formula and picture renders.
 
 ### The author's papers
 
@@ -179,8 +202,7 @@ word helps:
   checks the paper's repository for commits after the one recorded here and, where the public files of the paper
   changed, updates the post's text, tables and captions to them (the picture rules say how the pictures follow);
   then it records the new commit here. The expert parallelism post follows the MoE paper repository at commit
-  d1b9da2 (2026-10-23). The tensor parallelism post has no recorded commit yet: its next task compares it with the
-  latest version of the FFN paper.
+  d1b9da2 (2026-10-23), and the tensor parallelism post the FFN paper repository at commit 1076c33 (2026-10-18).
 
 ### Titles
 
@@ -202,26 +224,6 @@ repository, with a proposed fix for each item. The file has four sections, with 
 - Title issues: proposed changes to post titles.
 
 The user picks the items to fix before the next pass. A fixed item leaves the list.
-
-### Process
-
-This section is only for the current rewrite: it is removed from this file at the end of its last iteration.
-
-- The rewrite runs in three iterations. Each iteration is a pass over all posts, drafts and the publications
-  page, on top of the previous one, and ends with a pull request that the user reviews and merges before the
-  next iteration starts. The first iteration makes small changes; each later one builds on the approved one.
-- Iteration 1 starts from the post on master and returns to the author's wording. For each paragraph, the
-  author's original text (commit 9c353c1) is the reference for the voice: where master changed only the style,
-  the rewrite goes back to the original words; where master corrected a fact, a formula or a link, or added
-  content that the user asked for, the rewrite keeps it, in the author's voice. Content of the original that
-  master dropped comes back when it is correct and useful.
-- Rewrite one post at a time: read the original and the master version in full, check the math and the
-  pictures, then rewrite the post paragraph by paragraph.
-- Keep the line endings of each file (many posts use CRLF).
-- Build the site with `bundle exec jekyll build --drafts` and check that every formula and picture renders.
-- At the end of each iteration, show the user a review page with each changed paragraph before (left) and after
-  (right), and the formula fixes, together with this file. Then stop: the next iteration starts when the user
-  asks for it.
 
 ---
 
