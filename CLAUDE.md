@@ -164,20 +164,29 @@ word helps:
   operations, steps and relays (from the paper's appendix), in this order: AllGather-ReduceScatter; All-to-All,
   which sends each rank only the tokens it needs but needs a count exchange first; then in-network computing (INC)
   and the INC form of AllGather-ReduceScatter, which removes two steps (pack and global reduce); the INC
-  All-to-All, as All-to-All-Dispatch and All-to-All-Combine; and the partial collectives (One-to-Many-Dispatch and
-  Many-to-One-Combine), which lower the memory that INC All-to-All needs in the switch. No INC picture appears before
-  INC is introduced. The two timelines of the collective and partial collective combine stand side by side.
-- Each kernel fusion post follows the latest version of its paper. Every task on one of the two posts first checks
-  the paper's repository for commits after the one recorded here and, where the paper changed, updates the post's
-  text, tables and captions to it (the picture rules say how the pictures follow); then it records the new commit
-  here. The expert parallelism post follows the MoE paper repository at commit d1b9da2 (2026-10-23). The tensor
-  parallelism post has no recorded commit yet: its next task compares it with the latest version of the FFN paper.
+  All-to-All, as All-to-All-Dispatch and All-to-All-Combine, followed by its timeline. No INC picture appears before
+  INC is introduced. The routing table of the example is a Markdown table, not a picture.
+- The implementation of the partial collectives (One-to-Many-Dispatch and Many-to-One-Combine) is confidential, at
+  the user's request (2026-10-26): the expert parallelism post follows the public version of the paper (`main.tex`,
+  never `main_confidential.tex`). It says what they are (a variant of the all-to-all that multicasts the tokens and
+  reduces their expert outputs iteratively, as a sequence of partial collectives that wait only for the ranks
+  involved), their advantages and disadvantages, when to use each form, and their results, but has no picture,
+  timeline, protocol (operations, signals, flags, slots, metadata), operation table or step, relay or signal counts
+  of them, and says that their details will be released in the near future.
+- Never open, read or search any `*_confidential*` file (`main_confidential.tex`, `main_confidential.pdf` and the
+  like) in the paper repositories, at the user's request (2026-10-26): the posts use only the public files.
+- Each kernel fusion post follows the latest public version of its paper. Every task on one of the two posts first
+  checks the paper's repository for commits after the one recorded here and, where the public files of the paper
+  changed, updates the post's text, tables and captions to them (the picture rules say how the pictures follow);
+  then it records the new commit here. The expert parallelism post follows the MoE paper repository at commit
+  d1b9da2 (2026-10-23). The tensor parallelism post has no recorded commit yet: its next task compares it with the
+  latest version of the FFN paper.
 
 ### Titles
 
 - A post title, with the category that the home page puts before it ("Machine Learning: "), fits on one line of
-  the home page on a desktop screen. The title column is 815 px wide at 16 px: keep the line under 750 px in the
-  site's font, about 90 characters, so that it also fits with wider system fonts.
+  the home page on a desktop screen. The title column is 735 px wide at 16 px: keep the line under 690 px in the
+  site's font, about 85 characters, so that it also fits with wider system fonts.
 - A text task does not change titles: it proposes new ones in the title issues of `TODO.md`. The user approved
   the titles of seven posts on 2026-10-18; they are applied.
 
@@ -272,6 +281,11 @@ sections 6 and 7, and the font section 4.
   paper repository's draw.io or TikZ source. The paper repositories stay unchanged. Two pictures are the
   exception: ep_stages.svg and ep_pipeline.svg of the expert parallelism post stay the paper's own figures,
   copied unchanged and shown at 100% width.
+- Until 1 November 2026, at the user's request, the paper repository of the expert parallelism post gets new
+  and changed figures. Every SVG revision (every picture task) in that time first pulls the latest imgs/*.svg
+  and their draw.io or TikZ sources from the paper repositories, and adapts the pictures of the kernel fusion
+  posts to them: a changed figure is redrawn again in this repo (copied again for ep_stages.svg and
+  ep_pipeline.svg), and a new figure that the post does not show yet is reported to the user.
 - A picture or an animation shown unchanged from Wikimedia Commons (the Newton's method and k-means GIFs)
   links to its original file on upload.wikimedia.org, with no copy in assets.
 - A picture used by a post and by the publications page is stored once, in the post's asset folder, and
@@ -286,12 +300,22 @@ sections 6 and 7, and the font section 4.
 
 ### 3. Page width and scale
 
-- The post content width is X = 880 px (minima's $content-width 940 px minus 2 x 30 px padding;
-  assets/main.scss).
+- The pictures of a post are shown in a band X = 880 px wide, the width of the page (minima's $content-width
+  in assets/main.scss). The text column is 60 px narrower (T = 820 px, inside minima's 2 x 30 px padding), and
+  a picture paragraph takes that padding on both sides (_sass/site/_posts.scss). A picture is drawn to fit the
+  text column, at most T wide; one that is wider (a paper's own figure shown at 100%, section 2) reaches up to
+  30 px beyond the text on each side. On a screen narrower than the page, the band is as wide as the screen,
+  and the pictures scale down with it.
+- Every picture task first checks the page width, $content-width in assets/main.scss, at the user's request.
+  When it has changed, X is the new $content-width and T is X minus 60 px, and the sizes of these rules that
+  follow from them change with them (the 820 px and 880 px below, the column of the publications page, the
+  264 px of the pipeline pictures and the time unit of DualPipe in section 8): every P is recomputed with the
+  new X, and every picture wider than T, and every row of pictures side by side that no longer fits in T, is
+  redrawn to fit it, as the rules below say.
 - Every picture is drawn for a post, also one that only the publications page shows: at page scale, where
-  1 draw.io px is 1 px on the page when the picture is shown at its natural size, and no wider than 880 px.
-  The publications page puts its pictures in a 766 px column, so there they appear at 87% of their size in
-  a post, which is fine.
+  1 draw.io px is 1 px on the page when the picture is shown at its natural size, and no wider than 820 px.
+  The publications page keeps its pictures in its 734 px notes column, so there they appear at 83% of their
+  size in a post, which is fine.
 - The Markdown of every page, the publications page too, shows a picture of width W px at W/880*100
   percent, rounded to one decimal:
   ```
@@ -303,10 +327,28 @@ sections 6 and 7, and the font section 4.
 - Pictures shown side by side in one row each keep their own P. When the P values of a row add up to more
   than 98 (the spaces between pictures take the rest), the pictures wrap onto the next line. The two models at
   the top of the GPT-lite post are 92 px apart (twelve `&nbsp;` between their img tags), at the user's request.
-- A picture that does not fit 880 px at the text sizes below is redrawn: first narrow the empty space
-  between its parts, then move parts (wrap a row into two rows, stack panels, break long labels over two
-  lines). Never shrink the text to make it fit.
-- A picture whose arrows or labels are crowded grows, taller or wider up to 880 px, before any text or arrow
+- A picture that does not fit 820 px at the text sizes below is redrawn in this order, at the user's request:
+  first narrow the empty space between its parts; then shrink its elements (smaller matrices, cells, cubes,
+  circles and photos, shorter arrows, narrower tensors and boxes), as far as their text and the arrow layout of
+  section 6 allow; then, only where that is not enough, move parts (stack panels, move a legend). A long label
+  may break over two or three lines (the blue boxes of prefill_decode). Never shrink the text to make it fit.
+  Line weights and arrowheads keep their size, a box keeps 3 px between its text and its outline, a matrix
+  drawn to scale stays to scale, a photo keeps its aspect ratio, and the pictures of a series shrink together
+  (section 7).
+- A picture keeps its layout where smaller elements make it fit, at the user's request: a row of panels stays
+  one row (the two panels of ragged_batching, the five parts of xcrs_transpose_3, as in the original figure), and
+  a one-row array, tensor or sequence of tokens is never wrapped onto a second row (the arrays of xcrs_format).
+- Two variants that a picture compares are drawn one above the other, each in one row, with each part above its
+  counterpart, at the user's request: the baseline and the fused kernel of tp_matmuls, with no line between the two
+  rows.
+- To make room, a picture may draw fewer of the parts that it repeats only as an illustration (the latent volume
+  of sora_vae is 12 slices deep and its latent sequence 16 cells long), join the single tokens of one sequence into
+  one array (the prompt of prefill_decode, a 1 x 4 array), or move a label next to another part (the (N/2)× of
+  Device E in moe_gshard, left of its encoder output), at the user's request.
+- Pictures side by side whose rows refer to each other have the same height, each row at the height of the row
+  it refers to, at the user's request: the two rows of circles of svd_example_2 next to the two rows of photos
+  of svd_example.
+- A picture whose arrows or labels are crowded grows, taller or wider up to 820 px, before any text or arrow
   gets smaller (the transformer picture is taller, the DualPipe schedule wider). Its elements keep their size as
   it grows: only the spaces between them widen, which gives the arrows and their labels more room (tora, at the
   user's request).
@@ -363,9 +405,9 @@ sections 6 and 7, and the font section 4.
   A picture redrawn from an older one keeps the order of its text sizes: its most common size becomes 14,
   sizes at least 1.1 times larger become 16, sizes under 0.9 times smaller become 12.
   Italic is allowed for variables and for emphasis, bold only for titles, subtitles and names the post's
-  text refers to: the title of a frame or panel (its topmost label), N×, Encoder and Decoder, and the tensor
-  name of a label "name: shape" or "name(a, b)" (only the name: **Q**: H x S x h). Bold changes the weight of a
-  label, never its words, also in pictures from external sources.
+  text refers to: the title of a frame or panel (its topmost label), N× and (N/2)× (moe_gshard), Encoder and
+  Decoder, and the tensor name of a label "name: shape" or "name(a, b)" (only the name: **Q**: H x S x h). Bold
+  changes the weight of a label, never its words, also in pictures from external sources.
 - Charts use the same fonts and sizes: tick labels 12, axis labels and legends 14, panel titles 14 bold. A
   panel title that is a sentence goes into the caption; panel letters and short panel names stay. A legend
   with many entries in a small chart may use 10 (llama3_scaling_laws).
@@ -414,7 +456,7 @@ sections 6 and 7, and the font section 4.
   backward for weights #d79b00                                     #856000
   idle                 white, grey dashed outline (section 7)
   ```
-  Every pipeline picture uses 4 GPUs, except DualPipe (8) and the 8 workers of pipeline_8_stages,
+  Every pipeline picture uses 4 GPUs, except DualPipe (8) and the 8 GPUs of pipeline_8_stages,
   pipeline_4_stages and pipeline_2_stages, and shows no previous or next iteration. Section 8 gives the layout.
 - The same thing has the same color within a post (one color per process, GPU, head, expert...), and the
   same meaning keeps its color across posts where possible (blue forward, green backward).
@@ -593,7 +635,9 @@ sections 6 and 7, and the font section 4.
   of the map (str_steps).
 - Block arrows: body 10 px wide, head 20 px wide and 10 px long (flexArrow: width=10;endWidth=10;endSize=3.07;
   singleArrow: 20 px tall, arrowWidth=0.5). A block arrow with a label inside keeps a body taller than its
-  label, with the same proportions. A block arrow thinner than 6 px is a thin arrow (section 6).
+  label, with the same proportions. A block arrow thinner than 6 px is a thin arrow (section 6). A block arrow
+  between two panels sits over the gap between them (the arrows between the panels of moe_gshard, at the user's
+  request).
 - Dashed lines use draw.io's default dash pattern; dotted lines use dashPattern=1 2.
 - Arrows are straight or orthogonal (edgeStyle=orthogonalEdgeStyle). Curves only for pointers to a part of
   the drawing and for loops.
@@ -614,22 +658,24 @@ sections 6 and 7, and the font section 4.
   disableMultiStroke=1;disableMultiStrokeFill=1. draw.io's fillStyle=hatch turns into a bitmap in the PDF
   export.
 - The pictures of one series in a post (the attention variants, the pipeline schedules...) use the same
-  element sizes: the same cube, cell, row and box sizes in every picture of the series.
+  element sizes: the same cube, cell, row and box sizes in every picture of the series. Exception: the matrix of
+  xcrs_transpose_3 is smaller than the matrices of xcrs_format and xcrs_transpose_1, with the 12 px letters of the
+  original figure, so that the picture stays one row, as the user asked (section 3).
 - A legend is a row of entries, each a swatch with its label 4 px to its right, and 16 px between entries
   (24 px in the pictures of the prefill, decode, roofline and cache post; section 8 gives the pipeline
   legend). A chart's legend is one column (section 6).
 - Sizes for new and redrawn pictures: a one-line box 30 px tall, 20 px between boxes in a row, 40 px between
   rows (room for an arrow and its label), matrix and array cells 20 x 20 px with 12 px numbers (10 px when they
-  do not fit).
+  do not fit). A picture that does not fit the text column of section 3 takes smaller elements.
 
 ### 8. Pipeline schedules
 
 All pipeline schedules (the pipeline parallelism post and the publications page) share one layout:
-- One row per GPU, labelled "GPU 0" to "GPU 3" (to "GPU 7" for DualPipe; "Worker 1" to "Worker 4" where the
-  post's text says workers, as for the PipeDream pictures), 14 px regular, right-aligned 4 px left of the
-  first cell.
-- Rows 20 px tall and 3 px apart. One time unit is 21.86 px wide (15.44 px for DualPipe, so that its 8 GPUs
-  and 16 micro-batches fit 880 px): a forward pass takes 1 unit, a backward pass 2 units, or 1 unit each for
+- One row per GPU, labelled "GPU 0" to "GPU 3" (to "GPU 7" for DualPipe and for the 8 GPUs of pipeline_8_stages,
+  pipeline_4_stages and pipeline_2_stages), 14 px regular, right-aligned 4 px left of the first cell. The
+  pictures redrawn from PipeDream say GPU too, as their captions do, at the user's request.
+- Rows 20 px tall and 3 px apart. One time unit is 21.86 px wide (14.4 px for DualPipe, so that its 8 GPUs
+  and 16 micro-batches fit 820 px): a forward pass takes 1 unit, a backward pass 2 units, or 1 unit each for
   the backward for inputs (B) and the backward for weights (W). With two chunks per GPU (interleaved 1F1B,
   ZB-V, DualPipeV), each pass of a chunk takes half as long. DualPipe runs one stage per direction on each
   GPU, so its passes take the full time.
@@ -652,7 +698,8 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
   too; their annotations ("Pipeline flush", "Startup State", the time axis) keep their place relative to
   the rows.
 - No title inside a schedule (section 9). Pictures compared side by side in one row (pipeline_8_stages,
-  pipeline_4_stages, pipeline_2_stages) are at most 287 px wide each, so that three fit one row.
+  pipeline_4_stages, pipeline_2_stages) are at most 264 px wide each, so that three fit one row of the text
+  column with the spaces between them.
 
 ### 9. Captions
 

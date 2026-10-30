@@ -37,7 +37,7 @@ Each rank holds a disjoint subset of rows of the initial graph $$G$$, such that 
 A common format for the distributed storage of a sparse matrix is the **Compressed Sparse Row** (CSR) format. Each submatrix stored on a compute node is represented (serialized) as three arrays, holding (1) the number of populated columns per row, (2) the id of each populated column, and (3) their respective values. Note that the standard CSR stores the offset of each row instead of its number of populated columns. For clarity, the following picture illustrates a sample graph with vertices 0-5 and 12 edges labeled A-T, its representative sparse matrix, and the CSR data structure on 3 ranks:
 
 {: .picture}
-<img width="98.8%" height="98.8%" src="{{ site.assets }}/matrix-transpose/crs_format.svg">
+<img width="92.2%" height="92.2%" src="{{ site.assets }}/matrix-transpose/crs_format.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)
@@ -47,7 +47,7 @@ Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs An
 A small mental trick to understand this is to notice that a sparse matrix transpose is nothing more than a composition of two operations: a local matrix transpose and a view swap. So these two operations can be used to describe a distributed sparse matrix in four different data layouts, illustrated below:
 
 {: .picture}
-<img width="96.4%" height="96.4%" src="{{ site.assets }}/matrix-transpose/layouts.svg">
+<img width="53.0%" height="53.0%" src="{{ site.assets }}/matrix-transpose/layouts.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)
@@ -109,7 +109,7 @@ This information is required to match each column/row id to its target rank in t
 The first step performs a dense matrix transpose (`MPI_Alltoall`) to send/receive the number of elements to/from other ranks. The second step performs a selective scatter-gather (`MPI_Alltoallv`) that delivers the elements to the final rank. The following picture illustrates both steps on the sample matrix above: the transpose of the element counts (left), and the exchange of the elements with their row and column ids (right):
 
 {: .picture}
-<img width="98%" height="98%" src="{{ site.assets }}/matrix-transpose/matrix-transposition-crs.svg">
+<img width="92.7%" height="92.7%" src="{{ site.assets }}/matrix-transpose/matrix-transposition-crs.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)
@@ -139,7 +139,7 @@ Having a single edge between each pair of nodes is often not the case in real-li
 The solution starts by defining a data format that can hold high-cardinality elements per pair of graph nodes. It is called the **extended CSR**, or XCSR for short, and is defined as the previous CSR data structure with an added dimension that holds the number of elements per matrix cell (or edges between pairs of nodes). The layout is as follows:
 
 {: .picture}
-<img width="99.7%" height="99.7%" src="{{ site.assets }}/matrix-transpose/xcrs_format.svg">
+<img width="92.3%" height="92.3%" src="{{ site.assets }}/matrix-transpose/xcrs_format.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)
@@ -147,7 +147,7 @@ Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs An
 The transpose algorithm then follows in three steps. First, each compute node (rank) collects the metadata of its own sub-matrix, composed of the set of triplets of the form [ row id, column id, number of elements], indicating the row, column and dimensionality of each cell. Then the ranks perform a **local transpose** of their own data, by reordering their triplets by column and row id. This sequence illustrates the first step:
  
 {: .picture}
-<img width="99.2%" height="99.2%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_1.svg">
+<img width="89.0%" height="89.0%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_1.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)
@@ -157,7 +157,7 @@ The second step starts the **view swap** method. All ranks pack their triplets a
 More importantly, the matrix composed of all triplets across all ranks is a distributed matrix with a fixed element size per cell (a tuple of fixed size). Therefore, this exchange is performed by the same distributed transpose presented above in the section *How to transpose it?*. After the exchange, all ranks will hold the triplets of the metadata (*but not the data yet*) of the final matrix structure:   
 
 {: .picture}
-<img width="97.8%" height="97.8%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_2.svg">
+<img width="92.7%" height="92.7%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_2.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)
@@ -167,7 +167,7 @@ Finally, the view swap is completed by communicating the data, based on the meta
 These counts are then used to allocate the buffers for the incoming data and to perform an `MPI_Alltoallv` that sends/delivers the elements of the final matrix across all compute nodes. Upon completion, the (previously column-oriented) elements are sorted by row and column, which yields the final dataset: 
 
 {: .picture}
-<img width="99.2%" height="99.2%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_3.svg">
+<img width="93.1%" height="93.1%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_3.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)

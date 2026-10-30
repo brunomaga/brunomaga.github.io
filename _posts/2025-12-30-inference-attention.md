@@ -75,17 +75,17 @@ Decode reads the whole KV cache at every step, so a smaller KV cache means faste
 **Multi-Head Attention** ([MHA](https://arxiv.org/abs/1706.03762)), the attention of the original Transformer, keeps one query, one key and one value per head. The following picture illustrates it with $$H = 4$$ heads, one color per head, where the keys and values of all heads form the KV cache:
 
 {: .picture}
-<img width="97.6%" height="97.6%" src="{{ site.assets }}/inference/imgs/mha.svg"/>
+<img width="92.6%" height="92.6%" src="{{ site.assets }}/inference/imgs/mha.svg"/>
 
 In 2019, Noam Shazeer proposed **Multi-Query Attention** ([MQA](https://arxiv.org/abs/1911.02150)), which keeps one query per head, but all heads share a single key head and a single value head. The KV cache shrinks by a factor equal to the number of heads, at some cost in quality. The following picture shows the same example with MQA:
 
 {: .picture}
-<img width="97.6%" height="97.6%" src="{{ site.assets }}/inference/imgs/mqa.svg"/>
+<img width="92.6%" height="92.6%" src="{{ site.assets }}/inference/imgs/mqa.svg"/>
 
 **Grouped-Query Attention** ([GQA](https://arxiv.org/abs/2305.13245)), proposed in 2023, is the middle ground, with a quality close to MHA and a speed close to MQA, and most current models use it. The $$H$$ heads are split into $$G$$ groups, and the heads of a group share one key head and one value head, so the cache shrinks by a factor $$H / G$$. Thus, GQA becomes MHA when $$G = H$$, and MQA when $$G = 1$$. The following picture illustrates GQA with $$H = 4$$ heads in $$G = 2$$ groups, one color per group:
 
 {: .picture}
-<img width="97.6%" height="97.6%" src="{{ site.assets }}/inference/imgs/gqa.svg"/>
+<img width="92.6%" height="92.6%" src="{{ site.assets }}/inference/imgs/gqa.svg"/>
 
 A trained MHA model can be converted to GQA by averaging (mean pooling) the key and value heads of each group, followed by a short *uptraining* with about 5% of the original pre-training compute. Note that the savings of MQA and GQA appear only when there is a KV cache to read during decode: without a cache, GQA only saves a little compute in the key and value projections.
 
@@ -325,7 +325,7 @@ DSA was added to an already trained model, in two stages. First, during a short 
 With a KV cache, the indexer key of every token is cached too. Index scores are often tied, since the ReLU outputs many zeros, so the selection uses a [stable sort](https://en.wikipedia.org/wiki/Sorting_algorithm#Stability), which breaks ties the same way whether the tokens are processed together or one at a time. Decoding with a KV cache then gives the same result as processing the whole sequence at once. The following picture illustrates DSA with $$H = 4$$ heads, where each query attends only to the 3 tokens with the highest index scores:
 
 {: .picture}
-<img width="97.3%" height="97.3%" src="{{ site.assets }}/inference/imgs/dsa.svg"/>
+<img width="92.4%" height="92.4%" src="{{ site.assets }}/inference/imgs/dsa.svg"/>
 
 The following code adds DSA to multi-head attention. It keeps the projections of `GQA` with `num_groups = num_heads`, so it can load the weights of a trained MHA module, and adds the indexer. First, `lightning_index_scores` computes the index scores of the formula above, `top_k_indices` selects the highest ones with a stable sort, and `indexer_loss` computes the loss of the warm-up.
 

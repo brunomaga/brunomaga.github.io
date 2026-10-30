@@ -31,7 +31,7 @@ DECODE = [[18.4, 19.1, 20.6, 23.8, 30.2],
 BLACK, GREY = '#000000', '#666666'
 COLORS = ['#b85450', '#6c8ebf', '#82b366']               # red, blue and green accents
 MARKERS = ['s', '^', 'o']
-# Each value sits next to its point with no box, 3 px or more from every line and marker: Baseline's above its points,
+# Each value sits next to its point with no box, 2.5 px or more from every line and marker: Baseline's above its points,
 # MegaKernel+INC's below them, and MegaKernel's, which lie between the other two series, right of its point (prefill)
 # or above it (decode; right of the first point, where the Baseline point leaves no room). The labels of points where
 # a line runs on rise or move aside to clear it. One (offset in points, ha, va) per point, for each series.
@@ -39,10 +39,10 @@ ABOVE, BELOW, RIGHT = ('center', 'bottom'), ('center', 'top'), ('left', 'center'
 PLACES = {'prefill': [[((2.5, 12), *ABOVE), ((0, 12), *ABOVE), ((0, 12), *ABOVE), ((0, 12), *ABOVE), ((0, 5), *ABOVE)],
                       [((7.5, -4), *RIGHT), ((9, -4), *RIGHT), ((14.5, -4), *RIGHT), ((13, -4), *RIGHT),
                        ((7, 0), *RIGHT)],
-                      [((2, -5), *BELOW), ((0, -7.5), *BELOW), ((0, -7.5), *BELOW), ((0, -7.5), *BELOW),
+                      [((2, -5), *BELOW), ((1.5, -8), *BELOW), ((0.5, -8), *BELOW), ((0, -7.5), *BELOW),
                        ((0, -7.5), *BELOW)]],
           'decode': [[((0, 5), *ABOVE), ((0, 5), *ABOVE), ((-1, 7.5), *ABOVE), ((-8, 5), *ABOVE), ((0, 5), *ABOVE)],
-                     [((6, 13.5), *RIGHT), ((0, 5), *ABOVE), ((0, 7.5), *ABOVE), ((-7, 5.5), *ABOVE), ((0, 5), *ABOVE)],
+                     [((6, 13.5), *RIGHT), ((0, 5), *ABOVE), ((0, 7.5), *ABOVE), ((-6, 5), *ABOVE), ((0, 5), *ABOVE)],
                      [((0, -7.5), *BELOW), ((0, -7.5), *BELOW), ((0, -7.5), *BELOW), ((0, -7.5), *BELOW),
                       ((0, -7.5), *BELOW)]]}
 
@@ -85,9 +85,9 @@ def panel(ax, title, xs, series, labels, xticks, xlabels, yticks, xlim, ylim, xl
         ax.spines[side].set_visible(False)
 
 
-fig, (left, right) = plt.subplots(1, 2, figsize=(11.8, 4.4), dpi=72)     # 1 inch = 72 units = 72 px
+fig, (left, right) = plt.subplots(1, 2, figsize=(10.78, 4.4), dpi=72)     # 1 inch = 72 units = 72 px
 panel(left, 'prefill', PREFILL_X, PREFILL, PREFILL_LABELS, PREFILL_X, ['4k', '8k', '16k', '32k', '64k'],
-      [0.25, 0.5, 1, 2, 4], (3500, 86000), (0.185, 4.6), 'batch size (tokens)', 'time per iteration (s)', COLORS,
+      [0.25, 0.5, 1, 2, 4], (3444, 86000), (0.185, 4.6), 'batch size (tokens)', 'time per iteration (s)', COLORS,
       ['-'] * 3, BLACK)
 panel(right, 'decode', DECODE_X, DECODE, [['%.1f' % v for v in ys] for ys in DECODE], DECODE_X,
       [str(x) for x in DECODE_X], [16, 32], (27, 680), (13.8, 36), 'concurrent sequences', 'time per output token (ms)',

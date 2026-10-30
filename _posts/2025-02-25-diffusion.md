@@ -495,10 +495,10 @@ Another interesting feature that improves quality is [classifier-free guidance](
 
 ## Video diffusion and 3D attention
 
-Running diffusion directly on pixels is already expensive for high-resolution images. This led to the creation of the **[latent diffusion model](https://arxiv.org/abs/2112.10752)**, where diffusion is applied in the latent space of a pretrained [autoencoder](https://en.wikipedia.org/wiki/Autoencoder) (e.g. a VAE) instead of on the image directly. This reduces the cost of training on high-resolution images by working on their compressed representation. As diffusion moved towards the domain of video, the large amount of data per sample made this compression even more important, and video models now compress their input in both the spatial and temporal dimensions:
+Running diffusion directly on pixels is already expensive for high-resolution images. This led to the creation of the **[latent diffusion model](https://arxiv.org/abs/2112.10752)**, where diffusion is applied in the [latent space](https://en.wikipedia.org/wiki/Latent_space) of a pretrained [autoencoder](https://en.wikipedia.org/wiki/Autoencoder) (e.g. a VAE) instead of on the image directly. This reduces the cost of training on high-resolution images by working on their compressed representation. As diffusion moved towards the domain of video, the large amount of data per sample made this compression even more important, and video models now compress their input in both the spatial and temporal dimensions:
 
 {: .picture}
-<img width="98.6%" height="98.6%" src="{{ site.assets }}/diffusion/sora_vae.svg"/> 
+<img width="92.2%" height="92.2%" src="{{ site.assets }}/diffusion/sora_vae.svg"/> 
 
 {: .caption}
 An overview of the latent space compression in Sora. The pre-processing step "turns videos into [visual] patches by first compressing videos into a lower-dimensional latent space and subsequently decomposing the representation into spacetime patches". Adapted from: [Video generation models as world simulators (OpenAI)](https://openai.com/index/video-generation-models-as-world-simulators/)
@@ -516,6 +516,34 @@ The other challenge with video data is attention: how to correlate image patches
 An illustration of a masked autoencoder that randomly picks 10% of the spacetime patches of a video. These patches retain enough representative power to reconstruct the original video. Adapted from: [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113)
 
 In practice, the spatial and temporal attentions are cheaper and can reuse the spatial layers of a pre-trained image model. The full 3D attention relates every patch to the patches of all frames, which helps to keep objects with large motions consistent across frames (Section 2.2 of [CogVideoX](https://arxiv.org/abs/2408.06072)).
+
+## Why diffusion instead of autoregressive models for video generation
+
+A video is a 3D cube of pixels: height × width × time. An **[autoregressive model](https://en.wikipedia.org/wiki/Autoregressive_model)** generates it *one frame at a time*, each frame conditioned on the previous ones. A diffusion model generates *the whole cube at once*: it starts from a cube of noise and denoises all the frames together over $$T$$ steps. The following picture illustrates both:
+
+{: .picture}
+<img width="88%" height="88%" src="{{ site.assets }}/diffusion/ar_vs_diffusion.svg"/>
+
+{: .caption}
+The generation of a video, a cube of height × width × time, by an autoregressive model and by a diffusion model. The cubes show 8 of the 100 frames.
+
+As an example, imagine a video of $$F=100$$ frames of $$256 \times 256$$ pixels with 3 colors, i.e. $$100 \times 256 \times 256 \times 3 \approx 20$$ million values. Both models generate it in a latent space, as the [latent diffusion models](#video-diffusion-and-3d-attention) above: an encoder compresses each frame into a **latent** of 1000 values, and a decoder turns each latent back into a frame. So the models only generate a matrix of $$100 \times 1000$$ values, about 200 times fewer than the pixels, as illustrated below:
+
+{: .picture}
+<img width="73.3%" height="73.3%" src="{{ site.assets }}/diffusion/video_encoder_decoder.svg"/>
+
+{: .caption}
+An encoder compresses each frame of a video into a latent of 1000 values, one row of the matrix of latents, and a decoder turns each latent back into a frame. The cubes show 8 of the 100 frames, and the matrix 8 of the 100 latents.
+
+To count their cost, imagine also that both models are only [matrix multiplications](https://en.wikipedia.org/wiki/Matrix_multiplication) (matmuls): $$L=10$$ layers, each one multiplying its input by a weight matrix of $$1000 \times 1000$$ values, i.e. 10 million weights in total. A matmul $$[m \times k] \times [k \times n]$$ costs $$2mkn$$ [FLOPs](https://en.wikipedia.org/wiki/FLOPS): a multiply and an accumulate for each of the $$kn$$ weights and each of the $$m$$ rows of the input. So:
+- the **autoregressive model** runs $$F=100$$ sequential steps, one per frame. In each step, each layer multiplies the latent of one frame, a $$1 \times 1000$$ matrix, by its weights, which costs $$2 \times 1 \times 1000 \times 1000 = 2 \times 10^6$$ FLOPs. The video takes $$100 \times 10 = 1000$$ matmuls and $$2 \times 10^9$$ FLOPs.
+- the **diffusion model** runs $$T=100$$ sequential steps, one per noise level. In each step, each layer multiplies the latents of all the frames, a $$100 \times 1000$$ matrix, by its weights, which costs $$2 \times 100 \times 1000 \times 1000 = 2 \times 10^8$$ FLOPs. The video takes the same 1000 matmuls, but $$2 \times 10^{11}$$ FLOPs.
+
+Thus, **the diffusion model performs $$T=100$$ times more FLOPs**: as many matmuls as the autoregressive model, each one over all the frames instead of one. Real models also mix the latents of different frames, e.g. with the attention of the [DiT](#diffusion-transformers) above, which this count leaves out.
+
+However, both models read the same 10 million weights from memory in each step, and a GPU performs hundreds of FLOPs in the time it reads one weight (about 600 for 16-bit weights on an H100). With 2 FLOPs per weight, the autoregressive model is [memory-bound](https://en.wikipedia.org/wiki/Memory-bound_function) and leaves the GPU mostly idle, as the decode phase of a large language model ([roofline model]({% post_url 2025-06-07-inference-prefill-decode-roofline-cache %}#roofline-model)). The diffusion model uses each weight on the 100 frames at once, i.e. 200 FLOPs per weight, in about the same time. So **the diffusion model benefits from parallelism**. On longer videos, its steps fill the GPU and its extra FLOPs take time, but its frames then split across many GPUs ([sequence parallelism]({% post_url 2024-08-30-sequence-context-parallelism %})), while the autoregressive model has a single frame per step to split.
+
+Moreover, **the diffusion model makes fewer errors**. The autoregressive model never revises a frame, so its errors carry over to the next frames and accumulate into flicker and drift, while each diffusion step revises all the frames with the context of the previous and the following ones. However, **the autoregressive model can stream its video**: its first frame is ready after one step, and it can extend the video for as long as needed, while a diffusion model generates clips of a fixed length, and no frame is ready before its last step. **Hybrid** models are autoregressive across chunks of frames and use diffusion within each chunk ([Diffusion Forcing](https://arxiv.org/abs/2407.01392), [CausVid](https://arxiv.org/abs/2412.07772)): [Self Forcing](https://arxiv.org/abs/2506.08009) generates video in real time, at 17 frames per second on a single H100.
 
 ## Further Reading 
 
@@ -537,7 +565,7 @@ To train on videos, they use the method presented in [Align your Latents: High-R
 The following picture illustrates the temporal layers inserted between the spatial layers of the image model:
 
 {: .picture}
-<img width="93.9%" height="93.9%" src="{{ site.assets }}/diffusion/align_your_latents.svg"/> 
+<img width="92.7%" height="92.7%" src="{{ site.assets }}/diffusion/align_your_latents.svg"/> 
 
 {: .caption}
 **Left:** a pre-trained LDM is turned into a video generator by inserting temporal layers that learn to align frames into temporally consistent sequences. During optimization, the image backbone $$\theta$$ remains fixed and only the parameters $$\phi$$ of the temporal layers $$l^i_\phi$$ are trained. **Right:** During training, the base model $$\theta$$ interprets the input sequence of length $$T$$ as a batch of images. For the temporal layers $$l^i_\phi$$, these batches are reshaped into video format. Their output $$z'$$ is combined with the spatial output $$z$$, using a learned merge parameter $$\alpha$$. During inference, skipping the temporal layers ($$\alpha^i_\phi=1$$) yields the original image model. For illustration purposes, only a single U-Net Block is shown. $$B$$ denotes the batch size, $$T$$ the sequence length, $$C$$ the input channels and $$H$$ and $$W$$ the spatial dimensions of the input. $$c_S$$ is an optional context-frame conditioning, used when training prediction models. Adapted from: [Align your Latents: High-Resolution Video Synthesis with Latent Diffusion Models](https://arxiv.org/abs/2304.08818).
@@ -551,7 +579,7 @@ A U-Net-based diffusion model that takes as input a reference image (a photo of 
 Spatio-temporal attention is achieved by a spatial attention that converts an input $$B \times T \times H \times W \times C$$ into $$(B * T ) \times (H * W) \times C$$ to perform attention of patches within the same frame. It is followed by a temporal attention that converts it into $$(B * H * W) \times T \times C$$ and performs attention of the same patch across time. An overview of the model is displayed below:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/diffusion/anymate_anyone.svg"/> 
+<img width="92.6%" height="92.6%" src="{{ site.assets }}/diffusion/anymate_anyone.svg"/> 
 
 {: .caption}
 Overview of Animate Anyone. The pose sequence is initially encoded using Pose Guider and fused with multi-frame noise, followed by the Denoising UNet conducting the denoising process for video generation. The computational block of the Denoising UNet consists of Spatial-Attention, Cross-Attention, and Temporal-Attention, as illustrated in the dashed box on the right. The integration of reference image involves two aspects. Firstly, detailed features are extracted through ReferenceNet and utilized for Spatial-Attention. Secondly, semantic features are extracted through the CLIP image encoder for Cross-Attention. Temporal-Attention operates in the temporal dimension. Finally, the VAE decoder decodes the result into a video clip. Adapted from: [Animate Anyone: Consistent and Controllable Image-to-Video Synthesis for Character Animation](https://arxiv.org/abs/2311.17117).
@@ -581,7 +609,7 @@ And here are some examples of DiT-inspired conditional diffusion models:
 OmniGen is a diffusion model made only of a VAE and a transformer (initialized from the Phi-3 LLM), able to perform several image generation tasks: text-to-image, image editing, subject-driven generation and visual-conditional generation. Text input is tokenized, and image inputs are transformed into embeddings via a VAE. Its framework is illustrated in the following picture:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/diffusion/omnigen.svg"/> 
+<img width="92.1%" height="92.1%" src="{{ site.assets }}/diffusion/omnigen.svg"/> 
 
 {: .caption}
 The framework of OmniGen. Texts are tokenized into tokens, while input images are transformed into embedding via VAE. OmniGen can accept free-form multi-modal prompts and generate images through the rectified flow approach. The attention mask (left) is causal across the input sequence and bidirectional within each image. Adapted from: [OmniGen: Unified Image Generation](https://arxiv.org/abs/2409.11340).
@@ -594,7 +622,7 @@ The framework of OmniGen. Texts are tokenized into tokens, while input images ar
 A text-to-image diffusion model that replaces the commonly used T5 and CLIP text encoders with the latents of a decoder-only LLM (Llama3-8B), as illustrated in the following picture:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/diffusion/playground_v3.svg"/> 
+<img width="92.5%" height="92.5%" src="{{ site.assets }}/diffusion/playground_v3.svg"/> 
 
 {: .caption}
 Simplified structure of Playground v3 (PGv3). Text conditioning comes only from Llama3-8B, with no T5 or CLIP encoder: each PGv3 block attends jointly to the image tokens and to the keys and values of the matching Llama3 block. Adapted from: [Playground v3: Improving Text-to-Image Alignment with Deep-Fusion Large Language Models](https://arxiv.org/abs/2409.10695).
@@ -662,7 +690,7 @@ Tora can generate videos guided by trajectories, images, texts, or combinations 
 Its trajectory extractor "converts the trajectory into motion patches, which inhabit the same latent space as the video patches". Text encoding is provided by T5. The architecture of Tora is illustrated in the following picture:
 
 {: .picture}
-<img width="98.6%" height="98.6%" src="{{ site.assets }}/diffusion/tora.svg"/> 
+<img width="92.1%" height="92.1%" src="{{ site.assets }}/diffusion/tora.svg"/> 
 
 {: .caption}
 Overview of the Tora architecture. Tora adds two modules: the Trajectory Extractor and the Motion-guidance Fuser. The Trajectory Extractor uses a 3D motion VAE to embed trajectory vectors into the same latent space as video patches, preserving motion information across frames. It then employs stacked convolutional layers to extract hierarchical motion features. The Motion-guidance Fuser uses adaptive normalization layers to integrate these multi-level motion conditions into the corresponding DiT blocks, so that generated videos follow the defined trajectories. Tora uses the scalability of DiT to create motion-controllable videos of extended duration. Adapted from: [Tora: Trajectory-oriented Diffusion Transformer for Video Generation](https://arxiv.org/abs/2407.21705).
@@ -704,7 +732,7 @@ And here is some work on multi-dimensional parallelism for large-scale models su
 Presents DiT-MoE, a sparse [Mixture of Experts](https://en.wikipedia.org/wiki/Mixture_of_experts) (MoE) version of DiT, delivering good scaling properties, performance comparable to dense DiTs, and highly optimized inference. Its architecture is illustrated in the following picture:
 
 {: .picture}
-<img width="97.4%" height="97.4%" src="{{ site.assets }}/diffusion/dit_moe.svg"/> 
+<img width="92.6%" height="92.6%" src="{{ site.assets }}/diffusion/dit_moe.svg"/> 
 
 {: .caption}
 <b>Overview of the DiT-MoE architecture.</b> DiT-MoE is built upon the DiT and composed of MoE-inserted Transformer blocks. In each block, the MLP is replaced by a sparsely activated mixture of MLPs. The right subfigure shows the MoE layer with the shared expert strategy. Adapted from: [Scaling Diffusion Transformers to 16 Billion Parameters](https://arxiv.org/abs/2407.11633).
@@ -720,7 +748,7 @@ LongVILA details a 5-stage pipeline for training long-context visual-language mo
 In Stage 5, the model is fine-tuned for long video understanding with Multi-Modal Sequence Parallelism (MM-SP) based on [LoongTrain: Efficient Training of Long-Sequence LLMs with Head-Context Parallelism](https://arxiv.org/abs/2406.18485). The workflow of MM-SP is illustrated in the following picture:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/diffusion/longvilla.svg"/> 
+<img width="92.7%" height="92.7%" src="{{ site.assets }}/diffusion/longvilla.svg"/> 
 
 {: .caption}
 Workflow of Multi-Modal Sequence Parallelism (MM-SP) with a Batch Size (bs) of 4 and a Sequence Parallel Size (SP\_Size) of 3. To support sequence parallelism for multi-modal inputs, MM-SP uses a custom sharding strategy that balances the workload and is compatible with SP communication. Adapted from: [LongVILA: Scaling Long-Context Visual Language Models for Long Videos](https://arxiv.org/abs/2408.10188).
@@ -735,7 +763,7 @@ Workflow of Multi-Modal Sequence Parallelism (MM-SP) with a Batch Size (bs) of 4
 PipeFusion splits images into patches and distributes the network layers across multiple devices, orchestrating communication and computation in a pipeline-parallel manner. xDiT is a parallel **inference** engine for DiTs that uses [Unified Sequence Parallelism](https://arxiv.org/abs/2405.07719) (including Ulysses attention and Ring attention), PipeFusion, and hybrid parallelism. xDiT is applied to and benchmarked on the following DiT implementations: CogVideoX, Flux, Latte, HunyuanDiT, Stable Diffusion 3, PixArt-Sigma, PixArt-alpha. The following picture compares PipeFusion with DistriFusion:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/diffusion/pipefusion.svg"/> 
+<img width="92.4%" height="92.4%" src="{{ site.assets }}/diffusion/pipefusion.svg"/> 
 
 {: .caption}
 (a) DistriFusion replicates DiT parameters on two devices. It splits an image into 2 patches and employs asynchronous allgather for activations of every layer. (b) PipeFusion shards DiT parameters on two devices. It splits an image into 4 patches and employs asynchronous P2P for activations across two devices. In both panels, the orange and blue blocks run on the two devices. Adapted from: [PipeFusion: Displaced Patch Pipeline Parallelism for Inference of Diffusion Transformer Models](https://arxiv.org/abs/2405.14430).

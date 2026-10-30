@@ -292,7 +292,7 @@ The design philosophy is a balance of three layer types: MoE for sparse paramete
 <b>Nemotron-3-Nano-30B-A3B.</b> Nemotron 3 models (e.g., Nemotron 3 Nano) leverage a hybrid Mamba-Transformer MoE architecture consisting predominantly of interleaved Mamba-2 and MoE layers, with a select few self attention layers. Adapted from: [NVIDIA Nemotron 3: Efficient and Open Intelligence](https://arxiv.org/abs/2512.20856)
 
 {: .picture}
-<img loading="lazy" width="99.3%" height="99.3%" src="{{ site.assets }}/publications/nemotron3_2.svg"/>
+<img loading="lazy" width="92.8%" height="92.8%" src="{{ site.assets }}/publications/nemotron3_2.svg"/>
 
 {: .caption}
 Relative difference in train loss (left) and validation loss (right) between models trained with NVFP4 and BF16 (higher is better), shown at two model scales: Nemotron 3 Nano (A3B) and the larger MoE model (A8B). Loss gaps decrease as model size increases (A3B → A8B). Recipe ablation on Nemotron 3 Nano started from Nemotron 3 NVFP4 checkpoint at 500B tokens, then quantizes sensitive layers (Mamba Output, QKV, and Attention projections) to NVFP4, highlighting the importance of keeping these layers in high precision. Adapted from: [NVIDIA Nemotron 3: Efficient and Open Intelligence](https://arxiv.org/abs/2512.20856)
@@ -315,7 +315,7 @@ Comet works in two parts. (1) Dependency resolving: it maps out which pieces of 
 The authors note that the division point between computation and communication SMs depends on the model layer, input shape and level of parallelism. As the following picture illustrates, the number of [thread blocks](https://en.wikipedia.org/wiki/Thread_block_(CUDA_programming)) for communication that gives the shortest kernel duration (the dots) changes with the input size and with the mix of tensor and expert parallelism:
 
 {: .picture}
-<img loading="lazy" width="99.8%" height="99.8%" src="{{ site.assets }}/publications/comet.svg"/>
+<img loading="lazy" width="92.8%" height="92.8%" src="{{ site.assets }}/publications/comet.svg"/>
 
 {: .caption}
 Duration of the MoE layer1 kernel with varying number of thread blocks assigned for communication ($$n_c$$). The total number of thread blocks is identical to the number of SMs on Hopper(132). The figure shows four cases with different parallelisms. Adapted from: [Comet: Fine-grained Computation-communication Overlapping for Mixture-of-Experts](https://arxiv.org/abs/2502.19811)
@@ -366,7 +366,7 @@ The split is asymmetric (TPLA uses MLA for prefill and TPLA for decode) because 
 On DeepSeek-V3 and Kimi-K2 at 32K context, it delivers **1.79× and 1.93×** speedups while holding quality on commonsense and LongBench benchmarks, and it can be implemented with FlashAttention-3 for real end-to-end gains. The "disaggregated" framing fits the prefill/decode split: sharded latent for memory-bound decode, standard MLA for compute-bound prefill. The following picture compares MLA, GLA and TPLA on two devices (orange and green), from the latent KV cache at the bottom to the attention output at the top:
 
 {: .picture}
-<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/tpla.svg"/>
+<img loading="lazy" width="92.4%" height="92.4%" src="{{ site.assets }}/publications/tpla.svg"/>
 
 {: .caption}
 Comparison of MLA, GLA, and TPLA. In MLA, each device must load the entire KV cache. In GLA, each attention head only accesses the portion of the KV cache stored on its own device. In TPLA, the prefilling phase follows MLA for efficiency and accuracy, while during the decoding phase, attention heads are distributed across devices, each relying on the KV cache stored locally on its assigned device. Adapted from: [TPLA: Tensor Parallel Latent Attention for Efficient Disaggregated Prefill & Decode Inference](https://arxiv.org/abs/2508.15881)
@@ -981,7 +981,7 @@ The result is fewer bubbles and full forward/backward computation-communication 
 Unlike PipeFill, which accepts bubbles and fills them with unrelated jobs, DualPipe attacks the bubbles directly by densifying the main job's own schedule, making the two approaches complementary rather than competing. The following picture illustrates the DualPipe schedule, with the overlapped forward and backward pairs in the middle of each row:
 
 {: .picture}
-<img loading="lazy" width="99.2%" height="99.2%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
+<img loading="lazy" width="92.8%" height="92.8%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
 
 {: .caption}
 DualPipe on 8 GPUs: micro-batches 1 to 8 (light) enter at GPU 0, and micro-batches 9 to 16 (dark) enter at GPU 7. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other. Adapted from: [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437)
@@ -1059,7 +1059,7 @@ The authors used scaling laws ([Hoffmann et al., 2022](https://arxiv.org/abs/220
 The compute-optimal models are the minima of the IsoFLOPs curves (the validation loss against the number of training tokens, for a fixed compute budget), and their number of training tokens follows a power law of the compute budget. Extrapolated to the budget of the flagship model, this law suggests a 402B-parameter model trained on 16.55T tokens. The following picture illustrates the IsoFLOPs curves and the power law (figures 2 and 3 of the paper):
 
 {: .picture}
-<img loading="lazy" width="99.7%" height="99.7%" src="{{ site.assets }}/publications/llama3_scaling_laws.svg"/>
+<img loading="lazy" width="92.8%" height="92.8%" src="{{ site.assets }}/publications/llama3_scaling_laws.svg"/>
 
 {: .caption}
 <b>Left:</b> <b>Scaling law IsoFLOPs curves</b> between $$6 \times 10^{18}$$ and $$10^{22}$$ FLOPs. The loss is the negative log-likelihood on a held-out validation set. Measurements at each compute scale are approximated by a second-degree polynomial. <b>Right:</b> <b>Number of training tokens in identified compute-optimal models as a function of pre-training compute budget.</b> The line is the fitted scaling-law prediction. The compute-optimal models correspond to the parabola minima of the left plot. Adapted from: [The Llama 3 Herd of Models](https://arxiv.org/abs/2407.21783)
@@ -1084,7 +1084,7 @@ The authors also experiment with adding image, video, and speech capabilities, b
 The image encoder is a standard [vision transformer](https://en.wikipedia.org/wiki/Vision_transformer) trained to align images and text, the ViT-H/14 variant. They introduce cross-attention layers (using grouped-query attention) between the visual token representations produced by the image encoder and the token representations produced by the language model, after every 4th self-attention layer. The following picture illustrates the resulting multimodal model, where the color of each module marks its training stage:
 
 {: .picture}
-<img loading="lazy" width="99.5%" height="99.5%" src="{{ site.assets }}/publications/llama_3_multi_modal.svg"/>
+<img loading="lazy" width="92.8%" height="92.8%" src="{{ site.assets }}/publications/llama_3_multi_modal.svg"/>
 
 {: .caption}
 <b>Illustration of the compositional approach to adding multimodal capabilities to Llama 3 studied in the paper.</b> This approach leads to a multimodal model that is trained in five stages: <b>(1)</b> language model pre-training, <b>(2)</b> multi-modal encoder pre-training, <b>(3)</b> vision adapter training, <b>(4)</b> model finetuning, and <b>(5)</b> speech adapter training. Adapted from: [The Llama 3 Herd of Models](https://arxiv.org/abs/2407.21783)
@@ -1134,7 +1134,7 @@ To hide TP communication behind computation, "Domino provides extra and generic 
 As the attention computation is modularized and highly optimized (e.g. FlashAttention), "we keep $$A$$ untouched and do not conduct any tensor partitioning on $$A$$. Therefore, we only conduct tensor slicing on input tensor $$X$$ (section 3.2) and the second group of linear weights as $$B$$ (section 3.3). We also provide a hybrid tensor partition strategy of both $$X$$ and $$B$$ (section 3.4)." The following picture illustrates how both splits break $$X \cdot A \cdot B$$ into independent pieces, so that the AllReduce of one piece overlaps with the computation of another:
 
 {: .picture}
-<img loading="lazy" width="99.7%" height="99.7%" src="{{ site.assets }}/publications/domino.svg"/>
+<img loading="lazy" width="92.4%" height="92.4%" src="{{ site.assets }}/publications/domino.svg"/>
 
 {: .caption}
 **Left:** Domino row-wise (batch-dim) split on input <i>X</i>. The AllReduce of <i>Y</i><sub>1</sub> overlaps with the computation of <i>X</i><sub>2</sub> ⊗ <i>A</i> ⊗ <i>B</i> (intra-layer overlap), and the AllReduce of <i>Y</i><sub>2</sub> with the computation of <i>X</i><sub>1</sub> ⊗ <i>A</i> ⊗ <i>B</i> of the next layer (inter-layer overlap). **Right:** Domino col-wise (last-dim) split on weights <i>B</i>. The AllReduce of <i>Y</i><sub>3</sub> overlaps with the computation of <i>X</i> ⊗ <i>A</i> ⊗ <i>B</i><sub>2</sub>, but the next layer needs the concatenation of <i>Y</i><sub>3</sub> and <i>Y</i><sub>4</sub>, so the overlap stays within the layer. Here ⊗ is a matrix multiplication (GeMM). Adapted from: [Domino: Eliminating Communication in LLM Training via Generic Tensor Slicing and Overlapping](https://arxiv.org/abs/2409.15241)
@@ -1613,7 +1613,7 @@ LoRA blocks "suffer from two major problems: first, the size of these blocks is 
 They report training such dynamic, search-free models at least 4–7× faster than LoRA (depending on the task) without significantly compromising performance. The following picture illustrates the forward pass and the parameter updates of DyLoRA for two sampled ranks:
 
 {: .picture}
-<img loading="lazy" width="99.3%" height="99.3%" src="{{ site.assets }}/publications/dylora.svg"/>
+<img loading="lazy" width="92.5%" height="92.5%" src="{{ site.assets }}/publications/dylora.svg"/>
 
 {: .caption}
 The overall diagram of DyLoRA. In each iteration, a rank $$b$$ is sampled from a pre-defined random distribution $$P_B$$, which truncates the up-projection and down-projection matrices in the LoRA (Hu et al., 2021) objective: the forward pass uses only the first $$b$$ columns of $$W_{up}$$ and the first $$b$$ rows of $$W_{dw}$$, and the parameter update changes only the $$b$$-th column and row, while the others stay frozen (snowflakes). Adapted from: [DyLoRA: Parameter-Efficient Tuning of Pretrained Models using Dynamic Search-Free Low Rank Adaptation](https://arxiv.org/abs/2210.07558)
@@ -1738,7 +1738,7 @@ Contrastive learning "regards two augmentations from the same image as a positiv
 Contrastive Deep Supervision starts from those advancements, and optimizes the intermediate layers with contrastive learning instead of traditional supervised learning. The paper evaluates it on nine datasets with eleven models, in image classification, fine-grained classification and object detection. The following picture compares it with traditional supervised learning, contrastive learning and deep supervision:
 
 {: .picture}
-<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/contrastive_deep_supervision.svg"/>
+<img loading="lazy" width="92.6%" height="92.6%" src="{{ site.assets }}/publications/contrastive_deep_supervision.svg"/>
 
 {: .caption}
 The overview of the four methods: (a) traditional supervised learning, (b) contrastive learning, (c) deep supervision and (d) contrastive deep supervision. “→” and “<span style="color:#6c8ebf">→</span>” indicate the path of forward computation and gradients backward computation. “`proj`” and “`fc`” indicate the projection heads and the fully connected classifiers, respectively. The gray dash line indicates whether the feature is task-irrelevant or task-biased. (a) Traditional supervised learning only applies supervision to the last layer and propagates it to the previous layers, leading to gradient vanishing. (c) Deep supervision trains both the last layer and the intermediate layers directly, which addresses gradient vanishing but makes all the layers be biased to the task. (d) Contrastive deep supervision introduces contrastive learning to supervise the intermediate layer and thus avoids these problems. Adapted from: [Contrastive Deep Supervision](https://arxiv.org/abs/2207.05306)
@@ -1989,7 +1989,7 @@ The paper argues that neither convolutions (CNNs) nor attention (Transformers) a
 When pre-trained on large datasets (or with modern regularization), results are competitive with existing methods (e.g., 87.9% ImageNet top-1 when pre-trained on JFT-300M), at comparable pre-training and inference cost. The following picture illustrates the architecture of MLP-Mixer (bottom) and one of its Mixer layers (top), where the table of patches and channels is transposed (T) before and after the token-mixing MLP:
  
 {: .picture}
-<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/mlp_mixer.svg"/>
+<img loading="lazy" width="92.5%" height="92.5%" src="{{ site.assets }}/publications/mlp_mixer.svg"/>
 
 {: .caption}
 MLP-Mixer consists of per-patch linear embeddings, Mixer layers, and a classifier head. Mixer layers contain one token-mixing MLP and one channel-mixing MLP, each consisting of two fully-connected layers and a GELU nonlinearity. Other components include: skip-connections, dropout, and layer norm on the channels. Adapted from: [MLP-Mixer: An all-MLP Architecture for Vision](https://arxiv.org/abs/2105.01601)
@@ -2018,7 +2018,7 @@ where $$σ$$ is an activation function, $$U$$ and $$V$$ are linear projections a
 Here, $$s(·)$$ is the **Spatial Gating Unit** (Section 2.1): $$Z$$ is split along channels into $$(Z_1, Z_2)$$ and $$s(Z) = Z_1 \odot (W Z_2 + b)$$, a linear projection across the token (spatial) dimension, initialized so that the unit starts close to an identity ($$W \approx 0$$, $$b = 1$$). Unlike Transformers, it does not require position embeddings, because the positional information is captured in $$s(·)$$. The following picture illustrates a gMLP block (left), its Spatial Gating Unit (center) and their pseudo-code (right):
 
 {: .picture}
-<img loading="lazy" width="93.5%" height="93.5%" src="{{ site.assets }}/publications/pay_attention_to_mlps.svg"/>
+<img loading="lazy" width="92.7%" height="92.7%" src="{{ site.assets }}/publications/pay_attention_to_mlps.svg"/>
 
 {: .caption}
 Overview of the gMLP architecture with Spatial Gating Unit (SGU). The model consists of a stack of <i>L</i> blocks with identical structure and size. All projection operations are linear and “⊙” refers to element-wise multiplication (linear gating). The input and output protocols follow BERT for NLP and ViT for vision. Unlike Transformers, gMLPs do not require positional encodings, nor is it necessary to mask out the paddings during NLP finetuning. Adapted from: [Pay Attention to MLPs](https://arxiv.org/abs/2105.08050)
@@ -2067,7 +2067,7 @@ on a relatively modest amount of data and stopping significantly before converge
 The following picture illustrates the test loss as a function of the compute, the dataset size and the number of parameters:
 
 {: .picture}
-<img loading="lazy" width="99.9%" height="99.9%" src="{{ site.assets }}/publications/scaling_laws.svg"/>
+<img loading="lazy" width="92.8%" height="92.8%" src="{{ site.assets }}/publications/scaling_laws.svg"/>
 
 {: .caption}
 Language modeling performance improves smoothly as the model size, dataset size, and amount of compute used for training increase. For optimal performance all three factors must be scaled up in tandem. Empirical performance has a power-law relationship with each individual factor when not bottlenecked by the other two. Adapted from: [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361)
@@ -2124,7 +2124,7 @@ a natural language instruction describing the task.
 The following picture illustrates the outer and inner loops of the meta-learning of a language model:
 
 {: .picture}
-<img loading="lazy" width="97.3%" height="97.3%" src="{{ site.assets }}/publications/gpt3_fig11.svg"/> 
+<img loading="lazy" width="92.4%" height="92.4%" src="{{ site.assets }}/publications/gpt3_fig11.svg"/> 
 
 {: .caption}
 <b>Language model meta-learning.</b> During unsupervised pre-training, a language model develops a broad set of skills and pattern recognition abilities. It then uses these abilities at inference time to rapidly adapt to or recognize the desired task. The term “in-context learning” describes the inner loop of this process, which occurs within the forward-pass upon each sequence. The sequences in this diagram are not intended to be representative of the data a model would see during pre-training, but are intended to show that there are sometimes repeated sub-tasks embedded within a single sequence. Adapted from: [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165)
@@ -2293,7 +2293,7 @@ reconstruction loss."
 Equation 3 specifies the overall loss: the reconstruction loss, a codebook loss $$\| sg[z_e(x)] - e \|_2^2$$ that moves the embeddings towards the encoder outputs, and a commitment loss $$\beta \| z_e(x) - sg[e] \|_2^2$$ that keeps the encoder committed to an embedding ($$sg$$ is the stop-gradient operator). The gradient of the reconstruction loss is copied straight-through across the non-differentiable mapping from $$z_e(x)$$ to $$z_q(x)$$. The following picture illustrates the nearest-embedding lookup between the encoder and the decoder, and the straight-through gradient (in red):
 
 {: .picture}
-<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/rqvae.svg"/>
+<img loading="lazy" width="92.4%" height="92.4%" src="{{ site.assets }}/publications/rqvae.svg"/>
 
 {: .caption}
 Left: A figure describing the VQ-VAE. Right: Visualisation of the embedding space. The output of the encoder <i>z</i><sub>e</sub>(<i>x</i>) is mapped to the nearest point <i>e</i><sub>2</sub>. The gradient ∇<sub><i>z</i></sub><i>L</i> (in red) will push the encoder to change its output, which could alter the configuration in the next forward pass. Adapted from: [Neural Discrete Representation Learning](https://arxiv.org/abs/1711.00937)

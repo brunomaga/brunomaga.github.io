@@ -220,7 +220,7 @@ During ring attention, each process keeps its local chunk of queries and **rotat
 This pattern can be illustrated as:
 
 {: .picture}
-<img width="98.9%" height="98.9%" src="{{ site.assets }}/distributed-training/imgs/ring_attention.svg"/>
+<img width="92.6%" height="92.6%" src="{{ site.assets }}/distributed-training/imgs/ring_attention.svg"/>
 
 {: .caption}
 Overview of the Ring Attention algorithm. **Before Ring Attention:** the initial view of the input tensor, distributed across 4 color-coded GPUs and split along the sequence (`S`) dimension. **1st Ring Attention step:** each process holds its part of the Query, Key and Value tensors (Q, K and V) and computes block attention on them. Meanwhile, each process asynchronously sends its Key and Value tensors to the next process in the ring (clockwise). **2nd, 3rd, and 4th steps:** each process receives the Key and Value blocks of the previous process and computes the attention output for its original Query tensor and the received Key/Value tensors. **After Ring Attention:** the MHA output is already sequence-split across processes, as in the initial data layout. Inspired by: [Ring Attention with Blockwise Transformers for Near-Infinite Context](https://arxiv.org/abs/2310.01889)

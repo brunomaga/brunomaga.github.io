@@ -19,7 +19,7 @@ A GPT-like model generates text *autoregressively*: it reads the prompt, predict
 The following picture illustrates both phases for a prompt of four tokens and four output tokens, with the keys and values that each step writes to the KV cache and reads from it:
 
 {: .picture}
-<img width="96.4%" height="96.4%" src="{{ site.assets }}/inference/imgs/prefill_decode.svg"/>
+<img width="92.8%" height="92.8%" src="{{ site.assets }}/inference/imgs/prefill_decode.svg"/>
 
 This observation motivates most of this post. Almost every decode optimization does one of three things:
 - it **reads fewer bytes** per token (quantization, smaller KV caches, smaller models), or
@@ -46,7 +46,7 @@ The [roofline model](https://en.wikipedia.org/wiki/Roofline_model), presented in
 An example of a roofline chart with three applications is displayed below:
 
 {: .picture}
-<img width="98.9%" height="98.9%" src="{{ site.assets }}/inference/imgs/roofline.svg"/>
+<img width="92.7%" height="92.7%" src="{{ site.assets }}/inference/imgs/roofline.svg"/>
 
 {: .caption}
 A roofline plot, on a log-log scale. Below the ridge point, the roof rises with the arithmetic intensity at the peak memory bandwidth; beyond it, the roof is flat at the peak performance. App<sub>1</sub> is memory-bound. App<sub>2</sub> is compute-bound and runs below the peak performance. The arrows show how an application at ❌ moves right (more FLOPs per byte), moves up (closer to the roof), or gains from a higher roof. Adapted from: [Roofline model, Wikipedia](https://en.wikipedia.org/wiki/Roofline_model)
@@ -253,7 +253,7 @@ In the attention layer, the query of the new token attends to the keys and value
 Without a cache, each decode step recomputes the keys and values of the whole sequence, so generating $$n$$ tokens costs $$O(n^2)$$ work in the projections and MLPs and $$O(n^3)$$ in attention. With a cache, each step only computes the query, key and value of the new token, appends the new key and value to the cache, and attends over all cached ones: $$O(n)$$ and $$O(n^2)$$ in total. Queries do not need to be cached, because the query of a past token was only needed to compute the output at that past position. The following picture illustrates the attention of one head in a decode step, without and with the KV cache:
 
 {: .picture}
-<img width="96%" height="96%" src="{{ site.assets }}/inference/imgs/kv_cache.svg"/>
+<img width="89%" height="89%" src="{{ site.assets }}/inference/imgs/kv_cache.svg"/>
 
 {: .caption}
 **Without KV cache:** generating $$n$$ tokens costs $$O(n^2)$$ in the projections and the MLP, and $$O(n^3)$$ in attention. **With KV cache:** generating $$n$$ tokens costs $$O(n)$$ in the projections and the MLP, and $$O(n^2)$$ in attention.
@@ -482,7 +482,7 @@ Serving many requests at once makes memory management hard, because the final le
 Almost no memory is wasted, so more sequences fit in a batch: vLLM reported 2-4 times higher throughput than previous systems. A block can also be shared by several sequences, and copied only when one of them writes to it ([copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write)), which is how prefix caching, parallel sampling and [beam search](https://en.wikipedia.org/wiki/Beam_search) share their common prefix. An illustration of the block tables of two sequences, with blocks of 4 tokens, is displayed below:
 
 {: .picture}
-<img width="98.8%" height="98.8%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
+<img width="92.8%" height="92.8%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
 
 {: .caption}
 The attention kernel reads the blocks of each sequence through its block table, and a sequence wastes at most 3 slots, in its last block. Inspired by: [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180)
@@ -553,7 +553,7 @@ Many requests start with the same tokens: a system prompt, tool definitions, a l
 The following picture illustrates the lookup for three requests whose prompts start with the same tokens:
 
 {: .picture}
-<img width="99.2%" height="99.2%" src="{{ site.assets }}/inference/imgs/prefix_caching.svg"/>
+<img width="92.5%" height="92.5%" src="{{ site.assets }}/inference/imgs/prefix_caching.svg"/>
 
 {: .caption}
 Automatic prefix caching, with blocks of 4 tokens (16 in vLLM). The hash of each block chains the hash of the previous block with the tokens of the block. Request 2 reuses the first two blocks of request 1 and prefills 4 tokens. Request 3 reuses only the first block: its last block holds the same tokens as that of request 1, but its hash differs because its second block differs, so request 3 prefills 8 tokens.
@@ -616,7 +616,7 @@ A semantic cache sits in front of the model, in the application. For every incom
 The diagram below illustrates these four steps:
 
 {: .picture}
-<img width="94%" height="94%" src="{{ site.assets }}/inference/imgs/semantic_caching.svg"/>
+<img width="92.6%" height="92.6%" src="{{ site.assets }}/inference/imgs/semantic_caching.svg"/>
 
 {: .caption}
 A semantic cache. The vector index finds the past query whose embedding is closest to that of the new query. If their similarity reaches the threshold, as it may for a paraphrase such as "What is the price of corn in Rome?", the cache returns the stored answer of that query. Otherwise, the LLM answers, and the embedding and the answer are stored.
@@ -759,7 +759,7 @@ Each chunk attends to the KV cache of the earlier chunks. Suppose an 8,000-token
 The example of the 8,000-token prompt is illustrated below, without and with chunked prefill:
 
 {: .picture}
-<img width="99.7%" height="99.7%" src="{{ site.assets }}/inference/imgs/chunked_prefill.svg"/>
+<img width="92.4%" height="92.4%" src="{{ site.assets }}/inference/imgs/chunked_prefill.svg"/>
 
 The following code implements chunked prefill:
 
@@ -785,7 +785,7 @@ Instead, the sequences are concatenated, and **each step is one forward pass ove
 The following picture illustrates three sequences in a padded batch and in a ragged batch, with the block-diagonal causal mask of the ragged batch:
 
 {: .picture}
-<img width="99.9%" height="99.9%" src="{{ site.assets }}/inference/imgs/ragged_batching.svg"/>
+<img width="91.8%" height="91.8%" src="{{ site.assets }}/inference/imgs/ragged_batching.svg"/>
 
 The following code packs sequences of different lengths into one flat sequence, with the position of every token, the block-diagonal causal mask, and the indices of the last tokens:
 
@@ -852,7 +852,7 @@ This is the design of [DistServe](https://arxiv.org/abs/2401.09670), [Splitwise]
 To avoid sending large KV cache chunks and waiting for them, modern engines use **layer-wise streaming** (a pipeline overlap of computation and communication). As soon as layer 1 finishes its prefill, it starts transmitting its KV cache chunks over the network, while layer 2 is still computing. The destination can be the [High-Bandwidth Memory](https://en.wikipedia.org/wiki/High_Bandwidth_Memory) (HBM) of a decode GPU or, in more advanced cases, a shared cluster acting as a **KV cache store**, e.g., [Mooncake](https://www.zhongzhuzhou.org/blog/2026-05-28-mooncake-technical-review-en/) or [LMCache](https://docs.lmcache.ai/mp/disaggregated_prefill.html). An illustration of the prefill and decode pools, and of the layer-wise streaming of the KV cache, is displayed below:
 
 {: .picture}
-<img width="99.7%" height="99.7%" src="{{ site.assets }}/inference/imgs/disaggregation.svg"/>
+<img width="92.6%" height="92.6%" src="{{ site.assets }}/inference/imgs/disaggregation.svg"/>
 
 {: .caption}
 The prefill pool computes the KV cache and the first token of each request, and sends them to the decode pool. In the layer-wise streaming of the KV cache, the transfer of each layer overlaps with the compute of the next layers, and only the transfer of the last layer delays the decode. Inspired by: [Splitwise: Efficient Generative LLM Inference Using Phase Splitting](https://arxiv.org/abs/2311.18677)

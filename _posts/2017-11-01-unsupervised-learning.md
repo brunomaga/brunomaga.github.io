@@ -382,11 +382,11 @@ The input dataset and the `python` implementation are available in <a href="{{ s
 
 
 {: .picture}
-<img width="29.4%" height="29.4%" src="{{ site.assets }}/unsupervised-learning/kohonen_1.svg">
+<img width="27.1%" height="27.1%" src="{{ site.assets }}/unsupervised-learning/kohonen_1.svg">
 <span style="display:inline-block; width:1cm;"></span>
-<img width="29.6%" height="29.6%" src="{{ site.assets }}/unsupervised-learning/kohonen_2.svg">
+<img width="27.2%" height="27.2%" src="{{ site.assets }}/unsupervised-learning/kohonen_2.svg">
 <span style="display:inline-block; width:1cm;"></span>
-<img width="29.2%" height="29.2%" src="{{ site.assets }}/unsupervised-learning/kohonen_3.svg">
+<img width="26.7%" height="26.7%" src="{{ site.assets }}/unsupervised-learning/kohonen_3.svg">
  
  
 More examples can be found in the [Wikipedia entry for self-organizing maps](https://en.wikipedia.org/wiki/Self-organizing_map#Examples).
