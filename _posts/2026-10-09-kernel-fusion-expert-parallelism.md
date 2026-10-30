@@ -17,11 +17,6 @@ However, both run the transfers on the accelerator's own compute units, as a tra
 
 This post describes a kernel that takes the transfers off the compute units. It first compares the two common implementations of the MoE collectives, AllGather-ReduceScatter and All-to-All, and their forms on an **in-network computing** (INC) switch, i.e. a network switch that computes. It then covers two INC methods for the MoE layer, the INC all-to-all and its phased variant for switches with little memory, and a kernel that fuses the whole layer into a single launch of eight stages, [pipelined](https://en.wikipedia.org/wiki/Pipeline_(computing)) over microbatches so that three classes of hardware units work at the same time. The post ends with the results on a node with four compute devices.
 
-{::options toc_levels="2..3" /}
-
-* TOC
-{:toc}
-
 ## Expert parallelism: dispatch and combine
 
 Consider $$W$$ compute ranks, i.e. devices, and an MoE layer of $$E$$ experts, where each token selects its top-$$k$$ experts. With expert parallelism, each rank holds $$E_{\text{loc}} = E/W$$ experts, and the layer processes $$N$$ tokens of width $$H$$, split into microbatches of $$m_b$$ tokens. Every MoE layer then runs two [collectives](https://en.wikipedia.org/wiki/Collective_operation):
@@ -37,21 +32,11 @@ Each rank is therefore the **token rank** of its tokens and the **expert rank** 
 | $$P_1$$ | | B | B |
 | $$P_2$$ | C | C | |
 
-The collectives in this post are built with the one-sided operations of [SHMEM](https://en.wikipedia.org/wiki/SHMEM), which reach the memory of a remote rank without involving it. The ranks address each other through a **symmetric heap**, a memory region allocated at the same offset on every rank. Seven operations are needed, each given with the OpenSHMEM call that implements it:
-
-- `put_signal*` (`shmem_putmem_signal_nbi`) writes a contiguous payload into the symmetric heap of a remote rank, and then raises a flag there, in one nonblocking call (the asterisk marks the nonblocking calls);
-- `put*` (`shmem_putmem_nbi`) writes a contiguous payload into the symmetric heap of a remote rank, without a flag, in one nonblocking call;
-- `signal` (`shmemx_signal_op`, an extension of OpenSHMEM) raises a remote flag without data, and a zero-length `put_signal*` can replace it;
-- `get` (`shmem_getmem`) copies a region of the symmetric heap of a remote rank into local memory, and blocks until the copy is done;
-- `wait_until` (`shmem_signal_wait_until`) blocks until a local flag satisfies a comparison, e.g. until it is raised;
-- `wait_until_some` (`shmem_wait_until_some`) blocks until any of a set of local flags satisfies a comparison, and reports which;
-- `quiet` (`shmem_quiet`) blocks until every nonblocking put that the caller issued has completed.
-
-The INC all-to-all phased, described later, also uses an INC [barrier](https://en.wikipedia.org/wiki/Barrier_(computer_science)), at which every rank waits until all ranks have joined.
+The INC all-to-all phased, described later, uses an INC [barrier](https://en.wikipedia.org/wiki/Barrier_(computer_science)), at which every rank waits until all ranks have joined.
 
 Two implementations of the dispatch and combine, or *backends*, are common: AllGather-ReduceScatter and All-to-All. Each of them runs through a regular switch that relays packets, or through an INC switch, so there are four **communication models**, and the last of them also has a phased variant. In this post, the dispatch (one-to-many) always follows a **push model**, in which each sender writes its data to the receiver. Without INC, the combine (many-to-one) follows a push model too, and the owner of each token sums the partial results that it receives (*rank reduce*); with INC, it follows a **pull model**, in which the INC switch reads the partial results itself and sums them (*INC reduce*).
 
-Each model below comes with a table of its one-sided operations per microbatch: those that a token rank $$P_x$$, the switch and an expert rank $$P_y$$ issue on the dispatch, from $$P_x$$ to $$P_y$$, and on the combine, back to $$P_x$$. The tables also give the **steps**, i.e. the transfers on the critical path from the data being ready to its delivery, the **relays** per node, i.e. the packets that cross the switch for each rank, and what the switch holds and waits for. For a token rank $$P_x$$, $$T_x \le T$$ is the number of its $$T$$ tokens that it sends in the current microbatch, and $$W_x \le W$$ the number of ranks that hold the experts these tokens are routed to.
+The pictures below count the **steps** of each model, i.e. the transfers on the critical path from the data being ready to its delivery. The **relays** are the packets that cross the switch for each rank.
 
 ## AllGather-ReduceScatter
 
@@ -62,18 +47,6 @@ Each model below comes with a table of its one-sided operations per microbatch: 
 
 {: .caption}
 AllGather-ReduceScatter through a switch that relays each packet, with the dispatch (All-Gather) on the left and the combine (Reduce-Scatter) on the right. $$A_0$$ is token A sent to the expert rank $$P_0$$, $$E_0(\text{AC}_0)$$ the expert $$E_0$$ of $$P_0$$ processing tokens A and C, $$\sigma^y_t$$ the partial sum of the expert outputs of $$P_y$$ for token $$t$$, $$\Sigma_t = \sigma^0_t + \sigma^1_t + \sigma^2_t$$ their sum across all ranks, i.e. the final output of token $$t$$, and $$\emptyset$$ a token without output. Under each collective, a bracket names its model and counts its steps per node $$P_x$$.
-
-The one-sided operations per microbatch are:
-
-| | All-Gather (dispatch, push) | Reduce-Scatter (combine, push) |
-|:--|:--|:--|
-| Token rank $$P_x$$ | `put_signal*` $$\times W$$ | `wait_until` $$\times W$$ + rank reduce |
-| Switch | (`wait_until_some` + `put_signal*`) $$\times W^2$$ | (`wait_until_some` + `put_signal*`) $$\times W^2$$ |
-| Expert rank $$P_y$$ | `wait_until_some` $$\times W$$ | `put_signal*` $$\sigma$$ $$\times W$$ |
-| Steps | 2 | 2 |
-| Relays per node | $$W$$ in, $$W$$ out | $$W$$ in, $$W$$ out |
-| Switch holds | one packet | one packet |
-| Switch waits for | none | none |
 
 AllGather-ReduceScatter does not depend on the routing, which makes it simple, but it moves up to $$W$$ times more data than needed: each rank pushes its tokens $$W$$ times on the dispatch, once per destination, and its outputs $$W$$ times on the combine.
 
@@ -86,18 +59,6 @@ AllGather-ReduceScatter does not depend on the routing, which makes it simple, b
 
 {: .caption}
 All-to-All through a switch that relays each packet, with the dispatch on the left and the combine on the right, in the notation of AllGather-ReduceScatter. $$\emptyset$$ on a dotted arrow is a signal alone, sent where a rank has no data for the destination.
-
-The one-sided operations per microbatch are the same as those of AllGather-ReduceScatter, but on $$T_x$$ tokens or outputs per destination instead of $$T$$:
-
-| | All-to-All (dispatch, push) | All-to-All (combine, push) |
-|:--|:--|:--|
-| Token rank $$P_x$$ | `put_signal*` $$\times W$$ | `wait_until` $$\times W$$ + rank reduce |
-| Switch | (`wait_until_some` + `put_signal*`) $$\times W^2$$ | (`wait_until_some` + `put_signal*`) $$\times W^2$$ |
-| Expert rank $$P_y$$ | `wait_until_some` $$\times W$$ | `put_signal*` $$\sigma$$ $$\times W$$ |
-| Steps | 2 | 2 |
-| Relays per node | $$W$$ in, $$W$$ out | $$W$$ in, $$W$$ out |
-| Switch holds | one packet | one packet |
-| Switch waits for | none | none |
 
 The cost of the selective send is that the message sizes depend on the routing, so every receiver must know how much data it gets from each sender. Two-sided libraries such as [MPI](https://en.wikipedia.org/wiki/Message_Passing_Interface) therefore need an additional all-to-all beforehand, in which the ranks trade their send and receive counts, as in the [distributed implementation of the MoE post]({{ site.baseurl }}{% post_url 2024-01-19-mixture-of-experts %}#distributed-implementation-in-pytorch). This setup step adds the latency of one more collective to every layer, although the setup of a step can sometimes be overlapped with the computation of the previous one. The one-sided implementation of this post sends the counts with the tokens instead: the first chunk that a token rank puts to each rank holds the number of chunks and bytes and the top-$$k$$ experts of its tokens, and a rank with no tokens for a destination sends it a `put_signal*` with no payload, i.e. a signal alone ($$\emptyset$$ in the picture above), so that no receiver waits forever. One bit of the signal tag says whether a payload came with it. Thus, each collective still puts a packet from every rank to every rank, i.e. $$W^2$$ packets into the switch and $$W^2$$ packets out of it, although only those with tokens carry a payload, and the owner of each token sums the partial results that it receives.
 
@@ -124,19 +85,7 @@ An INC switch improves AllGather-ReduceScatter with fewer relays and less bandwi
 {: .caption}
 INC AllGather-ReduceScatter, with INC All-Gather on the left and INC Reduce-Scatter on the right. $$A_{012}$$ is token A for the expert ranks $$P_0$$, $$P_1$$ and $$P_2$$, $$\text{ABC}_0$$ the tokens A, B and C for $$P_0$$, $$\sigma^0_{A\emptyset C}$$ the partial sums of $$P_0$$ for the tokens A and C, with no output for B, and $$r^0_{A\emptyset C}$$ the signal that they are ready (dotted). The first INC switch of the combine maps each ready signal, in a dashed box, to the pull of the partial sums that it names, $$r^y_t \rightarrow \sigma^y_t$$; the expert ranks are drawn again where the INC switch pulls from them.
 
-The one-sided operations per microbatch are:
-
-| | INC All-Gather (dispatch, INC push) | INC Reduce-Scatter (combine, INC pull) |
-|:--|:--|:--|
-| Token rank $$P_x$$ | `put_signal*` $$\times 1$$ | `wait_until` $$\Sigma$$ $$\times 1$$ |
-| INC switch | `wait_until_some` $$\times W$$ + `put_signal*` $$\times W$$ | (`wait_until_some` $$r$$ + `get` $$\sigma$$ + add to $$\Sigma$$) $$\times W$$ + `put_signal*` $$\Sigma$$ $$\times W$$ |
-| Expert rank $$P_y$$ | `wait_until_some` $$\times 1$$ | `signal` $$r$$ $$\times 1$$ |
-| Steps | 2 | 3 |
-| Relays per node | 1 in, 1 out | 1 in, 1 out, plus 1 signal |
-| Switch holds | the tokens of every rank, until the last arrives | the sums $$\Sigma$$ of every rank |
-| Switch waits for | all $$W$$ ranks | all $$W$$ ranks |
-
-Compared with the table of AllGather-ReduceScatter, each rank issues one operation per collective instead of $$W$$, and one packet per rank crosses the switch in each direction, instead of $$W$$. As INC switches such as NVLink SHARP support it already, and as it is a single-step communication, with no setup step to exchange counts as in All-to-All, AllGather-ReduceScatter is still used for the dispatch and combine of many production systems. As an example, the MoE layers of [Megatron-Core](https://docs.nvidia.com/megatron-core/developer-guide/latest/apidocs/core/core.transformer.moe.token_dispatcher_inference.html) can dispatch and combine for inference with an all-gather and a reduce-scatter on NVLink SHARP, and [vLLM](https://docs.vllm.ai/en/latest/serving/expert_parallel_deployment/) offers an AllGather-ReduceScatter backend next to its all-to-all ones.
+Compared with AllGather-ReduceScatter, each rank issues one operation per collective instead of $$W$$, and one packet per rank crosses the switch in each direction, instead of $$W$$. As INC switches such as NVLink SHARP support it already, and as it is a single-step communication, with no setup step to exchange counts as in All-to-All, AllGather-ReduceScatter is still used for the dispatch and combine of many production systems. As an example, the MoE layers of [Megatron-Core](https://docs.nvidia.com/megatron-core/developer-guide/latest/apidocs/core/core.transformer.moe.token_dispatcher_inference.html) can dispatch and combine for inference with an all-gather and a reduce-scatter on NVLink SHARP, and [vLLM](https://docs.vllm.ai/en/latest/serving/expert_parallel_deployment/) offers an AllGather-ReduceScatter backend next to its all-to-all ones.
 
 DeepSeek considers both sides. DeepSeek-V3 runs its dispatch and combine as an all-to-all without INC, with point-to-point transfers that its SMs issue, and asks for hardware that takes over this work, i.e. a network co-processor like SHARP, with read, write, multicast and reduce operations. The [Insights into DeepSeek-V3](https://arxiv.org/abs/2505.09343) paper names both INC opportunities, a dispatch that "resembles a small-scale multicast" and a combine that could use in-network aggregation, but judges a flexible combine hard to implement in the network, because of its small reduction scope and its imbalanced load. The pull model of the INC combine below, which adds the partial results in whatever order they become ready, is a response to this concern. Similarly, a [deployment of DeepSeek-V4-Pro in SGLang](https://www.lmsys.org/blog/2026-08-19-deepseek-v4-pro-engine-optimization-h20) runs the MoE layers of the prefill with an all-gather and a reduce-scatter, whose communication is predictable, and those of the decode with the all-to-all of DeepEP.
 
@@ -154,7 +103,7 @@ Once every sender has arrived, the switch sends each expert rank the tokens that
 
 The conventional combine is wasteful in two ways: the $$W$$ partial results of a token cross the network independently, and their sum on the owner cannot start until all of them have arrived.
 
-The transfer and the sum are fused into **INC All-to-All-Combine**, an all-to-all extended with an in-network selective reduction: a many-to-one collective on an INC pull model, as in INC Reduce-Scatter. Each expert rank writes its partial results into its own symmetric heap, raises its ready flag on the INC switch with one `signal`, and goes back to the experts. The switch serves the flags in the order they rise, found with `wait_until_some`: it pulls the partial results of each rank with one `get`, and adds them to the sum *as they land*. Once all ranks are in, it sends each token rank its rows of the sum with one `put_signal*`, which the rank waits for with `wait_until`.
+The transfer and the sum are fused into **INC All-to-All-Combine**, an all-to-all extended with an in-network selective reduction: a many-to-one collective on an INC pull model, as in INC Reduce-Scatter. Each expert rank writes its partial results into its own **symmetric heap**, a memory region allocated at the same offset on every rank and reachable by the switch, raises its ready flag on the INC switch with one `signal`, and goes back to the experts. The switch serves the flags in the order they rise, found with `wait_until_some`: it pulls the partial results of each rank with one `get`, and adds them to the sum *as they land*. Once all ranks are in, it sends each token rank its rows of the sum with one `put_signal*`, which the rank waits for with `wait_until`.
 
 The combine needs no metadata of its own, as it reuses the counts per sender of the dispatch, transposed, and the compute ranks run no cross-rank arithmetic. Note that each expert rank applies the routing weights to its expert outputs before it publishes its partial results, so the switch only adds them. The following picture shows both collectives on the example above:
 
@@ -163,18 +112,6 @@ The combine needs no metadata of its own, as it reuses the counts per sender of 
 
 {: .caption}
 The dispatch and combine of the example through the INC switch, with $$W$$ transfers in and $$W$$ out per collective. **Left:** INC All-to-All-Dispatch. **Right:** INC All-to-All-Combine. $$A_{02}$$ is token A for the expert ranks $$P_0$$ and $$P_2$$, $$\text{AC}_0$$ the tokens A and C for $$P_0$$, $$\sigma^y_{AC}$$ the partial sums of $$P_y$$ for tokens A and C, and $$r^y_{AC}$$ the signal that they are ready (dotted). The INC switch maps each ready signal to the pull of the partial sums that it names, $$r^y_t \rightarrow \sigma^y_t$$, and adds them into $$\Sigma_t$$.
-
-The one-sided operations per microbatch are:
-
-| | INC All-to-All-Dispatch (INC push) | INC All-to-All-Combine (INC pull) |
-|:--|:--|:--|
-| Token rank $$P_x$$ | `put_signal*` $$\times 1$$ | `wait_until` $$\Sigma$$ $$\times 1$$ |
-| INC switch | (`wait_until_some` + group by expert rank) $$\times W$$ + `put_signal*` $$\times W$$ | (`wait_until_some` $$r$$ + `get` $$\sigma$$ + add to $$\Sigma$$) $$\times W$$ + `put_signal*` $$\Sigma$$ $$\times W$$ |
-| Expert rank $$P_y$$ | `wait_until_some` $$\times 1$$ | `signal` $$r$$ $$\times 1$$ |
-| Steps | 2 | 3 |
-| Relays per node | 1 in, 1 out | 1 in, 1 out, plus 1 signal |
-| Switch holds | the tokens of every token rank, until the last arrives | the sums $$\Sigma$$ of every token rank |
-| Switch waits for | all $$W$$ token ranks | all $$W$$ expert ranks |
 
 Every flag is a 32-bit integer, into which each sender writes the *magic* of its step, a value that strictly increases from step to step, so that a flag left from an earlier step never reads as an arrival. Slots are indexed by the microbatch modulo the pipeline depth, and a slot is written again only after the combine of the microbatch that used it has completed. As this combine follows every read of the slot, no further flow control is needed: in INC All-to-All-Combine, each rank receives its sums only after the switch has pulled the partial results of every rank. The INC switch also starts the next sum only after a `quiet` has completed the puts that read the previous one.
 
@@ -220,18 +157,6 @@ The following picture shows the INC all-to-all phased on the example, in a simpl
 {: .caption}
 INC All-to-All-Dispatch (Phased) on the left and INC All-to-All-Combine (Phased) on the right, with $$G=1$$, following token C of $$P_2$$ (black; the other phases are faded). The INC switch multicasts C to $$P_0$$ and $$P_1$$, which join an INC barrier (stopwatch), and once every token rank has sent its request, $$\text{rank}^{01}_C$$ for $$P_2$$, which names the expert ranks of token C, it pulls their partial sums for C and returns $$\Sigma_C$$ to $$P_2$$. Because of industry confidentiality, the drawing omits the details of the implementation. Brackets count the steps per node $$P_x$$, where $$W_x \le W$$ is the number of ranks that hold the experts of its tokens.
 
-The one-sided operations per microbatch, for one token rank per phase ($$G=1$$), are:
-
-| | INC All-to-All-Dispatch (Phased, INC push) | INC All-to-All-Combine (Phased, INC pull) |
-|:--|:--|:--|
-| Token rank $$P_x$$ | `put_signal*` $$\times 1$$ + barrier | `put_signal*` $$\text{rank}$$ $$\times 1$$ + `wait_until` $$\Sigma$$ $$\times 1$$ |
-| INC switch | (`wait_until_some` + `put*` $$\times W_x$$ + `quiet`) $$\times W$$ + barrier | `wait_until` $$\text{rank}$$ $$\times W$$ + ((`get` $$\sigma$$ + add to $$\Sigma$$) $$\times W_x$$ + `put_signal*` $$\Sigma$$ + `quiet`) $$\times W$$ |
-| Expert rank $$P_y$$ | barrier | none |
-| Steps | 2 | 3 |
-| Relays per node | 1 in, $$W_x$$ out | $$W_x$$ in, 1 out, plus 1 request |
-| Switch holds | the tokens of one token rank, until they are multicast | the sum $$\Sigma$$ of one token rank |
-| Switch waits for | none, until the barrier | the requests of all $$W$$ token ranks |
-
 The timeline below follows the three tokens of the example through the INC all-to-all phased, in the same simplified view:
 
 {: .picture}
@@ -257,7 +182,7 @@ The kernel is described in hardware-agnostic terms, which apply to the accelerat
 - **matrix units** (MUs) for two-dimensional matrix operations, such as matrix multiplications;
 - **vector units** (VUs) for elementwise work, gathers, scatters and data movement.
 
-Memory is divided into the off-chip **global memory** (GM), i.e. the [high-bandwidth memory](https://en.wikipedia.org/wiki/High_Bandwidth_Memory) (HBM) of large capacity, and the on-chip **local memory** (LM), a [scratchpad](https://en.wikipedia.org/wiki/Scratchpad_memory) managed by software (e.g. the shared memory of a GPU). An interconnect fabric links the devices into one logical node, and a collective communication library (CCL) provides the collectives over it, next to the one-sided operations above.
+Memory is divided into the off-chip **global memory** (GM), i.e. the [high-bandwidth memory](https://en.wikipedia.org/wiki/High_Bandwidth_Memory) (HBM) of large capacity, and the on-chip **local memory** (LM), a [scratchpad](https://en.wikipedia.org/wiki/Scratchpad_memory) managed by software (e.g. the shared memory of a GPU). An interconnect fabric links the devices into one logical node, and a collective communication library (CCL) provides the collectives over it, next to the one-sided operations of the collectives above.
 
 Note that a cross-rank transfer is issued by a vector unit and staged through its local memory, so a rank that communicates always spends vector unit cycles on it. This hardware fact motivates the whole design.
 
@@ -338,47 +263,11 @@ Note that on a $$\log_2$$ axis a constant speedup is a constant vertical offset.
 | MegaKernel+INC | **1.54 to 2.04** | **2.53 to 3.49** | **1.27 to 1.58** | **1.10 to 1.22** |
 | MegaKernel+INC (Phased, $$G=1$$) | 1.48 to 1.85 | 2.27 to 3.13 | 1.17 to 1.46 | 1.11 to 1.17 |
 
-### Fusion and in-network computing
+The gap between the Baseline and MegaKernel is the return on fusion alone, on the same network and relay switch: one launch per layer, and intermediate results of the experts that never leave the local memory. The gap between MegaKernel and MegaKernel+INC is the return on in-network computing, with the same kernel: it removes the $$W^2$$ relayed flows of the plain all-to-all, as it sends each token once and folds the sum into the transfer, and runs the MoE layers a further 1.28 to 1.54 times faster in prefill and 1.81 to 2.31 times faster in decode.
 
-The gap between the Baseline and MegaKernel is the return on software engineering alone, on the same network, collectives and relay switch: MegaKernel runs the MoE layers 1.20 to 1.33 times faster than the Baseline in prefill, and 1.40 to 1.52 times faster in decode, thanks to one launch per layer and to intermediate results of the experts that never leave the local memory. Without in-network computing, it is held back by its collectives: a plain all-to-all puts $$W^2$$ flows per collective through the relay switch, a quadratic number of relays that the network multiplies by splitting every large payload into packets.
+In prefill, computation and communication overlap fully, as each rank issues only one `put_signal*` and one `signal` per microbatch, and no units are reserved for communication. The matrix units are busy 75% of the time, so the layer is *compute-bound* (see the [roofline model]({{ site.baseurl }}{% post_url 2025-06-07-inference-prefill-decode-roofline-cache %})), and the gain is largest at 1k to 4k tokens, the chunk sizes of chunked prefill. In decode, the payloads are a few rows, the collectives sit on the critical path, and the step is bound by latency, so both fusion and in-network computing pay most there.
 
-The gap between MegaKernel and MegaKernel+INC is the return on network engineering, with the same kernel and the same number of data steps: only the protocol and the role of the switch change. MegaKernel+INC removes those relays, as it sends each token once and folds the sum into the transfer. It runs the MoE layers a further 1.28 to 1.54 times faster in prefill and 1.81 to 2.31 times faster in decode, i.e. 1.54 to 2.04 times and 2.53 to 3.49 times faster than the Baseline. The network speedup is larger than the software speedup at every point on the MoE layers, and on the whole model in prefill. The gain is largest at 1k to 4k tokens, the chunk sizes of chunked prefill, where the MoE layers run 1.75 to 2.04 times faster and the whole model up to 1.58 times faster. At 64k tokens, the prefill throughput of the model rises from 24,843 to 35,406 tokens per second per compute rank (the two INC devices are not counted in the denominator).
-
-### Prefill
-
-Profiling confirms the design: computation and communication overlap fully, so that no communication step adds to the runtime, apart from the dispatch of the first microbatch and the combine of the last, which fill and drain the pipeline. The whole share of a rank in the two collectives is one `put_signal*` and one `signal` per microbatch, each of them overlapped with its next stage. All matrix and vector units therefore stay available to the experts for the whole layer, and no units are reserved for communication, unlike the thread blocks of COMET and the SM budget of DeepEP.
-
-The prefill gains come from the large matrix multiplications. At prefill batch sizes, the two grouped `MatMul` stages dominate the runtime of a microbatch, and the schedule fits all the remaining stages under them: the vector stages of microbatch $$m+1$$ and the INC transfers of $$m+2$$ run while the matrix units are busy with $$m$$. The matrix units are busy 75% of the time, the vector units 57%, and each INC device 22%. Thus, the layer is *compute-bound* (see the [roofline model]({{ site.baseurl }}{% post_url 2025-06-07-inference-prefill-decode-roofline-cache %})): its runtime is set by the matrix multiplications, and the remaining levers are arithmetic intensity and expert load balance, neither of them a communication problem. Also, the low load of the INC devices leaves room for more ranks.
-
-This makes large prefills and training the hardest regime to accelerate: with the matrix multiplications dominating, the speedup comes almost entirely from the overlap, and communication hides behind computation only if it is cheap, with few operations per rank and few packets on the network. From 16k tokens on, MegaKernel+INC holds a steady speedup of 1.54 to 1.58 times on the MoE layers: efficient communication is what keeps the collectives under the matrix multiplications as the batch grows.
-
-In the schedule of the pipeline, dispatches never overlap each other and combines never overlap each other, but a dispatch overlaps a combine freely. An INC operation waits on the flags of the ranks with `wait_until_some`, moves the data (regrouping it on the dispatch, pulling it with blocking `get`s on the combine), and sends only once every rank has arrived. Therefore, the requests are served in order of arrival, and the work of one INC device is serialized. The dispatch and the combine overlap only because they run on *different* devices. A single device that serves both would remove this concurrency and lengthen the pipeline, although at $$W=4$$ both devices are busy less than a quarter of the time.
-
-### Decode
-
-The decode step is the opposite extreme. Each step adds one token per sequence, so its payload is a handful of rows: the grouped `MatMul` stages become skinny matrix multiplications that no longer fill the matrix units, while the weights of the experts must still be read from global memory in full at every step. With too few tokens to be split into microbatches, the collectives sit on the critical path, as the time axis of the stages picture shows. The decode time of the MoE layers hardly depends on the number of sequences: from 1 to 64 sequences, it is 0.91 to 1.14 s in the Baseline, and 0.30 to 0.39 s in MegaKernel+INC. Thus, a step is bound by latency, not by work, and both fusion and in-network computing pay most here.
-
-Fusion pays here for a different reason than in prefill. A non-fused layer pays, at every step, a kernel launch and a round trip to global memory per stage, and runs its collectives as separate library calls whose latency is exposed. The fused kernel removes all three:
-
-- **memory efficiency**: the intermediate results of the experts never leave the local memory, and the working set follows the tokens in flight rather than the batch;
-- **kernel launches**: the eight stages run in one launch instead of ten;
-- **fused communication**: the collectives are one-sided operations issued from inside the kernel, instead of library calls.
-
-Thus, fusion runs the MoE layers 1.40 to 1.52 times faster than the Baseline in decode. The INC all-to-all then replaces the $$W^2$$ relayed flows and the reduction on the owner with one put and one signal per rank, and adds a further 1.81 to 2.31 times, i.e. 2.53 to 3.49 times faster than the Baseline. The whole model gains 1.10 to 1.22 times: the MoE layers take 47% to 57% of the decode time of the Baseline, and the time spent outside them is larger in the fused runs, 1.19 to 1.37 s with MegaKernel+INC against 0.83 to 1.04 s in the Baseline.
-
-### The INC all-to-all phased
-
-At $$G=1$$, the switch holds the data of one token rank at a time, $$W$$ times less than under the INC all-to-all. In prefill, the phased variant runs close to the INC all-to-all: from 8k tokens, it is 3.5% to 6.0% slower on the MoE layers and 2.7% to 5.2% slower on the whole model, and below 8k tokens, 7.5% to 17% slower on the MoE layers. The reason lies in the network: one-sided puts are optimized for latency, and the network splits a large payload into many small packets, so the extra signals and relays of the phased collectives add few packets to the many that each phase moves anyway. Decode reverses the proportion: its payloads are a few packets each, the signals and relays become a large part of every step, and the phased variant runs the MoE layers 4.4% to 22% slower. Thus, with the INC all-to-all phased, a switch with little memory loses little in prefill and training, while decode, which needs little switch memory, is best served by the INC all-to-all.
-
-### The emulated switch
-
-The setup understates the benefit of in-network computing in two ways, and favors the Baseline in a third:
-
-1. The INC switch is emulated by devices, so an INC collective takes two steps in sequence, to the switch and from it, separated by its wait for every rank. The relay switch of MegaKernel forwards each packet as it lands instead, so its point-to-point relays proceed at the same time, in effectively one step. A switch that multicasts and reduces in its forwarding path removes the second step.
-2. At $$W=4$$, the 16 relayed flows per collective of the plain all-to-all are not yet a bottleneck next to the linear relays of the INC methods, a gap that is expected to widen with $$W$$.
-3. The collectives of the Baseline are calls to the CCL, highly optimized for this network, while the one-sided collectives and the emulated switch are a prototype.
-
-Therefore, the kernel is expected to improve further on switch hardware. A fair comparison would implement both protocols in the same switch hardware, which is left for future work.
+The INC all-to-all phased ($$G=1$$), with $$W$$ times less switch memory, runs close to the INC all-to-all in prefill, 3.5% to 6.0% slower on the MoE layers from 8k tokens, as its extra signals and relays add few packets to the many that each phase moves. In decode, where these extra packets weigh more, it is 4.4% to 22% slower, so decode is best served by the INC all-to-all. Finally, the INC switch is emulated by devices, which adds a step to each INC collective, and the plain all-to-all of the Baseline uses a highly optimized CCL: the gains are therefore expected to grow on switch hardware and at a larger $$W$$.
 
 ## Communication volume and memory
 
@@ -402,23 +291,4 @@ However, the prototype allocates the buffers of all $$M$$ microbatches: in the s
 
 ## Final remarks
 
-Several directions remain open:
-
-- switch hardware: implementing the INC collectives and the plain all-to-all in the same switch, at a larger $$W$$, would give the fair comparison that an emulated switch cannot;
-- an allocator bounded by the pipeline depth would turn the memory bound above into a measured saving;
-- a dispatch in reduced precision, possibly with [quantization](https://en.wikipedia.org/wiki/Quantization_(signal_processing)) in the INC switch, would halve the largest transfer, and composes with the INC pull model;
-- expert load balance matters too, as many modern MoE models include shared experts, or are served with experts cloned across ranks, which the fused scheduler could accommodate;
-- prefill and decode measured in isolation do not represent serving, so continuous batching is the next evaluation.
-
-To find more about the topic, [DySHARP](https://computer-arch.hkust.edu.hk/publication/isca2026-tackling-moe-communication-bottleneck-wi/) (ISCA 2026) is the closest work. It removes the same two redundancies (a token sent once per destination on the dispatch, and partial results returned separately on the combine) with multicast and reduction inside the switch, evaluated in simulation. However, two of its four groups of SMs still issue the dispatch and the combine.
-
-On the software side, the following works speed up or fuse the dispatch and the combine:
-
-- DeepEP provides expert-parallel communication kernels;
-- COMET fuses the dispatch and combine into the matrix multiplications of the experts;
-- the Mega MoE kernel of [DeepGEMM](https://github.com/deepseek-ai/DeepGEMM) fuses the dispatch, the experts and the combine into one kernel;
-- [Triton-distributed](https://arxiv.org/abs/2504.19442) moves the transfers of the dispatch and combine inside its kernels.
-
-All of them still run the transfers on the compute units.
-
-This post summarizes the paper *MoeInc: An Expert Parallelism MegaKernel Overlapping Matrix and Vector Units with In-Network Dispatch-and-Combine*.
+Several directions remain open: INC collectives in switch hardware at a larger $$W$$, an allocator bounded by the pipeline depth, a dispatch in reduced precision, shared or cloned experts, and an evaluation under continuous batching. The closest work is [DySHARP](https://computer-arch.hkust.edu.hk/publication/isca2026-tackling-moe-communication-bottleneck-wi/) (ISCA 2026), which removes the same two redundancies with multicast and reduction inside the switch, in simulation, while its SMs still issue the dispatch and the combine; on the software side, DeepEP, COMET, the Mega MoE kernel of [DeepGEMM](https://github.com/deepseek-ai/DeepGEMM) and [Triton-distributed](https://arxiv.org/abs/2504.19442) speed up or fuse the dispatch and the combine on the compute units.
