@@ -192,10 +192,10 @@ A step computes $$2 \frac{M}{p} \frac{N}{p} O$$ FLOPs and sends $$\frac{N}{p} O$
 The rest of this post implements the GPT model of the post [Building a GPT model in PyTorch from scratch]({{ site.baseurl }}{% post_url 2023-02-28-gptlite %}), called GPTlite. The model embeds its input tokens, runs them through $$L$$ identical blocks, and maps the output of the last block to the logits of the next token. The blocks hold most of the parameters and of the computation, and almost all of them in large models, so this post implements only the blocks, and leaves out the embeddings and the final layer normalization and linear layer. The block is illustrated below:
 
 {: .picture}
-<img width="25.3%" height="25.3%" src="{{ site.assets }}/gpt-cpp-cuda/gpt_block.svg"/>
+<img width="18.0%" height="18.0%" src="{{ site.assets }}/gpt-cpp-cuda/gpt_block.svg"/>
 
 {: .caption}
-The GPT block: a masked multi-head attention and a feed-forward network, each after a layer normalization and inside a skip connection. The model stacks L blocks. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
+The GPT block: a masked multi-head attention and a feed-forward network, each after a layer normalization and inside a skip connection. The model stacks $$L$$ blocks. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
 
 The block takes a batch of $$B$$ sequences of $$S$$ tokens, each token an embedding of $$E$$ values, and computes:
 
@@ -236,7 +236,7 @@ Moreover, to compare the outputs of the implementations, the input and the param
 The simplest part of the block is the **feed-forward network** (FFN), made of matrix multiplications and element-wise operations, and emphasized below:
 
 {: .picture}
-<img width="25.3%" height="25.3%" src="{{ site.assets }}/gpt-cpp-cuda/gpt_block_ffn.svg"/>
+<img width="18.0%" height="18.0%" src="{{ site.assets }}/gpt-cpp-cuda/gpt_block_ffn.svg"/>
 
 {: .caption}
 The feed-forward network of the GPT block, emphasized in red. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
@@ -328,7 +328,7 @@ The thread `i` handles the value `i`, so the 32 threads of a warp read and write
 The second part of the block is the masked multi-head attention, emphasized below:
 
 {: .picture}
-<img width="25.3%" height="25.3%" src="{{ site.assets }}/gpt-cpp-cuda/gpt_block_attention.svg"/>
+<img width="18.0%" height="18.0%" src="{{ site.assets }}/gpt-cpp-cuda/gpt_block_attention.svg"/>
 
 {: .caption}
 The masked multi-head attention of the GPT block, emphasized in red. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
@@ -520,7 +520,7 @@ First, each thread reads the values `j`, `j + 256`, `j + 512`, etc. of the row, 
 The third part of the block is the skip connection, which adds the input of the attention and of the FFN to their output, as emphasized below:
 
 {: .picture}
-<img width="25.3%" height="25.3%" src="{{ site.assets }}/gpt-cpp-cuda/gpt_block_skip.svg"/>
+<img width="18.0%" height="18.0%" src="{{ site.assets }}/gpt-cpp-cuda/gpt_block_skip.svg"/>
 
 {: .caption}
 The skip connections of the GPT block, emphasized in red. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
@@ -551,7 +551,7 @@ __global__ void add(dt* x, const dt* y, long n) {
 The last part of the block is the layer normalization, applied at the input of the attention and of the FFN, as emphasized below:
 
 {: .picture}
-<img width="25.3%" height="25.3%" src="{{ site.assets }}/gpt-cpp-cuda/gpt_block_layernorm.svg"/>
+<img width="18.0%" height="18.0%" src="{{ site.assets }}/gpt-cpp-cuda/gpt_block_layernorm.svg"/>
 
 {: .caption}
 The layer normalizations of the GPT block, emphasized in red. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762)

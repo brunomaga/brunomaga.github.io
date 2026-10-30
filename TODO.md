@@ -1009,11 +1009,6 @@ that is not wrong.
 
 ### GPT from scratch in C++ and CUDA vs. fused PyTorch (_drafts/2026-08-17-gpt-cpp-cuda.md)
 
-- The five pictures of the block are not drawn yet: `gpt-cpp-cuda/gpt_block.svg`, and the same block with the FFN,
-  the attention, the skip connections and the layer normalizations emphasized in red (`gpt_block_ffn.svg`,
-  `gpt_block_attention.svg`, `gpt_block_skip.svg`, `gpt_block_layernorm.svg`). The draft links them at a placeholder
-  width of 25.3%. Fix: draw them in `assets/gpt-cpp-cuda/gpt-cpp-cuda.drawio` from the block of
-  `gptlite/gptlite.drawio`, and set their widths from the export.
 - Optional: the matrix multiplication section has no picture. Fix: a picture of the tiles of `tiledMultiply` (the row
   of tiles of A and the column of tiles of B that one thread block reads for its tile of C), and one of the ring
   algorithm (the blocks of B passed between the ranks at each step).
