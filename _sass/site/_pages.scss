@@ -29,7 +29,7 @@
 }
 
 // the field, in the small grey capitals of the labels, its two parts separated by a small
-// square; on phones each part on its own line
+// square; on phones each part on its own line, with no square
 .home-field {
   grid-area: field;
   margin: 0;
@@ -53,7 +53,7 @@
 .home-field-break { display: none; }
 
 @include media-query($on-palm) {
-  .home-field-sep { margin-right: 0; }
+  .home-field-sep { display: none; }
   .home-field-break { display: inline; }
 }
 
