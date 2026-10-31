@@ -6,7 +6,7 @@ layout: default
 <div class="home-header">
   <div class="home-header-text">
     <h1 class="post-title">{{ site.author.name }}</h1>
-    <h2 class="home-field">Machine Learning<span class="home-field-sep" aria-hidden="true"></span><br class="home-field-break">High-Performance Computing</h2>
+    <h2 class="home-field">High-Performance Computing<span class="home-field-sep" aria-hidden="true"></span><br class="home-field-break">Machine Learning</h2>
     <div class="home-links">
       <a href="https://linkedin.com/in/brunomaga" aria-label="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
       <a href="https://github.com/brunomaga" aria-label="GitHub" title="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
