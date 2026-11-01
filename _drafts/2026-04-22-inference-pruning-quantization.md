@@ -12,11 +12,6 @@ A smaller model is faster because of decode, the phase in which a [large languag
 
 This post covers which parts of a transformer can be pruned, how to choose them and how distillation recovers the lost accuracy. It then presents the number formats and the quantization of the weights, the activations and the KV cache, and implements the main methods on [GPTlite]({{ site.baseurl }}{% post_url 2023-02-28-gptlite %}). As before, all the code is in the [repository of this post](https://github.com/{{ site.repository }}/tree/master/assets/inference).
 
-{::options toc_levels="2..3" /}
-
-* TOC
-{:toc}
-
 ## Pruning
 
 Pruning removes parts of a trained model. The idea is old: the 1989 paper [Optimal Brain Damage](https://papers.nips.cc/paper/1989/hash/6c9882bbac1c7093bd25041881277658-Abstract.html) already chose the weights to remove with the second derivatives of the loss, which worked much better than removing the smallest weights. Pruning remains a hard problem, for three reasons: one must decide *what* to remove without trying every option; the parts of a network are coupled, so removing one forces changes elsewhere; and removing anything hurts accuracy, which must be recovered. A fourth difficulty is turning the removal into actual speed. The sections below take them in turn: the parts that can be removed and how they are coupled, the sparsity that GPUs turn into speed, the criteria that choose what to remove, and the distillation that recovers the accuracy.

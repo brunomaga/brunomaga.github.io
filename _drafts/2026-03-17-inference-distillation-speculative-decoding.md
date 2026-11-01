@@ -13,11 +13,6 @@ This post looks at [knowledge distillation](https://en.wikipedia.org/wiki/Knowle
 
 Most methods come with a short PyTorch snippet, which assumes `import torch`, `import torch.nn as nn` and `import torch.nn.functional as F`. The models and the transformer blocks take an optional KV cache and return it, with the new tokens appended, together with their output.
 
-{::options toc_levels="2..3" /}
-
-* TOC
-{:toc}
-
 ## Knowledge distillation
 
 **Knowledge Distillation** (KD) trains a *student* model from a *teacher* model. Information flows from a larger or pre-trained teacher to a smaller or untrained student, to make the student smaller and/or better than it would be if trained alone. The main rationale is that the *soft labels* produced by a trained network, i.e., its full output distribution, are a richer training signal than the user-provided *hard labels*.

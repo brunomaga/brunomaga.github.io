@@ -10,11 +10,6 @@ In 1901, Karl Pearson described the method known today as principal component an
 
 Unsupervised learning is the field of machine learning dedicated to learning without supervision or reward signals. Unlike in [reinforcement learning](https://en.wikipedia.org/wiki/Reinforcement_learning) and [supervised learning](https://en.wikipedia.org/wiki/Supervised_learning), the data is the only information given to the method. Still, these methods are very powerful, and are commonly used for image compression, dimensionality reduction, clustering and visualization, and to learn representations of the data that other models then build on. This post starts with Hebbian learning, a biologically inspired rule behind several of these methods. It then covers dimensionality reduction, with principal and independent component analysis (PCA and ICA), kernel PCA, t-SNE and UMAP, and the curse of dimensionality. Then come the clustering methods (k-means, Gaussian mixtures, hierarchical clustering, DBSCAN, spectral clustering and self-organizing maps), and finally autoencoders and self-supervised learning.
 
-{::options toc_levels="2..3" /}
-
-* TOC
-{:toc}
-
 ## Foreword: Hebbian Learning
 
 Among the many *biologically inspired* learning models, [Hebbian learning](https://en.wikipedia.org/wiki/Hebbian_theory) ([Donald Hebb](https://en.wikipedia.org/wiki/Donald_O._Hebb), 1949) is probably the oldest. Its principle underlies many unsupervised learning rules, including several in this post. It is based on the [synaptic](https://en.wikipedia.org/wiki/Synapse) changes between neurons that spike at close instants in time (motto: "*if they fire together, they wire together*").

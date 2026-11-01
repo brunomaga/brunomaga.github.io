@@ -14,11 +14,6 @@ This post focuses on performance. It covers the prefill and decode phases of tex
 
 Most methods come with a short PyTorch snippet, which assumes `import torch`, `import torch.nn as nn` and `import torch.nn.functional as F`. The snippets that run a model use the small [GPT](https://en.wikipedia.org/wiki/Generative_pre-trained_transformer)-like model defined in the section on the KV cache.
 
-{::options toc_levels="2..3" /}
-
-* TOC
-{:toc}
-
 ## Prefill and decode phases
 
 A GPT-like model generates text *autoregressively*: it reads the prompt, predicts the next token, appends it to the input, and repeats. Inference therefore has two phases that behave very differently:

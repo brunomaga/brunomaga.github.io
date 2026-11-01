@@ -12,11 +12,6 @@ In a **dense** model, every parameter processes every token, and a forward pass 
 
 This post discusses the development of MoEs since the early days, and provides implementations of MoEs on single and multiple nodes using the PyTorch distributed API. It covers key concepts such as routing, sparsity, load imbalance (and the corresponding loss terms), expert parallelism, expert capacity, numerical instabilities, overfitting and finetuning.
 
-{::options toc_levels="2..3" /}
-
-* TOC
-{:toc}
-
 ## Early days: small MoEs as a weighted sum of expert outputs
 
 In 1991, the papers [Adaptive Mixtures of Local Experts](https://www.cs.toronto.edu/~hinton/absps/jjnh91.pdf) and [Task Decomposition Through Competition in a Modular Connectionist Architecture](https://onlinelibrary.wiley.com/doi/abs/10.1207/s15516709cog1502_2) introduced some of the earliest architectures similar to what is now called an MoE. The following picture illustrates such an MoE (left), next to the deep MoE of the next section (right):
