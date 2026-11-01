@@ -426,13 +426,7 @@ The following table sums up the three methods of this post, for a linear regress
 
 ## Final Remarks
 
-For more advanced topics on Bayesian Linear Regression, the main references are chapter 3 of the Pattern Recognition and Machine Learning book by Chris Bishop and section 9.3 of Mathematics for Machine Learning, both available on the [resources page]({{ site.resources_permalink }}). The source code of the closed-form solutions and of the examples above can be downloaded as the <a href="{{ site.assets }}/bayesian-linear-regression/bayesian_linear_regression.ipynb">Bayesian Linear Regression notebook</a>.
-
-Finally, it has been shown that a kernelized Bayesian Linear Regression with the kernel $$K(x, x') = x^TS_0x'$$ (i.e. $$x^Tx'$$ for the prior $$S_0 = I$$) is equivalent to a [Gaussian Process](https://en.wikipedia.org/wiki/Gaussian_process) (source: [Rasmussen and Williams, Gaussian Processes for Machine Learning, section 2.2](https://gaussianprocess.org/gpml/chapters/RW2.pdf)).
-
-### Generalized linear models
-
-For a setup where the output is non-Gaussian but is a member of the [exponential family](https://en.wikipedia.org/wiki/Exponential_family), the corresponding linear models are the [Generalized Linear Models](https://en.wikipedia.org/wiki/Generalized_linear_model).
+For more advanced topics on Bayesian Linear Regression, the main references are chapter 3 of the Pattern Recognition and Machine Learning book by Chris Bishop and section 9.3 of Mathematics for Machine Learning, both available on the [resources page]({{ site.resources_permalink }}), and the source code of the closed-form solutions and of the examples above can be downloaded as the <a href="{{ site.assets }}/bayesian-linear-regression/bayesian_linear_regression.ipynb">Bayesian Linear Regression notebook</a>. It has also been shown that a kernelized Bayesian Linear Regression with the kernel $$K(x, x') = x^TS_0x'$$ (i.e. $$x^Tx'$$ for the prior $$S_0 = I$$) is equivalent to a [Gaussian Process](https://en.wikipedia.org/wiki/Gaussian_process) (source: [Rasmussen and Williams, Gaussian Processes for Machine Learning, section 2.2](https://gaussianprocess.org/gpml/chapters/RW2.pdf)). When the output is non-Gaussian but is a member of the [exponential family](https://en.wikipedia.org/wiki/Exponential_family), the corresponding linear models are the [Generalized Linear Models](https://en.wikipedia.org/wiki/Generalized_linear_model).
 
 
 

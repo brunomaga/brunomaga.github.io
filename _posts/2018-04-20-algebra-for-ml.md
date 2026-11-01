@@ -11,11 +11,6 @@ In 1847, Augustin-Louis Cauchy proposed a general method to solve systems of sim
 
 This post is a brief summary of the topics in mathematics that are relevant to ML engineers on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. It covers matrices and systems of linear equations, vector spaces, linear mappings, analytic geometry, matrix decompositions, vector calculus, backpropagation and automatic differentiation, and continuous optimization.
 
-{::options toc_levels="2..3" /}
-
-* TOC
-{:toc}
-
 ## Properties of Matrices
 
 Matrices have the properties of associativity $$(AB)C = A(BC)$$ and distributivity $$(A+B)C = AC + BC$$ and $$A(B+C)=AB+AC$$. Unlike the product of numbers, the matrix product is not commutative: in general, $$AB \neq BA$$. There is no division operator defined between matrices, as $$AB^{-1}$$ and $$B^{-1}A$$ usually differ. The equivalent is multiplication by the inverse (when it exists), e.g. $$A/B = AB^{-1}$$.

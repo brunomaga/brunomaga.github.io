@@ -20,11 +20,6 @@ A diffusion model is a $$T$$-step Markov chain, defined by a forward process $$q
 
 The next sections look at those processes in detail. Credit: the formulation and the U-Net implementation are inspired by the paper [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239), Hugging Face's post [The Annotated Diffusion Model](https://huggingface.co/blog/annotated-diffusion) and Lilian Weng's post [Lil'Log: what are diffusion models](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/). The learned variance and the noise schedule for a smaller number of steps follow [Improved Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2102.09672) and its [official implementation](https://github.com/openai/improved-diffusion). The full code is available in [diffusion.py]({{ site.assets }}/diffusion/diffusion.py) and [dit.py]({{ site.assets }}/diffusion/dit.py).
 
-{::options toc_levels="2..3" /}
-
-* TOC
-{:toc}
-
 ## Forward process
 
 The forward diffusion process $$q$$ is a Markov chain of $$T$$ steps, where each step adds Gaussian noise to the output of the previous step, according to a variance $$\beta_t \in (0,1)$$ for each of the $$T$$ timesteps, typically with $$0 \lt \beta_1 \lt \beta_2 \lt  ... \lt \beta_T < 1$$. $$\beta_t$$ can be learned or (in this case) fixed as a hyper-parameter. The process starts with the data as $$\mathbf{x}_0$$ for $$t=0$$ and gradually samples and adds Gaussian noise at each step, producing noisy samples $$\mathbf{x}_1, ..., \mathbf{x}_T$$.

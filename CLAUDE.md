@@ -125,10 +125,11 @@ word helps:
   $$\operatorname{Var}$$ and $$\operatorname{Cov}$$. Where a picture or the code uses another symbol, the text keeps
   the picture's symbol or says the mapping once ("$$N_d$$ in the picture").
 - The front matter of every post and draft has a one-sentence `description:` with its keywords (20 to 35 words, for
-  search engines and link previews), and `tags:` that list its main keywords with these spellings. A page of more
-  than 6,000 words has a list of contents after its opening paragraphs: the four lines `{::options
-  toc_levels="2..3" /}`, a blank line, `* TOC` and `{:toc}`, which kramdown turns into links to the H2 and H3
-  headings. The two kernel fusion posts are the exception: they have no list of contents.
+  search engines and link previews), and `tags:` that list its main keywords with these spellings.
+- No post or draft has a list of contents (no kramdown `* TOC`), at the user's request (2026-11-01).
+- The closing remarks of a post or draft (its "Final remarks" section) are a single paragraph, at the user's request
+  (2026-11-01). A "Further reading" list of references and a closing comparison table or summary are not closing
+  remarks.
 
 ### References
 
@@ -185,7 +186,6 @@ word helps:
   repositories the MoE and the FFN paper repositories.
 - The two kernel fusion posts are kept short, at the user's request (2026-10-30). They summarize their paper and do
   not copy all of it:
-  - no list of contents (above);
   - no list of the shmem (or other library) operations that the collectives are built with, and no table of the
     one-sided operations of each communication model: the pictures and the timelines show them already, and the
     text names an operation only where it explains a step;

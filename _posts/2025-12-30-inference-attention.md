@@ -22,11 +22,6 @@ There are three families of solutions, which can be combined:
 
 Prefill processes all the tokens of the prompt at once and is limited by compute, so it benefits most from faster kernels (FlashAttention and SageAttention). Decode processes one token at a time and is limited by memory bandwidth, so it benefits most from storing and reading fewer keys and values (MQA, GQA, MLA and KV eviction). It also benefits from kernels that spread the reading of a long KV cache over the whole GPU (Flash-Decoding). Sparse attention, linear attention and hybrid models help both phases, and the summary table at the end of the post lists where each method helps most.
 
-{::options toc_levels="2..3" /}
-
-* TOC
-{:toc}
-
 ## Scaled dot-product attention
 
 The scaled dot-product attention of a head is computed as:

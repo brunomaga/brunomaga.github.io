@@ -256,9 +256,7 @@ For the sake of comparison, the sample (data) parallelism shown in (b) is limite
 
 ## Final remarks
 
-PyTorch now has an [API for tensor parallelism](https://pytorch.org/docs/stable/distributed.tensor.parallel.html), still marked as experimental. It is built on distributed tensors (DTensor), and the user picks a parallel style for each layer: a column-wise split (`ColwiseParallel`), a row-wise split (`RowwiseParallel`), or the sequence parallelism of this post (`SequenceParallel`). Also, combining data, pipeline and tensor parallelism requires one to define the correct strategy for [custom model parallelism](https://www.deepspeed.ai/training/#model-parallelism).
-
-To find more about the topic, [Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM](https://arxiv.org/abs/2104.04473) combines tensor, pipeline and data parallelism on up to 3072 GPUs. It recommends tensor parallelism inside a server, where the GPUs share fast links, and pipeline parallelism across servers.
+PyTorch now has an [API for tensor parallelism](https://pytorch.org/docs/stable/distributed.tensor.parallel.html), still marked as experimental. It is built on distributed tensors (DTensor), and the user picks a parallel style for each layer: a column-wise split (`ColwiseParallel`), a row-wise split (`RowwiseParallel`), or the sequence parallelism of this post (`SequenceParallel`). Also, combining data, pipeline and tensor parallelism requires one to define the correct strategy for [custom model parallelism](https://www.deepspeed.ai/training/#model-parallelism). To find more about the topic, [Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM](https://arxiv.org/abs/2104.04473) combines tensor, pipeline and data parallelism on up to 3072 GPUs. It recommends tensor parallelism inside a server, where the GPUs share fast links, and pipeline parallelism across servers.
 
 
 
