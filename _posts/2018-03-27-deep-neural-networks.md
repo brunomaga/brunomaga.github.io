@@ -2,13 +2,13 @@
 layout: post
 title:  "Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings"
 categories: ["Machine Learning"]
-tags: ["deep learning", "backpropagation", "autodiff", "NumPy", "activation functions", "SGD", "Adam", "dropout", "CNN", "skip connections", "embeddings"]
-description: "How deep neural networks compute and learn: activation functions, backpropagation derived and implemented in NumPy, automatic differentiation, optimizers (SGD, Adam), dropout, convolutional neural networks (CNNs), skip connections and embeddings."
+tags: ["deep learning", "backpropagation", "autodiff", "NumPy", "activation functions", "dropout", "CNN", "skip connections", "optimizers", "SGD", "Adam", "embeddings"]
+description: "How deep neural networks compute and learn: activation functions and XOR, backpropagation derived and implemented in NumPy, automatic differentiation, dropout, convolutional neural networks (CNNs), skip connections, optimizers (SGD, Adam) and embeddings."
 ---
 
 In 1958, Frank Rosenblatt described the [perceptron](https://en.wikipedia.org/wiki/Perceptron), an artificial neuron that learns to separate two classes with a linear boundary. In 1969, the book [Perceptrons](https://en.wikipedia.org/wiki/Perceptrons_(book)) by Marvin Minsky and Seymour Papert showed that such a neuron cannot learn a function as simple as the [exclusive or](https://en.wikipedia.org/wiki/Exclusive_or) (XOR) of two binary inputs. No line separates the inputs $$(0, 1)$$ and $$(1, 0)$$, of output 1, from $$(0, 0)$$ and $$(1, 1)$$, of output 0. Networks with several layers of such neurons can learn XOR and much more complex functions. In 1986, the paper [Learning representations by back-propagating errors](https://www.nature.com/articles/323533a0), by David Rumelhart, Geoffrey Hinton and Ronald Williams, showed how to train them with gradient descent, by propagating the errors backwards from the output layer to the first one.
 
-Deep Neural Networks (also known as [Multi-Layer Perceptrons](https://en.wikipedia.org/wiki/Multilayer_perceptron)) are **[universal approximators](https://en.wikipedia.org/wiki/Universal_approximation_theorem)**, i.e. they can approximate any continuous function on a closed and bounded domain, even with a single hidden layer, given enough neurons. They are the most important and relevant ML tool in the field of supervised learning, as they are part of the models used for most supervised tasks. This post covers their structure, the backpropagation algorithm that trains them, its implementation with automatic differentiation and in NumPy, and then dropout, convolutional networks, skip connections, optimizers with a training loop, and embeddings.
+Deep Neural Networks (also known as [Multi-Layer Perceptrons](https://en.wikipedia.org/wiki/Multilayer_perceptron)) are **[universal approximators](https://en.wikipedia.org/wiki/Universal_approximation_theorem)**, i.e. they can approximate any continuous function on a closed and bounded domain, even with a single hidden layer, given enough neurons. They are the most important and relevant ML tool in the field of supervised learning, as they are part of the models used for most supervised tasks. This post covers their structure, the backpropagation algorithm that trains them and its implementation in NumPy and with automatic differentiation, and then dropout, convolutional networks, skip connections, optimizers with a training loop, and embeddings.
 
 ## Feedforward Networks and Activation Functions
 
@@ -128,46 +128,50 @@ $$
 
 where $$\odot$$ is the element-wise ([Hadamard](https://en.wikipedia.org/wiki/Hadamard_product_(matrices))) product. For a mini-batch, the vectors $$x$$ and $$\delta$$ become matrices with one column per sample, and the product $$x^{(l-1)} (\delta^{(l)})^T$$ then adds up the derivatives of all samples. Each layer then runs one matrix product in the forward pass, $$(W^{(l)})^T x^{(l-1)}$$, and two of the same size in the backward pass, one for the errors and one for the derivatives of the weights. Therefore, the backward pass takes about twice the floating-point operations of the forward pass, and a training step about three times.
 
-### Implementation in NumPy
+These equations map directly to [NumPy](https://en.wikipedia.org/wiki/NumPy) code, with one column per sample as above (NumPy code often stores one sample per row instead, which transposes every product). First, each parameter holds its values (`data`) and the derivative of the loss with respect to them (`grad`), as a PyTorch tensor does. A fully connected (*linear*) layer holds the parameters $$W^{(l)}$$ and $$b^{(l)}$$, and its `forward` method computes $$z^{(l)}$$ of equation \ref{eq_z}. Its `backward` method receives $$\delta^{(l)}$$, adds $$\partial \mathcal{L} / \partial W^{(l)}$$ and $$\partial \mathcal{L} / \partial b^{(l)}$$, summed over the samples, to the `grad` of the parameters, and returns $$W^{(l)} \delta^{(l)}$$, from which the previous layer computes its error.
 
-The vector form maps directly to code. The following [NumPy](https://en.wikipedia.org/wiki/NumPy) snippets implement a fully connected (linear) layer and a ReLU, each with a `forward` and a `backward` method. A mini-batch of $$B$$ samples is stored with one sample per row, as is usual in NumPy, so the input $$X$$ of a layer is a $$B \times D$$ matrix and the forward pass computes $$Z = XW + b$$. The equations above then appear transposed: the derivatives of the weights are $$X^T \delta$$, and the derivative of the loss with respect to the input of the layer is $$\delta W^T$$.
-
-First, the linear layer. Its weights are set with **He initialization**, introduced in [Delving Deep into Rectifiers](https://arxiv.org/abs/1502.01852): a normal distribution of variance $$2/D$$ for $$D$$ inputs, which keeps the variance of the activations about constant from layer to layer with ReLU activations (Eq. 10 in the paper). The biases start at zero. The forward pass saves its input, which the backward pass needs for the derivatives of the weights. The backward pass takes the errors $$\delta$$ of the layer (`dZ`), writes the derivatives of the weights and biases in place (`out=`), into arrays allocated once that the optimizer reads, and returns the derivative of the loss with respect to the input of the layer:
+The weights start with the *normalized initialization* of [Understanding the difficulty of training deep feedforward neural networks](https://proceedings.mlr.press/v9/glorot10a.html), known as **Xavier initialization**: a uniform distribution of variance $$2 / (n_{\text{in}} + n_{\text{out}})$$, for a layer of $$n_{\text{in}}$$ inputs and $$n_{\text{out}}$$ outputs (Eq. 16 in the paper). This variance keeps the activations and the gradients at about the same scale across layers, while too small weights make them vanish and too large ones make them explode. [He initialization](https://arxiv.org/abs/1502.01852), a normal distribution of variance $$2 / n_{\text{in}}$$, is its variant for ReLU activations, which set about half of their inputs to zero. The biases start at zero:
 
 ```python
 import numpy as np
 
+class Parameter:
+    def __init__(self, data):
+        self.data, self.grad = data, np.zeros_like(data)
+
 class Linear:
-    def __init__(self, d_in, d_out, rng):
-        self.W = rng.normal(0, np.sqrt(2 / d_in), (d_in, d_out))  # He initialization
-        self.b = np.zeros(d_out)
-        self.dW, self.db = np.zeros_like(self.W), np.zeros_like(self.b)
+    def __init__(self, n_in, n_out):
+        limit = np.sqrt(6 / (n_in + n_out))  # Xavier initialization
+        self.W = Parameter(np.random.uniform(-limit, limit, (n_in, n_out)))
+        self.b = Parameter(np.zeros((n_out, 1)))
 
-    def forward(self, X):
-        self.X = X  # input saved for the backward pass
-        return X @ self.W + self.b
+    def forward(self, x):
+        self.x = x  # saved for the backward pass
+        return self.W.data.T @ x + self.b.data
 
-    def backward(self, dZ):
-        np.matmul(self.X.T, dZ, out=self.dW)
-        dZ.sum(axis=0, out=self.db)
-        return dZ @ self.W.T
+    def backward(self, delta):
+        self.W.grad += self.x @ delta.T
+        self.b.grad += delta.sum(axis=1, keepdims=True)
+        return self.W.data @ delta
 
-    def params(self):
-        return [(self.W, self.dW), (self.b, self.db)]
+    def parameters(self):
+        return [self.W, self.b]
 ```
 
-Then, the ReLU. Its derivative $$\phi'(z)$$ is 1 for a positive input and 0 otherwise, so the forward pass saves a mask of the positive inputs, and the backward pass multiplies the incoming derivative by it, i.e. the Hadamard product with $$\phi'(z^{(l)})$$ above. It has no parameters, so `params` returns an empty list:
+Its three matrix products are the ones counted above. Note that `forward` saves its input $$x^{(l-1)}$$, which the derivative of the weights needs, and that `backward` adds to `grad` instead of overwriting it, which also sums the derivatives of a parameter used more than once, such as the shared weights of the CNNs below.
+
+Then, the ReLU, $$\phi(z) = \max\{0, z\}$$, whose derivative $$\phi'(z)$$ is 1 for $$z > 0$$ and 0 otherwise. Its `backward` method multiplies the derivative of the loss with respect to its output, $$W^{(l+1)} \delta^{(l+1)}$$ (`dx`), by $$\phi'(z^{(l)})$$ (`self.z > 0`), which gives $$\delta^{(l)}$$ as in the first equation above. It has no parameters:
 
 ```python
 class ReLU:
-    def forward(self, Z):
-        self.mask = Z > 0
-        return Z * self.mask
+    def forward(self, z):
+        self.z = z  # saved for the backward pass
+        return np.maximum(0, z)
 
-    def backward(self, dX):
-        return dX * self.mask
+    def backward(self, dx):
+        return dx * (self.z > 0)
 
-    def params(self):
+    def parameters(self):
         return []
 ```
 
@@ -181,35 +185,34 @@ Finally, when `tensor.backward()` is called, it recursively computes the gradien
 
 Storing a computational graph is also useful for [activation checkpointing](https://arxiv.org/abs/1604.06174), where one needs to recompute a module's output during the backward pass, as it is discarded during the forward pass to save memory. A good example of activation checkpointing based on the reentrant and non-reentrant PyTorch implementations can be found in the post [How Activation Checkpointing enables scaling up training deep learning models](https://medium.com/pytorch/how-activation-checkpointing-enables-scaling-up-training-deep-learning-models-7a93ae01ff2d).
 
-It also follows that inference requires less memory than training. The derivative of the weights of a layer, $$x^{(l-1)} (\delta^{(l)})^T$$, needs the input of the layer. Therefore, training saves the activations of all layers in the computational graph until the backward pass, while inference can discard them as soon as the next layer is computed.
+It also follows that inference requires less memory than training. The derivative of the weights of a layer, $$x^{(l-1)} (\delta^{(l)})^T$$, needs the input of the layer (`self.x` of the linear layer above). Therefore, training saves the activations of all layers in the computational graph until the backward pass, while inference can discard them as soon as the next layer is computed.
 
-For completeness, very good step-by-step overviews of the backpropagation theory applied to a real example can be found in [Hooks for autograd saved tensors](https://pytorch.org/tutorials/intermediate/autograd_saved_tensors_hooks_tutorial.html) and [PyTorch Autograd: Backpropagation](https://colab.research.google.com/drive/1aWNdmYt7RcHMbUk-Xz2Cv5-cGFSWPXe0#scrollTo=LfW6wYg42SEW).
-
-The two layers above are enough for a simple form of reverse-mode autodiff: an MLP that stores its layers in a list, in the order of the forward pass. The list plays the role of the computational graph, and each layer saves what its backward pass needs. The backward pass then calls the `backward` methods in reverse order, each applying the chain rule to the derivative returned by the layer after it. Contrary to PyTorch, the graph is fixed by the model definition, and the derivative of each layer is written by hand:
+The two layers above are enough for a minimal form of reverse-mode autodiff, whose elementary operations are the layers. A multi-layer perceptron (MLP) stores its layers in a list, in the order of the forward pass, which computes $$f^{(L+1)} \circ ... \circ f^{(1)}$$. This list plays the role of the computational graph, and each layer saves what its backward pass needs (`self.x` and `self.z`), as the nodes of PyTorch's graph do. The `backward` method then runs the layers in reverse order, from the error $$\delta^{(L+1)}$$ of the output layer to the first layer:
 
 ```python
 class MLP:
-    def __init__(self, sizes, seed=0):
-        rng = np.random.default_rng(seed)
+    def __init__(self, sizes):
         self.layers = []
-        for d_in, d_out in zip(sizes[:-1], sizes[1:]):
-            self.layers += [Linear(d_in, d_out, rng), ReLU()]
+        for n_in, n_out in zip(sizes[:-1], sizes[1:]):
+            self.layers += [Linear(n_in, n_out), ReLU()]
         self.layers.pop()  # no activation after the output layer
 
-    def forward(self, X):
+    def forward(self, x):
         for layer in self.layers:
-            X = layer.forward(X)
-        return X
+            x = layer.forward(x)
+        return x
 
-    def backward(self, dY):
+    def backward(self, delta):
         for layer in reversed(self.layers):
-            dY = layer.backward(dY)
+            delta = layer.backward(delta)
 
-    def params(self):
-        return [p for layer in self.layers for p in layer.params()]
+    def parameters(self):
+        return [theta for layer in self.layers for theta in layer.parameters()]
 ```
 
-As an example, `MLP([2, 32, 32, 2])` builds a network with 2 inputs, two hidden layers of 32 ReLU neurons and 2 outputs. Its backward pass can be checked with the finite differences above: on a small network, the derivatives computed both ways agree to about $$10^{-10}$$.
+Contrary to PyTorch, the graph is fixed by the model definition, and the derivatives of each layer are written by hand. As an example, `MLP([2, 16, 16, 1])` builds a network with $$D = 2$$ inputs, $$L = 2$$ hidden layers of $$K = 16$$ ReLU neurons and one output. The finite differences above can check its derivatives: on a small network, the derivatives computed both ways agree to about $$10^{-10}$$.
+
+For completeness, very good step-by-step overviews of the backpropagation theory applied to a real example can be found in [Hooks for autograd saved tensors](https://pytorch.org/tutorials/intermediate/autograd_saved_tensors_hooks_tutorial.html) and [PyTorch Autograd: Backpropagation](https://colab.research.google.com/drive/1aWNdmYt7RcHMbUk-Xz2Cv5-cGFSWPXe0#scrollTo=LfW6wYg42SEW).
 
 ## Dropout
 
@@ -325,101 +328,134 @@ In the picture, the input $$x_0$$ has $$k_0 = 6$$ feature maps and $$k = 4$$, so
 
 There is currently a plethora of different implementations of CNNs with several layouts of skip connections. To know more, the curious reader can have a look at [ResNet](https://arxiv.org/abs/1512.03385), [DenseNet](https://arxiv.org/abs/1608.06993) and [U-net](https://arxiv.org/abs/1505.04597).
 
-## Optimizers and Loss Functions
+## Optimizers
 
-Backpropagation gives the derivatives of the loss. An **optimizer** uses them to update the parameters $$\theta$$ (all weights and biases), with the learning rate $$\eta$$. The most common optimizers are:
-- **Gradient descent** (GD), or batch gradient descent: each step uses the gradient of the loss over all $$N$$ training samples, $$\theta \leftarrow \theta - \eta \nabla_\theta \mathcal{L}$$. Each step follows the exact gradient, but costs a pass over the whole dataset;
-- **Stochastic gradient descent** (SGD): each step uses the gradient of one sample or, in practice, of a mini-batch of $$B$$ samples drawn at random (mini-batch SGD). The gradient of a mini-batch is a noisy but unbiased estimate of the full gradient, $$N/B$$ times cheaper to compute;
-- **SGD with momentum**: keeps a velocity $$v$$, a decaying sum of the past gradients, with $$v \leftarrow \mu v + \nabla_\theta \mathcal{L}$$ and $$\theta \leftarrow \theta - \eta v$$, and a momentum $$\mu$$ around 0.9. Gradients that agree from step to step add up, while those that change sign cancel, which speeds up training along long, narrow valleys of the loss;
-- **Adam** (adaptive moment estimation), introduced in [Adam: A Method for Stochastic Optimization](https://arxiv.org/abs/1412.6980): keeps running averages of the gradient and of its square (its first and second moments), and divides the step of each parameter by the root of its second moment, so that each parameter has its own step size.
+Backpropagation computes the gradient $$g_t$$ of the loss with respect to the parameters $$\theta$$ of the network (all its weights and biases), at the step $$t$$ of the training. An **optimizer** uses this gradient to update the parameters. The simplest one, **gradient descent** (GD), takes a step against the gradient, of a size set by the learning rate $$\eta$$:
 
-The update of Adam at step $$t$$ is given by:
+$$
+\theta_t = \theta_{t-1} - \eta \, g_t
+$$
+
+In GD, $$g_t$$ is the gradient of the loss over all $$N$$ training samples, so each step follows the exact gradient, but costs a pass over the whole dataset. **Stochastic gradient descent** (SGD) computes it on one sample or, in practice, on a mini-batch of $$B$$ samples drawn at random (mini-batch SGD), which gives a noisy but unbiased estimate of the gradient, $$N/B$$ times cheaper to compute. **Momentum** smooths the steps of SGD: it keeps a decaying sum $$m_t$$ of the past gradients, and steps along it:
 
 $$
 \begin{align*}
-m_t & = \beta_1 m_{t-1} + (1 - \beta_1) g_t \\
-v_t & = \beta_2 v_{t-1} + (1 - \beta_2) g_t^2 \\
-\theta_t & = \theta_{t-1} - \eta \frac{m_t / (1 - \beta_1^t)}{\sqrt{v_t / (1 - \beta_2^t)} + \epsilon}
+m_t & = \mu \, m_{t-1} + g_t \\
+\theta_t & = \theta_{t-1} - \eta \, m_t
 \end{align*}
 $$
 
-where $$g_t$$ is the gradient, the square and the root are applied to each entry, and the divisions by $$1 - \beta_1^t$$ and $$1 - \beta_2^t$$ correct the bias of the averages toward their zero initial values in the first steps. The paper suggests $$\beta_1 = 0.9$$, $$\beta_2 = 0.999$$ and $$\epsilon = 10^{-8}$$ (Algorithm 1 in the paper). In practice, Adam needs less tuning of the learning rate than SGD, and it is the default optimizer of Transformers, while SGD with momentum remains common for CNNs. Its variant AdamW, from [Decoupled Weight Decay Regularization](https://arxiv.org/abs/1711.05101), applies the weight decay to the parameters directly instead of adding it to the gradient.
+where the momentum $$\mu$$ is usually 0.9 (0.95 to 0.99 with dropout, as seen above). Gradients that agree from step to step add up, while those that change sign cancel out, which also speeds up training along the long, narrow valleys of the loss.
 
-Each optimizer below holds the list of (parameter, derivative) pairs of the model, and updates the parameters in place in its `step` method. First, SGD with momentum, where a momentum of 0 gives plain SGD:
+In code, an optimizer holds the parameters of a model. Its `zero_grad` method resets their derivatives, which the backward pass accumulates, and its `step` method updates them. The following SGD implements the equations above, and plain SGD for $$\mu = 0$$, its default:
 
 ```python
-class SGD:
-    def __init__(self, params, lr=0.1, momentum=0.9):
-        self.params, self.lr, self.momentum = params, lr, momentum
-        self.v = [np.zeros_like(p) for p, _ in params]
+class Optimizer:
+    def __init__(self, parameters, eta):
+        self.parameters, self.eta = parameters, eta
+
+    def zero_grad(self):
+        for theta in self.parameters:
+            theta.grad.fill(0)
+
+class SGD(Optimizer):
+    def __init__(self, parameters, eta, mu=0):
+        super().__init__(parameters, eta)
+        self.mu = mu
+        self.m = [np.zeros_like(theta.data) for theta in parameters]
 
     def step(self):
-        for (p, g), v in zip(self.params, self.v):
-            v[:] = self.momentum * v + g
-            p -= self.lr * v
+        for theta, m in zip(self.parameters, self.m):
+            m[:] = self.mu * m + theta.grad
+            theta.data -= self.eta * m
 ```
 
-Then, Adam, with one $$m$$ and one $$v$$ per parameter array:
+**Adam** (adaptive moment estimation), introduced in [Adam: A Method for Stochastic Optimization](https://arxiv.org/abs/1412.6980), keeps the momentum $$m_t$$ as a running average of the gradients instead of a sum, and a running average $$v_t$$ of their squares. It divides the step of each parameter by $$\sqrt{v_t}$$, so that each parameter moves by at most about $$\eta$$ per step, whatever the scale of its gradients (section 2.1 of the paper). Its update is given by (Algorithm 1 in the paper, which writes $$\alpha$$ for $$\eta$$):
+
+$$
+\begin{align*}
+m_t & = \beta_1 m_{t-1} + (1 - \beta_1) \, g_t \\
+v_t & = \beta_2 v_{t-1} + (1 - \beta_2) \, g_t^2 \\
+\hat{m}_t & = m_t / (1 - \beta_1^t) \\
+\hat{v}_t & = v_t / (1 - \beta_2^t) \\
+\theta_t & = \theta_{t-1} - \eta \, \hat{m}_t / (\sqrt{\hat{v}_t} + \epsilon)
+\end{align*}
+$$
+
+where the square, the root and the division apply to each entry. As $$m_0 = v_0 = 0$$, both averages are biased toward zero in the first steps, and $$\hat{m}_t$$ and $$\hat{v}_t$$ correct this bias. The paper suggests $$\eta = 0.001$$, $$\beta_1 = 0.9$$, $$\beta_2 = 0.999$$ and $$\epsilon = 10^{-8}$$, the default values of the code:
 
 ```python
-class Adam:
-    def __init__(self, params, lr=1e-3, beta1=0.9, beta2=0.999, eps=1e-8):
-        self.params, self.lr, self.beta1, self.beta2, self.eps = params, lr, beta1, beta2, eps
-        self.m = [np.zeros_like(p) for p, _ in params]
-        self.v = [np.zeros_like(p) for p, _ in params]
-        self.t = 0
+class Adam(Optimizer):
+    def __init__(self, parameters, eta=1e-3, beta1=0.9, beta2=0.999, eps=1e-8):
+        super().__init__(parameters, eta)
+        self.beta1, self.beta2, self.eps, self.t = beta1, beta2, eps, 0
+        self.m = [np.zeros_like(theta.data) for theta in parameters]
+        self.v = [np.zeros_like(theta.data) for theta in parameters]
 
     def step(self):
         self.t += 1
-        for (p, g), m, v in zip(self.params, self.m, self.v):
-            m[:] = self.beta1 * m + (1 - self.beta1) * g
-            v[:] = self.beta2 * v + (1 - self.beta2) * g**2
+        for theta, m, v in zip(self.parameters, self.m, self.v):
+            m[:] = self.beta1 * m + (1 - self.beta1) * theta.grad
+            v[:] = self.beta2 * v + (1 - self.beta2) * theta.grad**2
             m_hat = m / (1 - self.beta1**self.t)
             v_hat = v / (1 - self.beta2**self.t)
-            p -= self.lr * m_hat / (np.sqrt(v_hat) + self.eps)
+            theta.data -= self.eta * m_hat / (np.sqrt(v_hat) + self.eps)
 ```
 
-The squared loss of the backpropagation section fits regression. For classification into $$C$$ classes, the output layer returns one score (*logit*) $$z_c$$ per class, the [softmax function](https://en.wikipedia.org/wiki/Softmax_function) turns the scores into the probabilities $$\hat{y}_c = e^{z_c} / \sum_k e^{z_k}$$, and the [cross-entropy](https://en.wikipedia.org/wiki/Cross-entropy) loss of a sample of class $$y$$ is $$-\log \hat{y}_y$$. Its error at the output layer has a simple form, $$\delta_c = \hat{y}_c - \mathbb{1}[c = y]$$, where $$\mathbb{1}[c = y]$$ is 1 for the true class and 0 otherwise: the predicted probabilities minus the one-hot target. The implementation subtracts the largest logit of each sample before the exponential, which leaves the softmax unchanged and avoids an overflow, and divides the errors by $$B$$, as the loss is the mean over the mini-batch:
-
-```python
-def cross_entropy(logits, y):
-    Z = logits - logits.max(axis=1, keepdims=True)  # avoids an overflow in exp
-    log_P = Z - np.log(np.exp(Z).sum(axis=1, keepdims=True))
-    B, rows = len(y), np.arange(len(y))
-    loss = -log_P[rows, y].mean()
-    dZ = np.exp(log_P)
-    dZ[rows, y] -= 1
-    return loss, dZ / B
-```
+In practice, Adam needs less tuning of the learning rate than SGD, and Adam or its variants train most Transformers, while SGD with momentum remains common for CNNs. Adam's variant AdamW, from [Decoupled Weight Decay Regularization](https://arxiv.org/abs/1711.05101), shrinks the weights at every step (*weight decay*) directly, instead of adding an L2 regularization term to the gradient, which Adam would rescale.
 
 ### Training Loop
 
-And that is all that a training loop needs. The following example trains the MLP on a continuous version of XOR: points drawn uniformly in $$[-1, 1]^2$$, of class 1 when their two coordinates have the same sign, which no line separates. Each epoch shuffles the training set into new mini-batches of 32 samples, and each step runs the forward pass, the loss, the backward pass and the optimizer step:
+The training loop needs one more piece, the loss. The squared loss of the backpropagation section, averaged over the $$B$$ samples of a mini-batch, is the mean squared error (MSE):
+
+$$
+\mathcal{L} = \frac{1}{B} \sum_{n=1}^{B} (y_n - \hat{y}_n)^2
+$$
+
+where $$\hat{y}_n$$ is the output of the network for the sample $$n$$. The `backward` method of the loss returns the error of the output layer, $$\delta_n^{(L+1)} = -2 (y_n - \hat{y}_n)$$ as in the backpropagation section, divided by $$B$$ as the loss is a mean:
 
 ```python
-def make_data(n, rng):
-    X = rng.uniform(-1, 1, (n, 2))
-    return X, (X[:, 0] * X[:, 1] > 0).astype(int)  # class 1 in the 1st and 3rd quadrants
+class MSELoss:
+    def forward(self, y_hat, y):
+        self.y_hat, self.y = y_hat, y  # saved for the backward pass
+        return np.mean((y - y_hat)**2)
 
-rng = np.random.default_rng(0)
-X, y = make_data(1024, rng)
-X_test, y_test = make_data(256, rng)
-model = MLP([2, 32, 32, 2])
-optimizer = Adam(model.params(), lr=1e-2)
-B = 32  # mini-batch size
-
-for epoch in range(50):
-    perm = rng.permutation(len(X))  # new mini-batches at every epoch
-    for i in range(0, len(X), B):
-        idx = perm[i:i + B]
-        loss, dZ = cross_entropy(model.forward(X[idx]), y[idx])
-        model.backward(dZ)
-        optimizer.step()
-
-accuracy = (model.forward(X_test).argmax(axis=1) == y_test).mean()
+    def backward(self):
+        B = self.y.size  # samples in the mini-batch, with one output each
+        return -2 * (self.y - self.y_hat) / B
 ```
 
-Note that there is no equivalent of PyTorch's `optimizer.zero_grad()`, as each backward pass overwrites the derivatives instead of adding to them. After 50 epochs, the model classifies 98.4% of the test points correctly, with Adam and with `SGD(model.params(), lr=0.1)` alike. The misclassified points lie within 0.04 of an axis, where the class changes.
+For classification, a [softmax](https://en.wikipedia.org/wiki/Softmax_function) output with the [cross-entropy](https://en.wikipedia.org/wiki/Cross-entropy) loss gives an error of the same form, $$\hat{y}_n - y_n$$, where $$\hat{y}_n$$ holds the predicted probabilities of the classes and $$y_n$$ is the [one-hot](https://en.wikipedia.org/wiki/One-hot) vector of the true class.
+
+Then, the loop. The following example trains an MLP on a continuous version of XOR: points drawn uniformly in $$[-1, 1]^2$$, with the target 1 when their two coordinates have different signs and 0 otherwise. As for XOR, no line separates the two classes. At each step, the loop draws a random mini-batch of $$B = 32$$ samples, resets the derivatives, and runs the forward pass, the loss, the backward pass and the optimizer step, in the order of a PyTorch training loop:
+
+```python
+def xor_data(N):
+    x = np.random.uniform(-1, 1, (2, N))
+    y = (x[0] * x[1] < 0).astype(float).reshape(1, N)  # 1 when the signs differ
+    return x, y
+
+np.random.seed(0)
+N, B = 1024, 32  # training samples, mini-batch size
+x, y = xor_data(N)
+x_test, y_test = xor_data(256)
+model = MLP([2, 16, 16, 1])
+loss_fn = MSELoss()
+optimizer = Adam(model.parameters(), eta=0.01)
+
+for step in range(2000):
+    n = np.random.choice(N, B, replace=False)  # samples of a random mini-batch
+    optimizer.zero_grad()
+    loss = loss_fn.forward(model.forward(x[:, n]), y[:, n])
+    model.backward(loss_fn.backward())
+    optimizer.step()
+    if step % 500 == 0:
+        print(f"step {step}: loss {loss:.4f}")
+
+print("test accuracy:", np.mean((model.forward(x_test) > 0.5) == y_test))
+```
+
+With $$B = N$$, the same loop runs GD. After 2,000 steps, the network classifies 98.8% of the 256 test points correctly, with an output above 0.5 for the target 1, and the three misclassified points lie within 0.004 of an axis, where the class changes. SGD with momentum, `SGD(model.parameters(), eta=0.1, mu=0.9)`, classifies 97.7% of them correctly.
 
 ## Embeddings
 
