@@ -1322,6 +1322,12 @@ category that the home page puts before it, fits on one line of the home page on
   clustering, DBSCAN, spectral clustering, self-organizing maps, t-SNE, UMAP and self-supervised learning.
   Proposed: "Dimensionality Reduction, Clustering and Self-Supervised Learning" (652 px).
 
+### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-deep-neural-networks.md)
+
+- The title does not name the optimizers (SGD, momentum, Adam) or the NumPy implementation of a network and its
+  training loop that the post covers, and it is 708 px wide. Proposed: "DNNs, Backpropagation, Optimizers, Dropout,
+  CNNs and Embeddings" (671 px with the category).
+
 ### Variational Autoencoders (VAEs) and Generative Adversarial Networks (GANs) (2019-10-12-vae-gan.md)
 
 - The title is 729 px wide on the home page, the widest of the posts. Fix: "Variational Autoencoders and Generative
