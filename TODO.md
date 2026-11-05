@@ -986,6 +986,16 @@ that is not wrong.
   An Expert Parallelism MegaKernel Overlapping Matrix and Vector Units with In-Network Dispatch-and-Combine](link)"
   under `ep_stages.svg` and `ep_pipeline.svg`, and "Adapted from:" with the same link under the others, once the paper
   has a public link; the user decides.
+- `inference/imgs/ep_timeline_phased.svg` draws each request, rank<sup>02</sup><sub>𝐴</sub> and the others, leaving the
+  expert rank at the end of its reduce, as the figure of the paper does, while the paper's own text, and the post,
+  say that the request is sent by the token rank that owns the token. Fix: correct the paper's figure, which this one
+  follows, and redraw the arrow here from the token rank; the user decides.
+- The lifelines of `ep_timeline.svg` and `ep_timeline_phased.svg` are black and 1.4 px, where the paper draws them grey
+  and thin, so the lifeline shows through the arc with which an arrow jumps over it. Fix: grey #999999 lifelines, as in
+  the paper, or white masks that cut the lifeline inside the arc rather than 6 px above it.
+- The MoE paper has a new figure, the prefill time of one MoE layer with its times and speedups in rows under the plot.
+  It is folded here into the first panel of `ep_results.svg`, without the rows, and the speedups are the Markdown table
+  of the post. Fix: none needed, unless the user wants it as a picture of its own.
 
 ### Knowledge distillation, speculative decoding and multi-token prediction (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
 

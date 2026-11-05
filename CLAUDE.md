@@ -212,7 +212,7 @@ word helps:
   checks the paper's repository for commits after the one recorded here and, where the public files of the paper
   changed, updates the post's text, tables and captions to them (the picture rules say how the pictures follow);
   then it records the new commit here. The expert parallelism post follows the MoE paper repository at commit
-  d5461df (2026-10-30), and the tensor parallelism post the FFN paper repository at commit 1076c33 (2026-10-18).
+  7607a95 (2026-11-05), and the tensor parallelism post the FFN paper repository at commit 1076c33 (2026-10-18).
 
 ### Titles
 
