@@ -126,9 +126,20 @@ $$
 \end{align*}
 $$
 
-where $$\odot$$ is the element-wise ([Hadamard](https://en.wikipedia.org/wiki/Hadamard_product_(matrices))) product. For a mini-batch, the vectors $$x$$ and $$\delta$$ become matrices with one column per sample, and the product $$x^{(l-1)} (\delta^{(l)})^T$$ then adds up the derivatives of all samples. Each layer then runs one matrix product in the forward pass, $$(W^{(l)})^T x^{(l-1)}$$, and two of the same size in the backward pass, one for the errors and one for the derivatives of the weights. Therefore, the backward pass takes about twice the floating-point operations of the forward pass, and a training step about three times.
+where $$\odot$$ is the element-wise ([Hadamard](https://en.wikipedia.org/wiki/Hadamard_product_(matrices))) product. For a mini-batch of $$B$$ samples, the vectors of all samples are stacked into matrices. Deep learning libraries such as PyTorch store one sample per row (*batch first*), so that $$x^{(l)}$$, $$z^{(l)}$$ and $$\delta^{(l)}$$ become matrices with the vector of one sample in each row, and $$b^{(l)}$$ a row vector added to every row. The equations then become:
 
-These equations map directly to [NumPy](https://en.wikipedia.org/wiki/NumPy) code, with one column per sample as above (NumPy code often stores one sample per row instead, which transposes every product). First, each parameter holds its values (`data`) and the derivative of the loss with respect to them (`grad`), as a PyTorch tensor does. A fully connected (*linear*) layer holds the parameters $$W^{(l)}$$ and $$b^{(l)}$$, and its `forward` method computes $$z^{(l)}$$ of equation \ref{eq_z}. Its `backward` method receives $$\delta^{(l)}$$, adds $$\partial \mathcal{L} / \partial W^{(l)}$$ and $$\partial \mathcal{L} / \partial b^{(l)}$$, summed over the samples, to the `grad` of the parameters, and returns $$W^{(l)} \delta^{(l)}$$, from which the previous layer computes its error.
+$$
+\begin{align*}
+z^{(l)} & = x^{(l-1)} W^{(l)} + b^{(l)} \\
+\delta^{(l)} & = \left( \delta^{(l+1)} (W^{(l+1)})^T \right) \odot \phi'(z^{(l)}) \\
+\frac{\partial \mathcal{L}}{\partial W^{(l)}} & = (x^{(l-1)})^T \delta^{(l)} \\
+\frac{\partial \mathcal{L}}{\partial b^{(l)}} & = \sum_{n=1}^{B} \delta_n^{(l)}
+\end{align*}
+$$
+
+where $$\mathcal{L}$$ is the loss of the mini-batch, and $$\delta_n^{(l)}$$ is the row of the sample $$n$$. The product $$(x^{(l-1)})^T \delta^{(l)}$$ adds up the derivatives of all samples, as the sum does for the biases. Each layer then runs one matrix product in the forward pass, $$x^{(l-1)} W^{(l)}$$, and two of the same size in the backward pass, one for the errors and one for the derivatives of the weights. Therefore, the backward pass takes about twice the floating-point operations of the forward pass, and a training step about three times.
+
+These equations map directly to [NumPy](https://en.wikipedia.org/wiki/NumPy) code, with one sample per row. First, each parameter holds its values (`data`) and the derivative of the loss with respect to them (`grad`), as a PyTorch tensor does. A fully connected (*linear*) layer holds the parameters $$W^{(l)}$$ and $$b^{(l)}$$, and its `forward` method computes $$z^{(l)}$$ of the first equation above. Its `backward` method receives $$\delta^{(l)}$$, adds $$\partial \mathcal{L} / \partial W^{(l)}$$ and $$\partial \mathcal{L} / \partial b^{(l)}$$ to the `grad` of the parameters, and returns $$\delta^{(l)} (W^{(l)})^T$$, from which the previous layer computes its error.
 
 The weights start with the *normalized initialization* of [Understanding the difficulty of training deep feedforward neural networks](https://proceedings.mlr.press/v9/glorot10a.html), known as **Xavier initialization**: a uniform distribution of variance $$2 / (n_{\text{in}} + n_{\text{out}})$$, for a layer of $$n_{\text{in}}$$ inputs and $$n_{\text{out}}$$ outputs (Eq. 16 in the paper). This variance keeps the activations and the gradients at about the same scale across layers, while too small weights make them vanish and too large ones make them explode. [He initialization](https://arxiv.org/abs/1502.01852), a normal distribution of variance $$2 / n_{\text{in}}$$, is its variant for ReLU activations, which set about half of their inputs to zero. The biases start at zero:
 
@@ -143,16 +154,16 @@ class Linear:
     def __init__(self, n_in, n_out):
         limit = np.sqrt(6 / (n_in + n_out))  # Xavier initialization
         self.W = Parameter(np.random.uniform(-limit, limit, (n_in, n_out)))
-        self.b = Parameter(np.zeros((n_out, 1)))
+        self.b = Parameter(np.zeros((1, n_out)))
 
     def forward(self, x):
         self.x = x  # saved for the backward pass
-        return self.W.data.T @ x + self.b.data
+        return x @ self.W.data + self.b.data
 
     def backward(self, delta):
-        self.W.grad += self.x @ delta.T
-        self.b.grad += delta.sum(axis=1, keepdims=True)
-        return self.W.data @ delta
+        self.W.grad += self.x.T @ delta
+        self.b.grad += delta.sum(axis=0, keepdims=True)
+        return delta @ self.W.data.T
 
     def parameters(self):
         return [self.W, self.b]
@@ -160,7 +171,7 @@ class Linear:
 
 Its three matrix products are the ones counted above. Note that `forward` saves its input $$x^{(l-1)}$$, which the derivative of the weights needs, and that `backward` adds to `grad` instead of overwriting it, which also sums the derivatives of a parameter used more than once, such as the shared weights of the CNNs below.
 
-Then, the ReLU, $$\phi(z) = \max\{0, z\}$$, whose derivative $$\phi'(z)$$ is 1 for $$z > 0$$ and 0 otherwise. Its `backward` method multiplies the derivative of the loss with respect to its output, $$W^{(l+1)} \delta^{(l+1)}$$ (`dx`), by $$\phi'(z^{(l)})$$ (`self.z > 0`), which gives $$\delta^{(l)}$$ as in the first equation above. It has no parameters:
+Then, the ReLU, $$\phi(z) = \max\{0, z\}$$, whose derivative $$\phi'(z)$$ is 1 for $$z > 0$$ and 0 otherwise. Its `backward` method multiplies the derivative of the loss with respect to its output, $$\delta^{(l+1)} (W^{(l+1)})^T$$ (`dx`), by $$\phi'(z^{(l)})$$ (`self.z > 0`), which gives $$\delta^{(l)}$$ as in the second equation above. It has no parameters:
 
 ```python
 class ReLU:
@@ -431,8 +442,8 @@ Then, the loop. The following example trains an MLP on a continuous version of X
 
 ```python
 def xor_data(N):
-    x = np.random.uniform(-1, 1, (2, N))
-    y = (x[0] * x[1] < 0).astype(float).reshape(1, N)  # 1 when the signs differ
+    x = np.random.uniform(-1, 1, (N, 2))
+    y = (x[:, 0] * x[:, 1] < 0).astype(float).reshape(N, 1)  # 1 if the signs differ
     return x, y
 
 np.random.seed(0)
@@ -446,7 +457,7 @@ optimizer = Adam(model.parameters(), eta=0.01)
 for step in range(2000):
     n = np.random.choice(N, B, replace=False)  # samples of a random mini-batch
     optimizer.zero_grad()
-    loss = loss_fn.forward(model.forward(x[:, n]), y[:, n])
+    loss = loss_fn.forward(model.forward(x[n]), y[n])
     model.backward(loss_fn.backward())
     optimizer.step()
     if step % 500 == 0:
@@ -455,7 +466,7 @@ for step in range(2000):
 print("test accuracy:", np.mean((model.forward(x_test) > 0.5) == y_test))
 ```
 
-With $$B = N$$, the same loop runs GD. After 2,000 steps, the network classifies 98.8% of the 256 test points correctly, with an output above 0.5 for the target 1, and the three misclassified points lie within 0.004 of an axis, where the class changes. SGD with momentum, `SGD(model.parameters(), eta=0.1, mu=0.9)`, classifies 97.7% of them correctly.
+With $$B = N$$, the same loop runs GD. After 2,000 steps, the network classifies 99.2% of the 256 test points correctly, with an output above 0.5 for the target 1, and the two misclassified points lie within 0.006 of an axis, where the class changes. SGD with momentum, `SGD(model.parameters(), eta=0.1, mu=0.9)`, classifies 98.8% of them correctly.
 
 ## Embeddings
 
