@@ -2428,7 +2428,7 @@ Dropout helps in **reducing overfitting**, as the network learns to never rely o
 Because a fully connected layer occupies most of the parameters, it is prone to overfitting. Therefore, dropout **increases model generalization**: on MNIST, for example, a dropout network with max-norm regularization reaches a test error of 0.95%, against 1.60% for a standard network. [Batch Normalization](#batch-normalization) later removes the need for dropout in some cases. The following picture illustrates a standard network (left) and one of the thinned networks that dropout samples from it (right):
 
 {: .picture}
-<img loading="lazy" width="68.5%" height="68.5%" src="{{ site.assets }}/deep-neural-networks/dropout.svg"/>
+<img loading="lazy" width="68.5%" height="68.5%" src="{{ site.assets }}/dnn-backprop/dropout.svg"/>
 
 {: .caption}
 Dropout. Left: a standard network with two hidden layers ($$p = 0$$). Right: a thinned network produced by dropout with $$p = 0.5$$, where $$p$$ is the probability of dropping a unit: the crossed units are dropped, with their connections. Adapted from: [Dropout: A Simple Way to Prevent Neural Networks from Overfitting](https://jmlr.org/papers/v15/srivastava14a.html)
