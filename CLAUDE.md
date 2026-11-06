@@ -809,7 +809,9 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
   same on every device, whatever fonts it has, as in the kernel paper figures.
 - Source Sans 3 (Google Fonts) and New Computer Modern Sans Math (NewCMSansMath-Regular.otf, from the
   newcomputermodern package on CTAN) must be installed where the export runs: without them draw.io draws
-  other fonts, with other widths.
+  other fonts, with other widths. Where CTAN cannot be reached, the npm package web-computer-modern holds the
+  same font as "WebCM Math Sans Regular.woff2": converted to TTF and renamed to the family NewComputerModernSansMath
+  (fontTools), it renders the same glyphs. Check with `fc-match NewComputerModernSansMath` before an export.
 - Transparent background, no embedded fonts. Stencils from mxgraph.* libraries need the real draw.io CLI
   to render; do not export them with another renderer.
 - Check every exported SVG at its page size (P% of 880 px) before committing: no overlapping text, no
