@@ -2,13 +2,13 @@
 layout: post
 title:  "Unsupervised Learning methods"
 categories: ["Machine Learning"]
-tags: ["unsupervised learning", "clustering", "k-means", "KNN", "DBSCAN", "GMM", "self-organizing maps", "dimensionality reduction", "PCA", "t-SNE", "ICA", "association rules", "Apriori", "FP-growth", "anomaly detection", "isolation forest", "LOF", "curse of dimensionality", "nearest neighbor search", "RAG"]
-description: "Unsupervised learning: clustering with k-means, KNN, DBSCAN, Gaussian mixtures and self-organizing maps, dimensionality reduction with PCA, t-SNE and ICA, association rules, anomaly detection, and nearest-neighbor search for RAG."
+tags: ["unsupervised learning", "clustering", "k-means", "KNN", "hierarchical clustering", "DBSCAN", "spectral clustering", "GMM", "self-organizing maps", "dimensionality reduction", "PCA", "kernel PCA", "t-SNE", "UMAP", "ICA", "association rules", "Apriori", "FP-growth", "anomaly detection", "isolation forest", "LOF", "curse of dimensionality", "nearest neighbor search", "RAG"]
+description: "Unsupervised learning: clustering with k-means, hierarchical clustering, DBSCAN, spectral clustering, Gaussian mixtures and self-organizing maps, dimensionality reduction with PCA, t-SNE and ICA, association rules, anomaly detection, and nearest-neighbor search for RAG."
 ---
 
 In 1901, Karl Pearson described the method known today as principal component analysis, in the paper [On lines and planes of closest fit to systems of points in space](https://doi.org/10.1080/14786440109462720). In 1957, Stuart Lloyd proposed the algorithm known today as k-means, to quantize signals, although his paper [Least squares quantization in PCM](https://doi.org/10.1109/TIT.1982.1056489) was only published in 1982.
 
-Unsupervised learning is the field of machine learning dedicated to learning without supervision or reward signals. Unlike in [reinforcement learning](https://en.wikipedia.org/wiki/Reinforcement_learning) and [supervised learning](https://en.wikipedia.org/wiki/Supervised_learning), the data is the only information given to the method. Still, these methods are very powerful, and are commonly used for image compression, dimensionality reduction, clustering, visualization and the detection of anomalies. This post starts with clustering (k-means, k-nearest neighbors, hierarchical clustering, DBSCAN, spectral clustering, Gaussian mixtures and self-organizing maps). It then covers dimensionality reduction, with principal component analysis (PCA) and kernel PCA, t-SNE and independent component analysis (ICA), association rule mining (Apriori, ECLAT and FP-growth), and anomaly detection (isolation forests and the local outlier factor). It ends with the curse of dimensionality, and with the nearest-neighbor search in high dimensions that retrieval-augmented generation relies on.
+Unsupervised learning is the field of machine learning dedicated to learning without supervision or reward signals. Unlike in [reinforcement learning](https://en.wikipedia.org/wiki/Reinforcement_learning) and [supervised learning](https://en.wikipedia.org/wiki/Supervised_learning), the data is the only information given to the method. Still, these methods are very powerful, and are commonly used for image compression, dimensionality reduction, clustering, visualization and the detection of anomalies. This post starts with clustering (k-means, hierarchical clustering, DBSCAN, spectral clustering, Gaussian mixtures and self-organizing maps) and the related k-nearest neighbors algorithm. It then covers dimensionality reduction, with principal component analysis (PCA) and kernel PCA, t-SNE and independent component analysis (ICA), association rule mining (Apriori, ECLAT and FP-growth), and anomaly detection (isolation forests and the local outlier factor). It ends with the curse of dimensionality, and with the nearest-neighbor search in high dimensions that retrieval-augmented generation relies on.
 
 ## Clustering
 
@@ -16,14 +16,14 @@ Unsupervised learning is the field of machine learning dedicated to learning wit
 
 ### K-Means Clustering
 
-[Competitive learning](https://en.wikipedia.org/wiki/Competitive_learning) underlies the self-organization of the brain. In practice, neural network wiring is adaptive, not fixed, and competition drives wiring across all brain systems (motor cortex, neocortex, etc.).
-A common technique for data reduction from competitive learning is **prototype clustering**, where the data points $$x_u$$ are represented by a smaller set of prototypes $$w_i$$ that represent clusters of points. The general rule is that *a new point $$x$$ belongs to the closest prototype $$i^*$$*, i.e.
+[Competitive learning](https://en.wikipedia.org/wiki/Competitive_learning) underlies the self-organization of the brain. The wiring of biological neural networks is adaptive, not fixed, and competition shapes it across many brain systems (motor cortex, neocortex, etc.).
+A common technique for data reduction from competitive learning is **prototype clustering**, where the data points $$x_u$$ are represented by a smaller set of prototypes $$w_i$$, one per cluster of points. The general rule is that *a new point $$x$$ belongs to the closest prototype $$i^*$$*, i.e.
 
 $$
 \| w_{i^*} - x \| \leq \| w_i - x \| \text{, for all } i
 $$
 
-This kind of partitioning underlies problems such as the [Voronoi diagram](https://en.wikipedia.org/wiki/Voronoi_diagram) for spatial data partitioning. A 2D example follows, where the points of each region (colored cells) belong to its prototype (black points):
+This rule partitions the space into the cells of the [Voronoi diagram](https://en.wikipedia.org/wiki/Voronoi_diagram) of the prototypes, a partition also used for spatial data. A 2D example follows, where the points of each colored cell belong to its prototype (black dot):
 
 
 {: .picture}
@@ -43,15 +43,15 @@ $$
 **[k-means clustering](https://en.wikipedia.org/wiki/K-means_clustering)** is an iterative method for prototype clustering. Its objective is to find the partition of the data points into $$k$$ clusters $$C_1, ..., C_k$$ that minimizes the error above:
 
 $$
-\arg\min_{C_1, ..., C_k} \sum_{i=1}^{k} \sum_{x \in C_i} \| x - w_i \|^2
+\arg\min_{C_1, ..., C_k} \sum_{i=1}^{k} \sum_{u \in C_i} \| x_u - w_i \|^2
 $$
 
-where $$w_i$$ is the mean of the points in $$C_i$$. The standard algorithm, also called **Lloyd's algorithm**, iterates over 2 steps:
+where $$w_i$$ is the mean of the points in $$C_i$$. The standard algorithm, also called **Lloyd's algorithm**, alternates between two steps:
 - assignment step: assign each observation to the closest mean, based on e.g. the [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance);
 - update step: compute the new means as the centroids of the observations in each new cluster:
 
 $$
-w_i^{(t+1)} = \frac{1}{\vert C^{(t)}_i \vert} \sum_{x_j \in C_i^{(t)}} x_j
+w_i^{(t+1)} = \frac{1}{\vert C^{(t)}_i \vert} \sum_{u \in C_i^{(t)}} x_u
 $$
 
 The algorithm converges when the assignments no longer change, and the means are then the centers of mass of their clusters. With the update $$\Delta w_i = \eta \sum_{u \in C_i} (x_u - w_i)$$ over the $$\vert C_i \vert$$ points of cluster $$C_i$$, convergence means $$\Delta w_i = 0$$, so it must hold that:
@@ -69,7 +69,7 @@ which is the definition of the center of mass of cluster $$i$$. Neither step inc
 **1.** $$k = 3$$ initial means (colored circles) are chosen at random within the data domain. **2.** Assignment step: each point joins the cluster of the closest mean; the colored regions are the Voronoi cells of the means. **3.** Update step: each mean moves to the centroid of its cluster (dashed circles: the previous means; lines: the points of each cluster). **4.** Assignment step with the new means and their Voronoi cells: two points move from the green to the red cluster. The two steps repeat until the assignments no longer change. Adapted from: [k-means clustering](https://en.wikipedia.org/wiki/K-means_clustering)
 
 
-In a 2D space, one can imagine a 3-cluster run as:
+A whole run of k-means on 2D data, until the assignments no longer change, is illustrated below:
 
 {: .picture}
 <img width="91.3%" height="91.3%" src="{{ site.assets }}/unsupervised-learning/kmeans_iterations.svg">
@@ -78,7 +78,7 @@ In a 2D space, one can imagine a 3-cluster run as:
 Iterations of k-means with $$k = 3$$ on 90 points of three Gaussian clusters, from three of the points as initial means. Each panel shows the means (circles), their Voronoi cells and their clusters, and the lines trace the means of the previous iterations. Two initial means fall in the same cluster, so 26 points change cluster in iteration 1 and 5 in iteration 2, and in iteration 3 the assignments no longer change. Inspired by: [k-means clustering](https://en.wikipedia.org/wiki/K-means_clustering)
 
 
-The update rule above is a **batch learning rule**, as it updates the weights based on a set (*batch*) of inputs. The converse rule is the **online update** rule, which updates the weights of the winning prototype $$i$$ at the introduction of every new input $$x_u$$:
+The update $$\Delta w_i = \eta \sum_{u \in C_i} (x_u - w_i)$$ above is a **batch learning rule**, as it updates the weights based on a set (*batch*) of inputs. The **online update** rule, instead, updates the weights of the winning prototype $$i$$ at the introduction of every new input $$x_u$$:
 
 $$
 \Delta w_i = \eta (x_u - w_i)
@@ -131,7 +131,7 @@ Two core points within distance $$\varepsilon$$ of each other belong to the same
 <img width="90.3%" height="90.3%" src="{{ site.assets }}/unsupervised-learning/dbscan.svg">
 
 {: .caption}
-DBSCAN, with $$\varepsilon = 0.25$$ and $$m = 6$$, on 100 points of two half-moons and 10 points of uniform noise. The dashed circle of radius $$\varepsilon$$ around a core point holds 7 points. DBSCAN finds the two moons as two clusters, without being given their number, and labels 5 isolated points as noise.
+DBSCAN, with $$\varepsilon = 0.25$$ and $$m = 6$$, on 100 points of two half-moons and 10 points of uniform noise. The dashed circle of radius $$\varepsilon$$ around a core point holds 7 points. DBSCAN finds the two moons as two clusters, blue and green, with dark core points and light border points, without being given their number, and labels 5 isolated points as noise (gray).
 
 ### Spectral Clustering
 
@@ -195,18 +195,18 @@ Three elongated clusters, clustered by k-means (center), with the Voronoi cells 
 
 ### Self-Organizing Maps and Kohonen Maps
 
-A **self-organizing map** (SOM) is an unsupervised artificial neural network, typically a 2D grid of neurons, that represents a discretization of the input space (or of the training set). It was introduced by Teuvo Kohonen in the paper [Self-organized formation of topologically correct feature maps](https://link.springer.com/article/10.1007/BF00337288) (1982), hence its other name, the Kohonen map. Its main purpose is to represent the training data by localized regions (neurons) that represent agglomerates of inputs, with neighboring neurons of the grid representing nearby regions of the input space. Like k-means, a SOM is a prototype method, whose prototypes are the weights of its neurons; unlike k-means, its prototypes are ordered on a grid. The following picture illustrates Kohonen's model (top) and one step of its learning algorithm (bottom):
+A **self-organizing map** (SOM) is an unsupervised artificial neural network, typically a 2D grid of neurons, that represents a discretization of the input space (or of the training set). It was introduced by Teuvo Kohonen in the paper [Self-organized formation of topologically correct feature maps](https://link.springer.com/article/10.1007/BF00337288) (1982), hence its other name, the Kohonen map. Its main purpose is to represent the training data by neurons, each standing for a localized region of similar inputs, with neighboring neurons of the grid representing nearby regions of the input space. Like k-means, a SOM is a prototype method, whose prototypes are the weights of its neurons; unlike k-means, its prototypes are ordered on a grid. The following picture illustrates Kohonen's model (top) and one step of its learning algorithm (bottom):
 
 {: .picture}
 <img width="46%" height="46%" src="{{ site.assets }}/unsupervised-learning/kohonen.svg"><br>
 <img width="37%" height="37%" src="{{ site.assets }}/unsupervised-learning/kohonen2.svg">
 
 {: .caption}
-**Top:** the neuron layer of Kohonen's model. The input fibres running horizontally carry the input signal (the stimulus) and excite the neurons of the layer through synaptic connections. Lateral interactions between the neurons confine the response to a spatially bounded local excitation zone. The layer acts as a topographic feature map if the position $$s$$ of the excitation zone varies continuously with the stimulus features of interest. **Bottom:** the adaptation step. The input $$v$$ in the input space $$V$$ selects the winner neuron $$s$$ in the lattice of neurons $$A$$ ($$\phi$$ is the map from $$V$$ to $$A$$). The winner and its neighbours shift their weight vectors towards $$v$$, by an amount that decreases with the distance from $$s$$, shown by the sizes and gray levels of the neurons. Only the shift $$\Delta w_s$$ of the winner's weights $$w_s$$ is drawn. In the algorithm below, $$v$$ is the input $$x_u$$ and $$s$$ is the winner $$j^*$$. Adapted from: [Neural Computation and Self-Organizing Maps, H. Ritter, T. Martinetz and K. Schulten, 1992, Figures 4.1 and 4.2](https://tcbg.illinois.edu/Services/Class/PHYS498TBP/spring2002/neuro_4.pdf)
+**Top:** the neuron layer of Kohonen's model. The input fibers running horizontally carry the input signal (the stimulus) and excite the neurons of the layer through synaptic connections. Lateral interactions between the neurons confine the response to a spatially bounded local excitation zone. The layer acts as a topographic feature map if the position $$s$$ of the excitation zone varies continuously with the stimulus features of interest. **Bottom:** the adaptation step. The input $$v$$ in the input space $$V$$ selects the winner neuron $$s$$ in the lattice of neurons $$A$$ ($$\phi$$ is the map from $$V$$ to $$A$$). The winner and its neighbors shift their weight vectors towards $$v$$, by an amount that decreases with the distance from $$s$$, shown by the sizes and gray levels of the neurons. Only the shift $$\Delta w_s$$ of the winner's weights $$w_s$$ is drawn. In the algorithm below, $$v$$ is the input $$x_u$$ and $$s$$ is the winner $$j^*$$. Adapted from: [Neural Computation and Self-Organizing Maps, H. Ritter, T. Martinetz and K. Schulten, 1992, Figures 4.1 and 4.2](https://tcbg.illinois.edu/Services/Class/PHYS498TBP/spring2002/neuro_4.pdf)
 
 
 The algorithm is the following:
-- neurons are randomly placed in the multidimensional space;
+- the weights of the neurons are initialized at random in the input space;
 - at every iteration, choose an input $$x_u$$;
 - determine which neuron $$j^*$$ is the *winner* (or *best matching unit*, BMU), i.e. the closest in space:
 
@@ -231,7 +231,7 @@ Very nice videos demonstrating an iterative execution of the Kohonen map can be 
 {: .caption}
 A SOM of 6x6 neurons, trained on 2D inputs drawn uniformly from a square (blue). Each circle is the weight vector of a neuron, and the lines join the neurons that are neighbors in the grid. The weights start in a small random cloud, where the grid is tangled. The first iterations order the grid, and the following ones spread it over the square, as $$\eta$$ decreases from 0.5 to 0.01 and the width of the Gaussian $$h$$ from 3 to 0.5 neurons.
 
-A good example is the recognition of handwritten digits from the [MNIST database](http://yann.lecun.com/exdb/mnist/).
+A good example is the clustering of handwritten digits from the [MNIST database](http://yann.lecun.com/exdb/mnist/).
 Each digit is a 28x28 (=784) pixel array, represented as a data point in a 784-dimensional space. Each pixel is monochromatic, so each dimension takes values between 0 and 255.
 
 The task is, given a database of 5,000 handwritten digits, to find the 6x6 SOM that best represents 4 of the digits from 0 to 9. This example studies how the neighborhood width and the learning rate affect the performance of the Kohonen map.
@@ -379,7 +379,7 @@ Closely related to PCA is **[Independent Component Analysis](https://en.wikipedi
 - the source signals $$s_1$$, ..., $$s_n$$ are statistically independent, i.e. $$p(s_1, s_2, ..., s_n) = p(s_1)\,\,p(s_2) \,\, ... \,\, p(s_n)$$;
 - the sources are not Gaussian (at most one of them may be), otherwise ICA is impossible.
 
-ICA builds on the [Central Limit Theorem](https://en.wikipedia.org/wiki/Central_limit_theorem), which states that the distribution of the sum of $$N$$ independent random variables approaches a Gaussian as $$N \rightarrow \infty$$. As an example, the throw of a die has a uniform distribution from 1 to 6, but the distribution of the sum of several throws is better approximated by a Gaussian as the number of throws increases. A mixture of independent signals is thus *more Gaussian* than the signals themselves, and the most non-Gaussian directions recover the independent signals. In short, *non-Gaussianity is independence*.
+ICA builds on the [Central Limit Theorem](https://en.wikipedia.org/wiki/Central_limit_theorem), which states that the distribution of the sum of $$N$$ independent and identically distributed random variables of finite variance approaches a Gaussian as $$N \rightarrow \infty$$. As an example, the throw of a die has a uniform distribution from 1 to 6, but the distribution of the sum of several throws is better approximated by a Gaussian as the number of throws increases. A mixture of independent signals is thus *more Gaussian* than the signals themselves, and the most non-Gaussian directions recover the independent signals.
 
 A famous example is the [cocktail party](https://en.wikipedia.org/wiki/Cocktail_party_effect) problem. Three guests speak at the same time, and three microphones at different places of the room record the observed signals $$x$$, each a different mixture of the original signals $$s$$, the three voices, as in:
 
@@ -399,7 +399,7 @@ $$
 
 where $$A$$ is an invertible mixing matrix. Thus, the problem can be written as $$s(t) = Bx(t)$$, where $$B = A^{-1}$$. It is only necessary to estimate $$B$$ so that the $$s_i$$ are independent.
 
-Signals $$z$$ are *white* if they satisfy $$E [z] = 0$$ and $$E [ z z^T ] = I$$. [Whitening](https://en.wikipedia.org/wiki/Whitening_transformation) is a useful pre-processing step for ICA. The whitened signals are $$z (t) = V x(t)$$, where $$x$$ is centered and $$V$$ is the whitening matrix (e.g. $$V = \Lambda^{-1/2} F^T$$, with the eigenvalues $$\Lambda$$ and the eigenvectors $$F$$ of the covariance matrix of $$x$$, as in PCA). The model becomes:
+Signals $$z$$ are *white* if they satisfy $$\mathbb{E}[z] = 0$$ and $$\mathbb{E}[ z z^T ] = I$$. [Whitening](https://en.wikipedia.org/wiki/Whitening_transformation) is a useful pre-processing step for ICA. The whitened signals are $$z (t) = V x(t)$$, where $$x$$ is centered and $$V$$ is the whitening matrix (e.g. $$V = \Lambda^{-1/2} F^T$$, with the eigenvalues $$\Lambda$$ and the eigenvectors $$F$$ of the covariance matrix of $$x$$, as in PCA). The model becomes:
 
 $$
 s(t) = U z (t) = U V x (t) = B x (t)
@@ -416,39 +416,39 @@ Independent component analysis of two mixed signals, with colors that mark the f
 **Non-Gaussianity is a measure of independence**. [Kurtosis](https://en.wikipedia.org/wiki/Kurtosis) is a measure of non-Gaussianity, defined for a variable $$y$$ of zero mean by:
 
 $$
-\mathrm{kurt}(y) =  E [y^4] - 3 (E[y^2])^2.
+\mathrm{kurt}(y) =  \mathbb{E}[y^4] - 3 (\mathbb{E}[y^2])^2.
 $$
 
-It is zero for a Gaussian. Assume that $$y$$ is white, i.e. $$E[y]=0$$ and $$E[y^2]=1$$, thus
+It is zero for a Gaussian. Assume that $$y$$ is white, i.e. $$\mathbb{E}[y]=0$$ and $$\mathbb{E}[y^2]=1$$, thus
 
 $$
-\mathrm{kurt}(y) = E[y^4]-3.
+\mathrm{kurt}(y) = \mathbb{E}[y^4]-3.
 $$
 
-As an example, the sources of the picture are uniform. A uniform variable of unit variance has $$E[y^4] = 9/5$$, i.e. a kurtosis of −1.2, while a variable with a [Laplace distribution](https://en.wikipedia.org/wiki/Laplace_distribution) of unit variance has $$E[y^4] = 6$$, i.e. a kurtosis of +3. Variables of negative kurtosis, flatter than a Gaussian, are called *sub-Gaussian*, and those of positive kurtosis, with a sharper peak and heavier tails, *super-Gaussian*. The kurtosis of a sum of independent variables is the sum of their kurtoses, and a factor $$1/\sqrt{2}$$ divides it by 4. Thus, the mixture $$(s_1 + s_2)/\sqrt{2}$$ of two uniform sources of unit variance has a kurtosis of −0.6, halfway to the 0 of a Gaussian. Mixing makes the signals more Gaussian, and maximizing the absolute value of the kurtosis undoes the mixing.
+As an example, the sources of the picture are uniform. A uniform variable of unit variance has $$\mathbb{E}[y^4] = 9/5$$, i.e. a kurtosis of −1.2, while a variable with a [Laplace distribution](https://en.wikipedia.org/wiki/Laplace_distribution) of unit variance has $$\mathbb{E}[y^4] = 6$$, i.e. a kurtosis of +3. Variables of negative kurtosis, flatter than a Gaussian, are called *sub-Gaussian*, and those of positive kurtosis, with a sharper peak and heavier tails, *super-Gaussian*. The kurtosis of a sum of independent variables is the sum of their kurtoses, and a factor $$1/\sqrt{2}$$ divides it by 4. Thus, the mixture $$(s_1 + s_2)/\sqrt{2}$$ of two uniform sources of unit variance has a kurtosis of −0.6, halfway to the 0 of a Gaussian. Mixing makes the signals more Gaussian, and maximizing the absolute value of the kurtosis undoes the mixing.
 
 Each row $$b^T$$ of $$B$$ recovers one source, $$s_i = b^T x$$. The ICA problem is solved with
 
 $$
-\hat{b} = \arg\max_b | \mathrm{kurt}(b^T x(t)) |
+\hat{b} = \arg\max_b \vert \mathrm{kurt}(b^T x(t)) \vert
 $$
 
-where $$b^T x(t)$$ is constrained to unit variance. On the whitened data, $$b^T x(t) = w^T z(t)$$, where $$w^T = b^T V^{-1}$$ is a row of $$U$$, and the unit-variance constraint becomes $$w^T w=1$$. The absolute value of the *kurtosis* $$\mid \mathrm{kurt}(w^Tz) \mid$$ is then maximized, subject to $$w^T w=1$$. Its gradient is:
+where $$b^T x(t)$$ is constrained to unit variance. On the whitened data, $$b^T x(t) = w^T z(t)$$, where $$w^T = b^T V^{-1}$$ is a row of $$U$$, and the unit-variance constraint becomes $$w^T w=1$$. The absolute value of the *kurtosis* $$\vert \mathrm{kurt}(w^T z) \vert$$ is then maximized, subject to $$w^T w=1$$. Its gradient is:
 
 $$
 \begin{align*}
-\frac{\partial \vert \mathrm{kurt}(w^T z) \vert}{\partial w} & = \frac{\partial}{\partial w} \left\vert E[(w^T z)^4] - 3 (E[(w^T z)^2])^2 \right\vert \\
-& = \frac{\partial}{\partial w} \left\vert E[(w^T z)^4] - 3 (\| w \|^2)^2 \right\vert \quad \text{(because } E[z z^T] = I) \\
-& = 4 \, \text{sign}[\mathrm{kurt}(w^T z)] \left( E[z (w^T z)^3] - 3 w \| w \|^2 \right)
+\frac{\partial \vert \mathrm{kurt}(w^T z) \vert}{\partial w} & = \frac{\partial}{\partial w} \left\vert \mathbb{E}[(w^T z)^4] - 3 (\mathbb{E}[(w^T z)^2])^2 \right\vert \\
+& = \frac{\partial}{\partial w} \left\vert \mathbb{E}[(w^T z)^4] - 3 (\| w \|^2)^2 \right\vert \quad \text{(because } \mathbb{E}[z z^T] = I) \\
+& = 4 \, \text{sign}[\mathrm{kurt}(w^T z)] \left( \mathbb{E}[z (w^T z)^3] - 3 w \| w \|^2 \right)
 \end{align*}
 $$
 
 The problem can now be solved by gradient ascent (with $$\| w \| = 1$$):
-- $$\Delta w \propto \text{sign} [ \mathrm{kurt}(w^T z)] \, ( E [ z(w^T z)^3 ] - 3w )$$;
+- $$\Delta w \propto \text{sign} [ \mathrm{kurt}(w^T z)] \, ( \mathbb{E}[ z(w^T z)^3 ] - 3w )$$;
 - $$w \leftarrow w + \Delta w$$, followed by the normalization $$w \leftarrow w / \| w \|$$.
 
 Or, because the algorithm converges when $$w \propto \Delta w$$, and $$w$$ and $$-w$$ are equivalent, with the fixed-point iteration of **[FastICA](https://en.wikipedia.org/wiki/FastICA)** ([Hyvärinen and Oja, 1997](https://doi.org/10.1162/neco.1997.9.7.1483)):
-- $$w \leftarrow E [ z ( w^T z)^3 ] - 3w$$, followed by $$w \leftarrow w / \| w \|$$.
+- $$w \leftarrow \mathbb{E}[ z ( w^T z)^3 ] - 3w$$, followed by $$w \leftarrow w / \| w \|$$.
 
 Unlike gradient ascent, FastICA has no learning rate to tune, and its convergence is cubic, so it is usually much faster. The other components are found in the same way, keeping each new $$w$$ orthogonal to the previous ones, as the rows of $$U$$ are orthonormal.
 
@@ -563,7 +563,7 @@ A sparse cluster, a dense cluster, a global outlier (top) and a local outlier un
 
 Distance-based methods, such as k-means, KNN, DBSCAN and LOF, struggle with high-dimensional data, in particular with Euclidean distances. This is due to a phenomenon called the **[curse of dimensionality](https://en.wikipedia.org/wiki/Curse_of_dimensionality)**: as the number of dimensions increases, the distances between any two points become similar, which makes the distance metric almost irrelevant. For example, for points with independent and identically distributed coordinates, the relative difference between the distances from a point to its farthest and nearest neighbors, $$(d_{max} - d_{min}) / d_{min}$$, tends to 0 as the number of dimensions grows ([Beyer et al., 1999](https://link.springer.com/chapter/10.1007/3-540-49257-7_15)).
 
-For 1,000 points drawn uniformly in the unit cube, this relative difference has a median of 65 in 2 dimensions, 2.6 in 10, 0.44 in 100 and 0.12 in 1,000, over 100 random query points. The reason is that the squared distance between two such points is a sum of one independent term per dimension, the squared difference of two uniform coordinates, of mean 1/6 and variance 7/180. Its mean grows with the number of dimensions, while its standard deviation grows only with the square root of that number. Thus, the standard deviation relative to the mean is $$\sqrt{7/5}$$ divided by the square root of the number of dimensions: 84% in 2 dimensions, 12% in 100 and 3.7% in 1,000. The following picture shows how the distances concentrate around their mean as the number of dimensions grows:
+For 1,000 points drawn uniformly in the unit cube, this relative difference has a median of 65 in 2 dimensions, 2.6 in 10, 0.44 in 100 and 0.12 in 1,000, over 100 random query points. The reason is that the squared distance between two such points is a sum of one independent term per dimension, the squared difference of two uniform coordinates, of mean 1/6 and variance 7/180. Its mean grows with the number of dimensions, while its standard deviation grows only with the square root of that number. Thus, the standard deviation of the squared distance relative to its mean is $$\sqrt{7/5}$$ divided by the square root of the number of dimensions: 84% in 2 dimensions, 12% in 100 and 3.7% in 1,000. The following picture shows how the distances concentrate around their mean as the number of dimensions grows:
 
 {: .picture}
 <img width="91.4%" height="91.4%" src="{{ site.assets }}/unsupervised-learning/curse_of_dimensionality.svg">
@@ -583,4 +583,4 @@ An exact search over $$n$$ vectors of $$d$$ dimensions costs $$O(nd)$$ operation
 - **product quantization** (PQ, [Jégou, Douze and Schmid, 2011](https://doi.org/10.1109/TPAMI.2010.57)): each vector is split into sub-vectors, and each sub-vector is replaced by the index of its closest centroid in a small k-means codebook. Split into 64 sub-vectors with 256 centroids each, an embedding of 1,024 FP32 values (4 KB) takes 64 bytes, and its distances to a query are computed with table lookups;
 - **graph indexes**, such as [HNSW](https://en.wikipedia.org/wiki/Hierarchical_navigable_small_world) (Hierarchical Navigable Small World, [Malkov and Yashunin, 2016](https://arxiv.org/abs/1603.09320)): each vector is a node connected to its approximate nearest neighbors, in a hierarchy of graphs of increasing density, and a query walks greedily from node to node towards its nearest neighbors, in about $$O(\log n)$$ steps.
 
-Libraries such as [FAISS](https://en.wikipedia.org/wiki/FAISS) ([Johnson, Douze and Jégou, 2017](https://arxiv.org/abs/1702.08734)) combine these methods, e.g. IVF with PQ, and run them on GPUs. Embeddings escape the curse of dimensionality only in part: the embedding model is trained so that related texts are close, so the embeddings lie near a manifold of much lower intrinsic dimension than their 1,024 coordinates, and the nearest neighbors of a query still stand out from the rest. Thus, the ideas of this post (k-means clustering, Voronoi cells, quantization and the graphs of nearest neighbors) are what makes the search over billions of embeddings fast enough for RAG.
+Libraries such as [FAISS](https://en.wikipedia.org/wiki/FAISS) ([Johnson, Douze and Jégou, 2017](https://arxiv.org/abs/1702.08734)) combine these methods, e.g. IVF with PQ, and run them on GPUs. Embeddings escape the curse of dimensionality only in part: the embedding model is trained so that related texts are close, so the embeddings lie near a manifold of much lower intrinsic dimension than their 1,024 coordinates, and the nearest neighbors of a query still stand out from the rest. Thus, the ideas of this post (k-means clustering, Voronoi cells, quantization and the graphs of nearest neighbors) are what make the search over billions of embeddings fast enough for RAG.
