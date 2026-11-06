@@ -117,14 +117,6 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
   `_tools/charts.py`, as the chart rule of CLAUDE.md (Pictures, section 2) asks; its pictures already have the same
   fonts, palette and line weights. Fix: import `charts` for the constants, and keep its `Canvas` class and ink crop.
 
-### Dropout, CNNs, Skip Connections and Embeddings (2018-04-01-dropout-cnns-skip-connections-embeddings.md)
-
-- Dropout snippet: `MyDropout` reads `self.p` but defines no `__init__` that sets it, so the first call fails with an
-  `AttributeError`; also, `torch.distributions.binomial.Binomial(probs=1-self.p)` samples its mask on the CPU, so `X *
-  mask` fails for an input `X` on a GPU. Proposed fix: add `def __init__(self, p=0.5): super().__init__(); self.p =
-  p`, and draw the mask on the device of `X`, e.g. `mask = (torch.rand_like(X) >= self.p).to(X.dtype)` and `return X *
-  mask / (1 - self.p)`.
-
 ### Bayesian Linear Regression, Maximum Likelihood and Maximum a Posteriori (2018-08-20-bayesian-linear-regression.md)
 
 - `assets/bayesian-linear-regression/bayesian_linear_regression.ipynb`, predictive distribution cell: the data
@@ -1164,15 +1156,17 @@ Content problems that need the author's decision, such as overlap between posts.
 
 ### Dropout, CNNs, Skip Connections and Embeddings (2018-04-01-dropout-cnns-skip-connections-embeddings.md)
 
-- `dropout-cnns-skip-connections-embeddings/cnn.svg` gives no filter size, so the text assumes 3×3 filters: the first
+- `dropout-cnns-skip-connections-embeddings/cnn.svg` gives no filter size, so the text and the code assume 3×3 filters: the first
   layer has 896 parameters, 7,000 times fewer than a dense layer, and the fully connected layers hold 96.4% of the
   545,218 parameters. With 5×5 filters, these numbers become 2,432 parameters, 2,600 times fewer, and 90.7% of
   579,522. Proposed fix: confirm the filter size of the network of the picture, and keep or change the numbers; "more
   than all the convolutional layers together" holds either way.
 - Some letters stand for two quantities, as the sections follow their papers: $$p$$ is the probability of dropping a
-  unit, while the focal and Dice losses write $$p_t$$ and $$p_i$$ for predicted probabilities; $$m$$ is a pixel index
-  of the convolutions and the margin of the contrastive and triplet losses; and $$k$$ is the growth rate of DenseNet
-  and the step of message passing. Proposed fix: leave them, or rename the margin of the two losses.
+  unit, while the focal, Dice and CTC losses write $$p_t$$, $$p_i$$ and $$p^t_k$$ for predicted probabilities; $$m$$ is
+  a pixel index of the convolutions and the margin of the contrastive and triplet losses; $$k$$ is the growth rate of
+  DenseNet, the step of message passing and a label of the CTC loss; and $$\delta$$ is the error of the backward pass of
+  a convolution, as in the DNN post, and the distance of the contrastive loss. Proposed fix: leave them, or rename the
+  margin of the two losses, and write the distance of the contrastive loss $$d$$, as its code does.
 
 ### Exponential Family of Distributions (2019-03-20-exponential-family.md)
 
