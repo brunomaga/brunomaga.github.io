@@ -70,6 +70,10 @@ written by Claude read as if the author had written them from the beginning, not
   the code of its implementation. The text that applies to all implementations stays outside the tabs, before or
   after the group. `assets/js/code-tabs.js` shows one tab at a time, and a tab picked in one group is picked in
   all groups of the page.
+- The code of a post is shown in snippets in the post, not left to external files, which are hard to keep in
+  sync with the snippets, at the user's request (2026-11-06). A file that the post shows whole without
+  explaining it line by line, such as a `CMakeLists.txt`, goes in an expandable `<details markdown="1">` block.
+  The code files of the asset folder stay as the version that builds and runs, and every snippet matches them.
 - Plain, precise words. The author's mild informal words stay ("trickier", "handy"), slang goes ("lingo"), and
   contractions are written out ("does not", "it is").
 

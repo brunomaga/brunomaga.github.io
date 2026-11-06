@@ -8,7 +8,6 @@
 #include <cuda_bf16.h>
 #include "gpt.h"
 
-using dt = __nv_bfloat16;
 constexpr int THREADS = 256;   // threads per thread block of the element-wise and row kernels
 cublasHandle_t handle;
 

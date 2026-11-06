@@ -1,6 +1,7 @@
 Support material for the post [GPT from scratch in C++ and CUDA vs. fused PyTorch](https://brunomaga.github.io/gpt-cpp-cuda).
 
-- `gpt.h`: the dimensions of the model, and the deterministic values of its input and parameters;
+- `gpt.h`: the dimensions of the model, the type of its values, and the deterministic values of its input and
+  parameters;
 - `gpt.py`: the GPT blocks in PyTorch, run in eager mode or with `torch.compile`;
 - `gpt_libtorch.cpp`: the GPT blocks in LibTorch, the C++ API of PyTorch;
 - `gpt_cpu.cpp`: the GPT blocks in plain C++ loops, on the CPU;

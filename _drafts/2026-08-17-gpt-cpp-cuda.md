@@ -180,7 +180,7 @@ where $$\text{Attention}$$ is the masked multi-head attention and $$\text{FFN}$$
 
 ### Dimensions and data types
 
-All implementations share the header `gpt.h`, with the dimensions of GPT-3 Small, the smallest model of the paper [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (GPT-3, Table 2.1 in the paper):
+All implementations share the header `gpt.h`, with the dimensions of GPT-3 Small, the smallest model of the paper [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (GPT-3, Table 2.1 in the paper), the type `dt` of the values, and the numbers of iterations of the benchmark:
 
 ```cpp
 // the dimensions of GPT-3 Small, Table 2.1 of "Language Models are Few-Shot Learners", Brown et al., 2020
@@ -191,18 +191,41 @@ constexpr int D = E / H;         // size of each attention head (d_head)
 constexpr int S = 2048;          // sequence length (n_ctx)
 constexpr int B = 8;             // batch size of the benchmark, in sequences
 constexpr float eps = 1e-5f;     // epsilon of the layer normalization, as in PyTorch
+
+// the type of the values: bf16 when nvcc compiles CUDA code (it then defines __CUDACC__), and fp32 otherwise
+#ifdef __CUDACC__
+#include <cuda_bf16.h>
+using dt = __nv_bfloat16;
+#else
+using dt = float;
+#endif
+
+constexpr int warmup_iters = 5;      // iterations before the timed ones
+constexpr int benchmark_iters = 20;  // timed iterations
 ```
 
 Only the dimensions come from GPT-3 Small. The block is the one of GPTlite, with a ReLU where GPT-3 uses a GELU, and with dense attention in all blocks, where GPT-3 alternates dense and locally banded sparse attention. Also, the batch size $$B$$ is the number of sequences of the benchmark, not the batch size of the paper (0.5M tokens), which is a setting of the training.
 
-On the GPU, the values are stored in BF16 and summed in FP32 ([mixed precision](https://en.wikipedia.org/wiki/Mixed-precision_arithmetic)), as PyTorch does in a BF16 model. The Tensor Cores multiply BF16 values and add them in FP32, and the kernels of the softmax and of the layer normalization compute in FP32 and store BF16. On the CPU, all values are FP32, which keeps the code short. Each file sets the type `dt` of its values:
+On the GPU, the values are stored in BF16 and summed in FP32 ([mixed precision](https://en.wikipedia.org/wiki/Mixed-precision_arithmetic)), as PyTorch does in a BF16 model. The Tensor Cores multiply BF16 values and add them in FP32, and the kernels of the softmax and of the layer normalization compute in FP32 and store BF16. On the CPU, all values are FP32, which keeps the code short. The CUDA compiler, [nvcc](https://en.wikipedia.org/wiki/Nvidia_CUDA_Compiler), defines the macro `__CUDACC__` when it compiles CUDA code, so `dt` is `__nv_bfloat16` in `gpt_cuda.cu`, and `float` in `gpt_cpu.cpp`.
+
+Moreover, to compare the outputs of the implementations, the input and the parameters are not random: their values come from an integer hash of their index, in the same order in all implementations, computed by `init_value` in `gpt.h`:
 
 ```cpp
-using dt = float;            // gpt_cpu.cpp
-using dt = __nv_bfloat16;    // gpt_cuda.cu
+// the same deterministic values in every implementation: the input is init_value(i, 1), and the weights and biases
+// of the linear layers are init_value(i, 0.02), where i counts their values block after block, in the order Wq, bq,
+// Wk, bk, Wv, bv, Wo, bo, W1, b1, W2, b2, with each W stored as (in x out) in row-major order. The layer
+// normalizations keep the defaults of PyTorch (weight 1, bias 0)
+inline float init_value(unsigned int i, double scale) {
+  i = (i ^ 61) ^ (i >> 16);   // Thomas Wang's integer hash of i, on 32 bits
+  i *= 9;
+  i ^= i >> 4;
+  i *= 0x27d4eb2d;
+  i ^= i >> 15;
+  return (float) (scale * (2.0 * i / 4294967295.0 - 1.0));   // from [0, 2^32 - 1] to [-scale, scale]
+}
 ```
 
-Moreover, to compare the outputs of the implementations, the input and the parameters are not random: their values come from an integer hash of their index, in the same order in all implementations (`init_value` in `gpt.h`). Each program prints the first three values of the output of the first sequence, and the mean of the absolute values of this output. In FP32, the C++ code on the CPU prints the same values as PyTorch (0.7254, 0.0187 and 1.1980, with a mean absolute value of 0.6332), and PyTorch in BF16 on the CPU prints 0.7188, 0.0156 and 1.1953, with the same mean.
+Each program prints the first three values of the output of the first sequence, and the mean of the absolute values of this output. In FP32, the C++ code on the CPU prints the same values as PyTorch (0.7254, 0.0187 and 1.1980, with a mean absolute value of 0.6332), and PyTorch in BF16 on the CPU prints 0.7188, 0.0156 and 1.1953, with the same mean.
 
 ### Feed-forward network
 
@@ -678,29 +701,6 @@ class Block(nn.Module):
     return x
 ```
 
-The main program stacks the $$L$$ blocks in an `nn.Sequential`, initializes their parameters with the same values as `gpt.h`, moves the model to the GPU in BF16, and compiles it with the option `--compile`. Then, it runs the model on the input, 5 times to warm up and then 20 times under the clock:
-
-```python
-torch.set_default_device("cuda")
-model = nn.Sequential(*[Block() for _ in range(L)])
-init_params(model)
-model = model.to(torch.bfloat16).eval()
-if args.compile:
-  model = torch.compile(model)
-x = init_values(0, args.batch*S*E, 1).view(args.batch, S, E).to(torch.bfloat16)
-
-with torch.inference_mode():
-  for it in range(warmup_iters + benchmark_iters):
-    if it == warmup_iters:   # the first iterations compile the model, with torch.compile
-      torch.cuda.synchronize()
-      start = time.perf_counter()
-    y = model(x)
-  torch.cuda.synchronize()
-ms = (time.perf_counter() - start) * 1000 / benchmark_iters
-```
-
-The call `torch.set_default_device("cuda")` creates all tensors on the GPU, the parameters of the model included, and `torch.inference_mode()` turns off the tracking of gradients in its scope.
-
 </div>
 <div class="tab" data-title="LibTorch" markdown="1">
 
@@ -728,22 +728,7 @@ struct Block : nn::Module {
 };
 ```
 
-The attention and the FFN are created with `std::make_shared`, as `register_module` takes a shared pointer to a module, the same pointer that the holders of `torch::nn` wrap. The main program then stacks the $$L$$ blocks in an `nn::Sequential`, initializes their parameters with the values of `gpt.h`, and moves the model to the GPU in BF16:
-
-```cpp
-torch::Device device(torch::kCUDA);
-nn::Sequential model;
-for (int l = 0; l < L; l++)
-  model->push_back(std::make_shared<Block>());
-init_params(model);
-model->to(device, torch::kBFloat16);
-model->eval();
-Tensor x = init_values(0, batch*S*E, 1).view({batch, S, E}).to(device, torch::kBFloat16);
-
-c10::InferenceMode guard;   // the C++ equivalent of torch.inference_mode() in Python
-```
-
-As an important remark, LibTorch does not include a C++ equivalent to `torch.set_default_device`, so the input and the model are moved to the GPU explicitly. And because every parameter, buffer and module was registered, `model->to(device, torch::kBFloat16)` recursively copies all the contents of the model to the GPU, in BF16. Also, containers in C++ are declared for a fixed element type: `nn::Sequential` stores elements of type `nn::Module`, so `init_params` casts each of them dynamically to its derived type with `module->as<Block>()` before it accesses the members of the block. The guard `c10::InferenceMode` turns off the tracking of gradients in its scope, as `torch.inference_mode()` does in Python.
+The attention and the FFN are created with `std::make_shared`, as `register_module` takes a shared pointer to a module, the same pointer that the holders of `torch::nn` wrap.
 
 </div>
 <div class="tab" data-title="C++" markdown="1">
@@ -766,6 +751,12 @@ struct Buffers {
 The forward pass of a block then calls the functions of the previous sections in turn, on the $$M = B \cdot S$$ tokens of the batch, and `add` computes the skip connections, $$x = x + y$$, with a loop over the values:
 
 ```cpp
+// the skip connection x = x + y
+void add(dt* x, const dt* y, int n) {
+  for (int i = 0; i < n; i++)
+    x[i] += y[i];
+}
+
 // forward pass of a block on x (B*S x E): x = x + attention(layernorm(x)), then x = x + ffn(layernorm(x))
 void block_forward(const Block& p, dt* x, const Buffers& t, int B, int S) {
   int M = B*S;
@@ -790,6 +781,13 @@ void block_forward(const Block& p, dt* x, const Buffers& t, int B, int S) {
 The CUDA version stores the same parameters and buffers as the C++ version (the structures `Block` and `Buffers`) in the global memory of the GPU. Its forward pass launches the kernels of the previous sections, where `add` is an element-wise kernel, as `relu`, and the layer normalization runs one thread block per token, with the shared memory for the $$E$$ values of a token and for the reductions:
 
 ```cpp
+// the skip connection x = x + y
+__global__ void add(dt* x, const dt* y, long n) {
+  long i = (long) blockIdx.x * blockDim.x + threadIdx.x;
+  if (i < n)
+    x[i] = (float) x[i] + (float) y[i];
+}
+
 // forward pass of a block on x (B*S x E): x = x + attention(layernorm(x)), then x = x + ffn(layernorm(x))
 void block_forward(const Block& p, dt* x, const Buffers& t, int B, int S) {
   int M = B*S;
@@ -809,24 +807,242 @@ void block_forward(const Block& p, dt* x, const Buffers& t, int B, int S) {
 }
 ```
 
-And that is all: the main program initializes the parameters of the $$L$$ blocks, copies them to the GPU, and runs the blocks on the input, 5 times to warm up and then 20 times under the clock:
+</div>
+</div>
 
-```cpp
-std::chrono::steady_clock::time_point start;
-for (int it = 0; it < warmup_iters + benchmark_iters; it++) {
-  if (it == warmup_iters) {
-    cudaDeviceSynchronize();
-    start = std::chrono::steady_clock::now();
-  }
-  cudaMemcpy(x, x0, M*E * sizeof(dt), cudaMemcpyDeviceToDevice);
-  for (const Block& p : blocks)
-    block_forward(p, x, t, batch, S);
-}
-cudaDeviceSynchronize();
-double ms = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count();
+### The main program
+
+And that is all: the main program of each implementation initializes the parameters of the $$L$$ blocks with the values of `gpt.h`, runs the blocks on the input, 5 times to warm up and then 20 times under the clock, and prints the average runtime of a forward pass and the values that compare the outputs of the implementations.
+
+<div class="code-tabs" markdown="1">
+<div class="tab" data-title="PyTorch" markdown="1">
+
+In PyTorch, `init_values` computes the values of `init_value` of `gpt.h` on a tensor of indices, and `init_params` copies them into the parameters of the linear layers. The main program stacks the $$L$$ blocks in an `nn.Sequential`, initializes their parameters, moves the model to the GPU in BF16, and compiles it with the option `--compile`:
+
+```python
+def init_values(i, n, scale):
+  """ the deterministic values init_value(i, scale) to init_value(i+n-1, scale) of gpt.h """
+  i = torch.arange(i, i + n, dtype=torch.int64)
+  i = (i ^ 61) ^ (i >> 16)   # Thomas Wang's integer hash, on 32 bits
+  i = (i * 9) & 0xFFFFFFFF
+  i = i ^ (i >> 4)
+  i = (i * 0x27d4eb2d) & 0xFFFFFFFF
+  i = i ^ (i >> 15)
+  return (scale * (2.0 * i.double() / 4294967295.0 - 1.0)).float()
+
+
+@torch.no_grad()
+def init_params(blocks):
+  """ the parameters of gpt.h, where nn.Linear stores the transposed weights W^T (out x in) """
+  i = 0
+  for block in blocks:
+    for linear in [block.sa.query, block.sa.key, block.sa.value, block.sa.proj, block.ffwd.net[0], block.ffwd.net[2]]:
+      n_out, n_in = linear.weight.shape
+      linear.weight.copy_(init_values(i, n_in*n_out, 0.02).view(n_in, n_out).t())
+      linear.bias.copy_(init_values(i + n_in*n_out, n_out, 0.02))
+      i += n_in*n_out + n_out
+
+
+def main():
+  parser = argparse.ArgumentParser()
+  parser.add_argument("--batch", type=int, default=B, help="batch size")
+  parser.add_argument("--compile", action="store_true", help="compile the model with torch.compile")
+  args = parser.parse_args()
+
+  torch.set_default_device("cuda")
+  model = nn.Sequential(*[Block() for _ in range(L)])
+  init_params(model)
+  model = model.to(torch.bfloat16).eval()
+  if args.compile:
+    model = torch.compile(model)
+  x = init_values(0, args.batch*S*E, 1).view(args.batch, S, E).to(torch.bfloat16)
+
+  with torch.inference_mode():
+    for it in range(warmup_iters + benchmark_iters):
+      if it == warmup_iters:   # the first iterations compile the model, with torch.compile
+        torch.cuda.synchronize()
+        start = time.perf_counter()
+      y = model(x)
+    torch.cuda.synchronize()
+  ms = (time.perf_counter() - start) * 1000 / benchmark_iters
+
+  y = y[0].float()   # the output of the first sequence, to compare implementations
+  print(f"PyTorch{' + torch.compile' if args.compile else ''}, batch size {args.batch}: {ms:.1f} ms per forward pass")
+  print(f"output: {y[0, 0]:.4f} {y[0, 1]:.4f} {y[0, 2]:.4f} ..., mean |y| {y.abs().mean():.4f}")
 ```
 
-Each iteration first copies the input `x0` into `x`, as the blocks update `x` in place.
+The call `torch.set_default_device("cuda")` creates all tensors on the GPU, the parameters of the model included, and `torch.inference_mode()` turns off the tracking of gradients in its scope.
+
+</div>
+<div class="tab" data-title="LibTorch" markdown="1">
+
+In LibTorch, `init_values` and `init_params` are the same as in Python, with `torch::NoGradGuard` for `@torch.no_grad()`. The main program stacks the $$L$$ blocks in an `nn::Sequential`, initializes their parameters, and moves the model to the GPU in BF16:
+
+```cpp
+// the values init_value(i, scale) to init_value(i+n-1, scale) of gpt.h
+Tensor init_values(unsigned int i, int n, double scale) {
+  std::vector<float> v(n);
+  for (float& x : v)
+    x = init_value(i++, scale);
+  return torch::tensor(v);
+}
+
+// the parameters of gpt.h, where nn::Linear stores the transposed weights W^T (out x in)
+void init_params(nn::Sequential& blocks) {
+  torch::NoGradGuard no_grad;
+  unsigned int i = 0;
+  for (auto& module : blocks->children()) {
+    Block* block = module->as<Block>();
+    for (nn::LinearImpl* linear : { block->sa->query.get(), block->sa->key.get(), block->sa->value.get(),
+                                    block->sa->proj.get(), block->ffwd->net[0]->as<nn::Linear>(),
+                                    block->ffwd->net[2]->as<nn::Linear>() }) {
+      int n_out = linear->weight.size(0), n_in = linear->weight.size(1);
+      linear->weight.copy_(init_values(i, n_in*n_out, 0.02).view({n_in, n_out}).t());
+      linear->bias.copy_(init_values(i + n_in*n_out, n_out, 0.02));
+      i += n_in*n_out + n_out;
+    }
+  }
+}
+
+int main(int argc, char* argv[]) {
+  int batch = argc > 1 ? std::atoi(argv[1]) : B;
+  torch::Device device(torch::kCUDA);
+  nn::Sequential model;
+  for (int l = 0; l < L; l++)
+    model->push_back(std::make_shared<Block>());
+  init_params(model);
+  model->to(device, torch::kBFloat16);
+  model->eval();
+  Tensor x = init_values(0, batch*S*E, 1).view({batch, S, E}).to(device, torch::kBFloat16);
+
+  c10::InferenceMode guard;   // the C++ equivalent of torch.inference_mode() in Python
+  Tensor y;
+  std::chrono::steady_clock::time_point start;
+  for (int it = 0; it < warmup_iters + benchmark_iters; it++) {
+    if (it == warmup_iters) {
+      torch::cuda::synchronize();
+      start = std::chrono::steady_clock::now();
+    }
+    y = model->forward(x);
+  }
+  torch::cuda::synchronize();
+  double ms = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count();
+
+  y = y[0].to(torch::kCPU, torch::kFloat);   // the output of the first sequence, to compare implementations
+  std::printf("LibTorch, batch size %d: %.1f ms per forward pass\n", batch, ms / benchmark_iters);
+  std::printf("output: %.4f %.4f %.4f ..., mean |y| %.4f\n", y[0][0].item<float>(), y[0][1].item<float>(),
+              y[0][2].item<float>(), y.abs().mean().item<float>());
+}
+```
+
+As an important remark, LibTorch does not include a C++ equivalent to `torch.set_default_device`, so the input and the model are moved to the GPU explicitly. And because every parameter, buffer and module was registered, `model->to(device, torch::kBFloat16)` recursively copies all the contents of the model to the GPU, in BF16. Also, containers in C++ are declared for a fixed element type: `nn::Sequential` stores elements of type `nn::Module`, so `init_params` casts each of them dynamically to its derived type with `module->as<Block>()` before it accesses the members of the block. The guard `c10::InferenceMode` turns off the tracking of gradients in its scope, as `torch.inference_mode()` does in Python.
+
+</div>
+<div class="tab" data-title="C++" markdown="1">
+
+On the CPU, the main program creates the parameters of the $$L$$ blocks with the values of `gpt.h`, where the layer normalizations keep the defaults of PyTorch (a weight of 1 and a bias of 0), allocates the buffers, and runs the blocks on a copy `x` of the input `x0`, as the blocks update `x` in place:
+
+```cpp
+int main(int argc, char* argv[]) {
+  int batch = argc > 1 ? std::atoi(argv[1]) : B, M = batch*S;
+
+  // the parameters of the L blocks, with the deterministic values of gpt.h
+  unsigned int i = 0;
+  auto linear_param = [&](int n) { dt* p = new dt[n]; for (int j = 0; j < n; j++) p[j] = init_value(i++, 0.02); return p; };
+  auto norm_param = [](int n, dt c) { dt* p = new dt[n]; std::fill(p, p + n, c); return p; };
+  std::vector<Block> blocks(L);
+  for (Block& p : blocks) {
+    p.ln1_w = norm_param(E, 1); p.ln1_b = norm_param(E, 0);
+    p.Wq = linear_param(E*E); p.bq = linear_param(E); p.Wk = linear_param(E*E); p.bk = linear_param(E);
+    p.Wv = linear_param(E*E); p.bv = linear_param(E); p.Wo = linear_param(E*E); p.bo = linear_param(E);
+    p.ln2_w = norm_param(E, 1); p.ln2_b = norm_param(E, 0);
+    p.W1 = linear_param(E*4*E); p.b1 = linear_param(4*E); p.W2 = linear_param(4*E*E); p.b2 = linear_param(E);
+  }
+  Buffers t = { new dt[M*E], new dt[M*E], new dt[M*E], new dt[M*E], new dt[M*E], new dt[M*4*E],
+                new dt[(long) batch*H*S*S] };
+  std::vector<dt> x0(M*E), x(M*E);
+  for (int j = 0; j < M*E; j++)
+    x0[j] = init_value(j, 1);
+
+  std::chrono::steady_clock::time_point start;
+  for (int it = 0; it < warmup_iters + benchmark_iters; it++) {
+    if (it == warmup_iters)
+      start = std::chrono::steady_clock::now();
+    x = x0;
+    for (const Block& p : blocks)
+      block_forward(p, x.data(), t, batch, S);
+  }
+  double ms = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count();
+
+  double sum = 0;   // mean absolute value of the output of the first sequence, to compare implementations
+  for (int j = 0; j < S*E; j++)
+    sum += std::abs(x[j]);
+  std::printf("CPU, batch size %d: %.1f ms per forward pass\n", batch, ms / benchmark_iters);
+  std::printf("output: %.4f %.4f %.4f ..., mean |y| %.4f\n", x[0], x[1], x[2], sum / (S*E));
+}
+```
+
+</div>
+<div class="tab" data-title="CUDA" markdown="1">
+
+On the GPU, the main program does the same, with the parameters, the buffers and the input in the global memory of the GPU (`cudaMalloc`), where the values are copied from the CPU (`cudaMemcpy`). At the end, it checks `cudaGetLastError`, as a kernel launch does not return the errors of the kernel:
+
+```cpp
+int main(int argc, char* argv[]) {
+  int batch = argc > 1 ? std::atoi(argv[1]) : B, M = batch*S;
+  cublasCreate(&handle);
+
+  // the parameters of the L blocks, with the deterministic values of gpt.h, copied to the GPU
+  auto to_gpu = [](const std::vector<dt>& v) {
+    dt* p;
+    cudaMalloc(&p, v.size() * sizeof(dt));
+    cudaMemcpy(p, v.data(), v.size() * sizeof(dt), cudaMemcpyHostToDevice);
+    return p;
+  };
+  unsigned int i = 0;
+  auto linear_param = [&](int n) { std::vector<dt> v(n); for (dt& w : v) w = init_value(i++, 0.02); return to_gpu(v); };
+  auto norm_param = [&](int n, float c) { return to_gpu(std::vector<dt>(n, c)); };
+  std::vector<Block> blocks(L);
+  for (Block& p : blocks) {
+    p.ln1_w = norm_param(E, 1); p.ln1_b = norm_param(E, 0);
+    p.Wq = linear_param(E*E); p.bq = linear_param(E); p.Wk = linear_param(E*E); p.bk = linear_param(E);
+    p.Wv = linear_param(E*E); p.bv = linear_param(E); p.Wo = linear_param(E*E); p.bo = linear_param(E);
+    p.ln2_w = norm_param(E, 1); p.ln2_b = norm_param(E, 0);
+    p.W1 = linear_param(E*4*E); p.b1 = linear_param(4*E); p.W2 = linear_param(4*E*E); p.b2 = linear_param(E);
+  }
+  auto alloc = [](long n) { dt* p; cudaMalloc(&p, n * sizeof(dt)); return p; };
+  Buffers t = { alloc(M*E), alloc(M*E), alloc(M*E), alloc(M*E), alloc(M*E), alloc(M*4*E), alloc((long) batch*H*S*S) };
+  std::vector<dt> host(M*E);
+  for (int j = 0; j < M*E; j++)
+    host[j] = init_value(j, 1);
+  dt *x0 = to_gpu(host), *x = alloc(M*E);
+
+  std::chrono::steady_clock::time_point start;
+  for (int it = 0; it < warmup_iters + benchmark_iters; it++) {
+    if (it == warmup_iters) {
+      cudaDeviceSynchronize();
+      start = std::chrono::steady_clock::now();
+    }
+    cudaMemcpy(x, x0, M*E * sizeof(dt), cudaMemcpyDeviceToDevice);
+    for (const Block& p : blocks)
+      block_forward(p, x, t, batch, S);
+  }
+  cudaDeviceSynchronize();
+  double ms = std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count();
+  cudaError_t err = cudaGetLastError();
+  if (err != cudaSuccess) {
+    std::printf("CUDA error: %s\n", cudaGetErrorString(err));
+    return 1;
+  }
+
+  cudaMemcpy(host.data(), x, S*E * sizeof(dt), cudaMemcpyDeviceToHost);   // the output of the first sequence
+  double sum = 0;
+  for (int j = 0; j < S*E; j++)
+    sum += std::abs((float) host[j]);
+  std::printf("CUDA, batch size %d: %.1f ms per forward pass\n", batch, ms / benchmark_iters);
+  std::printf("output: %.4f %.4f %.4f ..., mean |y| %.4f\n", (float) host[0], (float) host[1], (float) host[2], sum / (S*E));
+}
+```
 
 </div>
 </div>
@@ -886,7 +1102,51 @@ The benchmark runs the forward pass of the $$L = 12$$ blocks on sequences of $$S
 4. CUDA and cuBLAS (`gpt_cuda.cu`);
 5. C++ loops on the CPU (`gpt_cpu.cpp`), in FP32, on a batch of one sequence only, as it is much slower.
 
-The build follows the [instructions in the LibTorch documentation](https://pytorch.org/cppdocs/installing.html) and uses the [CMake](https://en.wikipedia.org/wiki/CMake) build system, which finds LibTorch in the installation of PyTorch. From a build folder inside the folder of the code, the programs are built and run as:
+The build follows the [instructions in the LibTorch documentation](https://pytorch.org/cppdocs/installing.html) and uses the [CMake](https://en.wikipedia.org/wiki/CMake) build system, which finds LibTorch in the installation of PyTorch. The four C++ and CUDA programs are built with the following `CMakeLists.txt`:
+
+<details markdown="1">
+<summary>Click here to expand the CMakeLists.txt</summary>
+
+```cmake
+cmake_minimum_required(VERSION 3.24 FATAL_ERROR)
+
+# by default, the GPUs of this machine (bf16 on the Tensor Cores needs a compute capability of 8.0 or more)
+if(NOT DEFINED CMAKE_CUDA_ARCHITECTURES)
+  set(CMAKE_CUDA_ARCHITECTURES native)
+endif()
+project(gpt_cpp_cuda LANGUAGES CXX CUDA)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CUDA_STANDARD 20)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
+# the CPU implementation, on all the cores of the CPU with OpenMP
+find_package(OpenMP REQUIRED)
+add_executable(gpt_cpu gpt_cpu.cpp)
+target_compile_options(gpt_cpu PRIVATE -march=native)
+target_link_libraries(gpt_cpu PRIVATE OpenMP::OpenMP_CXX)
+
+# the CUDA implementation and the matrix multiplication kernels, with cuBLAS
+find_package(CUDAToolkit REQUIRED)
+add_executable(gpt_cuda gpt_cuda.cu)
+target_link_libraries(gpt_cuda PRIVATE CUDA::cublas)
+add_executable(matmul matmul.cu)
+target_link_libraries(matmul PRIVATE CUDA::cublas)
+
+# the LibTorch implementation. find_package(Torch) adds the CUDA architectures of PyTorch to the flags of all the
+# CUDA targets, so the flags are restored after it
+set(CUDA_FLAGS "${CMAKE_CUDA_FLAGS}")
+find_package(Torch REQUIRED)
+set(CMAKE_CUDA_FLAGS "${CUDA_FLAGS}")
+add_executable(gpt_libtorch gpt_libtorch.cpp)
+target_link_libraries(gpt_libtorch PRIVATE ${TORCH_LIBRARIES})
+```
+
+</details>
+
+From a build folder inside the folder of the code, the programs are built and run as:
 
 ```shell
 cmake .. -DCMAKE_PREFIX_PATH=`python3 -c 'import torch;print(torch.utils.cmake_prefix_path)'`

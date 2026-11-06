@@ -7,8 +7,6 @@
 #include <vector>
 #include "gpt.h"
 
-using dt = float;
-
 // C (M x O) = A (M x N) B (N x O), with all matrices in row-major order
 void matmul(const dt* A, const dt* B, dt* C, int M, int N, int O) {
   #pragma omp parallel for
