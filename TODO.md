@@ -102,18 +102,6 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
   Fix: record the spike time (a getter for `last_spike_time_`), and compute and clamp the index as the fixed-step
   branch does.
 
-### Unsupervised Learning methods (2017-11-01-unsupervised-learning.md)
-
-- `assets/unsupervised-learning/kohonen_mnist.zip`, `kohonen.py`, `name2digits`: the function loads `hash.mat`,
-  which is not in the zip, so the script stops with a `FileNotFoundError` before the training starts. Fix: add
-  `hash.mat` to the zip, or set the digits directly, e.g. `targetdigits = [0, 1, 2, 3]`, the digits of the post's
-  figure.
-- `assets/unsupervised-learning/kohonen_mnist.zip`, `kohonen.py`, `name2digits` (besides the missing `hash.mat`): the
-  hash `s` is a float (`s += primenumbers[i]*ord(name[i])*2.0**(i+1)`), so `t = np.mod(s, x.shape[0])` is a float and
-  `x[t,:]` raises an `IndexError` (NumPy 1.12 and later refuse float indices), even once `hash.mat` is added to the
-  zip. Fix: `t = int(np.mod(s, x.shape[0]))`, or set `targetdigits = [0, 1, 2, 3]` directly, as the `hash.mat` item
-  proposes.
-
 ### Bayesian Linear Regression, Maximum Likelihood and Maximum a Posteriori (2018-08-20-bayesian-linear-regression.md)
 
 - `assets/bayesian-linear-regression/bayesian_linear_regression.ipynb`, predictive distribution cell: the data
@@ -578,18 +566,6 @@ that is not wrong.
 
 - Optional, `linear-regression-matrix-factorization/matrix-factorization.svg`: the rating 6 (movie 1, user 7) is
   outside a scale of 1 to 5 stars. Fix: a rating from 1 to 5.
-
-### Unsupervised Learning methods (2017-11-01-unsupervised-learning.md)
-
-- `unsupervised-learning/kohonen2.svg`: the outline of the input-space sheet is 1.4 px, a weight that no rule of
-  CLAUDE.md gives this shape. Fix: leave it, or 1.8 px, as the frame of a 2D domain.
-- The caption of `unsupervised-learning/kohonen.svg` and `kohonen2.svg`, and the label "Input fibres" of
-  `kohonen.svg` (draw.io cell kohonen-13), use British spellings, while the text uses American ones. Fix: "fibers",
-  "neighbors" and "Input fibers".
-- Pictures that do not follow the one style of the post yet (CLAUDE.md, Pictures, section 1): `voronoi.svg` and the
-  k-means GIF of Wikimedia Commons; and kernel PCA, t-SNE, Apriori, FP-growth, isolation forest, LOF and the curse of
-  dimensionality have no picture. Fix: draw them with `figures.py`, as framed panels of the steps or iterations of
-  each method.
 
 ### Deep Neural Networks, Backpropagation and Optimization (2018-03-27-dnn-backprop.md)
 
@@ -1060,23 +1036,6 @@ Content problems that need the author's decision, such as overlap between posts.
 - The page is now over 6,000 words, but has no list of contents, which CLAUDE.md gives to the pages over 6,000 words.
   Proposed fix: add it after the opening paragraphs.
 
-### Unsupervised Learning methods (2017-11-01-unsupervised-learning.md)
-
-- Kohonen maps: `unsupervised-learning/kohonen.svg` and `kohonen2.svg` write the input as v, the winner as s and its
-  weights as w_s, as their source (Ritter, Martinetz and Schulten, 1992) does, while the algorithm in the text writes
-  them as $$x_u$$, $$j^*$$ and $$w_{j^*}$$. The caption bridges the two ("In the algorithm below, $$v$$ is the input
-  $$x_u$$ and $$s$$ is the winner $$j^*$$"). Fix, in a text task: keep the bridge, or write the algorithm with the
-  source's v, s and w_s.
-- Optional, symbols with several meanings: $$E$$ is the expectation in ICA and the error of k-means, $$K$$ the kernel
-  matrix and the number of components of a GMM, $$d$$ the degree of a polynomial kernel, a distance and the number of
-  dimensions, $$m$$ the minimum number of points of DBSCAN, the number of items of association rules and the size of
-  the subsample of an isolation forest ($$\psi$$ in its paper), and $$k$$ has several uses. Proposed fix: write the
-  expectation as $$\mathbb{E}$$ in ICA, as the statistics posts and the isolation forest section do, and keep the
-  others, which each section defines.
-- ICA: the text writes the absolute value of the kurtosis as `$$\mid \mathrm{kurt}(w^Tz) \mid$$`, where `\mid` is a
-  relation with wide spaces around it, while the gradient below writes `\vert`. Fix: `$$\vert \mathrm{kurt}(w^T z)
-  \vert$$`.
-
 ### Deep Neural Networks, Backpropagation and Optimization (2018-03-27-dnn-backprop.md)
 
 - The example of the automatic differentiation section, from the MML book, names its intermediate variables $$a$$ to
@@ -1230,7 +1189,10 @@ Content problems that need the author's decision, such as overlap between posts.
   chunks of RAG (top-k) and the number of agent results used; $$d$$ is the decode index of the sums and the decoded
   tokens $$d_s$$ of the context of the orchestrator (the Execution table and the aai_dynamic picture). Proposed fix:
   keep top-k as the name of the selection, and name the agent results and the decoded tokens with other letters
-  (e.g. $$r$$ and $$o_s$$), in the text, the formulas, the tables and the pictures.
+  (e.g. $$r$$ and $$o_s$$), in the text, the formulas, the tables, the pictures and the comments of the code.
+- The draft writes Faiss, as its authors do ([The Faiss library](https://arxiv.org/abs/2401.08281), Douze et al.,
+  2024), and the unsupervised learning post writes FAISS, as the title of its Wikipedia article. Proposed fix: Faiss
+  in both posts, with the same Wikipedia link.
 
 ### Publication Summaries (publications.md)
 

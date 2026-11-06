@@ -5,25 +5,28 @@ chart style of _tools/charts.py (1 unit = 1 px, text as glyph outlines), cropped
 usage: python3 figures.py [NAME ...]   (needs matplotlib, scikit-learn, scipy and the fonts of CLAUDE.md)
 """
 import io, os, re, sys, zipfile
+from collections import Counter
 import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, '..', '..', '_tools'))
 import charts
-from charts import BLUE, GREEN, GREY, MATH, ORANGE, RED
+from charts import BLUE, GREEN, GREY, MATH, ORANGE, PURPLE, RED, YELLOW
 import matplotlib.pyplot as plt
 from matplotlib import transforms
 from matplotlib.patches import Ellipse, Polygon, Rectangle
 from PIL import Image
 from scipy.cluster.hierarchy import fcluster, leaves_list, linkage
 from scipy.optimize import linear_sum_assignment
-from scipy.spatial import ConvexHull
+from scipy.spatial import ConvexHull, Delaunay
 from sklearn.cluster import DBSCAN, KMeans, SpectralClustering
 from sklearn.datasets import make_blobs, make_moons
+from sklearn.ensemble import IsolationForest
 from sklearn.metrics import adjusted_rand_score
 from sklearn.mixture import GaussianMixture
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neighbors import KNeighborsClassifier, LocalOutlierFactor, NearestNeighbors
 
-PASTEL = {BLUE: charts.BLUE_FILL, GREEN: charts.GREEN_FILL, RED: charts.RED_FILL}  # the fill of each accent
+PASTEL = {BLUE: charts.BLUE_FILL, GREEN: charts.GREEN_FILL, ORANGE: charts.ORANGE_FILL, YELLOW: charts.YELLOW_FILL,
+          RED: charts.RED_FILL, PURPLE: charts.PURPLE_FILL}  # the fill of each accent
 DASH = (0, (3, 3))  # draw.io's default dash pattern, scaled by the line weight
 
 
@@ -98,7 +101,7 @@ def points(ax, xy, color, size=8, z=10):
     ax.plot(xy[:, 0], xy[:, 1], 's', ms=size, mfc=color, mec='k', mew=1.0, zorder=z)
 
 
-def voronoi(ax, means, colors, box):
+def voronoi_cells(ax, means, colors, box):
     """Fill the cell of each mean inside the box, with a 1 px black outline."""
     for i, (m, c) in enumerate(zip(means, colors)):
         cell = [(box[0], box[2]), (box[1], box[2]), (box[1], box[3]), (box[0], box[3])]
@@ -118,6 +121,61 @@ def voronoi(ax, means, colors, box):
 def means(ax, centers, colors):
     for m, c in zip(centers, colors):
         ax.plot(*m, 'o', ms=10, mfc=c, mec='k', mew=1.0, zorder=20)
+
+
+def voronoi():
+    """The Voronoi cells of 20 prototypes drawn at random in a square, at least 0.12 apart, colored so that no two
+    neighbors match."""
+    rng, P = np.random.default_rng(0), []
+    while len(P) < 20:
+        p = rng.uniform(0.04, 0.96, 2)
+        if all(np.linalg.norm(p - o) >= 0.12 for o in P): P.append(p)
+    P = np.array(P)
+    near = [set() for _ in P]  # the neighbors of each cell, from the Delaunay triangulation
+    for tri in Delaunay(P).simplices:
+        for i in tri:
+            near[i] |= set(tri) - {i}
+    order, left = [], set(range(len(P)))
+    while left:  # smallest-last order, in which a greedy coloring of a planar graph takes at most 6 colors
+        order.append(min(left, key=lambda i: len(near[i] & left)))
+        left.remove(order[-1])
+    col = {}
+    for i in reversed(order):
+        col[i] = next(c for c in PASTEL if c not in {col.get(j) for j in near[i]})
+    c, box = Canvas('voronoi', 260, 260), (-0.05, 1.05, -0.05, 1.05)
+    ax = c.panel(10, 10, 240, 240, box[:2], box[2:])
+    voronoi_cells(ax, P, [col[i] for i in range(len(P))], box)
+    ax.plot(*P.T, 'o', ms=6, mfc='k', mec='k', mew=1.0, zorder=20)
+    c.save()
+
+
+def kmeans_iterations():
+    """Lloyd's algorithm with k = 3 on three Gaussian clusters, from three of the points as initial means, until the
+    assignments no longer change; the lines trace the means of the previous iterations."""
+    X, _ = make_blobs(n_samples=90, centers=3, center_box=(-5, 5), random_state=26)
+    W, steps, prev = X[np.random.default_rng(4).choice(len(X), 3, replace=False)], [], None
+    while True:
+        labels = np.argmin(((X[:, None] - W) ** 2).sum(2), 1)  # assignment step
+        steps.append((W, labels))
+        if prev is not None and (labels == prev).all():
+            break
+        prev, W = labels, np.array([X[labels == i].mean(0) for i in range(3)])  # update step
+    colors = [BLUE, GREEN, RED]
+    def panel(t):
+        def draw(ax, box):
+            W, labels = steps[t]
+            voronoi_cells(ax, W, colors, box)
+            for k, col in enumerate(colors):
+                points(ax, X[labels == k], col)
+            trail = np.array([w for w, _ in steps[:t + 1]])  # the means of iterations 0 to t
+            for k in range(3):
+                ax.plot(*trail[:, k].T, 'o-', color='k', lw=1.4, ms=4, zorder=15)
+            means(ax, W, colors)
+        return draw
+    row('kmeans_iterations', square_box(X), [panel(t) for t in range(len(steps))],
+        [f'Iteration {t}' for t in range(len(steps))], size=185, arrow=False)
+    print('  iterations:', len(steps) - 1, 'points that change cluster:',
+          [int((steps[t][1] != steps[t - 1][1]).sum()) for t in range(1, len(steps))])
 
 
 def knn():
@@ -255,7 +313,7 @@ def data_panel(X):
 def kmeans_panel(X, km, colors):
     """Draw the Voronoi cells of the k-means means, the points of each cluster and the means."""
     def draw(ax, box):
-        voronoi(ax, km.cluster_centers_, colors, box)
+        voronoi_cells(ax, km.cluster_centers_, colors, box)
         for k, col in enumerate(colors):
             points(ax, X[km.labels_ == k], col)
         means(ax, km.cluster_centers_, colors)
@@ -263,12 +321,13 @@ def kmeans_panel(X, km, colors):
 
 
 def row(name, box, draws, labels, size=220, arrow=True, frame=True, legend=None):
-    """A row of square panels of size px over the same box, framed (frame) and 20 px apart, a block arrow after the
-    first panel (arrow), a label under each (a text or a (text, font) pair) and a legend column on the right."""
+    """Square panels of size px, 20 px apart, over one box (None: each draw sets its own), framed (frame), a block arrow
+    after the first (arrow), a label under each (a text or a (text, font) pair) and a legend column on the right."""
     c = Canvas(name, 830, size + 40)
     xs = [10 + k * (size + 20) + (30 if arrow and k else 0) for k in range(len(draws))]
+    lims = (box[:2], box[2:]) if box else ((0, 1), (0, 1))
     for x, draw in zip(xs, draws):
-        draw(c.panel(x, 10, size, size, box[:2], box[2:], frame), box)
+        draw(c.panel(x, 10, size, size, *lims, frame), box)
     if arrow:
         c.arrow(size + 20, size / 2 + 10)
     for x, label in zip(xs, labels):
@@ -286,15 +345,19 @@ def guides(ax, box):
     ax.plot([0, 0], box[2:], color=GREY, lw=1.0, ls=DASH, zorder=2)
 
 
-def spectral_clustering():
-    """Two concentric rings: k-means cuts them in halves, spectral clustering separates the rings."""
-    rng = np.random.default_rng(0)
-    rings = []
+def rings():
+    """Two concentric rings of 50 points of radius 1 and 25 points of radius 0.4, and the ring of each point."""
+    rng, parts = np.random.default_rng(0), []
     for n, r, s in ((50, 1.0, 0.05), (25, 0.4, 0.04)):  # points, radius and noise of each ring
         t = np.linspace(0, 2 * np.pi, n, endpoint=False) + rng.uniform(0, 2 * np.pi / n)
         d = r + rng.normal(0, s, n)
-        rings.append(np.c_[d * np.cos(t), d * np.sin(t)])
-    X, y = np.vstack(rings), np.repeat([0, 1], [50, 25])
+        parts.append(np.c_[d * np.cos(t), d * np.sin(t)])
+    return np.vstack(parts), np.repeat([0, 1], [50, 25])
+
+
+def spectral_clustering():
+    """Two concentric rings: k-means cuts them in halves, spectral clustering separates the rings."""
+    X, y = rings()
     colors = np.array([BLUE, GREEN])
     km = KMeans(2, n_init=10, random_state=0).fit(X)
     sc = SpectralClustering(2, affinity='nearest_neighbors', n_neighbors=8, random_state=0).fit(X)
@@ -408,6 +471,76 @@ def pca():
     print('  eigenvalues:', lam.round(2), 'variance of the first component:', round(lam[0] / lam.sum(), 3))
 
 
+def classes(P, y, colors, size=8):
+    """Draw the points P of each class of y in its color, size px wide, in a square box of their own, over guide
+    lines."""
+    def draw(ax, _):
+        box = square_box(P)
+        ax.set_xlim(*box[:2]); ax.set_ylim(*box[2:])
+        guides(ax, box)
+        for k, col in enumerate(colors):
+            points(ax, P[y == k], col, size)
+    return draw
+
+
+def kernel_pca():
+    """The two rings of spectral clustering, on their first two principal components: PCA only rotates them, and
+    kernel PCA with a Gaussian kernel of width 0.25, computed as in the post, separates them along the first one."""
+    X, y = rings()
+    n, sigma = len(X), 0.25
+    K = np.exp(-((X[:, None] - X) ** 2).sum(2) / (2 * sigma ** 2))
+    one = np.full((n, n), 1 / n)
+    Kt = K - one @ K - K @ one + one @ K @ one  # K centered in the feature space
+    lam, A = np.linalg.eigh(Kt)
+    lam, A = lam[:-3:-1], A[:, :-3:-1]  # the two largest eigenvalues and their unit eigenvectors
+    Y = Kt @ (A / np.sqrt(lam))  # alpha scaled so that lambda alpha^T alpha = 1
+    Xc = X - X.mean(0)
+    P = Xc @ np.linalg.eigh(np.cov(Xc.T))[1][:, ::-1]
+    colors = [BLUE, GREEN]
+    row('kernel_pca', None, [classes(X, y, colors), classes(P, y, colors), classes(Y, y, colors)],
+        ['Data', 'PCA', 'Kernel PCA'])
+    print('  kernel PCA eigenvalues:', lam.round(2), 'gap between the rings on the first component:',
+          round(Y[y == 1, 0].min() - Y[y == 0, 0].max(), 3))
+
+
+def tsne():
+    """t-SNE of 100 of each digit 0 to 3 of kohonen_mnist.zip, perplexity 30, optimized as in its paper: exaggeration by
+    4 for 50 iterations, learning rate 100 with adaptive gains, momentum 0.5, then 0.8 from iteration 250."""
+    with zipfile.ZipFile(os.path.join(HERE, 'kohonen_mnist.zip')) as z:
+        X, y = (np.loadtxt(io.BytesIO(z.read(f'kohonen_mnist/{f}.txt'))) for f in ('data', 'labels'))
+    rng = np.random.default_rng(0)
+    keep = np.concatenate([rng.choice(np.flatnonzero(y == d), 100, replace=False) for d in range(4)])
+    X, y, n = X[keep] / 255, y[keep].astype(int), len(keep)
+    D = ((X[:, None] - X) ** 2).sum(2)
+    P = np.zeros((n, n))
+    for i in range(n):  # the precision beta = 1 / (2 sigma_i^2) that gives p_{.|i} a perplexity of 30, by bisection
+        d, lo, hi, beta = np.delete(D[i], i), 0.0, np.inf, 1.0
+        for _ in range(100):
+            p = np.exp(-(d - d.min()) * beta)
+            p /= p.sum()
+            H = -(p * np.log(np.maximum(p, 1e-300))).sum()
+            if abs(H - np.log(30)) < 1e-5:
+                break
+            lo, hi = (beta, hi) if H > np.log(30) else (lo, beta)
+            beta = beta * 2 if hi == np.inf else (lo + hi) / 2
+        P[i, np.arange(n) != i] = p
+    P = (P + P.T) / (2 * n)
+    Y, V, gains, shown, snaps = rng.normal(0, 1e-2, (n, 2)), np.zeros((n, 2)), np.ones((n, 2)), (0, 50, 1000), {}
+    for t in range(1001):
+        if t in shown:
+            snaps[t] = Y.copy()
+        num = 1 / (1 + ((Y[:, None] - Y) ** 2).sum(2))
+        np.fill_diagonal(num, 0)
+        G = 4 * (((P * (4 if t < 50 else 1) - num / num.sum()) * num)[:, :, None] * (Y[:, None] - Y)).sum(1)
+        gains = np.where((G > 0) != (V > 0), gains + 0.2, gains * 0.8).clip(0.01)  # the adaptive gains of Jacobs
+        V = (0.5 if t < 250 else 0.8) * V - 100 * gains * G
+        Y = Y + V - (Y + V).mean(0)
+    colors = [BLUE, GREEN, ORANGE, RED]
+    legend = [(lambda c, x, y, col=col: c.square(x, y, col), 8, f'Digit {d}') for d, col in enumerate(colors)]
+    row('tsne', None, [classes(snaps[t], y, colors, 6) for t in shown], [f'Iteration {t:,}' for t in shown],
+        arrow=False, legend=legend)
+
+
 def ica():
     """Two independent uniform sources of unit variance, mixed, whitened, and separated by FastICA with the kurtosis,
     as in the post; the colors mark the quadrants of the sources."""
@@ -431,20 +564,229 @@ def ica():
     for k, j in zip(*linear_sum_assignment(-np.abs(C))):  # ICA cannot recover their order and signs: match them
         R[:, j] = np.sign(C[k, j]) * Y[:, k]
     col = np.array([BLUE, GREEN, ORANGE, RED])[(S[:, 0] < 0) + 2 * (S[:, 1] < 0)]  # by the quadrant of the source
-    def scatter(P):
+    def quadrants(P):
         def draw(ax, box):
             guides(ax, box)
             for c in np.unique(col):
                 points(ax, P[col == c], c)
         return draw
     r = 1.24 * np.abs(np.vstack([S, X, Z, R])).max()
-    row('ica', (-r, r, -r, r), [scatter(P) for P in (S, X, Z, R)],
+    row('ica', (-r, r, -r, r), [quadrants(P) for P in (S, X, Z, R)],
         ['1. Sources', '2. Observed', '3. Whitened', '4. Recovered'], size=185, arrow=False)
     print('  correlations with the sources:', np.abs(C).max(1).round(3))
 
 
-FIGURES = {f.__name__: f for f in [knn, hierarchical_clustering, dbscan, spectral_clustering, gmm, som_training,
-                                   som_mnist, pca, ica]}
+TRANSACTIONS = [{'bread', 'milk'}, {'bread', 'butter', 'eggs'}, {'milk', 'butter', 'eggs', 'cola'},
+                {'bread', 'milk', 'butter', 'eggs'}, {'bread', 'milk', 'butter', 'cola'}]  # the example of the post
+ITEMS, MIN_SUPPORT = ['bread', 'milk', 'butter', 'eggs', 'cola'], 3  # the items in the order of the post
+FREQUENT, INFREQUENT, PRUNED = PASTEL[GREEN], PASTEL[RED], '#ffffff'  # the fill of an itemset's row
+
+
+def text_width(c, s, **kw):
+    t = c.text(0, 0, s, **kw)
+    w = t.get_window_extent().width
+    t.remove()
+    return w
+
+
+def table(c, x, y, header, rows, fills):
+    """A table at (x, y) px of a grey header and rows of (text, number) cells, 22 px tall, with the fill of each row;
+    returns its width."""
+    widths = [max(text_width(c, r[k], fontweight='bold' if r is header else 'normal') for r in [header] + rows) + 16
+              for k in range(2)]
+    fills = ['#f5f5f5'] + fills
+    for r, (cells, f) in enumerate(zip([header] + rows, fills)):
+        c.top.add_patch(Rectangle((x, y + 22 * r), sum(widths), 22, fc=f, lw=0))
+        for k, text in enumerate(cells):
+            c.text(x + 8 if k == 0 else x + widths[0] + widths[1] / 2, y + 22 * r + 11, text, ha='left' if k == 0 else
+                   'center', va='center_baseline', fontweight='bold' if r == 0 else 'normal')
+    for r in range(1, len(fills)):  # a thin grey line between rows of one fill, a black boundary between two fills
+        same = fills[r] == fills[r - 1]
+        c.top.plot([x, x + sum(widths)], [y + 22 * r] * 2, color='#999999' if same else 'k', lw=0.4 if same else 0.6)
+    c.top.plot([x + widths[0]] * 2, [y, y + 22 * len(fills)], color='#999999', lw=0.4)
+    c.top.add_patch(Rectangle((x, y), sum(widths), 22 * len(fills), fill=False, ec='k', lw=1.2, joinstyle='miter'))
+    return sum(widths)
+
+
+def itemset(X):
+    return '{' + ', '.join(sorted(X, key=ITEMS.index)) + '}'
+
+
+def support(X):
+    return sum(X <= t for t in TRANSACTIONS)
+
+
+def swatch(c, x, y, fill):
+    """The 16 x 12 px legend swatch of a fill, centered at (x, y) px."""
+    c.top.add_patch(Rectangle((x - 8, y - 6), 16, 12, fc=fill, ec='k', lw=1.0))
+
+
+def fill_legend(c, x, y, entries):
+    """A legend column from x px, centered at y px, of (fill, label) entries."""
+    c.legend_column(x, y, [(lambda x, y, f=f: swatch(c, x, y, f), 16, t) for f, t in entries])
+
+
+def apriori():
+    """The candidate itemsets of each size of the post's example, with the support of those that Apriori counts, and
+    the candidates that it prunes, as one of their subsets is infrequent."""
+    c, levels, frequent, C = Canvas('apriori', 830, 220), [], set(), [frozenset([i]) for i in ITEMS]
+    while C:
+        rows = [(X, None if len(X) > 1 and any(X - {i} not in frequent for i in X) else support(X))
+                for X in sorted(C, key=lambda X: sorted(map(ITEMS.index, X)))]
+        frequent = {X for X, n in rows if n is not None and n >= MIN_SUPPORT}
+        levels.append(rows)
+        C = {a | b for a in frequent for b in frequent if len(a | b) == len(a) + 1}  # pairs that differ in one item
+    x, bottom = 10, 10 + 22 * (1 + max(map(len, levels)))  # the bottom of the tallest table
+    for k, rows in enumerate(levels):
+        fills = [PRUNED if n is None else FREQUENT if n >= MIN_SUPPORT else INFREQUENT for _, n in rows]
+        w = table(c, x, 10, ('Itemset', 'Support'), [(itemset(X), '' if n is None else str(n)) for X, n in rows], fills)
+        c.text(x + w / 2, bottom + 21, f'𝑘 = {k + 1}', font=MATH)
+        x += w + 30
+    fill_legend(c, x - 14, bottom / 2 + 5, [(FREQUENT, 'Frequent'), (INFREQUENT, 'Infrequent'), (PRUNED, 'Pruned')])
+    c.save()
+
+
+def fp_growth():
+    """The FP-tree of the post's example, the paths of the tree that end at eggs (its conditional pattern base), and
+    the support of the itemsets of eggs that they give."""
+    count = Counter(i for t in TRANSACTIONS for i in t)
+    order = sorted([i for i in ITEMS if count[i] >= MIN_SUPPORT], key=lambda i: -count[i])  # ties in the post's order
+    root = {'item': 'root', 'count': None, 'kids': {}}
+    for t in TRANSACTIONS:  # each transaction, its frequent items sorted by support, as a path from the root
+        node = root
+        for i in [i for i in order if i in t]:
+            node = node['kids'].setdefault(i, {'item': i, 'count': 0, 'kids': {}, 'up': node})
+            node['count'] += 1
+    c, nodes, leaves = Canvas('fp_growth', 830, 300), [], []
+    def place(node, depth):  # the leaves 90 px apart, each parent above the middle of its children
+        kids = [place(k, depth + 1) for k in node['kids'].values()]
+        node['x'] = np.mean([k['x'] for k in kids]) if kids else 90 * len(leaves)
+        if not kids:
+            leaves.append(node)
+        node['y'] = 10 + 50 * depth
+        nodes.append(node)
+        return node
+    place(root, 0)
+    for n in nodes:
+        label = n['item'] if n['count'] is None else f"{n['item']}: {n['count']}"
+        c.top.add_patch(Rectangle((n['x'] + 10, n['y']), 72, 30, fc='#ffffff', ec='k', lw=1.0))
+        c.text(n['x'] + 46, n['y'] + 15, label, va='center_baseline')
+        for k in n['kids'].values():
+            c.top.plot([n['x'] + 46, k['x'] + 46], [n['y'] + 30, k['y']], color='k', lw=1.4)
+    paths = []  # the prefix path of each eggs node, with the count of that node
+    for n in nodes:
+        if n['item'] == 'eggs':
+            up, path = n['up'], []
+            while up['count'] is not None:
+                path, up = [up['item']] + path, up['up']
+            paths.append((path, n['count']))
+    x0 = max(n['x'] for n in nodes) + 82 + 40
+    w = table(c, x0, 10, ('Path', 'Count'), [(', '.join(p), str(n)) for p, n in paths], ['#ffffff'] * len(paths))
+    base = Counter()  # the support of each item together with eggs
+    for p, n in paths:
+        base.update(dict.fromkeys(p, n))
+    rows = [({i, 'eggs'}, base[i]) for i in order if i in base]
+    w2 = table(c, x0 + w + 40, 10, ('Itemset', 'Support'), [(itemset(X), str(n)) for X, n in rows],
+               [FREQUENT if n >= MIN_SUPPORT else INFREQUENT for _, n in rows])
+    bottom = max(n['y'] for n in nodes) + 30
+    for x, label in ((root['x'] + 46, '1. FP-tree'), (x0 + w / 2, '2. Paths to eggs'),
+                     (x0 + w + 40 + w2 / 2, '3. Itemsets with eggs')):
+        c.text(x, bottom + 21, label)
+    fill_legend(c, x0 + w + 40 + w2 + 16, bottom / 2 + 5, [(FREQUENT, 'Frequent'), (INFREQUENT, 'Infrequent')])
+    c.save()
+    print('  FP-tree nodes:', len(nodes) - 1, 'items:', sum(len([i for i in order if i in t]) for t in TRANSACTIONS))
+
+
+def isolation_forest():
+    """60 points of a 2D Gaussian and 3 anomalies: the splits of random isolation trees until an anomaly, or a normal
+    point, is alone, and the anomaly scores of a forest of 1,000 trees built on all 63 points."""
+    rng = np.random.default_rng(0)
+    X = np.vstack([rng.normal(0, 1, (60, 2)), [[3.2, 2.6], [-3.0, 2.4], [2.8, -3.0]]])
+    box, anomaly, normal = (-4.5, 4.5, -4.5, 4.5), 60, int(np.argmin(np.linalg.norm(X[:60], axis=1)))
+    def isolate(i, seed):
+        """The splits (feature, value, cell) of a random isolation tree on the path of X[i], and its leaf's cell."""
+        r, idx, cell, splits = np.random.default_rng(seed), np.arange(len(X)), list(box), []
+        while len(idx) > 1:
+            q = r.integers(2)
+            v = r.uniform(X[idx, q].min(), X[idx, q].max())
+            splits.append((q, v, cell.copy()))
+            idx = idx[(X[idx, q] < v) == (X[i, q] < v)]
+            cell[2 * q + (X[i, q] < v)] = v  # the side of the point: cell is [x0, x1, y0, y1]
+        return splits, cell
+    def path_panel(i, splits, cell, col):
+        def draw(ax, _):
+            ax.add_patch(Rectangle((cell[0], cell[2]), cell[1] - cell[0], cell[3] - cell[2], fc=PASTEL[col], lw=0))
+            for q, v, c in splits:
+                ax.plot([v, v] if q == 0 else c[:2], c[2:] if q == 0 else [v, v], color='k', lw=1.0, zorder=5)
+            points(ax, np.delete(X, i, 0), GREY)
+            points(ax, X[i:i + 1], col, z=12)
+        return draw
+    forest = IsolationForest(n_estimators=1000, max_samples=len(X), random_state=0).fit(X)
+    levels, fills = [0.5, 0.65], ['#ffffff', PASTEL[YELLOW], PASTEL[RED]]
+    def score_panel(ax, _):
+        gx, gy = np.meshgrid(np.linspace(*box[:2], 361), np.linspace(*box[2:], 361))
+        score = -forest.score_samples(np.c_[gx.ravel(), gy.ravel()]).reshape(gx.shape)  # s(x, m) of the post
+        ax.contourf(gx, gy, score, levels=[0] + levels + [1], colors=fills, zorder=1)
+        ax.contour(gx, gy, score, levels=levels, colors='k', linewidths=1.0, zorder=2)
+        top = -forest.score_samples(X) >= levels[1]
+        points(ax, X[~top], GREY)
+        points(ax, X[top], RED)
+    paths = {i: isolate(i, 18) for i in (anomaly, normal)}  # a tree whose two paths are close to their mean lengths
+    labels = ['Score below 0.5', 'Score 0.5 to 0.65', 'Score above 0.65']
+    legend = [(lambda c, x, y, f=f: swatch(c, x, y, f), 16, t) for f, t in zip(fills, labels)]
+    row('isolation_forest', box, [path_panel(anomaly, *paths[anomaly], RED), path_panel(normal, *paths[normal], BLUE),
+                                  score_panel],
+        [f'Anomaly: {len(paths[anomaly][0])} splits', f'Normal point: {len(paths[normal][0])} splits', 'Anomaly score'],
+        size=200, arrow=False, legend=legend)
+    h = {i: np.mean([len(isolate(i, seed)[0]) for seed in range(100)]) for i in (anomaly, normal)}
+    print('  mean splits over 100 trees: anomaly', h[anomaly], 'normal point', h[normal],
+          'scores of the anomalies:', (-forest.score_samples(X[60:])).round(2),
+          'highest score of the other points:', (-forest.score_samples(X[:60])).max().round(2))
+
+
+def lof():
+    """A sparse and a dense cluster, a global outlier and a local outlier next to the dense cluster: the two points of
+    highest distance to their 5th nearest neighbor, and of highest LOF with k = 5."""
+    rng = np.random.default_rng(0)
+    X = np.vstack([rng.normal([-1.5, 0], 0.8, (40, 2)), rng.normal([2.2, 1.2], 0.25, (30, 2)),
+                   [[-1.0, 3.2], [2.2, -0.2]]])
+    k = 5
+    dist = NearestNeighbors(n_neighbors=k + 1).fit(X).kneighbors(X)[0][:, k]  # neighbor 0 is the point itself
+    factor = -LocalOutlierFactor(n_neighbors=k).fit(X).negative_outlier_factor_
+    def flagged(score):
+        def draw(ax, _):
+            top = np.argsort(-score)[:2]
+            points(ax, np.delete(X, top, 0), GREY)
+            points(ax, X[top], RED)
+        return draw
+    row('lof', square_box(X), [data_panel(X), flagged(dist), flagged(factor)],
+        ['Data', 'Distance to the 5th neighbor', 'LOF'])
+    print('  LOF of the global and the local outlier:', factor[-2:].round(2), 'highest LOF of the other points:',
+          factor[:-2].max().round(2), 'rank of the local outlier by distance:', int((dist > dist[-1]).sum()) + 1)
+
+
+def curse_of_dimensionality():
+    """The distances from 100 random query points to 1,000 points drawn uniformly in the unit cube, each divided by the
+    mean distance from its query point, in 2, 10, 100 and 1,000 dimensions."""
+    rng, c = np.random.default_rng(0), Canvas('curse_of_dimensionality', 830, 200)
+    for k, d in enumerate((2, 10, 100, 1000)):
+        X, Q = rng.uniform(size=(1000, d)), rng.uniform(size=(100, d))
+        D = np.sqrt(np.maximum((Q ** 2).sum(1)[:, None] + (X ** 2).sum(1) - 2 * Q @ X.T, 0))
+        h, edges = np.histogram(D / D.mean(1, keepdims=True), bins=50, range=(0, 2.5))
+        ax = c.panel(10 + 205 * k, 10, 185, 130, (0, 2.5), (0, 1.1), frame=False)
+        ax.axis('on')
+        ax.tick_params(left=False, labelleft=False)
+        ax.set_xticks([0, 1, 2])
+        ax.stairs(h / h.max(), edges, fill=True, fc=charts.BLUE_FILL, ec='k', lw=1.0)
+        c.text(102.5 + 205 * k, 180, f'{d:,} dimensions')
+        print(f'  {d} dimensions: median (d_max - d_min) / d_min =',
+              np.median((D.max(1) - D.min(1)) / D.min(1)).round(2))
+    c.save()
+
+
+FIGURES = {f.__name__: f for f in [
+    voronoi, kmeans_iterations, knn, hierarchical_clustering, dbscan, spectral_clustering, gmm, som_training,
+    som_mnist, pca, kernel_pca, tsne, ica, apriori, fp_growth, isolation_forest, lof, curse_of_dimensionality]}
 
 if __name__ == '__main__':
     for name in sys.argv[1:] or FIGURES:
