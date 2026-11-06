@@ -23,27 +23,19 @@ $$
 
 where $$i$$ and $$j$$ are the row and the column of a value of $$C$$, i.e. each value of $$C$$ is the dot product of a row of $$A$$ and a column of $$B$$. The product takes $$MNO$$ multiplications and as many additions, i.e. $$2MNO$$ floating-point operations ([FLOPs](https://en.wikipedia.org/wiki/FLOPS)), or $$2n^3$$ for square matrices of size $$n$$, a cubic complexity. However, it reads only $$MN + NO$$ values and writes $$MO$$, so that for square matrices each value of $$A$$ and $$B$$ is used $$n$$ times. Thus, a large matrix multiplication is *compute-bound*: its speed depends on the arithmetic units of the hardware, and on how well an implementation reuses the data that it reads (see the [roofline model]({{ site.baseurl }}{% post_url 2025-06-07-inference-prefill-decode-roofline-cache %}#roofline-model)).
 
-PyTorch and LibTorch call the matrix multiplication of a library of the device: a BLAS library on the CPU (e.g. MKL or OpenBLAS), and [cuBLAS](https://docs.nvidia.com/cuda/cublas/index.html) on NVIDIA GPUs. The tabs below show the product in PyTorch and in LibTorch, and then written from scratch, from loops on the CPU (C++) to the Tensor Cores of a GPU (CUDA).
+In PyTorch, the product is written with the operator `@`, as `C = A @ B` (or `torch.matmul(A, B)`), and LibTorch, the C++ distribution of PyTorch, writes it `torch::matmul(A, B)`, as C++ has no operator `@`. Both call the matrix multiplication of a library of the device: a BLAS library on the CPU (e.g. MKL or OpenBLAS), and [cuBLAS](https://docs.nvidia.com/cuda/cublas/index.html) on NVIDIA GPUs. The rest of this section writes the product from scratch, with loops on the CPU and with kernels on the GPU.
 
-<div class="code-tabs" markdown="1">
-<div class="tab" data-title="PyTorch" markdown="1">
+A GPU runs a function, called a **kernel**, on thousands of threads at once. The threads are grouped in [thread blocks](https://en.wikipedia.org/wiki/Thread_block_(CUDA_programming)), and each block runs on one Streaming Multiprocessor (SM) of the GPU. The threads of a block share a small and fast on-chip **shared memory**, while all threads read and write the large and slower global memory, the [high-bandwidth memory](https://en.wikipedia.org/wiki/High_Bandwidth_Memory) (HBM). A block runs as groups of 32 threads, called **warps**, whose threads execute the same instruction ([SIMT](https://en.wikipedia.org/wiki/Single_instruction,_multiple_threads)), and a warp reads global memory fastest when its 32 threads read consecutive addresses, i.e. when the access is *coalesced*.
 
-In PyTorch, the product is a single operator:
-
-```python
-C = A @ B  # or torch.matmul(A, B)
-```
-
-</div>
-<div class="tab" data-title="LibTorch" markdown="1">
-
-In LibTorch, the C++ distribution of PyTorch, it is the same operator, with an API as close as possible to the Python one:
+The [CUDA C++ Best Practices Guide](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#shared-memory-in-matrix-multiplication-c-ab) illustrates the use of shared memory on the product of $$A$$ of size $$M \times w$$ and $$B$$ of size $$w \times O$$, i.e. for $$N = w$$, where $$w = 32$$ is the size of a warp (`TILE_DIM` in the code). Each thread computes one value of $$C$$, and each thread block of $$32 \times 32$$ threads computes a tile of $$32 \times 32$$ values of $$C$$, where each warp computes 32 consecutive values of a row. The guide presents three kernels, and measures their effective bandwidth on a Tesla V100. Their code below is adapted from the guide, with [BF16](https://en.wikipedia.org/wiki/Bfloat16_floating-point_format) values (`dt`), sums in [FP32](https://en.wikipedia.org/wiki/Single-precision_floating-point_format), and the indices of the formula above: each thread computes $$C_{ij}$$, where $$i$$ is `row` and $$j$$ is `col`, in a loop over $$k$$. The kernels share the size of the tiles:
 
 ```cpp
-torch::Tensor C = torch::matmul(A, B);
+constexpr int TILE_DIM = 32;   // tiles of TILE_DIM x TILE_DIM values, with one thread per value
 ```
 
-</div>
+The tabs below show the product in C++ on the CPU, the three kernels of the guide, each with a picture of the values of $$A$$ and $$B$$ that a warp reads in the iteration $$k$$ and of the memory that it reads them from, and the product on the Tensor Cores:
+
+<div class="code-tabs" markdown="1">
 <div class="tab" data-title="C++" markdown="1">
 
 The CPU code of this post follows the style of [llama2.c](https://github.com/karpathy/llama2.c), in which Andrej Karpathy runs the inference of Llama 2 in a single file of plain C, and of [llm.c](https://github.com/karpathy/llm.c), in which he trains GPT-2 in plain C and CUDA. Both write each operation as loops over arrays of floats, and run the outer loop on all the cores of the CPU with [OpenMP](https://en.wikipedia.org/wiki/OpenMP).
@@ -66,20 +58,9 @@ void matmul(const dt* A, const dt* B, dt* C, int M, int N, int O) {
 
 The matrices are stored in [row-major order](https://en.wikipedia.org/wiki/Row-_and_column-major_order), i.e. row after row, as in C and PyTorch, so that $$A_{ik}$$ is at `A[i*N + k]`, and `dt` is the type of the values (`float` on the CPU, as explained later). The loop over `k` comes before the loop over `j`, so that the inner loop reads a row of $$B$$ and a row of $$C$$ contiguously, which the compiler turns into vector instructions ([SIMD](https://en.wikipedia.org/wiki/Single_instruction,_multiple_data)). In the textbook order, with the loop over `k` inside, each iteration would read a value of $$B$$ one row away from the previous one, and use a single value of each cache line that it loads ([locality of reference](https://en.wikipedia.org/wiki/Locality_of_reference)). The line `#pragma omp parallel for` splits the rows of $$C$$ among the threads of the CPU, which write disjoint rows and need no synchronization.
 
-Faster CPU implementations also split the loops into tiles that fit the caches of the CPU ([loop nest optimization](https://en.wikipedia.org/wiki/Loop_nest_optimization)). This is also the idea of the tiled kernels of the GPU, in the CUDA tab.
+Faster CPU implementations also split the loops into tiles that fit the caches of the CPU ([loop nest optimization](https://en.wikipedia.org/wiki/Loop_nest_optimization)). This is also the idea of `coalescedMultiply` and `sharedABMultiply`, in the next tabs, which read tiles of the matrices into the shared memory of the GPU.
 
 </div>
-<div class="tab" data-title="CUDA" markdown="1">
-
-A GPU runs a function, called a **kernel**, on thousands of threads at once. The threads are grouped in [thread blocks](https://en.wikipedia.org/wiki/Thread_block_(CUDA_programming)), and each block runs on one Streaming Multiprocessor (SM) of the GPU. The threads of a block share a small and fast on-chip **shared memory**, while all threads read and write the large and slower global memory, the [high-bandwidth memory](https://en.wikipedia.org/wiki/High_Bandwidth_Memory) (HBM). A block runs as groups of 32 threads, called **warps**, whose threads execute the same instruction ([SIMT](https://en.wikipedia.org/wiki/Single_instruction,_multiple_threads)), and a warp reads global memory fastest when its 32 threads read consecutive addresses, i.e. when the access is *coalesced*.
-
-The [CUDA C++ Best Practices Guide](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#shared-memory-in-matrix-multiplication-c-ab) illustrates the use of shared memory on the product of $$A$$ of size $$M \times w$$ and $$B$$ of size $$w \times O$$, i.e. for $$N = w$$, where $$w = 32$$ is the size of a warp (`TILE_DIM` in the code). Each thread computes one value of $$C$$, and each thread block of $$32 \times 32$$ threads computes a tile of $$32 \times 32$$ values of $$C$$, where each warp computes 32 consecutive values of a row. The guide presents three kernels, and measures their effective bandwidth on a Tesla V100. Their code below is adapted from the guide, with [BF16](https://en.wikipedia.org/wiki/Bfloat16_floating-point_format) values (`dt`), sums in [FP32](https://en.wikipedia.org/wiki/Single-precision_floating-point_format), and the indices of the formula above: each thread computes $$C_{ij}$$, where $$i$$ is `row` and $$j$$ is `col`, in a loop over $$k$$. The tabs below show each kernel with a picture of the values of $$A$$ and $$B$$ that a warp reads in the iteration $$k$$, and of the memory that it reads them from, and then the Tensor Cores. The kernels share the size of the tiles:
-
-```cpp
-constexpr int TILE_DIM = 32;   // tiles of TILE_DIM x TILE_DIM values, with one thread per value
-```
-
-<div class="code-tabs" markdown="1">
 <div class="tab" data-title="simpleMultiply" markdown="1">
 
 `simpleMultiply` ("Unoptimized matrix multiplication") reads $$A$$ and $$B$$ from global memory. The 32 threads of a warp read consecutive values of $$B$$, but they all read the same value of $$A$$, which wastes most of each memory transaction. It reaches 119.9 GB/s:
@@ -285,9 +266,6 @@ int main(int argc, char* argv[]) {
 ```
 
 </details>
-
-</div>
-</div>
 
 When the matrices do not fit the memory of one GPU, or to compute faster, the product is split among several GPUs, which exchange blocks of the matrices during the computation. The post [Distributed Matrix Multiplication and Database Joins]({{ site.baseurl }}{% post_url 2014-04-02-distributed-matmul-dbs %}#shifting-one-matrix-the-ring-algorithm) describes these algorithms, such as the **ring algorithm**, in which each GPU multiplies its current block of $$B$$ while it passes this block to its neighbor in the ring and receives the next one.
 

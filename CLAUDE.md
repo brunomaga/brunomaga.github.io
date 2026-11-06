@@ -67,12 +67,13 @@ written by Claude read as if the author had written them from the beginning, not
 - The same code in several languages or libraries is shown in tabs, at the user's request (2026-11-06): a
   `<div class="code-tabs" markdown="1">` holds one `<div class="tab" data-title="..." markdown="1">` per
   implementation, in the same order in every group of the post (PyTorch first), and each tab holds the text and
-  the code of its implementation. The text that applies to all implementations stays outside the tabs, before or
-  after the group. `assets/js/code-tabs.js` shows one tab at a time, and a tab picked in one group is picked in
-  all groups of the page. A tab may hold a group of its own: variants of one algorithm that the text compares go in
-  tabs too, at the user's request (2026-11-06), such as the CUDA tab of the matrix multiplication of the GPT C++ and
-  CUDA post, whose four tabs hold the three kernels of the CUDA C++ Best Practices Guide, each with its text, code and
-  picture, and the Tensor Cores.
+  the code of its implementation. The text that applies to all implementations, or to several of them, stays
+  outside the tabs, before or after the group. `assets/js/code-tabs.js` shows one tab at a time, and a tab picked
+  in one group is picked in all groups of the page. An implementation that is a single call is named in the text,
+  with no tab, at the user's request (2026-11-06): the `A @ B` of PyTorch and the `torch::matmul(A, B)` of
+  LibTorch. Variants of one algorithm that the text compares are tabs of the group too, each with its text, code and
+  picture, at the user's request (2026-11-06): the matrix multiplication of the GPT C++ and CUDA post is one group of
+  five tabs, C++, the three kernels of the CUDA C++ Best Practices Guide and the Tensor Cores.
 - The code of a post is shown in snippets in the post, not left to external files, which are hard to keep in
   sync with the snippets, at the user's request (2026-11-06). A file that the post shows whole without
   explaining it line by line, such as a `CMakeLists.txt`, goes in an expandable `<details markdown="1">` block.
