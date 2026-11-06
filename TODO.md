@@ -102,7 +102,7 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
   Fix: record the spike time (a getter for `last_spike_time_`), and compute and clamp the index as the fixed-step
   branch does.
 
-### Unsupervised Learning basics and Principal Component Analysis (2017-11-01-unsupervised-learning.md)
+### Unsupervised Learning methods (2017-11-01-unsupervised-learning.md)
 
 - `assets/unsupervised-learning/kohonen_mnist.zip`, `kohonen.py`, `name2digits`: the function loads `hash.mat`,
   which is not in the zip, so the script stops with a `FileNotFoundError` before the training starts. Fix: add
@@ -636,7 +636,7 @@ that is not wrong.
 - Optional, `linear-regression-matrix-factorization/matrix-factorization.svg`: the rating 6 (movie 1, user 7) is
   outside a scale of 1 to 5 stars. Fix: a rating from 1 to 5.
 
-### Unsupervised Learning basics and Principal Component Analysis (2017-11-01-unsupervised-learning.md)
+### Unsupervised Learning methods (2017-11-01-unsupervised-learning.md)
 
 - `unsupervised-learning/gaussianscatterpca.svg`: the arrow heads end past the scaled eigenvectors, at 3.75 and 1.75
   instead of 3 and 1, the lengths in the Wikipedia figure it follows. Fix: arrow heads that end at the tips of the
@@ -1137,16 +1137,18 @@ Content problems that need the author's decision, such as overlap between posts.
 - The page is now over 6,000 words, but has no list of contents, which CLAUDE.md gives to the pages over 6,000 words.
   Proposed fix: add it after the opening paragraphs.
 
-### Unsupervised Learning basics and Principal Component Analysis (2017-11-01-unsupervised-learning.md)
+### Unsupervised Learning methods (2017-11-01-unsupervised-learning.md)
 
 - Kohonen maps: `unsupervised-learning/kohonen.svg` and `kohonen2.svg` write the input as v, the winner as s and its
   weights as w_s, as their source (Ritter, Martinetz and Schulten, 1992) does, while the algorithm in the text writes
   them as $$x_u$$, $$j^*$$ and $$w_{j^*}$$. The caption bridges the two ("In the algorithm below, $$v$$ is the input
   $$x_u$$ and $$s$$ is the winner $$j^*$$"). Fix, in a text task: keep the bridge, or write the algorithm with the
   source's v, s and w_s.
-- Optional, symbols with two meanings: $$E$$ is the expectation in ICA and the error of k-means, $$K$$ the kernel
-  matrix and the number of components of a GMM, $$d$$ the degree of a polynomial kernel and a distance, and $$k$$ has
-  several uses. Proposed fix: write the expectation as $$\mathbb{E}$$ in ICA, as the statistics posts do, and keep the
+- Optional, symbols with several meanings: $$E$$ is the expectation in ICA and the error of k-means, $$K$$ the kernel
+  matrix and the number of components of a GMM, $$d$$ the degree of a polynomial kernel, a distance and the number of
+  dimensions, $$m$$ the minimum number of points of DBSCAN, the number of items of association rules and the size of
+  the subsample of an isolation forest ($$\psi$$ in its paper), and $$k$$ has several uses. Proposed fix: write the
+  expectation as $$\mathbb{E}$$ in ICA, as the statistics posts and the isolation forest section do, and keep the
   others, which each section defines.
 
 ### Deep Neural Networks, Backpropagation and Optimization (2018-03-27-dnn-backprop.md)
@@ -1330,12 +1332,6 @@ category that the home page puts before it, fits on one line of the home page on
   column in the site's font, but may wrap with a wider system font): faster attention (693 px), variable sequence
   lengths (725 px), learning from sequences (694 px), VAEs and GANs (729 px), Bayesian linear regression (718 px),
   variable timestep (720 px) and the LIF neuron and Brunel network (694 px). Fix: shorter titles, under 690 px.
-
-### Unsupervised Learning basics and Principal Component Analysis (2017-11-01-unsupervised-learning.md)
-
-- To do later. The title names only PCA, but the post also covers ICA, k-means, Gaussian mixtures, hierarchical
-  clustering, DBSCAN, spectral clustering, self-organizing maps, t-SNE, UMAP and self-supervised learning.
-  Proposed: "Dimensionality Reduction, Clustering and Self-Supervised Learning" (652 px).
 
 ### Variational Autoencoders (VAEs) and Generative Adversarial Networks (GANs) (2019-10-12-vae-gan.md)
 
