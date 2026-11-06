@@ -64,6 +64,9 @@ written by Claude read as if the author had written them from the beginning, not
   four sentences.
 - Implementation sections are hands-on: the code is introduced step by step ("First, ...", "Then, ...", "And
   that is all: ..."), and each snippet is preceded by what it does.
+- A snippet that explains an algorithm is short NumPy (or plain Python) code that implements it, rather than a call
+  to a library that hides it; the library (e.g. Faiss for the similarity search) is named in the text as the option
+  for large-scale or production use, at the user's request (2026-11-06).
 - Plain, precise words. The author's mild informal words stay ("trickier", "handy"), slang goes ("lingo"), and
   contractions are written out ("does not", "it is").
 

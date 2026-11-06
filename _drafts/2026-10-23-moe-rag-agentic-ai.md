@@ -77,16 +77,34 @@ def rag_prompt(system, query, k=4):
   return "\n\n".join([system, *(chunks[i] for i in top), query])  # sys, c1 ... ck, query
 ```
 
-This exact search reads all the vectors at each query, so its cost grows linearly with the number of chunks. An approximate search reads only a small part of them: with the [Faiss](https://en.wikipedia.org/wiki/FAISS) library, for example, an HNSW index of the same vectors is built once, ahead of time, and then searched at each query:
+This exact search reads all the vectors at each query, so its cost grows linearly with the number of chunks. An approximate search reads only a small part of them. The following code implements one of the methods of the unsupervised learning post, the inverted file index (IVF). First, ahead of time, a [k-means clustering]({{ site.baseurl }}{% post_url 2017-11-01-unsupervised-learning %}#k-means-clustering) groups the vectors into cells, here as many as the square root of the number of chunks, and each cell keeps the list of its chunks:
 
 ```python
-import faiss
+def kmeans(x, n_cells):
+  centroids = x[np.random.default_rng(0).choice(len(x), n_cells, replace=False)]
+  for _ in range(10):
+    cell = np.argmax(x @ centroids.T, axis=1)  # the closest centroid of each vector
+    for c in range(n_cells):
+      if np.any(cell == c):                     # skip the empty cells
+        centroids[c] = normalize(x[cell == c].mean(axis=0))  # unit mean vector
+  return centroids
 
-M = 32  # links per vector in each layer of the graph (2M in the base layer)
-hnsw = faiss.IndexHNSWFlat(index.shape[1], M, faiss.METRIC_INNER_PRODUCT)
-hnsw.add(index)                                          # ahead of time
-scores, top = hnsw.search(normalize(embed([query])), k)  # approximate top-k
+n_cells = int(np.sqrt(len(index)))  # e.g. 1,000 cells for a million chunks
+centroids = kmeans(index, n_cells)
+cell = np.argmax(index @ centroids.T, axis=1)                # the cell of each chunk
+lists = [np.flatnonzero(cell == c) for c in range(n_cells)]  # the chunks of each cell
 ```
+
+Then, at query time, the search compares the query with the centroids, and runs the exact search above only on the chunks of the `n_probe` closest cells:
+
+```python
+def ivf_search(q, k, n_probe=8):
+  probe = np.argsort(-(centroids @ normalize(q)))[:n_probe]  # the n_probe closest cells
+  ids = np.concatenate([lists[c] for c in probe])            # the chunks of these cells
+  return ids[search(index[ids], q, k)]                       # exact search among them
+```
+
+A nearest neighbor in a cell that is not probed is missed, which makes the search approximate: more probes return more of the true nearest neighbors, at a higher cost. For a million chunks in a thousand cells, a query with 8 probes scores 1,000 centroids and, with cells of equal size, 8,000 chunks, instead of a million. The [Faiss](https://en.wikipedia.org/wiki/FAISS) library implements this index and the other methods of the unsupervised learning post for collections of billions of vectors, on CPUs and GPUs.
 
 Vanilla RAG is thus a fixed retrieve-then-generate pipeline, in which only the retrieved content varies per query. Its overhead, one forward pass of the embedding model and one search, is small and predictable next to the LLM. Later work made retrieval adaptive, letting the model decide when to retrieve during generation (e.g. [Self-RAG](https://arxiv.org/abs/2310.11511), Asai et al., 2024). When an agent decides what and when to retrieve, possibly over several rounds, the approach is called **agentic RAG**.
 
