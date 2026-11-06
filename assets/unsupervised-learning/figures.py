@@ -1,16 +1,18 @@
 """Draw the data pictures of the unsupervised learning post as SVG files next to this script.
 
-Each picture runs its method on the post's example or on data drawn with a fixed seed. The SVGs follow CLAUDE.md
-(Pictures): 1 unit = 1 px, text as glyph outlines, cropped to the drawn content plus 0.5 px.
+Each picture runs its method on the post's example or on data drawn with a fixed seed. The SVGs take the shared
+chart style of _tools/charts.py (1 unit = 1 px, text as glyph outlines), cropped to the drawn content plus 0.5 px.
 usage: python3 figures.py [NAME ...]   (needs matplotlib, scikit-learn, scipy and the fonts of CLAUDE.md)
 """
 import io, os, re, sys, zipfile
 import numpy as np
-import matplotlib
-matplotlib.use('agg')
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(HERE, '..', '..', '_tools'))
+import charts
+from charts import BLUE, GREEN, GREY, MATH, ORANGE, RED
 import matplotlib.pyplot as plt
+from matplotlib import transforms
 from matplotlib.patches import Ellipse, Polygon, Rectangle
-from matplotlib.transforms import offset_copy
 from PIL import Image
 from scipy.cluster.hierarchy import fcluster, leaves_list, linkage
 from scipy.optimize import linear_sum_assignment
@@ -21,21 +23,16 @@ from sklearn.metrics import adjusted_rand_score
 from sklearn.mixture import GaussianMixture
 from sklearn.neighbors import KNeighborsClassifier
 
-TEXT, MATH = 'Source Sans 3', 'NewComputerModernSansMath'
-BLUE, GREEN, RED, ORANGE, GREY = '#6c8ebf', '#82b366', '#b85450', '#d79b00', '#666666'  # accents, for small marks
-PASTEL = {BLUE: '#dae8fc', GREEN: '#d5e8d4', RED: '#f8cecc'}
+PASTEL = {BLUE: charts.BLUE_FILL, GREEN: charts.GREEN_FILL, RED: charts.RED_FILL}  # the fill of each accent
 DASH = (0, (3, 3))  # draw.io's default dash pattern, scaled by the line weight
-HERE = os.path.dirname(os.path.abspath(__file__))
-plt.rcParams.update({'font.family': TEXT, 'svg.fonttype': 'path', 'svg.hashsalt': 'unsupervised-learning',
-                     'axes.unicode_minus': True, 'lines.solid_capstyle': 'butt'})
 
 
 class Canvas:
-    """A W x H px picture; the overlay axes place shapes and text in px from the top-left corner."""
+    """The w x h px picture name.svg; the overlay axes place shapes and text in px from the top-left corner."""
 
-    def __init__(self, w, h):
-        self.w, self.h = w, h
-        self.fig = plt.figure(figsize=(w / 72, h / 72), dpi=72)
+    def __init__(self, name, w, h):
+        self.name, self.w, self.h = name, w, h
+        self.fig = charts.figure(w, h, name)
         self.top = self.fig.add_axes([0, 0, 1, 1], zorder=50)
         self.top.set_xlim(0, w); self.top.set_ylim(h, 0); self.top.axis('off')
 
@@ -48,7 +45,7 @@ class Canvas:
                                    joinstyle='miter', zorder=30, clip_on=False))
         return ax
 
-    def text(self, x, y, s, size=14, font=TEXT, ha='center', va='baseline', color='k', **kw):
+    def text(self, x, y, s, size=14, font=None, ha='center', va='baseline', color='k', **kw):
         return self.top.text(x, y, s, fontsize=size, fontfamily=font, ha=ha, va=va, color=color, **kw)
 
     def arrow(self, x, yc, length=30):
@@ -71,8 +68,8 @@ class Canvas:
             swatch(x + sw_max / 2, y)
             self.text(x + sw_max + 4, y, label, va='center_baseline', ha='left')
 
-    def save(self, name):
-        """Write <name>.svg cropped to its ink plus 0.5 px, and print its width P in % of the 880 px band."""
+    def save(self):
+        """Write the SVG cropped to its ink plus 0.5 px, and print its width P in % of the 880 px band."""
         png = io.BytesIO()
         self.fig.savefig(png, format='png', dpi=288, facecolor='white')
         ink = np.array(Image.open(png).convert('L')) < 245
@@ -85,10 +82,10 @@ class Canvas:
         attrs, body = rest.split('>', 1)
         attrs = re.sub(r'width="[^"]*" height="[^"]*" viewBox="[^"]*"',
                        f'width="{w:.2f}" height="{h:.2f}" viewBox="{x0:.2f} {y0:.2f} {w:.2f} {h:.2f}"', attrs)
-        with open(os.path.join(HERE, name + '.svg'), 'w') as f:
+        with open(os.path.join(HERE, self.name + '.svg'), 'w') as f:
             f.write(head.split('<!DOCTYPE', 1)[0] + '<svg' + attrs + '>' + body)
         plt.close(self.fig)
-        print(f'{name}.svg: {w:.1f} x {h:.1f} px, P = {w / 880 * 100:.1f}%')
+        print(f'{self.name}.svg: {w:.1f} x {h:.1f} px, P = {w / 880 * 100:.1f}%')
 
 
 def square_box(X):
@@ -173,7 +170,7 @@ def hierarchical_clustering():
     leaf = np.argsort(leaves_list(Z))  # the position of each point among the leaves, which also numbers it
     groups = fcluster(Z, cut, 'distance')
     col = {g: [BLUE, GREEN, RED][i] for i, g in enumerate(dict.fromkeys(groups[leaves_list(Z)]))}  # in leaf order
-    c, box = Canvas(830, 260), square_box(X)
+    c, box = Canvas('hierarchical_clustering', 830, 260), square_box(X)
     a = c.panel(10, 10, 220, 220, box[:2], box[2:])
     points(a, X, GREY)
     px = (box[1] - box[0]) / 220  # data units per px
@@ -208,7 +205,7 @@ def hierarchical_clustering():
         points(b, P, col[g])
     for x, label in ((120, 'Data'), (412, 'Dendrogram'), (650, 'Clusters')):
         c.text(x, 251, label)
-    c.save('hierarchical_clustering')
+    c.save()
     print('  merge heights:', Z[:, 2].round(2))
 
 
@@ -221,7 +218,7 @@ def dbscan():
     db = DBSCAN(eps=eps, min_samples=m).fit(X)
     core = np.zeros(len(X), bool); core[db.core_sample_indices_] = True
     box, colors = (-1.4, 2.4, -0.9, 1.3), [BLUE, GREEN]
-    c = Canvas(830, 230)
+    c = Canvas('dbscan', 830, 230)
     a = c.panel(10, 10, 311, 180, box[:2], box[2:])
     points(a, X, GREY)
     c.arrow(340, 100)
@@ -238,7 +235,7 @@ def dbscan():
     c.legend_column(717, 100, [(lambda x, y: c.square(x, y, BLUE), 8, 'Core point'),
                                (lambda x, y: c.square(x, y, PASTEL[BLUE]), 8, 'Border point'),
                                (lambda x, y: c.square(x, y, GREY), 8, 'Noise')])
-    c.save('dbscan')
+    c.save()
     print('  clusters:', db.labels_.max() + 1, 'core:', core.sum(), 'border:', ((db.labels_ >= 0) & ~core).sum(),
           'noise:', (db.labels_ < 0).sum(), 'points in the circle:', (np.linalg.norm(X - X[i], axis=1) <= eps).sum())
 
@@ -268,45 +265,25 @@ def kmeans_panel(X, km, colors):
 def row(name, box, draws, labels, size=220, arrow=True, frame=True, legend=None):
     """A row of square panels of size px over the same box, framed (frame) and 20 px apart, a block arrow after the
     first panel (arrow), a label under each (a text or a (text, font) pair) and a legend column on the right."""
-    c = Canvas(830, size + 40)
+    c = Canvas(name, 830, size + 40)
     xs = [10 + k * (size + 20) + (30 if arrow and k else 0) for k in range(len(draws))]
     for x, draw in zip(xs, draws):
         draw(c.panel(x, 10, size, size, box[:2], box[2:], frame), box)
     if arrow:
         c.arrow(size + 20, size / 2 + 10)
     for x, label in zip(xs, labels):
-        text, font = label if isinstance(label, tuple) else (label, TEXT)
+        text, font = label if isinstance(label, tuple) else (label, None)
         c.text(x + size / 2, size + 31, text, font=font)
     if legend:
         c.legend_column(xs[-1] + size + 16, size / 2 + 10,
                         [(lambda x, y, f=f: f(c, x, y), sw, text) for f, sw, text in legend])
-    c.save(name)
+    c.save()
 
 
 def guides(ax, box):
     """The coordinate axes through the origin, as grey dashed guide lines."""
     ax.plot(box[:2], [0, 0], color=GREY, lw=1.0, ls=DASH, zorder=2)
     ax.plot([0, 0], box[2:], color=GREY, lw=1.0, ls=DASH, zorder=2)
-
-
-def vector(ax, p0, p1):
-    """A thin arrow from p0 to p1 with the classic head of draw.io: 6.4 px long and wide, its notch at 3/4."""
-    p0, p1 = np.asarray(p0, float), np.asarray(p1, float)
-    px = 1 / np.ptp(ax.transData.transform([(0, 0), (1, 0)])[:, 0])  # a px in data units
-    d = (p1 - p0) / np.linalg.norm(p1 - p0)
-    n, back = np.array([-d[1], d[0]]), p1 - 6.4 * px * d
-    ax.add_patch(Polygon([p1, back + 3.2 * px * n, p1 - 4.8 * px * d, back - 3.2 * px * n], fc='k', lw=0, zorder=25))
-    ax.plot(*np.c_[p0, p1 - 4 * px * d], color='k', lw=1.4, zorder=25)
-
-
-def sub(ax, p, base, index, dx, dy):
-    """The arrow text base with the subscript index (13 and 11 px, in the math font, the index shifted down as the
-    font says), its right end dx px and its baseline dy px away from the point p, in data units."""
-    r = ax.figure.canvas.get_renderer()
-    t, i = (ax.text(*p, text, fontsize=f, fontfamily=MATH, zorder=25) for text, f in ((base, 13), (index, 11)))
-    wb, wi = (u.get_window_extent(r).width for u in (t, i))
-    t.set_transform(offset_copy(ax.transData, ax.figure, dx - wb - wi, dy, units='points'))
-    i.set_transform(offset_copy(ax.transData, ax.figure, dx - wi, dy - 0.247 * 13, units='points'))
 
 
 def spectral_clustering():
@@ -422,8 +399,9 @@ def pca():
             points(ax, P, GREY)
             for k, (dx, dy) in enumerate([(-2, 7), (-3, 6)] if arrows else []):  # each eigenvector, 3 std long
                 tip = 3 * np.sqrt(lam[k]) * F[:, k]
-                vector(ax, (0, 0), tip)
-                sub(ax, tip, '𝑣', str(k + 1), dx, dy)
+                charts.arrow(ax, (0, 0), tip, zorder=25)
+                at = transforms.offset_copy(ax.transData, ax.figure, dx, dy, units='points')  # dx, dy px from the tip
+                charts.runs(ax, *tip, charts.sub('𝑣', str(k + 1), 13), 'right', at)
         return draw
     row('pca', square_box(np.vstack([X, Xc, Dn])), [scatter(X), scatter(Xc, True), scatter(Dn), scatter(Dn * [1, 0])],
         ['1. Data', '2. Centered', '3. Rotated', '4. First component'], size=185, arrow=False)
