@@ -300,7 +300,10 @@ sections 6 and 7, and the font section 4.
   too, the Voronoi diagram is one panel, and the curse of dimensionality a row of histograms. The association rule
   pictures show the post's example as tables and an FP-tree in the same layout, with green frequent, red infrequent
   and white pruned itemsets. These pictures are charts drawn from data by assets/unsupervised-learning/figures.py,
-  which runs each method on the post's example or on data drawn with a fixed seed.
+  which runs each method on the post's example or on data drawn with a fixed seed. The SOM has one picture and no
+  picture of Kohonen's model, at the user's request (2026-11-06): a grid of neurons that starts at random over a
+  letter and ends up covering it, with the first update (the input, the winner, its neighbors and their moves) in
+  its first panel.
 - Shapes that stand for sizes are drawn to scale: in the product of an M x N matrix and an N x O matrix, the
   three rectangles are M x N, N x O and M x O, with their splits (the Megatron-LM pictures).
 - Third person, as the post text: no "I", "we", "our", "ours", "us", "you" or "your" in a picture. A paper's

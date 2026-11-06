@@ -7,6 +7,15 @@ and a proposed fix. The user picks the items to fix before the next pass.
 
 Bugs in the code and data files of the posts (under `assets/`), and in the styles of the site (under `_sass/`).
 
+### All posts
+
+- `_includes/head.html`, the MathJax script: an inline formula is marked `.math-scroll` (wider than its line) when
+  its right edge passes the right edge of its parent element. When the parent is an inline element, that edge is
+  the end of the formula itself: the $$i^*$$ that ends the italic "*a new point $$x$$ belongs to the closest
+  prototype $$i^*$$*" of the unsupervised learning post ends 414 px before the end of its line at 1280 px, yet it is
+  marked, and the inline-block that the class sets makes its line taller. Fix: compare with the right edge of the
+  closest block, `m.closest('p, li, td, th, blockquote')`, instead of `m.parentElement`.
+
 ### Distributed Sorting Algorithms (2014-06-21-distributed-sort.md)
 
 - `assets/distributed-sort/distributedmemorysorter.cxx`, `oddEvenSort_MPI`: the loop runs exactly `mpiSize` phases,

@@ -78,6 +78,26 @@ A whole run of k-means on 2D data, until the assignments no longer change, is il
 Iterations of k-means with $$k = 3$$ on 90 points of three Gaussian clusters, from three of the points as initial means. Each panel shows the means (circles), their Voronoi cells and their clusters, and the lines trace the means of the previous iterations. Two initial means fall in the same cluster, so 26 points change cluster in iteration 1 and 5 in iteration 2, and in iteration 3 the assignments no longer change. Inspired by: [k-means clustering](https://en.wikipedia.org/wiki/K-means_clustering)
 
 
+In NumPy, Lloyd's algorithm takes a few lines. The following function picks $$k$$ data points at random as the initial means, and returns the means and the cluster of each point. A cluster that loses all its points keeps its mean, as the centroid of an empty cluster is not defined:
+
+```python
+import numpy as np
+
+def kmeans(X, k, steps=100, seed=0):
+    rng = np.random.default_rng(seed)
+    W = X[rng.choice(len(X), k, replace=False)]  # k data points as the initial means
+    for _ in range(steps):
+        labels = ((X[:, None] - W) ** 2).sum(2).argmin(1)  # assignment step
+        new = np.array([X[labels == i].mean(0) if np.any(labels == i) else W[i]
+                        for i in range(k)])  # update step
+        if np.allclose(new, W):  # the means, and thus the assignments, no longer change
+            break
+        W = new
+    return W, labels
+```
+
+For the color quantization above, `kmeans(pixels, 16)`, with the RGB values of an image in the rows of `pixels`, returns the palette of 16 colors and the index of each pixel in it.
+
 The update $$\Delta w_i = \eta \sum_{u \in C_i} (x_u - w_i)$$ above is a **batch learning rule**, as it updates the weights based on a set (*batch*) of inputs. The **online update** rule, instead, updates the weights of the winning prototype $$i$$ at the introduction of every new input $$x_u$$:
 
 $$
@@ -97,6 +117,18 @@ Given a query point $$x$$, KNN finds the $$k$$ training points closest to it, an
 
 {: .caption}
 KNN in 2D, with the training points of class A (blue) and class B (green), and a query point (circle) next to a single point of B among the points of A. The colored regions show the class that KNN predicts at each position, and the dashed circle holds the $$k$$ nearest neighbors of the query. With $$k = 1$$, the query takes the label B of its nearest neighbor, and the regions follow every training point; with $$k = 3$$, its neighbors vote A by 2 to 1, and the boundary between the classes is smoother.
+
+The following function implements a KNN classifier, and reproduces the example above:
+
+```python
+def knn(X, y, x, k):
+    nearest = np.argsort(((X - x) ** 2).sum(1))[:k]  # the k points closest to x
+    labels, votes = np.unique(y[nearest], return_counts=True)
+    return labels[votes.argmax()]  # the most common label among them
+
+X, y = np.array([[0], [1], [2], [3.5], [6], [7]]), np.array(list('AAABBB'))
+print(knn(X, y, 3, 1), knn(X, y, 3, 3))  # B A
+```
 
 A brute-force search computes the distances from the query to all $$n$$ training points, i.e. $$O(nd)$$ operations per query for $$d$$ dimensions. A spatial index, such as the [k-d tree](https://en.wikipedia.org/wiki/K-d_tree) ([Bentley, 1975](https://doi.org/10.1145/361002.361007)), finds the neighbors in about $$O(\log n)$$ time in low dimensions, but not in high dimensions, as the last section of this post explains. Also, the distances must be meaningful: the features are usually normalized first, so that a feature with a large range does not dominate the distance.
 
@@ -118,6 +150,25 @@ Cutting the dendrogram at a given height yields a partition, so the number of cl
 {: .caption}
 Single linkage on nine points in 2D, numbered in the order of the leaves of the dendrogram. The close points of each group merge first, and the three groups join last, at the heights 1.88 and 2.26. A cut at a height of 1.5 (dashed line) gives three clusters, drawn on the right.
 
+The following function implements agglomerative clustering. The linkage is a function of the distances between the points of two clusters: `np.min` for single linkage, `np.max` for complete linkage and `np.mean` for average linkage. The function returns the merges, each with its two clusters and its height, and reproduces the example of the five points above:
+
+```python
+def agglomerative(X, link=np.min):
+    D = np.sqrt(((X[:, None] - X) ** 2).sum(2))  # the distances between all points
+    clusters, merges = [[i] for i in range(len(X))], []
+    while len(clusters) > 1:  # merge the two closest clusters, a and b
+        n = len(clusters)
+        h, a, b = min((link(D[np.ix_(clusters[a], clusters[b])]), a, b)
+                      for a in range(n) for b in range(a + 1, n))
+        merges.append((clusters[a], clusters[b], float(h)))
+        clusters[a] = clusters[a] + clusters.pop(b)
+    return merges
+
+X = np.array([[0], [1], [3], [4], [8]])  # the five points of the example
+print([h for a, b, h in agglomerative(X)])  # [1.0, 1.0, 2.0, 4.0]
+print([h for a, b, h in agglomerative(X, np.max)])  # [1.0, 1.0, 4.0, 8.0]
+```
+
 ### DBSCAN
 
 **[DBSCAN](https://en.wikipedia.org/wiki/DBSCAN)** (Density-Based Spatial Clustering of Applications with Noise, [Ester et al., 1996](https://cdn.aaai.org/KDD/1996/KDD96-037.pdf)) defines clusters as dense regions separated by sparse ones. It takes two parameters, a radius $$\varepsilon$$ and a minimum number of points $$m$$, and labels each point as:
@@ -132,6 +183,27 @@ Two core points within distance $$\varepsilon$$ of each other belong to the same
 
 {: .caption}
 DBSCAN, with $$\varepsilon = 0.25$$ and $$m = 6$$, on 100 points of two half-moons and 10 points of uniform noise. The dashed circle of radius $$\varepsilon$$ around a core point holds 7 points. DBSCAN finds the two moons as two clusters, blue and green, with dark core points and light border points, without being given their number, and labels 5 isolated points as noise (gray).
+
+The following function implements DBSCAN, and labels the noise $$-1$$. It grows each cluster from a core point that is not yet in a cluster, with a stack of the core points whose neighbors remain to be visited:
+
+```python
+def dbscan(X, eps, m):
+    D = np.sqrt(((X[:, None] - X) ** 2).sum(2))
+    neighbors = [np.flatnonzero(d <= eps) for d in D]  # within eps, itself included
+    core = [len(nb) >= m for nb in neighbors]
+    labels, c = np.full(len(X), -1), 0  # -1 marks the noise, c is the next cluster
+    for p in range(len(X)):
+        if core[p] and labels[p] == -1:  # a new cluster, grown from the core point p
+            labels[p], stack = c, [p]
+            while stack:
+                for q in neighbors[stack.pop()]:
+                    if labels[q] == -1:
+                        labels[q] = c
+                        if core[q]:  # only core points extend the cluster
+                            stack.append(q)
+            c += 1
+    return labels
+```
 
 ### Spectral Clustering
 
@@ -153,6 +225,22 @@ This is a relaxation of the NP-hard problem of finding the *ratio cut* (with $$L
 
 {: .caption}
 Two concentric rings, clustered by k-means (center), with the Voronoi cells of its two means, and by spectral clustering on the graph of the 8 nearest neighbors of each point (right). K-means cuts both rings in halves, while spectral clustering separates the rings.
+
+The following function implements spectral clustering with the normalized Laplacian $$L_{sym}$$, where an edge joins each point to its nearest neighbors, and clusters the rows of $$H$$ with the `kmeans` function of the k-means section:
+
+```python
+def spectral_clustering(X, k, neighbors=8, sigma=1.0):
+    D2 = ((X[:, None] - X) ** 2).sum(2)
+    W = np.exp(-D2 / (2 * sigma**2))
+    far = D2 > np.sort(D2, 1)[:, [neighbors]]  # not among the nearest neighbors
+    W[far & far.T] = 0  # an edge joins each point to its nearest neighbors
+    np.fill_diagonal(W, 0)
+    d = W.sum(1)  # the degrees
+    L = np.eye(len(X)) - W / np.sqrt(np.outer(d, d))  # L_sym = I - D^-1/2 W D^-1/2
+    H = np.linalg.eigh(L)[1][:, :k]  # the eigenvectors of the k smallest eigenvalues
+    H /= np.linalg.norm(H, axis=1, keepdims=True)  # rows of unit length
+    return kmeans(H, k)[1]
+```
 
 For more details, [A Tutorial on Spectral Clustering](https://arxiv.org/abs/0711.0189) (von Luxburg, 2007) derives these algorithms from graph cuts, random walks and perturbation theory, and discusses which graph Laplacian to use.
 
@@ -193,17 +281,32 @@ Each iteration never decreases the log-likelihood, and the algorithm converges t
 {: .caption}
 Three elongated clusters, clustered by k-means (center), with the Voronoi cells of its three means, and by a GMM with full covariance matrices (right), with the contour at two standard deviations of each Gaussian. The Voronoi cells of k-means cut across the clusters, while the ellipses of the GMM follow them. Inspired by: [Demonstration of k-means assumptions](https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_assumptions.html)
 
+The following function fits a GMM with EM, starting from the means of k-means, and returns the weights $$\pi_k$$, the means $$\mu_k$$, the covariance matrices $$\Sigma_k$$ and the responsibilities $$\gamma_{ik}$$. `np.einsum` computes the term $$(x_i - \mu_k)^T \Sigma_k^{-1} (x_i - \mu_k)$$ of the Gaussians, and the covariance matrices of the M-step, for all points and components at once. The cluster of each point is the component of largest responsibility, `gamma.argmax(1)`:
+
+```python
+def gmm(X, K, steps=100, seed=0):
+    n, d = X.shape
+    mu = kmeans(X, K, seed=seed)[0]  # the means of k-means as the initial means
+    Sigma = np.array([np.diag(X.var(0))] * K)  # the variances of the data
+    pi = np.full(K, 1 / K)
+    for _ in range(steps):
+        diff = X[:, None] - mu  # x_i - mu_k, for each point i and component k
+        # pi_k N(x_i | mu_k, Sigma_k), with the squared Mahalanobis distances
+        maha = np.einsum('ikd,kde,ike->ik', diff, np.linalg.inv(Sigma), diff)
+        p = pi * np.exp(-maha / 2) / np.sqrt(np.linalg.det(2 * np.pi * Sigma))
+        gamma = p / p.sum(1, keepdims=True)  # E-step: the responsibilities
+        nk = gamma.sum(0)  # M-step
+        mu = gamma.T @ X / nk[:, None]
+        diff = X[:, None] - mu
+        Sigma = np.einsum('ik,ikd,ike->kde', gamma, diff, diff) / nk[:, None, None]
+        Sigma += 1e-6 * np.eye(d)  # keeps each covariance matrix invertible
+        pi = nk / n
+    return pi, mu, Sigma, gamma
+```
+
 ### Self-Organizing Maps and Kohonen Maps
 
-A **self-organizing map** (SOM) is an unsupervised artificial neural network, typically a 2D grid of neurons, that represents a discretization of the input space (or of the training set). It was introduced by Teuvo Kohonen in the paper [Self-organized formation of topologically correct feature maps](https://link.springer.com/article/10.1007/BF00337288) (1982), hence its other name, the Kohonen map. Its main purpose is to represent the training data by neurons, each standing for a localized region of similar inputs, with neighboring neurons of the grid representing nearby regions of the input space. Like k-means, a SOM is a prototype method, whose prototypes are the weights of its neurons; unlike k-means, its prototypes are ordered on a grid. The following picture illustrates Kohonen's model (top) and one step of its learning algorithm (bottom):
-
-{: .picture}
-<img width="46%" height="46%" src="{{ site.assets }}/unsupervised-learning/kohonen.svg"><br>
-<img width="37%" height="37%" src="{{ site.assets }}/unsupervised-learning/kohonen2.svg">
-
-{: .caption}
-**Top:** the neuron layer of Kohonen's model. The input fibers running horizontally carry the input signal (the stimulus) and excite the neurons of the layer through synaptic connections. Lateral interactions between the neurons confine the response to a spatially bounded local excitation zone. The layer acts as a topographic feature map if the position $$s$$ of the excitation zone varies continuously with the stimulus features of interest. **Bottom:** the adaptation step. The input $$v$$ in the input space $$V$$ selects the winner neuron $$s$$ in the lattice of neurons $$A$$ ($$\phi$$ is the map from $$V$$ to $$A$$). The winner and its neighbors shift their weight vectors towards $$v$$, by an amount that decreases with the distance from $$s$$, shown by the sizes and gray levels of the neurons. Only the shift $$\Delta w_s$$ of the winner's weights $$w_s$$ is drawn. In the algorithm below, $$v$$ is the input $$x_u$$ and $$s$$ is the winner $$j^*$$. Adapted from: [Neural Computation and Self-Organizing Maps, H. Ritter, T. Martinetz and K. Schulten, 1992, Figures 4.1 and 4.2](https://tcbg.illinois.edu/Services/Class/PHYS498TBP/spring2002/neuro_4.pdf)
-
+A **self-organizing map** (SOM) is an unsupervised artificial neural network, typically a 2D grid of neurons, that represents a discretization of the input space (or of the training set). It was introduced by Teuvo Kohonen in the paper [Self-organized formation of topologically correct feature maps](https://link.springer.com/article/10.1007/BF00337288) (1982), hence its other name, the Kohonen map. Its main purpose is to represent the training data by neurons, each standing for a localized region of similar inputs, with neighboring neurons of the grid representing nearby regions of the input space. Like k-means, a SOM is a prototype method, whose prototypes are the weights of its neurons; unlike k-means, its prototypes are ordered on a grid.
 
 The algorithm is the following:
 - the weights of the neurons are initialized at random in the input space;
@@ -223,23 +326,37 @@ $$
 where $$h(j, j^*)$$ is the *neighborhood function*, which decreases with the distance between neurons $$j$$ and $$j^*$$ in the grid (e.g. a Gaussian). If $$h$$ is $$1$$ for the winner and $$0$$ for all other neurons, the update above is the online update rule of k-means. It is also common to decrease $$\eta$$ and the width of $$h$$ as the iterations progress;
 - repeat until stabilization: either when reaching the maximum number of iterations, or when the change in weights falls below a given threshold.
 
-Very nice videos demonstrating an iterative execution of the Kohonen map can be found [in this link](https://www.youtube.com/watch?v=IixbH1gDhsg) and [this link](https://www.youtube.com/watch?v=zeOtwCAI3Fs). The following picture illustrates such an execution on 2D inputs:
+The following function implements the algorithm on a grid of `size` x `size` neurons, with a constant $$\eta$$ and a Gaussian $$h$$ of constant width, and returns the weight vector of each neuron:
+
+```python
+def som(X, size=6, steps=10000, eta=0.2, width=1.0, seed=0):
+    rng = np.random.default_rng(seed)
+    grid = np.indices((size, size)).reshape(2, -1).T  # the position of each neuron
+    W = rng.uniform(X.min(), X.max(), (size * size, X.shape[1]))  # random weights
+    for x in X[rng.permutation(np.arange(steps) % len(X))]:  # in a random order
+        winner = ((W - x) ** 2).sum(1).argmin()  # the best matching unit j*
+        h = np.exp(-((grid - grid[winner]) ** 2).sum(1) / (2 * width**2))  # h(j, j*)
+        W += eta * h[:, None] * (x - W)
+    return W
+```
+
+Very nice videos demonstrating an iterative execution of the Kohonen map can be found [in this link](https://www.youtube.com/watch?v=IixbH1gDhsg) and [this link](https://www.youtube.com/watch?v=zeOtwCAI3Fs). The following picture illustrates such an execution on 2D inputs, with the first update of the weights in its first panel:
 
 {: .picture}
 <img width="91.3%" height="91.3%" src="{{ site.assets }}/unsupervised-learning/som_training.svg">
 
 {: .caption}
-A SOM of 6x6 neurons, trained on 2D inputs drawn uniformly from a square (blue). Each circle is the weight vector of a neuron, and the lines join the neurons that are neighbors in the grid. The weights start in a small random cloud, where the grid is tangled. The first iterations order the grid, and the following ones spread it over the square, as $$\eta$$ decreases from 0.5 to 0.01 and the width of the Gaussian $$h$$ from 3 to 0.5 neurons.
+A SOM of 3x12 neurons, trained on 2D inputs drawn uniformly from the letter C (blue). Each circle is the weight vector of a neuron, and the lines join the neurons that are neighbors in the grid. The weights start at random, and the first panel draws only the first update: the input $$x_u$$ (red) selects the winner $$j^*$$ (black), the closest neuron, and the winner and its neighbors in the grid (grey) move towards $$x_u$$ (red arrows), even the neighbors that are far from it. The winner moves half of the way, with $$\eta = 0.5$$, and its neighbors 44% of theirs, with $$h(j, j^*) = 0.88$$; the other neurons move less, and their arrows are left out. The following iterations order the grid into a strip, which then spreads until it covers the letter, as $$\eta$$ decreases from 0.5 to 0.01 and the width of the Gaussian $$h$$ from 2 to 0.5 neurons.
 
 A good example is the clustering of handwritten digits from the [MNIST database](http://yann.lecun.com/exdb/mnist/).
 Each digit is a 28x28 (=784) pixel array, represented as a data point in a 784-dimensional space. Each pixel is monochromatic, so each dimension takes values between 0 and 255.
 
 The task is, given a database of 5,000 handwritten digits, to find the 6x6 SOM that best represents 4 of the digits from 0 to 9. This example studies how the neighborhood width and the learning rate affect the performance of the Kohonen map.
 
-The input dataset and the `python` implementation are available in <a href="{{ site.assets }}/unsupervised-learning/kohonen_mnist.zip">kohonen_mnist.zip</a>. The goal is to fine-tune the neighborhood width and the learning rate $$\eta$$. A good solution gives a visual perception of the digits being identified (in this case 0, 1, 2 and 3), as the weights of each neuron form a 28x28 image. Three possible outputs are displayed in the picture below:
-- left: a nicely tuned SOM, where each quadrant of neurons represents a digit;
-- center: a SOM with a high learning rate. The large step size makes neurons *step* over long distances during training, leading to a mixing of digits on nearby neurons, and possibly a *tangled* SOM;
-- right: a SOM with a large neighborhood width. The large width causes all neurons to behave almost synchronously, due to the very wide range of the update function. This leads to very similar outputs per neuron.
+The goal is to fine-tune the neighborhood width and the learning rate $$\eta$$ of the `som` function above, with the 2,000 images of the digits 0 to 3 in the rows of `X`. A good solution gives a visual perception of the digits being identified (in this case 0, 1, 2 and 3), as the weights of each neuron form a 28x28 image. Three possible outputs are displayed in the picture below:
+- left: a nicely tuned SOM, `som(X)`, where each quadrant of neurons represents a digit;
+- center: a SOM with a high learning rate, `som(X, eta=0.9)`. The large step size makes neurons *step* over long distances during training, leading to a mixing of digits on nearby neurons, and possibly a *tangled* SOM;
+- right: a SOM with a large neighborhood width, `som(X, width=4)`. The large width causes all neurons to behave almost synchronously, due to the very wide range of the update function. This leads to very similar outputs per neuron.
 
 {: .picture}
 <img width="86.5%" height="86.5%" src="{{ site.assets }}/unsupervised-learning/som_mnist.svg">
@@ -247,7 +364,7 @@ The input dataset and the `python` implementation are available in <a href="{{ s
 {: .caption}
 SOMs of 6x6 neurons, trained for 10,000 iterations on the digits 0 to 3 of the example, with each neuron drawn as the 28x28 image of its weights. The tuned SOM has $$\eta = 0.2$$ and a Gaussian $$h$$ of width 1, the second SOM $$\eta = 0.9$$, and the third a width of 4.
 
-More examples can be found in the [Wikipedia entry for self-organizing maps](https://en.wikipedia.org/wiki/Self-organizing_map#Examples).
+More examples can be found in the [Wikipedia entry for self-organizing maps](https://en.wikipedia.org/wiki/Self-organizing_map#Examples), and the theory of Kohonen's model in chapter 4 of [Neural Computation and Self-Organizing Maps](https://tcbg.illinois.edu/Services/Class/PHYS498TBP/spring2002/neuro_4.pdf), by H. Ritter, T. Martinetz and K. Schulten (1992).
 
 ### Comparison of the Clustering Methods
 
@@ -309,6 +426,21 @@ When $$F$$ keeps only $$k$$ eigenvectors, $$F D_n$$ is the projection of the dat
 
 In practice, PCA is usually computed with the [singular value decomposition](https://en.wikipedia.org/wiki/Singular_value_decomposition) of the centered data instead: if $$D_c^T = U \Sigma V^T$$, the columns of $$V$$ are the eigenvectors of $$C$$, and its eigenvalues are $$\lambda_i = \sigma_i^2 / (n-1)$$. This avoids computing $$C$$, whose [condition number](https://en.wikipedia.org/wiki/Condition_number) is the square of that of $$D_c$$, and is numerically more stable.
 
+In NumPy, the SVD gives PCA in a few lines. The following function returns the data transformed to its first $$k$$ principal components, one point per row, and the eigenvalues of $$C$$. On 10,000 points of the Gaussian of the picture, the first principal component explains 90% of the variance:
+
+```python
+def pca(X, k):
+    Xc = X - X.mean(0)  # the centered data, one point per row
+    _, s, Vt = np.linalg.svd(Xc, full_matrices=False)  # rows of Vt: eigenvectors of C
+    return Xc @ Vt[:k].T, s**2 / (len(X) - 1)  # the transformed data, the eigenvalues
+
+rng = np.random.default_rng(0)
+R = np.array([[0.866, -0.5], [0.5, 0.866]])  # rotates (1, 0) to (0.866, 0.5)
+X = rng.normal(size=(10000, 2)) * [3, 1] @ R.T + [1, 3]
+Y, lam = pca(X, 1)
+print((lam / lam.sum()).round(2))  # [0.9 0.1]
+```
+
 PCA only finds linear structure. **[Kernel PCA](https://en.wikipedia.org/wiki/Kernel_principal_component_analysis)** ([Schölkopf et al., 1998](https://doi.org/10.1162/089976698300017467)) applies PCA in a high-dimensional feature space $$\phi(x)$$, where non-linear structure of the input space may become linear. The [*kernel trick*](https://en.wikipedia.org/wiki/Kernel_method) avoids computing $$\phi$$, as the method only needs the dot products $$k(x_i, x_j) = \phi(x_i)^T \phi(x_j)$$, given by a kernel function such as the Gaussian kernel $$k(x_i, x_j) = \exp \left( - \| x_i - x_j \|^2 / 2 \sigma^2 \right)$$ or the polynomial kernel $$k(x_i, x_j) = (x_i^T x_j + c)^d$$. The algorithm is:
 - compute the $$n \times n$$ kernel matrix $$K$$, with $$K_{ij} = k(x_i, x_j)$$;
 - center the data in the feature space: $$\tilde{K} = K - 1_n K - K 1_n + 1_n K 1_n$$, where $$1_n$$ is the $$n \times n$$ matrix with all entries equal to $$1/n$$;
@@ -322,6 +454,18 @@ The following picture compares PCA and kernel PCA on the two rings of the spectr
 
 {: .caption}
 Two concentric rings of 50 and 25 points, and their first two principal components (horizontal and vertical axes) computed by PCA and by kernel PCA with a Gaussian kernel of $$\sigma = 0.25$$. PCA only rotates the data, and no direction separates the rings. Kernel PCA separates them along its first principal component.
+
+The following function implements kernel PCA with the Gaussian kernel, and returns the first $$k$$ principal components of each point. With $$\sigma = 0.25$$, its first component separates the two rings of the picture:
+
+```python
+def kernel_pca(X, k, sigma):
+    K = np.exp(-((X[:, None] - X) ** 2).sum(2) / (2 * sigma**2))  # the Gaussian kernel
+    J = np.full(K.shape, 1 / len(X))  # the matrix 1_n
+    Kc = K - J @ K - K @ J + J @ K @ J  # centered in the feature space
+    lam, A = np.linalg.eigh(Kc)  # in the order of increasing eigenvalues
+    lam, A = lam[::-1][:k], A[:, ::-1][:, :k]  # the k largest ones
+    return Kc @ (A / np.sqrt(lam))  # scaled so that lam * alpha^T alpha = 1
+```
 
 The eigendecomposition of an $$n \times n$$ matrix limits kernel PCA to datasets of moderate size, and mapping a point back to the input space (the *pre-image* problem) is only approximate. For the sake of comparison, the cost of PCA grows only linearly with the number of data points, as the size of its covariance matrix depends only on the number of features.
 
@@ -357,6 +501,34 @@ The following picture illustrates the iterations of t-SNE on the handwritten dig
 {: .caption}
 t-SNE of 100 images of each digit 0 to 3 (784 dimensions), with a perplexity of 30, colored by their digit, which t-SNE does not see. The embedding starts as a small random cloud. As in the paper, the first 50 iterations multiply the $$p_{ij}$$ by 4 (*early exaggeration*), which pulls the points of each digit together, and the following iterations spread the clusters apart. Each panel has its own scale.
 
+The following function implements t-SNE. First, it finds each $$\sigma_i$$ by bisection, so that $$p_{\cdot \mid i}$$ has the given perplexity. Then, it runs gradient descent from a small random cloud, with the early exaggeration of the picture, and computes the gradient of all points at once, with $$M_{ij} = (p_{ij} - q_{ij}) (1 + \| y_i - y_j \|^2)^{-1}$$:
+
+```python
+def tsne(X, perplexity=30, steps=1000, eta=100, seed=0):
+    n = len(X)
+    D = ((X[:, None] - X) ** 2).sum(2)
+    P = np.zeros((n, n))
+    for i in range(n):  # sigma_i by bisection on log(beta), with beta = 1 / 2 sigma_i^2
+        d, lo, hi = np.delete(D[i], i), -50.0, 50.0
+        for _ in range(60):
+            b = (lo + hi) / 2
+            p = np.exp(-np.exp(b) * (d - d.min()))  # d.min() avoids an underflow
+            p /= p.sum()
+            H = -(p * np.log2(p + 1e-300)).sum()  # the perplexity is 2^H
+            lo, hi = (b, hi) if 2**H > perplexity else (lo, b)
+        P[i, np.arange(n) != i] = p
+    P = (P + P.T) / (2 * n)
+    Y = np.random.default_rng(seed).normal(0, 1e-2, (n, 2))  # a small random cloud
+    for t in range(steps):
+        num = 1 / (1 + ((Y[:, None] - Y) ** 2).sum(2))  # (1 + |y_i - y_j|^2)^-1
+        np.fill_diagonal(num, 0)
+        Q = num / num.sum()
+        M = ((4 if t < 50 else 1) * P - Q) * num  # early exaggeration of P
+        G = 4 * (M.sum(1)[:, None] * Y - M @ Y)  # dKL/dy_i = 4 sum_j M_ij (y_i - y_j)
+        Y -= eta * G
+    return Y
+```
+
 **[UMAP](https://umap-learn.readthedocs.io/)** (Uniform Manifold Approximation and Projection, [McInnes et al., 2018](https://arxiv.org/abs/1802.03426)) follows the same idea with a different construction. It builds a weighted graph of the $$k$$ nearest neighbors of each point, with weights:
 
 $$
@@ -370,6 +542,52 @@ $$
 $$
 
 with stochastic gradient descent and negative sampling. The second term pushes apart the points that are not neighbors, and UMAP tends to preserve more of the global structure than t-SNE, although mostly due to its spectral initialization ([Kobak and Linderman, 2021](https://www.nature.com/articles/s41587-020-00809-z)). It is also faster, scales to millions of points and can embed new points, so it is used as a general dimensionality reduction method too, and not only for visualization.
+
+The following function implements UMAP. First, it finds each $$\sigma_i$$ by bisection, as t-SNE does for the perplexity, and builds the symmetric weights $$v_{ij}$$. Then, it fits $$a$$ and $$b$$ with SciPy's `curve_fit`, so that $$w_{ij}$$ is close to 1 up to the distance `min_dist` and decays exponentially beyond it. It starts from the spectral embedding of the graph, i.e. the eigenvectors of the second and third smallest eigenvalues of the Laplacian $$L_{sym}$$ of spectral clustering. At each epoch, it samples each edge with probability $$v_{ij}$$, moves the first point of each sampled edge towards the second one, which decreases the first term of the cross-entropy, and moves it away from a few random points, which decreases the second term (negative sampling):
+
+```python
+from scipy.optimize import curve_fit
+
+def umap(X, k=15, steps=500, min_dist=0.1, negatives=5, seed=0):
+    n = len(X)
+    D = np.sqrt(((X[:, None] - X) ** 2).sum(2))
+    nn = np.argsort(D, 1)[:, 1:k + 1]  # the k nearest neighbors of each point
+    d = np.take_along_axis(D, nn, 1)
+    rho, lo, hi = d[:, :1], np.zeros((n, 1)), np.full((n, 1), D.max())
+    for _ in range(60):  # sigma_i by bisection, so that sum_j v_j|i = log2 k
+        sigma = (lo + hi) / 2
+        big = np.exp(-(d - rho) / sigma).sum(1, keepdims=True) > np.log2(k)
+        lo, hi = np.where(big, lo, sigma), np.where(big, sigma, hi)
+    V = np.zeros((n, n))
+    np.put_along_axis(V, nn, np.exp(-(d - rho) / sigma), 1)  # v_j|i
+    V = V + V.T - V * V.T  # the symmetric weights v_ij
+    x = np.linspace(0, 3, 300)  # w fitted to 1 up to min_dist, and to exp(min_dist - x)
+    w = lambda x, a, b: 1 / (1 + a * x ** (2 * b))
+    (a, b), _ = curve_fit(w, x, np.where(x < min_dist, 1, np.exp(min_dist - x)))
+    deg = V.sum(1)
+    L = np.eye(n) - V / np.sqrt(np.outer(deg, deg))  # the Laplacian L_sym of the graph
+    Y = np.linalg.eigh(L)[1][:, 1:3]  # spectral initialization
+    Y *= 10 / np.abs(Y).max()  # coordinates within [-10, 10]
+    rng = np.random.default_rng(seed)
+    i, j = np.nonzero(V)  # the edges of the graph, in both directions
+    for t in range(steps):
+        lr = 1 - t / steps  # the learning rate decreases linearly to 0
+        e = rng.random(len(i)) < V[i, j]  # each edge is sampled with probability v_ij
+        p, q = i[e], j[e]
+        diff = Y[p] - Y[q]
+        d2 = (diff**2).sum(1, keepdims=True) + 1e-9  # avoids 0 ** (b - 1)
+        g = -2 * a * b * d2 ** (b - 1) / (1 + a * d2**b)  # attraction, from log w_ij
+        np.add.at(Y, p, lr * np.clip(g * diff, -4, 4))  # steps clipped to [-4, 4]
+        p = np.repeat(p, negatives)  # negative sampling: random points q
+        q = rng.integers(n, size=len(p))
+        diff = Y[p] - Y[q]
+        d2 = (diff**2).sum(1, keepdims=True)
+        g = 2 * b / ((1e-3 + d2) * (1 + a * d2**b))  # repulsion, from log(1 - w_ij)
+        np.add.at(Y, p, lr * np.clip(g * diff, -4, 4))
+    return Y
+```
+
+For the sake of comparison, on the 400 digits of the t-SNE picture, the majority digit of the 5 nearest neighbors of a point (the KNN classifier with $$k = 5$$) is its own digit for 94% of the points in the 2D embedding of the `umap` function above, and for 96% in that of the `tsne` function, at least as many as in the 784 dimensions of the images (93%), but only for 86% in the first two principal components of PCA. In practice, t-SNE and UMAP are the methods to visualize clusters, as they keep the neighborhoods of the points, while PCA is the method to compress the data or to prepare it for other methods, as it is fast, linear and keeps the large distances.
 
 ### Independent Component Analysis (ICA)
 
@@ -452,7 +670,45 @@ Or, because the algorithm converges when $$w \propto \Delta w$$, and $$w$$ and $
 
 Unlike gradient ascent, FastICA has no learning rate to tune, and its convergence is cubic, so it is usually much faster. The other components are found in the same way, keeping each new $$w$$ orthogonal to the previous ones, as the rows of $$U$$ are orthonormal.
 
+The following function whitens the data as in PCA, and finds the rows of $$U$$ one by one with the fixed-point iteration of FastICA. On 10,000 samples of the uniform sources and the matrix $$A$$ of the picture, each recovered source has a correlation of 1 or −1 with one of the sources, as their signs are not recovered:
+
+```python
+def fast_ica(X, steps=100, seed=0):
+    Xc = X - X.mean(0)  # one sample x(t) per row
+    lam, F = np.linalg.eigh(np.cov(Xc, rowvar=False))
+    Z = Xc @ F / np.sqrt(lam)  # the whitened signals z = V x, with V = Lambda^-1/2 F^T
+    rng = np.random.default_rng(seed)
+    U = np.zeros((Z.shape[1], Z.shape[1]))
+    for i in range(len(U)):  # each row w of U
+        w = rng.normal(size=len(U))
+        for _ in range(steps):
+            w = Z.T @ (Z @ w) ** 3 / len(Z) - 3 * w  # w = E[z (w^T z)^3] - 3w
+            w -= U[:i].T @ (U[:i] @ w)  # orthogonal to the rows found before
+            w /= np.linalg.norm(w)
+        U[i] = w
+    return Z @ U.T  # the sources s = U z, up to their order and signs
+
+rng = np.random.default_rng(0)
+s = rng.uniform(-3**0.5, 3**0.5, (10000, 2))  # two uniform sources of unit variance
+x = s @ np.array([[1, 0.6], [0.4, 1]]).T  # x = A s, one sample per row
+print(np.corrcoef(fast_ica(x).T, s.T)[:2, 2:].round(2))  # ±1 for the matching sources
+```
+
 As a final remark, *kurtosis is very sensitive to outliers, because it is a fourth-order function*. A more robust alternative is the [negentropy](https://en.wikipedia.org/wiki/Negentropy). It is omitted here for brevity, but the details are in the [original lecture notes](https://www.slideshare.net/yokotatsuya/independent-component-analysis-11359849).
+
+### Comparison of the Dimensionality Reduction Methods
+
+The following table sums up the dimensionality reduction methods of this section:
+
+| Method | Keeps | Linear | Cost | New points | When to use it |
+|---|---|---|---|---|---|
+| PCA | The directions of largest variance | Yes | An SVD of the data, linear in $$n$$ | Projected on the components | Compression, denoising, and a first step before other methods |
+| Kernel PCA | The directions of largest variance in the feature space of a kernel | No | An eigendecomposition of the $$n \times n$$ kernel matrix | With their kernel values to the training points | Non-linear structure in small to medium datasets |
+| t-SNE | The neighborhoods of the points | No | $$O(n^2)$$ per iteration, or $$O(n \log n)$$ with Barnes-Hut | Not in its standard form | Visualization of clusters in 2D or 3D |
+| UMAP | The neighborhoods of the points, and more of the global structure | No | Close to linear in $$n$$, with an approximate search of the nearest neighbors | Yes | Visualization, and non-linear reduction of large datasets |
+| ICA | The directions of independent, non-Gaussian signals | Yes | Whitening as in PCA, then a fixed-point iteration per component | Multiplied by $$B$$ | Blind source separation, e.g. the cocktail party problem |
+
+These methods are often combined: t-SNE and UMAP are usually run on the first 30 to 50 principal components of the data, which removes noise and makes the distances cheaper to compute.
 
 To find more about the topic, the book [Pattern Recognition and Machine Learning](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/) by Christopher Bishop covers k-means, Gaussian mixtures and the EM algorithm (chapter 9), and PCA, kernel PCA and ICA (chapter 12).
 
@@ -495,11 +751,52 @@ As an example, take five transactions: {bread, milk}, {bread, butter, eggs}, {mi
 {: .caption}
 The candidate itemsets of each size $$k$$ of the example, with a minimum support of 3 transactions. The frequent itemsets of size $$k - 1$$ form the candidates of size $$k$$, and the candidates with an infrequent subset are pruned without a scan of the database.
 
+In NumPy, the transactions of the example form a boolean matrix, with one row per transaction and one column per item, and the support of an itemset is the number of rows that hold all its items. The following function implements Apriori on this matrix, and returns the support of each frequent itemset:
+
+```python
+items = ['bread', 'milk', 'butter', 'eggs', 'cola']
+T = np.array([[1, 1, 0, 0, 0],  # one transaction per row, one item per column
+              [1, 0, 1, 1, 0],
+              [0, 1, 1, 1, 1],
+              [1, 1, 1, 1, 0],
+              [1, 1, 1, 0, 1]], dtype=bool)
+
+def apriori(T, min_support):
+    L = {frozenset([i]): s for i, s in enumerate(T.sum(0)) if s >= min_support}
+    frequent = dict(L)
+    while L:
+        C = {a | b for a in L for b in L if len(a | b) == len(a) + 1}  # join
+        C = [X for X in C if all(X - {i} in L for i in X)]  # prune
+        L = {X: T[:, list(X)].all(1).sum() for X in C}  # scan: the support of X
+        L = {X: s for X, s in L.items() if s >= min_support}
+        frequent.update(L)
+    return frequent  # the support of each frequent itemset
+
+for X, s in apriori(T, 3).items():
+    print([items[i] for i in sorted(X)], s)  # the 4 frequent items, then the 4 pairs
+```
+
 Apriori scans the database once per itemset size, and the number of candidates grows very large when the minimum support is low: $$10^4$$ frequent items give about $$5 \times 10^7$$ candidate pairs.
 
 ### ECLAT and FP-growth
 
 **ECLAT** (Equivalence Class Transformation, [Zaki, 2000](https://doi.org/10.1109/69.846291)) changes the layout of the database. Instead of a list of items per transaction (the *horizontal* layout), it stores, for each item, the set of the transactions that hold it, its *tidset* (the *vertical* layout). The support of an itemset is then the size of the intersection of the tidsets of its items, with no scan of the database. In the example above, the tidsets of butter and eggs are {2, 3, 4, 5} and {2, 3, 4}, and their intersection {2, 3, 4} gives the support 3 of {butter, eggs}. ECLAT searches the itemsets depth-first, extending each itemset with one item at a time and intersecting their tidsets, which is fast as long as the tidsets fit in memory.
+
+In the boolean matrix of the Apriori code, the tidset of an item is its column, and the intersection of two tidsets is the logical AND of their columns. The following function implements ECLAT, which extends each itemset with the items that come after its last one, and finds the same frequent itemsets as Apriori:
+
+```python
+def eclat(T, min_support, prefix=(), tids=None):
+    tids = np.ones(len(T), bool) if tids is None else tids  # the tidset of the prefix
+    frequent = {}
+    for i in range(prefix[-1] + 1 if prefix else 0, T.shape[1]):  # each later item
+        t = tids & T[:, i]  # the intersection of the two tidsets
+        if t.sum() >= min_support:
+            frequent[frozenset(prefix + (i,))] = t.sum()
+            frequent.update(eclat(T, min_support, prefix + (i,), t))  # depth-first
+    return frequent
+
+print(eclat(T, 3) == apriori(T, 3))  # True
+```
 
 **FP-growth** (Frequent Pattern growth, [Han, Pei and Yin, 2000](https://doi.org/10.1145/342009.335372)) generates no candidates at all. It scans the database twice: first, to count the support of each item; then, to insert each transaction, with its frequent items sorted by decreasing support, into a prefix tree, the *FP-tree*. Transactions that share a prefix share a path in the tree, and each node counts the transactions that pass through it, so the tree is a compressed copy of the database. Then, for each item, from the least frequent one, FP-growth collects the paths of the tree that end at that item (its *conditional pattern base*), builds a smaller FP-tree from them, and mines it recursively. In the example above, with the order bread, milk, butter, eggs, the 15 frequent items of the five transactions fit in an FP-tree of 9 nodes. The conditional pattern base of eggs is {bread, milk, butter}, {bread, butter} and {milk, butter}, one transaction each, in which only butter reaches the minimum support of 3, which gives the frequent itemset {butter, eggs}. The FP-tree of the example, and the mining of eggs, are illustrated below:
 
@@ -508,6 +805,38 @@ Apriori scans the database once per itemset size, and the number of candidates g
 
 {: .caption}
 **1.** The FP-tree of the example, with the frequent items of each transaction in the order bread, milk, butter, eggs, and the number of transactions that pass through each node. **2.** The conditional pattern base of eggs: the items on the path from the root to each node of eggs, with the count of that node. **3.** The support of each item of these paths together with eggs: only {butter, eggs} reaches the minimum support of 3.
+
+The following function implements FP-growth, with the FP-tree as nested dictionaries. It takes the transactions as pairs of items and counts, the form of the conditional pattern bases that it mines recursively, and finds the same frequent itemsets as Apriori:
+
+```python
+def fp_growth(T, min_support, suffix=()):
+    counts = {}
+    for items, c in T:  # first scan: the support of each item
+        for i in items:
+            counts[i] = counts.get(i, 0) + c
+    order = [i for i in counts if counts[i] >= min_support]  # the frequent items,
+    order.sort(key=lambda i: -counts[i])  # by decreasing support
+    tree = {}  # the FP-tree, as nested {item: [count, children]}
+    for items, c in T:  # second scan: insert the frequent items of each transaction
+        node = tree
+        for i in sorted([i for i in items if i in order], key=order.index):
+            entry = node.setdefault(i, [0, {}])
+            entry[0] += c
+            node = entry[1]
+    frequent = {}
+    for i in reversed(order):  # each item, from the least frequent one
+        frequent[frozenset(suffix + (i,))] = counts[i]
+        base = [(path, c) for path, j, c in nodes(tree) if j == i]  # its pattern base
+        frequent.update(fp_growth(base, min_support, suffix + (i,)))
+    return frequent
+
+def nodes(tree, path=()):  # each node, with the items on its path from the root
+    for i, (c, children) in tree.items():
+        yield path, i, c
+        yield from nodes(children, path + (i,))
+
+print(fp_growth([(np.flatnonzero(t), 1) for t in T], 3) == apriori(T, 3))  # True
+```
 
 In practice, FP-growth is usually faster than Apriori, as it scans the database only twice and generates no candidates, while ECLAT is fast on dense datasets whose tidsets fit in memory. Apriori is the simplest of the three, and suits sparse data with a high minimum support.
 
@@ -533,6 +862,39 @@ where $$m$$ is the number of points used to build each tree, and $$c(m) = 2 H(m-
 
 Each tree is built on a small random subsample of the data, e.g. the 256 points and 100 trees of the paper, and its depth can be limited to about $$\log_2 m$$, as only the short paths matter. Thus, an isolation forest computes no distances, its cost grows linearly with the number of points, and it scales to large and high-dimensional datasets.
 
+The following functions implement an isolation forest. Each tree is stored as nested tuples, with the feature and the value of each split, and each leaf as its number of points:
+
+```python
+def c(n):  # the average path length of an unsuccessful search in a BST of n points
+    if n <= 2:
+        return 1.0 if n == 2 else 0.0
+    return 2 * (np.log(n - 1) + 0.5772) - 2 * (n - 1) / n
+
+def isolation_tree(X, depth, rng):  # a node (f, s, left, right), or the leaf size
+    if depth == 0 or len(X) <= 1:
+        return len(X)
+    f = rng.integers(X.shape[1])  # a random feature, and a random split value
+    s = rng.uniform(X[:, f].min(), X[:, f].max())
+    left = X[:, f] < s
+    return (f, s, isolation_tree(X[left], depth - 1, rng),
+            isolation_tree(X[~left], depth - 1, rng))
+
+def path_length(x, node):  # h(x): the depth of x, plus c(n) in a leaf of n points
+    if not isinstance(node, tuple):
+        return c(node)
+    f, s, left, right = node
+    return 1 + path_length(x, left if x[f] < s else right)
+
+def isolation_forest(X, trees=100, m=256, seed=0):
+    rng = np.random.default_rng(seed)
+    m = min(m, len(X))  # the number of points of each tree
+    depth = int(np.ceil(np.log2(m)))  # the maximum depth of a tree
+    forest = [isolation_tree(X[rng.choice(len(X), m, replace=False)], depth, rng)
+              for _ in range(trees)]
+    h = np.array([[path_length(x, tree) for tree in forest] for x in X])
+    return 2 ** (-h.mean(1) / c(m))  # the anomaly score s(x, m)
+```
+
 ### Local Outlier Factor (LOF)
 
 The **[local outlier factor](https://en.wikipedia.org/wiki/Local_outlier_factor)** (LOF, [Breunig et al., 2000](https://doi.org/10.1145/342009.335388)) compares the density around a point with the density around its neighbors. A point in a sparse region is not an outlier when its neighbors lie in a sparse region too, so LOF finds outliers relative to their local neighborhood, also in data with clusters of different densities, where a single distance threshold fails. With the $$k$$ nearest neighbors $$N_k(p)$$ of a point $$p$$, and the distance $$d_k(o)$$ from a point $$o$$ to its $$k$$-th nearest neighbor:
@@ -550,6 +912,22 @@ $$
 $$
 
 A LOF close to 1 means that the point is as dense as its neighbors, and a LOF much larger than 1 that it is an outlier. As an example, take the points 0, 1, 2, 3 and 10 on a line, with $$k = 2$$. The points 0 to 3 each have an average reachability distance of 1.5, i.e. a local reachability density of 2/3, and a LOF of 1. The point 10 has the neighbors 3 and 2, at the reachability distances 7 and 8, so its density is 1/7.5, and its LOF is (2/3) / (1/7.5) = 5.
+
+The following function computes the LOF of each point, and reproduces the example:
+
+```python
+def lof(X, k):
+    D = np.sqrt(((X[:, None] - X) ** 2).sum(2))
+    np.fill_diagonal(D, np.inf)  # a point is not its own neighbor
+    N = np.argsort(D, 1)[:, :k]  # the k nearest neighbors of each point
+    rows = np.arange(len(X))[:, None]
+    dk = D[rows[:, 0], N[:, -1]]  # the distance to the k-th nearest neighbor
+    reach = np.maximum(dk[N], D[rows, N])  # reach_k(p, o), for each neighbor o of p
+    lrd = 1 / reach.mean(1)
+    return lrd[N].mean(1) / lrd
+
+print(lof(np.array([[0], [1], [2], [3], [10]]), 2))  # [1. 1. 1. 1. 5.]
+```
 
 LOF needs the $$k$$ nearest neighbors of each point, i.e. $$O(n^2)$$ distances with a brute-force search, and its scores are relative, so the threshold that separates the outliers depends on the data. For the sake of comparison, an isolation forest is faster and scales to large datasets, while LOF finds the local outliers next to a dense cluster that a global method may miss. The following picture compares LOF with a global method, the distance to the $$k$$-th nearest neighbor, on two clusters of different densities:
 
@@ -571,6 +949,17 @@ For 1,000 points drawn uniformly in the unit cube, this relative difference has 
 {: .caption}
 Histograms of the distances from 100 random query points to 1,000 points drawn uniformly in the unit cube, each divided by the mean distance from its query point. In 2 dimensions, the distances range from almost 0 to more than twice the mean, and in 1,000 dimensions from 0.91 to 1.08 times the mean.
 
+The medians of the relative difference above are computed by the following code:
+
+```python
+rng = np.random.default_rng(0)
+for d in (2, 10, 100, 1000):
+    X, Q = rng.uniform(size=(1000, d)), rng.uniform(size=(100, d))  # points and queries
+    D = np.array([np.linalg.norm(X - q, axis=1) for q in Q])  # from each query
+    relative = (D.max(1) - D.min(1)) / D.min(1)  # (d_max - d_min) / d_min, per query
+    print(d, np.median(relative).round(2))  # 65.29, 2.59, 0.44 and 0.12
+```
+
 The general proof of the claim is not detailed here, but this [blog post](https://medium.com/towards-data-science/that-cursing-dimensionality-ac317fb0fdcc) covers the curse of dimensionality in more detail. This phenomenon is one more reason to reduce the dimensionality of the data, e.g. with PCA, before clustering it.
 
 The curse of dimensionality also hits the search for nearest neighbors, the core operation of KNN, DBSCAN, LOF, t-SNE and UMAP. In low dimensions, [spatial databases](https://en.wikipedia.org/wiki/Spatial_database) answer such queries with spatial indexes, such as the k-d tree, which splits the space with one axis-aligned plane per node, and the [R-tree](https://en.wikipedia.org/wiki/R-tree) ([Guttman, 1984](https://doi.org/10.1145/602259.602266)), which groups nearby objects in nested bounding rectangles. A query then visits only the few nodes whose region may hold a neighbor, and skips the rest of the data. In high dimensions, this no longer works: when all distances are similar, the ball around a query overlaps almost every node, and [Weber, Schek and Blott (1998)](https://www.vldb.org/conf/1998/p194.pdf) showed that tree indexes then do worse than a sequential scan of the data, from about 10 dimensions.
@@ -582,5 +971,96 @@ An exact search over $$n$$ vectors of $$d$$ dimensions costs $$O(nd)$$ operation
 - **inverted file indexes** (IVF): the vectors are clustered with k-means, and a query scans only the clusters whose centroids are closest to it, i.e. the few Voronoi cells of the k-means section around the query;
 - **product quantization** (PQ, [Jégou, Douze and Schmid, 2011](https://doi.org/10.1109/TPAMI.2010.57)): each vector is split into sub-vectors, and each sub-vector is replaced by the index of its closest centroid in a small k-means codebook. Split into 64 sub-vectors with 256 centroids each, an embedding of 1,024 FP32 values (4 KB) takes 64 bytes, and its distances to a query are computed with table lookups;
 - **graph indexes**, such as [HNSW](https://en.wikipedia.org/wiki/Hierarchical_navigable_small_world) (Hierarchical Navigable Small World, [Malkov and Yashunin, 2016](https://arxiv.org/abs/1603.09320)): each vector is a node connected to its approximate nearest neighbors, in a hierarchy of graphs of increasing density, and a query walks greedily from node to node towards its nearest neighbors, in about $$O(\log n)$$ steps.
+
+The following functions implement IVF, LSH and PQ. IVF clusters the vectors once, with `W, cells = kmeans(X, 100)`, and a query scans only the vectors of its `probes` closest cells. LSH puts each vector into one bucket of each hash table, and a query ranks only the vectors of its own buckets, by their dot products, i.e. their cosine similarities for vectors of unit length. PQ stores one byte per sub-vector, and computes the distances to a query by looking up one table of distances per part:
+
+```python
+def ivf_search(X, W, cells, q, k, probes=5):
+    nearest = np.argsort(((W - q) ** 2).sum(1))[:probes]  # the cells closest to q
+    ids = np.flatnonzero(np.isin(cells, nearest))  # the vectors of these cells
+    return ids[np.argsort(((X[ids] - q) ** 2).sum(1))[:k]]  # the k nearest among them
+
+def lsh_index(X, tables=10, bits=8, seed=0):
+    rng, index = np.random.default_rng(seed), []
+    for _ in range(tables):  # each table hashes the vectors with its own hyperplanes
+        R = rng.normal(size=(X.shape[1], bits))  # random hyperplanes through the origin
+        buckets = {}
+        for i, code in enumerate(X @ R > 0):  # one bit per hyperplane: the side of x
+            buckets.setdefault(code.tobytes(), []).append(i)
+        index.append((R, buckets))
+    return index
+
+def lsh_search(X, index, q, k):
+    ids = {i for R, buckets in index for i in buckets.get((q @ R > 0).tobytes(), [])}
+    ids = np.array(sorted(ids), dtype=int)  # the vectors in the buckets of q
+    return ids[np.argsort(-(X[ids] @ q))[:k]]  # the k most similar, for unit vectors
+
+def pq_index(X, parts=8, centroids=256):
+    books, codes = [], []
+    for P in np.split(X, parts, axis=1):  # the sub-vectors of all vectors, part by part
+        W, labels = kmeans(P, centroids)  # the codebook of the part
+        books.append(W)
+        codes.append(labels)
+    return books, np.array(codes, dtype=np.uint8).T  # one byte per sub-vector
+
+def pq_search(books, codes, q, k):
+    tables = [((W - p) ** 2).sum(1) for W, p in zip(books, np.split(q, len(books)))]
+    dist = sum(table[codes[:, j]] for j, table in enumerate(tables))  # table lookups
+    return np.argsort(dist)[:k]
+```
+
+The following functions implement HNSW. `search_layer` is a best-first search in one layer of the graph: it keeps the `ef` nearest nodes that it has found, and expands the nearest of them that it has not expanded yet, i.e. computes the distances to its neighbors, until all of them are expanded. `select` picks the links of a node with the heuristic of the paper: a candidate is kept only if it is closer to the node than to the candidates kept before it, so that the links point in diverse directions, e.g. towards a nearby cluster, instead of only towards the nearest nodes of the same cluster.
+
+`hnsw_index` inserts the vectors one by one. Each vector gets a random top layer, from an exponential distribution, so that each layer holds about $$1/M$$ of the nodes of the layer below. The new node descends greedily from the top layer of the graph to its own top layer, and from there down to the bottom layer, it is linked to up to $$M$$ of the `ef` nearest nodes found in each layer, and back. Each node keeps up to $$M$$ links per layer, or $$2M$$ in the bottom layer, as in the paper: a node that gets more links keeps those that `select` picks. A query descends greedily through the upper layers, and searches the bottom layer with `ef` candidates:
+
+```python
+def search_layer(X, graph, q, entries, ef):  # the ef nearest nodes to q that it finds
+    found = sorted(zip(((X[entries] - q) ** 2).sum(1), entries))  # (distance, node)
+    seen, done = set(entries), set()
+    while todo := [i for _, i in found if i not in done]:  # the nodes not expanded yet
+        done.add(todo[0])  # expand the nearest of them
+        new = [j for j in graph[todo[0]] if j not in seen]
+        seen.update(new)
+        found = sorted(found + list(zip(((X[new] - q) ** 2).sum(1), new)))[:ef]
+    return [i for _, i in found]
+
+def select(X, i, nodes, M):  # up to M neighbors of node i, in diverse directions
+    dist = lambda a, b: ((X[a] - X[b]) ** 2).sum()
+    out = []
+    for j in sorted(nodes, key=lambda j: dist(i, j)):
+        if len(out) < M and all(dist(i, j) < dist(j, o) for o in out):
+            out.append(j)  # j is closer to i than to the neighbors kept before it
+    return out
+
+def hnsw_index(X, M=8, ef=32, seed=0):
+    rng = np.random.default_rng(seed)
+    graphs, entry = [], 0  # graphs[l][i]: the neighbors of node i in layer l
+    for i in range(len(X)):
+        top = int(rng.exponential() / np.log(M))  # the top layer of node i
+        ep = [entry]
+        for l in range(len(graphs) - 1, -1, -1):  # from the top layer down
+            ep = search_layer(X, graphs[l], X[i], ep, ef if l <= top else 1)
+            if l <= top:  # links to its neighbors, and back
+                graphs[l][i] = select(X, i, ep, M)
+                Mmax = 2 * M if l == 0 else M  # more links in layer 0
+                for j in graphs[l][i]:
+                    graphs[l][j].append(i)
+                    if len(graphs[l][j]) > Mmax:  # more than Mmax links: prune them
+                        graphs[l][j] = select(X, j, graphs[l][j], Mmax)
+        if top >= len(graphs):  # new layers, with node i as their entry point
+            graphs += [{i: []} for _ in range(top + 1 - len(graphs))]
+            entry = i
+    return graphs, entry
+
+def hnsw_search(X, graphs, entry, q, k, ef=32):
+    ep = [entry]
+    for graph in graphs[:0:-1]:  # a greedy descent through the upper layers
+        ep = search_layer(X, graph, q, ep, 1)
+    return search_layer(X, graphs[0], q, ep, max(ef, k))[:k]
+```
+
+For the sake of comparison, on 5,000 vectors of 32 dimensions in 50 clusters, normalized to unit length, and with the default parameters of the functions above, IVF finds all of the 10 nearest neighbors of a query by scanning 5.7% of the vectors, LSH finds 98.8% of them by ranking 6.7%, and HNSW 99.8% by computing the distances to 2.9%. PQ alone finds only 54% of them, as its distances are approximate, but all of them once its 100 best candidates are ranked again by their exact distances, a common way to use it.
+
+Each method has its trade-off. LSH needs no training, but it needs many hash tables, i.e. much memory, for a high recall. IVF and PQ need a k-means training, and PQ stores each vector in a few bytes. HNSW reaches the highest recall for a given query time in benchmarks ([Aumüller, Bernhardsson and Faithfull, 2018](https://arxiv.org/abs/1807.05614)), but its index is slow to build and keeps the full vectors in memory. Thus, HNSW is the usual choice when the vectors fit in memory, and PQ when they do not.
 
 Libraries such as [FAISS](https://en.wikipedia.org/wiki/FAISS) ([Johnson, Douze and Jégou, 2017](https://arxiv.org/abs/1702.08734)) combine these methods, e.g. IVF with PQ, and run them on GPUs. Embeddings escape the curse of dimensionality only in part: the embedding model is trained so that related texts are close, so the embeddings lie near a manifold of much lower intrinsic dimension than their 1,024 coordinates, and the nearest neighbors of a query still stand out from the rest. Thus, the ideas of this post (k-means clustering, Voronoi cells, quantization and the graphs of nearest neighbors) are what make the search over billions of embeddings fast enough for RAG.
