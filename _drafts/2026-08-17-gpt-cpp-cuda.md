@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "GPT from scratch in C++ and CUDA vs. fused PyTorch"
+redirect_from: /gptlite-cpp
 categories: ["Efficient Inference"]
 tags: ["GPT", "LLM", "C++", "CUDA", "LibTorch", "cuBLAS", "Tensor Cores", "NCCL", "kernel fusion", "torch.compile", "benchmarking"]
 ---
@@ -759,7 +760,7 @@ The other big announcement of PyTorch 2.x was `torch.compile`, which "makes PyTo
 The following diagram illustrates the three steps on a function that applies a convolution, a batch normalization and a ReLU:
 
 {: .picture}
-<img width="74.5%" height="74.5%" src="{{ site.assets }}/gptlite-cpp/torch_compile.svg"/>
+<img width="74.5%" height="74.5%" src="{{ site.assets }}/gpt-cpp-cuda/torch_compile.svg"/>
 
 {: .caption}
 A diagram of the three steps of `torch.compile`. Adapted from: [PyTorch 2.0 technology overview](https://pytorch.org/get-started/pytorch-2.0/#technology-overview)

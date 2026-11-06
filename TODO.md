@@ -164,46 +164,6 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
   shapes "(B,S,S) @ (B,S,E)", while `wei` has the shape (S,S) and is broadcast over the batch. Proposed fix: `# dot
   product shape: (S,S) @ (B,S,E) = (B,S,E), with wei broadcast over the batch, i.e. ([4, 8, 2])`.
 
-### GPT in C++: LibTorch vs. PyTorch, TorchScript and torch.compile (2023-06-27-gptlite-cpp.md)
-
-- Post and `assets/gptlite-cpp/gptlite.cpp`, `Head::forward`: the scores are scaled by `std::pow(E,-0.5)`, with
-  E = `n_embd` = 768, instead of `head_size`^-0.5 = 1/8, as in the Python code and the paper. Fix:
-  `wei = wei * std::pow(head_size, -0.5);`.
-- `assets/gptlite-cpp/main.cpp` and `main.py`: `main.cpp` times with `clock()`, the CPU time of all the threads of
-  the process, and `main.py` with `time.time()`, the wall-clock time. Neither waits for the GPU
-  (`torch::cuda::synchronize()`, `torch.cuda.synchronize()`) before it reads the clock. The C++ and Python
-  throughputs thus come from different clocks. E.g. LibTorch is 11% faster than PyTorch 2.1 on the inference of the
-  wide DNN, whose forward pass takes 0.35 s and launches 6 kernels, a gap that the Python overhead cannot explain.
-  Fix: time both with the wall-clock time (`std::chrono::steady_clock` in C++), synchronize the GPU before each
-  reading of the clock, and rerun the benchmark.
-- `assets/gptlite-cpp/main.cpp` and `main.py`, `benchmark_train`: a softmax is applied to the logits before
-  `cross_entropy`, which applies a log-softmax itself, so the model trains on a doubly normalized output. The
-  runtime barely changes, but the training is wrong. Fix: remove the softmax line in both files.
-- `assets/gptlite-cpp/main.py`: it imports `block_size` and `n_embd` from `assets/gptlite/gptlite.py`, which no
-  longer defines them, so it stops with an `ImportError`. The current Python `GPTlite` also takes other constructor
-  arguments, returns logits of shape (B, S, C), and has biases in its projections, so it is not the model of the C++
-  code. `torch_compile_kwargs` sets `mode='default-overhead'`, which is not a mode of `torch.compile`; with
-  `torch_compile_kwargs` set, the script also writes none of the `.pt` files that `./main [jit_folder]` loads. Fix:
-  keep a copy of the GPTlite code of the GPT-lite post in `assets/gptlite-cpp`, so that Python and C++ run the same
-  model, and set `torch_compile_kwargs = None` to export the TorchScript models, or a valid mode such as
-  `dict(mode='reduce-overhead', fullgraph=False)`.
-- Post and `assets/gptlite-cpp`: the post shows `gptlite.h` and `benchmark.h` as header-only files, `GPTlite` built
-  without a device, and benchmark functions without a model name. The repository splits the code into `.h` and
-  `.cpp` files, passes the device to `GPTlite`, runs 10 times more inference iterations than training iterations
-  (`epochs_multiplier = 10`), and uses the Adam betas (0.5, 0.5) in C++ and the defaults (0.9, 0.999) in Python.
-  Fix: show the repository code in the post, and use the same optimizer settings in both languages.
-- `assets/gptlite-cpp/README.md` names the post by an old title, "Building a GPT model in C++, and benchmarking
-  LibTorch, PyTorch, TorchScript and torch.compile", and `gptlite.h` dates the GPT-3 paper to 2021 instead of 2020.
-  Fix: the current title, and 2020.
-- Post and `assets/gptlite-cpp/gptlite.cpp`, `MultiHeadAttention::forward`: the loop runs over the global constant
-  `n_head` (`Tensor outputs[n_head]; for (int i=0; i<n_head; i++)`), not over the `num_heads` heads that the
-  constructor created, so a module built with another number of heads reads past `heads` or ignores some of them. Fix:
-  `std::vector<Tensor> outputs; for (const auto& m : *heads) outputs.push_back(m->as<Head>()->forward(x));`.
-- Post, TorchScript inference snippet: `JitModule model = torch::jit::load("model_jit.pt").to(device);` does not
-  compile, because `torch::jit::Module::to` returns `void` (`torch/csrc/jit/api/module.h`, v2.1.0). `main.cpp` does it
-  right. Fix: `JitModule model = torch::jit::load("model_jit.pt"); model.to(device);`, or
-  `torch::jit::load("model_jit.pt", device)`.
-
 ### Data parallelism, sharding and CPU offloading (2023-08-18-data-parallelism.md)
 
 - `assets/distributed-training/gptlite_ds.py` imports `n_layer`, `n_embd`, `n_head`, `block_size` and `Block` from
@@ -430,7 +390,7 @@ that is not wrong.
 - The arrow check of the restyle (CLAUDE.md, Pictures, section 6) reported 487 findings in 71 draw.io figures before
   the picture round of 2026-10-22, which fixed some of them: 199 arrows with less than 6 px of line before the head
   (48 of them with 4.6 to 5.9 px, as the 6 px heads take more of short arrows, for example in
-  `gptlite-cpp/torch_compile.svg` and the three `distributed-training/imgs/dnn_multiproc*.svg`), 197 lines through
+  `gpt-cpp-cuda/torch_compile.svg` and the three `distributed-training/imgs/dnn_multiproc*.svg`), 197 lines through
   the text box of a label, 55 labels that run into a box, 28 heads on text and 8 overlapping boxes. Most are in dense
   pictures from papers: `matrix-transpose/xcrs_format.svg` (48),
   `dropout-cnns-skip-connections-embeddings/densenet.svg` (42) and
@@ -728,25 +688,6 @@ that is not wrong.
   `learning-from-sequences/transformer.svg`: the one-line boxes (Layer Norm, Linear, Softmax, Add & Norm) are 17.5 px
   tall, so their 14 px labels sit about 2.3 px from the top and bottom outlines, where the arrows attach, and look
   tight. Fix: make the one-line boxes 20 px tall in the whole series, moving every row.
-
-### GPT in C++: LibTorch vs. PyTorch, TorchScript and torch.compile (2023-06-27-gptlite-cpp.md)
-
-- Optional, caption of `gptlite/gptlite.svg` and `benchmark_model.svg`: it starts with "This post details", and calls
-  the left model "the GPT-3 Small model", while it is GPTlite with the dimensions of GPT-3 Small. Fix: "Left: GPTlite
-  with N decoder blocks, with the dimensions of GPT-3 Small. Right: the benchmark DNN with L layers of width W. The
-  left diagram is adapted from Attention is all you need."
-- Optional, caption of `gptlite-cpp/benchmark_gptlite.svg`: "GPTlite Small" is a model name that the posts use
-  nowhere else. Fix: "GPTlite (with the dimensions of GPT-3 Small)".
-- `gptlite-cpp/benchmark_wide.svg` and `benchmark_deep.svg`, and `benchmark.xlsx` they are drawn from: the throughput
-  axes say "samples/sec", but `main.cpp` and `main.py` print epochs per second, and each epoch of the two DNN
-  benchmarks is one batch of 2048 samples, so the values are iterations per second (the text now says iterations/sec;
-  for GPTlite, with a batch of one sequence, both units are the same). Fix: label the DNN throughput axes and the
-  spreadsheet columns "iterations/sec", or multiply the DNN values by 2048 to keep samples/sec, after checking how the
-  spreadsheet values were entered.
-- Optional, `gptlite-cpp/benchmark_wide.svg` and `benchmark_deep.svg`, which the post links but does not show, are
-  the only charts that the chart restyle of 2026-10-22 left out: their bar outlines and grid lines keep the 0.8 px of
-  their earlier export. Fix: restyle them as `gptlite-cpp/benchmark_gptlite.svg` (bar outlines 1.0 px, CLAUDE.md,
-  Pictures, section 6).
 
 ### Data parallelism, sharding and CPU offloading (2023-08-18-data-parallelism.md)
 
@@ -1276,11 +1217,12 @@ Content problems that need the author's decision, such as overlap between posts.
   `torch.compile` were listed on the CPU, and the 5 passes over the attention weights come from the source of
   TorchInductor. Fix: run the commands of the Benchmark section and of `assets/gpt-cpp-cuda/README.md` on a GPU
   node, the compiled model with `TORCH_LOGS=output_code`, then fill in the placeholders and write the discussion.
-- The draft overlaps two posts. Its sections "Change of philosophy", "Kernel fusion" and "torch.compile" come from
-  the post GPT in C++ (2023-06-27-gptlite-cpp.md), whose benchmark it replaces, and its section "Kernel fusion on
-  several GPUs" covers the first section of the kernel fusion post for tensor parallelism. Fix: when the draft is
-  published, the kernel fusion post links to it and keeps only its own points in that section, and the old post
-  links to the new one in its introduction, or is removed; the user decides.
+- The draft's section "Kernel fusion on several GPUs" covers the first section of the kernel fusion post for tensor
+  parallelism. Fix: when the draft is published, the kernel fusion post links to it and keeps only its own points in
+  that section; the user decides.
+- The draft replaces the post GPT in C++: LibTorch vs. PyTorch, TorchScript and torch.compile, and its
+  `redirect_from: /gptlite-cpp` sends the links to that post to the draft, but only once the draft is published:
+  until then, /gptlite-cpp gives a 404. Fix: publish the draft (move it to `_posts`) when its results are in.
 
 ### From Mixture-of-Experts to RAG and Agentic AI Systems (_drafts/2026-10-23-moe-rag-agentic-ai.md)
 
