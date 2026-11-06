@@ -119,4 +119,15 @@ mjx-container.math-scroll {
   color: $grey;
 }
 
+// the titles of a group of class code-tabs--code are names of the code, such as functions, shown as written, in the
+// monospace font of the code blocks
+.code-tabs--code > .tab-bar > button,
+.code-tabs--code:not(.code-tabs--ready) > .tab::before {
+  font-family: monospace;
+  font-size: 14px;
+  font-weight: normal;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
 .post-content summary { cursor: pointer; }

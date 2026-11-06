@@ -74,26 +74,67 @@ Faster CPU implementations also split the loops into tiles that fit the caches o
 
 A GPU runs a function, called a **kernel**, on thousands of threads at once. The threads are grouped in [thread blocks](https://en.wikipedia.org/wiki/Thread_block_(CUDA_programming)), and each block runs on one Streaming Multiprocessor (SM) of the GPU. The threads of a block share a small and fast on-chip **shared memory**, while all threads read and write the large and slower global memory, the [high-bandwidth memory](https://en.wikipedia.org/wiki/High_Bandwidth_Memory) (HBM). A block runs as groups of 32 threads, called **warps**, whose threads execute the same instruction ([SIMT](https://en.wikipedia.org/wiki/Single_instruction,_multiple_threads)), and a warp reads global memory fastest when its 32 threads read consecutive addresses, i.e. when the access is *coalesced*.
 
-The [CUDA C++ Best Practices Guide](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#shared-memory-in-matrix-multiplication-c-ab) illustrates the use of shared memory on the product of $$A$$ of size $$M \times w$$ and $$B$$ of size $$w \times O$$, i.e. for $$N = w$$, where $$w = 32$$ is the size of a warp (`TILE_DIM` in the code). Each thread computes one value of $$C$$, and each thread block of $$32 \times 32$$ threads computes a tile of $$32 \times 32$$ values of $$C$$. The guide presents three kernels, and measures their effective bandwidth on a Tesla V100:
-1. `simpleMultiply` ("Unoptimized matrix multiplication") reads $$A$$ and $$B$$ from global memory. The 32 threads of a warp compute 32 consecutive values of a row of $$C$$, so they read consecutive values of $$B$$, but they all read the same value of $$A$$, which wastes most of each memory transaction. It reaches 119.9 GB/s;
-2. `coalescedMultiply` ("Using shared memory to improve the global memory load efficiency in matrix multiplication") first reads the tile of $$A$$ into shared memory, where each warp reads one row of the tile with coalesced reads. In the loop, shared memory then *broadcasts* each value of $$A$$ to all threads of the warp. The barrier `__syncwarp()` is enough, as each warp reads only the row of the tile that it wrote. It reaches 144.4 GB/s;
-3. `sharedABMultiply` ("Improvement by reading additional data into shared memory") also reads the tile of $$B$$ into shared memory, so that each value of $$B$$ is read once per thread block instead of once per warp. The barrier is now `__syncthreads()`, as a warp reads values of $$B$$ written by the other warps of the block. It reaches 195.5 GB/s.
-
-The guide notes that the gains are not due to a better coalescing, but to fewer redundant transfers from global memory. Here are the first and the last kernels, with [BF16](https://en.wikipedia.org/wiki/Bfloat16_floating-point_format) values (`dt`) and sums in [FP32](https://en.wikipedia.org/wiki/Single-precision_floating-point_format):
+The [CUDA C++ Best Practices Guide](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#shared-memory-in-matrix-multiplication-c-ab) illustrates the use of shared memory on the product of $$A$$ of size $$M \times w$$ and $$B$$ of size $$w \times O$$, i.e. for $$N = w$$, where $$w = 32$$ is the size of a warp (`TILE_DIM` in the code). Each thread computes one value of $$C$$, and each thread block of $$32 \times 32$$ threads computes a tile of $$32 \times 32$$ values of $$C$$, where each warp computes 32 consecutive values of a row. The guide presents three kernels, and measures their effective bandwidth on a Tesla V100. Their code below is adapted from the guide, with [BF16](https://en.wikipedia.org/wiki/Bfloat16_floating-point_format) values (`dt`), sums in [FP32](https://en.wikipedia.org/wiki/Single-precision_floating-point_format), and the indices of the formula above: each thread computes $$C_{ij}$$, where $$i$$ is `row` and $$j$$ is `col`, in a loop over $$k$$. Each kernel is followed by a picture of the values of $$A$$ and $$B$$ that a warp reads in the iteration $$k$$, and of the memory that it reads them from. The kernels share the size of the tiles:
 
 ```cpp
 constexpr int TILE_DIM = 32;   // tiles of TILE_DIM x TILE_DIM values, with one thread per value
+```
 
+<div class="code-tabs code-tabs--code" markdown="1">
+<div class="tab" data-title="simpleMultiply" markdown="1">
+
+`simpleMultiply` ("Unoptimized matrix multiplication") reads $$A$$ and $$B$$ from global memory. The 32 threads of a warp read consecutive values of $$B$$, but they all read the same value of $$A$$, which wastes most of each memory transaction. It reaches 119.9 GB/s:
+
+```cpp
 // C (M x O) = A (M x N) B (N x O) for N = TILE_DIM, with one thread per value of C, that reads A and B from global memory
 __global__ void simpleMultiply(const dt* A, const dt* B, dt* C, int O) {
   int row = blockIdx.y * blockDim.y + threadIdx.y;
   int col = blockIdx.x * blockDim.x + threadIdx.x;
   float sum = 0;
-  for (int i = 0; i < TILE_DIM; i++)
-    sum += (float) A[row*TILE_DIM + i] * (float) B[i*O + col];
+  for (int k = 0; k < TILE_DIM; k++)
+    sum += (float) A[row*TILE_DIM + k] * (float) B[k*O + col];
   C[row*O + col] = sum;
 }
+```
 
+{: .picture}
+<img width="78.5%" height="78.5%" src="{{ site.assets }}/gpt-cpp-cuda/simple_multiply.svg"/>
+
+{: .caption}
+The reads of `simpleMultiply` in the iteration $$k$$: the 32 threads of the warp that computes 32 values of the row $$i$$ of $$C$$ all read $$A_{ik}$$, and each thread reads one value of the row $$k$$ of the tile of $$B$$, both from global memory. Inspired by: [CUDA C++ Best Practices Guide](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#shared-memory-in-matrix-multiplication-c-ab)
+
+</div>
+<div class="tab" data-title="coalescedMultiply" markdown="1">
+
+`coalescedMultiply` ("Using shared memory to improve the global memory load efficiency in matrix multiplication") first reads the tile of $$A$$ into shared memory, where each warp reads one row of the tile with coalesced reads. In the loop, shared memory then *broadcasts* each value of $$A$$ to all threads of the warp. The barrier `__syncwarp()` is enough, as each warp reads only the row of the tile that it wrote. It reaches 144.4 GB/s:
+
+```cpp
+// the same, with the tile of A read into shared memory, with coalesced reads
+__global__ void coalescedMultiply(const dt* A, const dt* B, dt* C, int O) {
+  __shared__ dt aTile[TILE_DIM][TILE_DIM];
+  int row = blockIdx.y * blockDim.y + threadIdx.y;
+  int col = blockIdx.x * blockDim.x + threadIdx.x;
+  float sum = 0;
+  aTile[threadIdx.y][threadIdx.x] = A[row*TILE_DIM + threadIdx.x];
+  __syncwarp();   // each warp reads only the row of aTile that it wrote
+  for (int k = 0; k < TILE_DIM; k++)
+    sum += (float) aTile[threadIdx.y][k] * (float) B[k*O + col];
+  C[row*O + col] = sum;
+}
+```
+
+{: .picture}
+<img width="78.5%" height="78.5%" src="{{ site.assets }}/gpt-cpp-cuda/coalesced_multiply.svg"/>
+
+{: .caption}
+The reads of `coalescedMultiply`: the warp first copies the row $$i$$ of $$A$$ into its row of the tile `aTile` in shared memory. In the iteration $$k$$, its 32 threads read $$A_{ik}$$ from shared memory, and the row $$k$$ of the tile of $$B$$ from global memory. Inspired by: [CUDA C++ Best Practices Guide](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#shared-memory-in-matrix-multiplication-c-ab)
+
+</div>
+<div class="tab" data-title="sharedABMultiply" markdown="1">
+
+`sharedABMultiply` ("Improvement by reading additional data into shared memory") also reads the tile of $$B$$ into shared memory, so that each value of $$B$$ is read once per thread block instead of once per warp. The barrier is now `__syncthreads()`, as a warp reads values of $$B$$ written by the other warps of the block. It reaches 195.5 GB/s:
+
+```cpp
 // the same, with the tiles of A and B read into shared memory
 __global__ void sharedABMultiply(const dt* A, const dt* B, dt* C, int O) {
   __shared__ dt aTile[TILE_DIM][TILE_DIM], bTile[TILE_DIM][TILE_DIM];
@@ -103,11 +144,22 @@ __global__ void sharedABMultiply(const dt* A, const dt* B, dt* C, int O) {
   aTile[threadIdx.y][threadIdx.x] = A[row*TILE_DIM + threadIdx.x];
   bTile[threadIdx.y][threadIdx.x] = B[threadIdx.y*O + col];
   __syncthreads();
-  for (int i = 0; i < TILE_DIM; i++)
-    sum += (float) aTile[threadIdx.y][i] * (float) bTile[i][threadIdx.x];
+  for (int k = 0; k < TILE_DIM; k++)
+    sum += (float) aTile[threadIdx.y][k] * (float) bTile[k][threadIdx.x];
   C[row*O + col] = sum;
 }
 ```
+
+{: .picture}
+<img width="78.5%" height="78.5%" src="{{ site.assets }}/gpt-cpp-cuda/shared_ab_multiply.svg"/>
+
+{: .caption}
+The reads of `sharedABMultiply`: the warp first copies the row $$i$$ of $$A$$ into its row of `aTile`, and the warps of the thread block copy the tile of $$B$$ into `bTile`, one row per warp, both in shared memory. In the iteration $$k$$, the 32 threads of the warp read $$A_{ik}$$ and the row $$k$$ of `bTile` from shared memory. Inspired by: [CUDA C++ Best Practices Guide](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#shared-memory-in-matrix-multiplication-c-ab)
+
+</div>
+</div>
+
+The guide notes that the gains are not due to a better coalescing, but to fewer redundant transfers from global memory.
 
 The kernels of the guide only work for $$N = 32$$. For a larger $$N$$, a multiple of 32, each thread block loops over the $$N / 32$$ tiles of its row of tiles of $$A$$ and of its column of tiles of $$B$$, multiplies each pair of tiles as `sharedABMultiply` does, and adds the products:
 
@@ -123,8 +175,8 @@ __global__ void tiledMultiply(const dt* A, const dt* B, dt* C, int N, int O) {
     aTile[threadIdx.y][threadIdx.x] = A[row*N + t + threadIdx.x];
     bTile[threadIdx.y][threadIdx.x] = B[(t + threadIdx.y)*O + col];
     __syncthreads();
-    for (int i = 0; i < TILE_DIM; i++)
-      sum += (float) aTile[threadIdx.y][i] * (float) bTile[i][threadIdx.x];
+    for (int k = 0; k < TILE_DIM; k++)
+      sum += (float) aTile[threadIdx.y][k] * (float) bTile[k][threadIdx.x];
     __syncthreads();   // all threads have read the tiles before the next ones overwrite them
   }
   C[row*O + col] = sum;
@@ -138,7 +190,83 @@ dim3 threads(TILE_DIM, TILE_DIM), tiles(O / TILE_DIM, M / TILE_DIM);
 tiledMultiply<<<tiles, threads>>>(A, B, C, N, O);
 ```
 
-Each value of $$A$$ and $$B$$ is now read from global memory once per thread block, i.e. $$O/32$$ and $$M/32$$ times, with coalesced reads, while `simpleMultiply` reads each value of $$B$$ once per row of $$C$$, i.e. $$M$$ times. On **[GPU]**, for $$M = N = O = 4096$$, `tiledMultiply` computes **[x]** TFLOP/s, and cuBLAS **[y]** TFLOP/s (`matmul.cu`).
+Each value of $$A$$ and $$B$$ is now read from global memory once per thread block, i.e. $$O/32$$ and $$M/32$$ times, with coalesced reads, while `simpleMultiply` reads each value of $$B$$ once per row of $$C$$, i.e. $$M$$ times. On **[GPU]**, for $$M = N = O = 4096$$, `tiledMultiply` computes **[x]** TFLOP/s, and cuBLAS **[y]** TFLOP/s. The program `matmul.cu` times each kernel, and compares its output with the product of cuBLAS, presented in the next section:
+
+<details markdown="1">
+<summary>Click here to expand the benchmark of the matrix multiplication kernels</summary>
+
+```cpp
+// C (M x O) = A (M x N) B (N x O) in row-major order with cuBLAS, as in gpt_cuda.cu
+void cublasMultiply(cublasHandle_t handle, const dt* A, const dt* B, dt* C, int M, int N, int O) {
+  float alpha = 1, beta = 0;
+  cublasGemmEx(handle, CUBLAS_OP_N, CUBLAS_OP_N, O, M, N, &alpha, B, CUDA_R_16BF, O, A, CUDA_R_16BF, N,
+               &beta, C, CUDA_R_16BF, O, CUBLAS_COMPUTE_32F, CUBLAS_GEMM_DEFAULT);
+}
+
+// average runtime of f, in milliseconds, after a first run that is not timed
+template <typename F> double runtime(F f, int iters = 10) {
+  f();
+  cudaDeviceSynchronize();
+  auto start = std::chrono::steady_clock::now();
+  for (int it = 0; it < iters; it++)
+    f();
+  cudaDeviceSynchronize();
+  return std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now() - start).count() / iters;
+}
+
+// the largest difference between the values of C and ref (n values on the GPU), relative to the largest value of ref
+double difference(const dt* C, const dt* ref, long n) {
+  std::vector<dt> c(n), r(n);
+  cudaMemcpy(c.data(), C, n * sizeof(dt), cudaMemcpyDeviceToHost);
+  cudaMemcpy(r.data(), ref, n * sizeof(dt), cudaMemcpyDeviceToHost);
+  double diff = 0, max_ref = 0;
+  for (long i = 0; i < n; i++) {
+    diff = std::max(diff, (double) std::abs((float) c[i] - (float) r[i]));
+    max_ref = std::max(max_ref, (double) std::abs((float) r[i]));
+  }
+  return diff / max_ref;
+}
+
+int main(int argc, char* argv[]) {
+  // the sizes M, N and O of the tiled kernel and of cuBLAS, multiples of TILE_DIM
+  int M = argc > 3 ? std::atoi(argv[1]) : 4096, N = argc > 3 ? std::atoi(argv[2]) : 4096, O = argc > 3 ? std::atoi(argv[3]) : 4096;
+  cublasHandle_t handle;
+  cublasCreate(&handle);
+  std::vector<dt> a((long) M*N), b((long) N*O);
+  for (dt& v : a) v = (float) std::rand() / RAND_MAX - 0.5f;
+  for (dt& v : b) v = (float) std::rand() / RAND_MAX - 0.5f;
+  dt *A, *B, *C, *ref;
+  cudaMalloc(&A, a.size() * sizeof(dt));
+  cudaMalloc(&B, b.size() * sizeof(dt));
+  cudaMalloc(&C, (long) M*O * sizeof(dt));
+  cudaMalloc(&ref, (long) M*O * sizeof(dt));
+  cudaMemcpy(A, a.data(), a.size() * sizeof(dt), cudaMemcpyHostToDevice);
+  cudaMemcpy(B, b.data(), b.size() * sizeof(dt), cudaMemcpyHostToDevice);
+  dim3 threads(TILE_DIM, TILE_DIM), tiles(O / TILE_DIM, M / TILE_DIM);
+
+  // the three kernels of the guide, for N = TILE_DIM: the first M*TILE_DIM values of A are read as an M x TILE_DIM
+  // matrix, and the first TILE_DIM rows of B as a TILE_DIM x O matrix
+  cublasMultiply(handle, A, B, ref, M, TILE_DIM, O);
+  double ms = runtime([&] { simpleMultiply<<<tiles, threads>>>(A, B, C, O); });
+  std::printf("simpleMultiply,    N = %d: %.3f ms, difference to cuBLAS %.4f\n", TILE_DIM, ms, difference(C, ref, (long) M*O));
+  ms = runtime([&] { coalescedMultiply<<<tiles, threads>>>(A, B, C, O); });
+  std::printf("coalescedMultiply, N = %d: %.3f ms, difference to cuBLAS %.4f\n", TILE_DIM, ms, difference(C, ref, (long) M*O));
+  ms = runtime([&] { sharedABMultiply<<<tiles, threads>>>(A, B, C, O); });
+  std::printf("sharedABMultiply,  N = %d: %.3f ms, difference to cuBLAS %.4f\n", TILE_DIM, ms, difference(C, ref, (long) M*O));
+  ms = runtime([&] { cublasMultiply(handle, A, B, ref, M, TILE_DIM, O); });
+  std::printf("cuBLAS,            N = %d: %.3f ms\n", TILE_DIM, ms);
+
+  // the tiled kernel and cuBLAS, for any N
+  double tflop = 2.0 * M * N * O / 1e12;
+  ms = runtime([&] { cublasMultiply(handle, A, B, ref, M, N, O); });
+  std::printf("cuBLAS,        M = %d, N = %d, O = %d: %.3f ms, %.1f TFLOP/s\n", M, N, O, ms, tflop / ms * 1e3);
+  ms = runtime([&] { tiledMultiply<<<tiles, threads>>>(A, B, C, N, O); });
+  std::printf("tiledMultiply, M = %d, N = %d, O = %d: %.3f ms, %.1f TFLOP/s, difference to cuBLAS %.4f\n",
+              M, N, O, ms, tflop / ms * 1e3, difference(C, ref, (long) M*O));
+}
+```
+
+</details>
 
 ### On the Tensor Cores
 

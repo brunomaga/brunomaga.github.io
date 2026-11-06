@@ -6,7 +6,8 @@ Support material for the post [GPT from scratch in C++ and CUDA vs. fused PyTorc
 - `gpt_libtorch.cpp`: the GPT blocks in LibTorch, the C++ API of PyTorch;
 - `gpt_cpu.cpp`: the GPT blocks in plain C++ loops, on the CPU;
 - `gpt_cuda.cu`: the GPT blocks in CUDA kernels and cuBLAS;
-- `matmul.cu`: the matrix multiplication kernels of the CUDA C++ Best Practices Guide, a tiled kernel and cuBLAS.
+- `matmul.cu`: the matrix multiplication kernels adapted from the CUDA C++ Best Practices Guide, a tiled kernel and
+  cuBLAS.
 
 The CUDA programs need a GPU with BF16 Tensor Cores (compute capability 8.0 or more) and the CUDA toolkit. The build
 needs CMake 3.24 or more, a C++20 compiler and PyTorch:

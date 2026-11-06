@@ -966,8 +966,9 @@ that is not wrong.
 
 ### GPT from scratch in C++ and CUDA vs. fused PyTorch (_drafts/2026-08-17-gpt-cpp-cuda.md)
 
-- Optional: the matrix multiplication section has no picture. Fix: a picture of the tiles of `tiledMultiply` (the row
-  of tiles of A and the column of tiles of B that one thread block reads for its tile of C).
+- Optional: the pictures of the matrix multiplication section show the three kernels of the guide, but not
+  `tiledMultiply`. Fix: a picture of its tiles (the row of tiles of A and the column of tiles of B that one thread
+  block reads, one pair at a time, for its tile of C).
 
 ### Publication Summaries (publications.md)
 

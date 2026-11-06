@@ -1,5 +1,5 @@
-// The matrix multiplication kernels of the CUDA C++ Best Practices Guide, the tiled kernel for any N, and cuBLAS,
-// with bf16 values: their runtimes, and their differences to cuBLAS
+// The matrix multiplication kernels adapted from the CUDA C++ Best Practices Guide, the tiled kernel for any N, and
+// cuBLAS, with bf16 values: their runtimes, and their differences to cuBLAS
 #include <algorithm>
 #include <chrono>
 #include <cmath>
@@ -17,8 +17,8 @@ __global__ void simpleMultiply(const dt* A, const dt* B, dt* C, int O) {
   int row = blockIdx.y * blockDim.y + threadIdx.y;
   int col = blockIdx.x * blockDim.x + threadIdx.x;
   float sum = 0;
-  for (int i = 0; i < TILE_DIM; i++)
-    sum += (float) A[row*TILE_DIM + i] * (float) B[i*O + col];
+  for (int k = 0; k < TILE_DIM; k++)
+    sum += (float) A[row*TILE_DIM + k] * (float) B[k*O + col];
   C[row*O + col] = sum;
 }
 
@@ -30,8 +30,8 @@ __global__ void coalescedMultiply(const dt* A, const dt* B, dt* C, int O) {
   float sum = 0;
   aTile[threadIdx.y][threadIdx.x] = A[row*TILE_DIM + threadIdx.x];
   __syncwarp();   // each warp reads only the row of aTile that it wrote
-  for (int i = 0; i < TILE_DIM; i++)
-    sum += (float) aTile[threadIdx.y][i] * (float) B[i*O + col];
+  for (int k = 0; k < TILE_DIM; k++)
+    sum += (float) aTile[threadIdx.y][k] * (float) B[k*O + col];
   C[row*O + col] = sum;
 }
 
@@ -44,8 +44,8 @@ __global__ void sharedABMultiply(const dt* A, const dt* B, dt* C, int O) {
   aTile[threadIdx.y][threadIdx.x] = A[row*TILE_DIM + threadIdx.x];
   bTile[threadIdx.y][threadIdx.x] = B[threadIdx.y*O + col];
   __syncthreads();
-  for (int i = 0; i < TILE_DIM; i++)
-    sum += (float) aTile[threadIdx.y][i] * (float) bTile[i][threadIdx.x];
+  for (int k = 0; k < TILE_DIM; k++)
+    sum += (float) aTile[threadIdx.y][k] * (float) bTile[k][threadIdx.x];
   C[row*O + col] = sum;
 }
 
@@ -60,8 +60,8 @@ __global__ void tiledMultiply(const dt* A, const dt* B, dt* C, int N, int O) {
     aTile[threadIdx.y][threadIdx.x] = A[row*N + t + threadIdx.x];
     bTile[threadIdx.y][threadIdx.x] = B[(t + threadIdx.y)*O + col];
     __syncthreads();
-    for (int i = 0; i < TILE_DIM; i++)
-      sum += (float) aTile[threadIdx.y][i] * (float) bTile[i][threadIdx.x];
+    for (int k = 0; k < TILE_DIM; k++)
+      sum += (float) aTile[threadIdx.y][k] * (float) bTile[k][threadIdx.x];
     __syncthreads();   // all threads have read the tiles before the next ones overwrite them
   }
   C[row*O + col] = sum;

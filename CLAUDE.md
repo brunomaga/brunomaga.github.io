@@ -69,7 +69,10 @@ written by Claude read as if the author had written them from the beginning, not
   implementation, in the same order in every group of the post (PyTorch first), and each tab holds the text and
   the code of its implementation. The text that applies to all implementations stays outside the tabs, before or
   after the group. `assets/js/code-tabs.js` shows one tab at a time, and a tab picked in one group is picked in
-  all groups of the page.
+  all groups of the page. Variants of one algorithm that the text compares go in tabs too, at the user's request
+  (2026-11-06): the three matrix multiplication kernels of the CUDA C++ Best Practices Guide, each tab with the text,
+  the code and the picture of its kernel. A group whose titles are names of the code, such as kernels, takes the class
+  `code-tabs code-tabs--code`, which shows its titles as written, in the monospace font of the code.
 - The code of a post is shown in snippets in the post, not left to external files, which are hard to keep in
   sync with the snippets, at the user's request (2026-11-06). A file that the post shows whole without
   explaining it line by line, such as a `CMakeLists.txt`, goes in an expandable `<details markdown="1">` block.
