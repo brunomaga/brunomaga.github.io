@@ -90,7 +90,13 @@ which is [Oja's rule](https://en.wikipedia.org/wiki/Oja%27s_rule), a form of [He
 
 The **[k-nearest neighbors](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm)** algorithm (KNN), proposed by [Fix and Hodges (1951)](https://apps.dtic.mil/sti/pdfs/ADA800276.pdf) and analyzed by [Cover and Hart (1967)](https://doi.org/10.1109/TIT.1967.1053964), is not to be confused with k-means. It is not a clustering method either: it is a supervised classifier, as it needs the labels of the training points. It is covered here because its core operation, finding the $$k$$ points closest to a query, is the building block of many unsupervised methods of this post. DBSCAN counts the neighbors of each point within a radius, spectral clustering connects each point to its nearest neighbors, t-SNE and UMAP compute their similarities from the neighbors of each point, and the local outlier factor compares the density around a point with the density around its neighbors.
 
-Given a query point $$x$$, KNN finds the $$k$$ training points closest to it, and predicts the most common label among them (classification), or the average of their values (regression). It has no training step: the model is the training set itself, which is why KNN is called a *lazy* learner. As an example, take the points 0, 1 and 2 of class A and the points 3.5, 6 and 7 of class B on a line, and the query point 3. With $$k = 1$$, its nearest neighbor is 3.5, at a distance of 0.5, and the query is labeled B. With $$k = 3$$, its neighbors are 3.5, 2 and 1, at the distances 0.5, 1 and 2, and the vote gives A, by 2 to 1. A small $$k$$ follows the training data closely and is sensitive to noise, such as a single point of B among the points of A, while a large $$k$$ gives smoother boundaries between classes, but blurs the small classes. In practice, $$k$$ is chosen by [cross-validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics)), and an odd $$k$$ avoids ties between two classes.
+Given a query point $$x$$, KNN finds the $$k$$ training points closest to it, and predicts the most common label among them (classification), or the average of their values (regression). It has no training step: the model is the training set itself, which is why KNN is called a *lazy* learner. As an example, take the points 0, 1 and 2 of class A and the points 3.5, 6 and 7 of class B on a line, and the query point 3, as in the picture below. With $$k = 1$$, its nearest neighbor is 3.5, at a distance of 0.5, and the query is labeled B. With $$k = 3$$, its neighbors are 3.5, 2 and 1, at the distances 0.5, 1 and 2, and the vote gives A, by 2 to 1. A small $$k$$ follows the training data closely and is sensitive to noise, such as a single point of B among the points of A, while a large $$k$$ gives smoother boundaries between classes, but blurs the small classes. In practice, $$k$$ is chosen by [cross-validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics)), and an odd $$k$$ avoids ties between two classes.
+
+{: .picture}
+<img width="64.8%" height="64.8%" src="{{ site.assets }}/unsupervised-learning/knn.svg">
+
+{: .caption}
+KNN on a line, with the training points of class A (blue) and class B (orange) and the query point 3 (circle). With $$k = 1$$, the nearest neighbor 3.5 labels the query B; with $$k = 3$$, the neighbors 3.5, 2 and 1 label it A, by 2 votes to 1.
 
 A brute-force search computes the distances from the query to all $$n$$ training points, i.e. $$O(nd)$$ operations per query for $$d$$ dimensions. A spatial index, such as the [k-d tree](https://en.wikipedia.org/wiki/K-d_tree) ([Bentley, 1975](https://doi.org/10.1145/361002.361007)), finds the neighbors in about $$O(\log n)$$ time in low dimensions, but not in high dimensions, as the last section of this post explains. Also, the distances must be meaningful: the features are usually normalized first, so that a feature with a large range does not dominate the distance.
 
@@ -99,10 +105,16 @@ A brute-force search computes the distances from the query to all $$n$$ training
 **[Hierarchical clustering](https://en.wikipedia.org/wiki/Hierarchical_clustering)** builds a tree of clusters (a *[dendrogram](https://en.wikipedia.org/wiki/Dendrogram)*) instead of a single partition. Its common *agglomerative* (bottom-up) variant starts with one cluster per data point, and repeatedly merges the two closest clusters, until a single cluster remains. The distance between two clusters $$A$$ and $$B$$ is given by the *linkage* criterion:
 - single linkage: the distance between their closest points, $$\min_{a \in A, b \in B} d(a,b)$$. It finds elongated clusters, but can chain distinct clusters together through a few close points;
 - complete linkage: the distance between their farthest points, $$\max_{a \in A, b \in B} d(a,b)$$, which favors compact clusters;
-- average linkage: the average distance between all pairs of points, $$\frac{1}{\mid A \mid \mid B \mid} \sum_{a \in A} \sum_{b \in B} d(a,b)$$;
-- Ward's linkage: the increase of the k-means error (the sum of squared distances to the cluster means) caused by merging $$A$$ and $$B$$, which is $$\frac{\mid A \mid \mid B \mid}{\mid A \mid + \mid B \mid} \| \mu_A - \mu_B \|^2$$ for cluster means $$\mu_A$$ and $$\mu_B$$.
+- average linkage: the average distance between all pairs of points, $$\frac{1}{\vert A \vert \vert B \vert} \sum_{a \in A} \sum_{b \in B} d(a,b)$$;
+- Ward's linkage: the increase of the k-means error (the sum of squared distances to the cluster means) caused by merging $$A$$ and $$B$$, which is $$\frac{\vert A \vert \vert B \vert}{\vert A \vert + \vert B \vert} \| \mu_A - \mu_B \|^2$$ for cluster means $$\mu_A$$ and $$\mu_B$$.
 
-As an example, take the five points 0, 1, 3, 4 and 8 on a line. With single linkage, the pairs $$\{0, 1\}$$ and $$\{3, 4\}$$ merge first, at a distance of 1. The two clusters then merge at a distance of 2 (from 1 to 3), and the point 8 joins last, at a distance of 4 (from 4 to 8). With complete linkage, the same merges happen at the heights 1, 1, 4 and 8, as the distance between two clusters is then the one between their farthest points.
+As an example, take the five points 0, 1, 3, 4 and 8 on a line, whose dendrograms are drawn below. With single linkage, the pairs $$\{0, 1\}$$ and $$\{3, 4\}$$ merge first, at a distance of 1. The two clusters then merge at a distance of 2 (from 1 to 3), and the point 8 joins last, at a distance of 4 (from 4 to 8). With complete linkage, the same merges happen at the heights 1, 1, 4 and 8, as the distance between two clusters is then the one between their farthest points.
+
+{: .picture}
+<img width="84.9%" height="84.9%" src="{{ site.assets }}/unsupervised-learning/hierarchical_clustering.svg">
+
+{: .caption}
+The dendrograms of the points 0, 1, 3, 4 and 8 with single linkage (left) and complete linkage (right): each merge is drawn at the distance between the two clusters it joins. A cut at a height of 3 (dashed line) gives the two clusters $$\{0, 1, 3, 4\}$$ and $$\{8\}$$ with single linkage, and three clusters with complete linkage (colors).
 
 Cutting the dendrogram at a given height yields a partition, so the number of clusters can be chosen after the fact, by looking at the tree. In the single linkage example, a cut at a height of 3 gives the two clusters $$\{0, 1, 3, 4\}$$ and $$\{8\}$$, and a cut at 1.5 gives three clusters. The *divisive* (top-down) variant does the opposite: it starts with all points in one cluster, and splits clusters recursively. Agglomerative clustering needs the $$n \times n$$ matrix of pairwise distances, and runs in $$O(n^2)$$ to $$O(n^3)$$ time depending on the linkage and the implementation, so it suits small to medium datasets.
 
@@ -113,7 +125,13 @@ Cutting the dendrogram at a given height yields a partition, so the number of cl
 - a *border point*, if it is not a core point but lies within distance $$\varepsilon$$ of a core point;
 - *noise*, otherwise.
 
-Two core points within distance $$\varepsilon$$ of each other belong to the same cluster, so each cluster is a connected group of core points, plus the border points around them. Unlike k-means, DBSCAN does not need the number of clusters, finds clusters of arbitrary shapes, and labels outliers as noise. On the other hand, a single radius $$\varepsilon$$ cannot capture clusters of very different densities, a limitation addressed by its extensions [OPTICS](https://en.wikipedia.org/wiki/OPTICS_algorithm) and [HDBSCAN](https://hdbscan.readthedocs.io/). In low dimensions, a spatial index finds the neighbors of each point without computing all pairwise distances.
+Two core points within distance $$\varepsilon$$ of each other belong to the same cluster, so each cluster is a connected group of core points, plus the border points around them. Unlike k-means, DBSCAN does not need the number of clusters, finds clusters of arbitrary shapes, and labels outliers as noise, as in the picture below. On the other hand, a single radius $$\varepsilon$$ cannot capture clusters of very different densities, a limitation addressed by its extensions [OPTICS](https://en.wikipedia.org/wiki/OPTICS_algorithm) and [HDBSCAN](https://hdbscan.readthedocs.io/). In low dimensions, a spatial index finds the neighbors of each point without computing all pairwise distances.
+
+{: .picture}
+<img width="90.3%" height="90.3%" src="{{ site.assets }}/unsupervised-learning/dbscan.svg">
+
+{: .caption}
+DBSCAN, with $$\varepsilon = 0.25$$ and $$m = 6$$, on 100 points of two half-moons and 10 points of uniform noise. The dashed circle of radius $$\varepsilon$$ around a core point holds 7 points. DBSCAN finds the two moons as two clusters, without being given their number, and labels 5 isolated points as noise.
 
 ### Spectral Clustering
 
@@ -128,7 +146,13 @@ So $$f^T L f$$ is small when $$f$$ takes similar values on strongly connected po
 - stack them as the columns of an $$n \times k$$ matrix $$H$$, and take its $$i$$-th row as the new $$k$$-dimensional representation of point $$x_i$$ (with $$L_{sym}$$, after normalizing each row to unit length);
 - cluster the rows of $$H$$ with k-means.
 
-This is a relaxation of the NP-hard problem of finding the *ratio cut* (with $$L$$) or the *normalized cut* (with $$L_{sym}$$) of the graph. Spectral clustering separates non-convex clusters (e.g. two concentric rings) that k-means cannot, at the cost of an eigendecomposition of an $$n \times n$$ (sparse) matrix.
+This is a relaxation of the NP-hard problem of finding the *ratio cut* (with $$L$$) or the *normalized cut* (with $$L_{sym}$$) of the graph. Spectral clustering separates non-convex clusters (e.g. the two concentric rings of the picture below) that k-means cannot, at the cost of an eigendecomposition of an $$n \times n$$ (sparse) matrix.
+
+{: .picture}
+<img width="83.3%" height="83.3%" src="{{ site.assets }}/unsupervised-learning/spectral_clustering.svg">
+
+{: .caption}
+Two concentric rings, clustered by k-means (center), with the Voronoi cells of its two means, and by spectral clustering on the graph of the 8 nearest neighbors of each point (right). K-means cuts both rings in halves, while spectral clustering separates the rings.
 
 For more details, [A Tutorial on Spectral Clustering](https://arxiv.org/abs/0711.0189) (von Luxburg, 2007) derives these algorithms from graph cuts, random walks and perturbation theory, and discusses which graph Laplacian to use.
 
@@ -161,7 +185,13 @@ $$
 
 As an example, take two components in one dimension, with the means 0 and 4, unit variances and equal weights. A point at $$x = 3$$ has the responsibility $$e^{-1/2} / (e^{-9/2} + e^{-1/2}) = 1/(1 + e^{-4}) = 0.982$$ for the component of mean 4, and 0.018 for the other one, while a point at $$x = 2$$, halfway, has a responsibility of 0.5 for each. In the M-step, the point at 3 thus counts for 0.982 of a point in the mean of the second component, and for 0.018 in the first, where k-means would assign it fully to the second cluster.
 
-Each iteration never decreases the log-likelihood, and the algorithm converges to a local maximum, so, as with k-means, it is usually run from several initializations, or initialized with the result of k-means. In fact, k-means is a limit case of EM: for a GMM whose components share the covariance $$\sigma^2 I$$, the responsibilities become hard assignments to the closest mean as $$\sigma \rightarrow 0$$. The number of components $$K$$ can be chosen with a model selection criterion, such as the [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion). In practice, k-means is cheaper per iteration and is preferred for large datasets with compact clusters, while a GMM suits elliptical or overlapping clusters. The post on [variational inference]({{ site.baseurl }}{% post_url 2019-07-01-variational-inference-gmm %}) fits a Bayesian GMM, with a prior over its means, by variational inference instead of EM.
+Each iteration never decreases the log-likelihood, and the algorithm converges to a local maximum, so, as with k-means, it is usually run from several initializations, or initialized with the result of k-means. In fact, k-means is a limit case of EM: for a GMM whose components share the covariance $$\sigma^2 I$$, the responsibilities become hard assignments to the closest mean as $$\sigma \rightarrow 0$$. The number of components $$K$$ can be chosen with a model selection criterion, such as the [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion). In practice, k-means is cheaper per iteration and is preferred for large datasets with compact clusters, while a GMM suits elliptical or overlapping clusters, as in the picture below. The post on [variational inference]({{ site.baseurl }}{% post_url 2019-07-01-variational-inference-gmm %}) fits a Bayesian GMM, with a prior over its means, by variational inference instead of EM.
+
+{: .picture}
+<img width="83.3%" height="83.3%" src="{{ site.assets }}/unsupervised-learning/gmm.svg">
+
+{: .caption}
+Three elongated clusters, clustered by k-means (center), with the Voronoi cells of its three means, and by a GMM with full covariance matrices (right), with the contour at two standard deviations of each Gaussian. The Voronoi cells of k-means cut across the clusters, while the ellipses of the GMM follow them. Inspired by: [Demonstration of k-means assumptions](https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_assumptions.html)
 
 ### Self-Organizing Maps and Kohonen Maps
 
