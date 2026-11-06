@@ -13,7 +13,7 @@ from matplotlib import transforms
 MATH = 'NewComputerModernSansMath'
 BLACK, GREY = '#000000', '#666666'
 BLUE, GREEN, ORANGE, RED, PURPLE = '#6c8ebf', '#82b366', '#d79b00', '#b85450', '#9673a6'  # accents
-BLUE_FILL, RED_FILL = '#dae8fc', '#f8cecc'
+BLUE_FILL, GREEN_FILL, RED_FILL = '#dae8fc', '#d5e8d4', '#f8cecc'
 DOT = dict(marker='o', markersize=6, markeredgecolor=BLACK, markeredgewidth=1.0, linestyle='none', zorder=2.2)
 
 

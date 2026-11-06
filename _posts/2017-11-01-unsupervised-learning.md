@@ -223,26 +223,30 @@ $$
 where $$h(j, j^*)$$ is the *neighborhood function*, which decreases with the distance between neurons $$j$$ and $$j^*$$ in the grid (e.g. a Gaussian). If $$h$$ is $$1$$ for the winner and $$0$$ for all other neurons, the update above is the online update rule of k-means. It is also common to decrease $$\eta$$ and the width of $$h$$ as the iterations progress;
 - repeat until stabilization: either when reaching the maximum number of iterations, or when the change in weights falls below a given threshold.
 
-Very nice videos demonstrating an iterative execution of the Kohonen map can be found [in this link](https://www.youtube.com/watch?v=IixbH1gDhsg) and [this link](https://www.youtube.com/watch?v=zeOtwCAI3Fs).
+Very nice videos demonstrating an iterative execution of the Kohonen map can be found [in this link](https://www.youtube.com/watch?v=IixbH1gDhsg) and [this link](https://www.youtube.com/watch?v=zeOtwCAI3Fs). The following picture illustrates such an execution on 2D inputs:
+
+{: .picture}
+<img width="91.3%" height="91.3%" src="{{ site.assets }}/unsupervised-learning/som_training.svg">
+
+{: .caption}
+A SOM of 6x6 neurons, trained on 2D inputs drawn uniformly from a square (blue). Each circle is the weight vector of a neuron, and the lines join the neurons that are neighbors in the grid. The weights start in a small random cloud, where the grid is tangled. The first iterations order the grid, and the following ones spread it over the square, as $$\eta$$ decreases from 0.5 to 0.01 and the width of the Gaussian $$h$$ from 3 to 0.5 neurons.
 
 A good example is the recognition of handwritten digits from the [MNIST database](http://yann.lecun.com/exdb/mnist/).
 Each digit is a 28x28 (=784) pixel array, represented as a data point in a 784-dimensional space. Each pixel is monochromatic, so each dimension takes values between 0 and 255.
 
 The task is, given a database of 5,000 handwritten digits, to find the 6x6 SOM that best represents 4 of the digits from 0 to 9. This example studies how the neighborhood width and the learning rate affect the performance of the Kohonen map.
 
-The input dataset and the `python` implementation are available in <a href="{{ site.assets }}/unsupervised-learning/kohonen_mnist.zip">kohonen_mnist.zip</a>. The goal is to fine-tune the neighborhood width and the learning rate $$\eta$$. A good solution gives a visual perception of the digits being identified (in this case 0, 1, 2 and 3), as the weights of each neuron form a 28x28 image. Three possible outputs are displayed in the pictures below:
+The input dataset and the `python` implementation are available in <a href="{{ site.assets }}/unsupervised-learning/kohonen_mnist.zip">kohonen_mnist.zip</a>. The goal is to fine-tune the neighborhood width and the learning rate $$\eta$$. A good solution gives a visual perception of the digits being identified (in this case 0, 1, 2 and 3), as the weights of each neuron form a 28x28 image. Three possible outputs are displayed in the picture below:
 - left: a nicely tuned SOM, where each quadrant of neurons represents a digit;
 - center: a SOM with a high learning rate. The large step size makes neurons *step* over long distances during training, leading to a mixing of digits on nearby neurons, and possibly a *tangled* SOM;
 - right: a SOM with a large neighborhood width. The large width causes all neurons to behave almost synchronously, due to the very wide range of the update function. This leads to very similar outputs per neuron.
 
 {: .picture}
-<img width="27.1%" height="27.1%" src="{{ site.assets }}/unsupervised-learning/kohonen_1.svg">
-<span style="display:inline-block; width:1cm;"></span>
-<img width="27.2%" height="27.2%" src="{{ site.assets }}/unsupervised-learning/kohonen_2.svg">
-<span style="display:inline-block; width:1cm;"></span>
-<img width="26.7%" height="26.7%" src="{{ site.assets }}/unsupervised-learning/kohonen_3.svg">
- 
- 
+<img width="86.5%" height="86.5%" src="{{ site.assets }}/unsupervised-learning/som_mnist.svg">
+
+{: .caption}
+SOMs of 6x6 neurons, trained for 10,000 iterations on the digits 0 to 3 of the example, with each neuron drawn as the 28x28 image of its weights. The tuned SOM has $$\eta = 0.2$$ and a Gaussian $$h$$ of width 1, the second SOM $$\eta = 0.9$$, and the third a width of 4.
+
 More examples can be found in the [Wikipedia entry for self-organizing maps](https://en.wikipedia.org/wiki/Self-organizing_map#Examples).
 
 ### Comparison of the Clustering Methods
@@ -286,10 +290,10 @@ For $$n$$ data points $$x_1, ..., x_n$$, the algorithm is the following:
 A visual example is displayed below, where PCA rotates the data towards the new axes of the cluster of data points:
 
 {: .picture}
-<img width="26.7%" height="26.7%" src="{{ site.assets }}/unsupervised-learning/gaussianscatterpca.svg">
+<img width="91.3%" height="91.3%" src="{{ site.assets }}/unsupervised-learning/pca.svg">
 
 {: .caption}
-PCA of a 2D Gaussian centred at $$(1, 3)$$, with a standard deviation of 3 roughly along the direction $$(0.866, 0.5)$$ and of 1 in the orthogonal direction. The arrows are the eigenvectors of the covariance matrix, scaled by the square roots of their eigenvalues, with their tails at the mean. Adapted from: [Principal component analysis](https://en.wikipedia.org/wiki/Principal_component_analysis)
+**1.** 30 points of a 2D Gaussian centered at $$(1, 3)$$, with a standard deviation of 3 along the direction $$(0.866, 0.5)$$ and of 1 in the orthogonal direction. **2.** The centered data, and the eigenvectors $$v_1$$ and $$v_2$$ of its covariance matrix, scaled to three standard deviations of the data along them. **3.** The transformed data $$D_n = F^T D_c$$: the rotation turns $$v_1$$ to the horizontal axis and $$v_2$$ to the vertical axis. **4.** The first principal component only: each point is described by one number. Inspired by: [Principal component analysis](https://en.wikipedia.org/wiki/Principal_component_analysis)
 
 The least significant dimensions of the transformed data can now be discarded, reducing the number of features of the model. The number of eigenvectors kept in $$F$$ dictates the amount of compression achieved. The first $$k$$ components explain a fraction $$\sum_{i=1}^k \lambda_i / \sum_{i} \lambda_i$$ of the variance of the data, a common criterion to choose $$k$$.
 
@@ -385,15 +389,13 @@ $$
 s(t) = U z (t) = U V x (t) = B x (t)
 $$
 
-where $$U$$ is an orthogonal matrix. **Whitening simplifies ICA**, as it is then only necessary to estimate $$U$$: the whitened signals are already uncorrelated, like the principal components of PCA, and $$U$$ is the rotation that makes them independent. An illustration of the source, observed and whitened data is displayed below, where the mixing turns the square of the sources into a parallelogram, and whitening turns it back into a square, rotated:
+where $$U$$ is an orthogonal matrix. **Whitening simplifies ICA**, as it is then only necessary to estimate $$U$$: the whitened signals are already uncorrelated, like the principal components of PCA, and $$U$$ is the rotation that makes them independent. An illustration of the source, observed, whitened and recovered data is displayed below, where the mixing turns the square of the sources into a parallelogram, whitening turns it back into a square, rotated, and $$U$$ rotates it back to the sources:
 
 {: .picture}
-<img width="19.2%" height="19.2%" src="{{ site.assets }}/unsupervised-learning/ica_source.svg">
-<img width="19.2%" height="19.2%" src="{{ site.assets }}/unsupervised-learning/ica_observed.svg"> 
-<img width="18.2%" height="18.2%" src="{{ site.assets }}/unsupervised-learning/ica_whitening.svg">
+<img width="91.3%" height="91.3%" src="{{ site.assets }}/unsupervised-learning/ica.svg">
 
 {: .caption}
-Independent component analysis of two mixed signals: (a) the sources $$s_1$$, $$s_2$$, independent and uniformly distributed; (b) the observed signals $$x_1$$, $$x_2$$, mixed as $$x = As$$; (c) the whitened signals $$z_1$$, $$z_2$$, $$z = Vx$$, with zero mean and identity covariance, from which only the orthogonal matrix $$U$$ remains to be found. Adapted from: [T. Yokota, Independent Component Analysis for Blind Source Separation, Tokyo Institute of Technology, 2012](https://www.slideshare.net/slideshow/independent-component-analysis-11359849/11359849)
+Independent component analysis of two mixed signals, with colors that mark the four quadrants of the sources. **1.** The sources $$s_1$$ and $$s_2$$, independent and uniformly distributed, with zero mean and unit variance. **2.** The observed signals $$x = As$$, with $$a_{11} = a_{22} = 1$$, $$a_{12} = 0.6$$ and $$a_{21} = 0.4$$. **3.** The whitened signals $$z = Vx$$, with zero mean and identity covariance, from which only the orthogonal matrix $$U$$ remains to be found. **4.** The sources recovered as $$Uz$$, with the rows of $$U$$ found by FastICA; their order and signs, which ICA cannot recover, are matched to the sources. Inspired by: [T. Yokota, Independent Component Analysis for Blind Source Separation, Tokyo Institute of Technology, 2012](https://www.slideshare.net/slideshow/independent-component-analysis-11359849/11359849)
 
 **Non-Gaussianity is a measure of independence**. [Kurtosis](https://en.wikipedia.org/wiki/Kurtosis) is a measure of non-Gaussianity, defined for a variable $$y$$ of zero mean by:
 
