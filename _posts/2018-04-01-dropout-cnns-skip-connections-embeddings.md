@@ -14,16 +14,30 @@ The post [Deep Neural Networks, Backpropagation and Optimization]({{ site.baseur
 
 A network with many parameters is prone to [overfitting](https://en.wikipedia.org/wiki/Overfitting): it learns the noise of the training data, and generalizes poorly to new data. **Dropout**, described in the paper [Dropout: A Simple Way to Prevent Neural Networks from Overfitting](https://jmlr.org/papers/v15/srivastava14a.html), is a method that drops neurons (in different layers) with a given probability $$p$$ at training time. For each training sample in a mini-batch, a new *thinned* network is sampled, made of the neurons that are kept.
 
-The outputs of the kept neurons are scaled by $$1/(1-p)$$, so that their expected value is the same at training and inference time. An output $$x_j^{(l)}$$ is kept with probability $$1-p$$, so its expected value is $$(1-p) \times x_j^{(l)}/(1-p) = x_j^{(l)}$$. At inference time, all neurons are used, and no dropout is applied. This scaling at training time is known as *inverted dropout*; note that the paper scales the weights at inference time instead, and writes $$p$$ for the probability of keeping a unit. A simple code snippet to explain this is:
+The outputs of the kept neurons are scaled by $$1/(1-p)$$, so that their expected value is the same at training and inference time. An output $$x_j^{(l)}$$ is kept with probability $$1-p$$, so its expected value is $$(1-p) \times x_j^{(l)}/(1-p) = x_j^{(l)}$$. At inference time, all neurons are used, and no dropout is applied. This scaling at training time is known as *inverted dropout*; note that the paper scales the weights at inference time instead, and writes $$p$$ for the probability of keeping a unit.
+
+A simple code snippet to explain this follows the NumPy layers of the post on [deep neural networks]({{ site.baseurl }}{% post_url 2018-03-27-dnn-backprop %}#backpropagation), with a `forward` and a `backward` method, and the code of this post reuses their classes `Parameter`, `Linear`, `ReLU` and `MLP`. First, the base class `Layer` gives the layers without parameters an empty list of parameters. Then, the `forward` method of `Dropout` draws a mask that keeps each unit with probability $$1-p$$, scaled by $$1/(1-p)$$, and multiplies the input by it. As the output is the input times this mask, the `backward` method multiplies the derivative of the loss by the same mask, so that the dropped units get no gradient:
 
 ```python
-class MyDropout(nn.Module):
-    def forward(self, X):
-        if self.training:
-            binomial = torch.distributions.binomial.Binomial(probs=1-self.p)
-            return X * binomial.sample(X.size()) * (1.0/(1-self.p))
-        return X
+class Layer:  # a layer without parameters
+    def parameters(self):
+        return []
+
+class Dropout(Layer):
+    def __init__(self, p=0.5):
+        self.p, self.training = p, True  # training is False at inference time
+
+    def forward(self, x):
+        if not self.training:
+            return x
+        self.mask = (np.random.rand(*x.shape) >= self.p) / (1 - self.p)  # scaled kept units
+        return x * self.mask
+
+    def backward(self, dx):
+        return dx * self.mask
 ```
+
+The flag `training` plays the role of the `train()` and `eval()` methods of a PyTorch module.
 
 Dropout helps reduce overfitting, as the network learns to never rely on any given activation, so it learns *redundant* ways of solving the task with multiple neurons. As a side effect, it leads to sparse activations, similar to an L1 regularization of the activations (section 7.2 of the paper). For linear regression, it is equivalent in expectation to an L2 regularization of the weights, i.e. [ridge regression](https://en.wikipedia.org/wiki/Ridge_regression) (section 9.1).
 
@@ -94,6 +108,92 @@ Weight sharing makes a convolutional layer much smaller than a fully connected o
 
 Training is done with [backpropagation]({{ site.baseurl }}{% post_url 2018-03-27-dnn-backprop %}#backpropagation), ignoring that some weights are shared and considering each weight on each edge to be an independent variable. Once the gradient has been computed for this network with independent weights, the gradients of all edges that share the same weight are summed up. This gives the gradient for the network with weight sharing, as the loss depends on the shared weight through each of these edges. 
 
+For one channel, with the cross-correlation $$x^{(1)}[n,m] = \sum_{u,v} h[u,v] \, x^{(0)}[n+u,m+v]$$ of deep learning libraries and the error $$\delta[n,m] = \partial \mathcal{L} / \partial x^{(1)}[n,m]$$ of the output, the chain rule gives the derivatives of the loss with respect to the filter and to the input as:
+
+$$
+\frac{\partial \mathcal{L}}{\partial h[u,v]} = \sum_{n,m} \delta[n,m] \, x^{(0)}[n+u,m+v], \hspace{1cm} \frac{\partial \mathcal{L}}{\partial x^{(0)}[n,m]} = \sum_{u,v} \delta[n-u,m-v] \, h[u,v]
+$$
+
+The first sum adds up the derivatives of the shared weight $$h[u,v]$$ over all the positions of the filter, as described above. The second is a convolution of the error with the filter, and not a cross-correlation, over all the positions where they overlap (a *full* convolution). Thus, the backward pass of a convolutional layer is also a convolution, from the output channels to the input channels.
+
+Both passes are computed as matrix products. The windows of the input that the filter covers, after the padding, are gathered into a matrix with one window per row (a method known as *im2col*), and the convolution becomes the product of this matrix with the matrix of the filters, computed by the same optimized routines as the matrix products of a fully connected layer. In NumPy, `sliding_window_view` gives these windows as a view of the input, without copying it, and `tensordot` copies them into such a matrix and multiplies it by the filters, over the two dimensions of the window and the input channels. The images have the shape $$B \times H \times W \times C$$ ($$N \times 16 \times 16 \times 3$$ in the picture above), with the channels last, and the layer has a stride of 1, as the convolutions of the picture:
+
+```python
+from numpy.lib.stride_tricks import sliding_window_view
+
+class Conv2d:
+    def __init__(self, c_in, c_out, k, padding=0):
+        std = np.sqrt(2 / (k * k * c_in))  # He initialization, for ReLU
+        self.W = Parameter(np.random.normal(0, std, (k, k, c_in, c_out)))
+        self.b = Parameter(np.zeros(c_out))
+        self.k, self.padding = k, padding
+
+    def forward(self, x):  # x: B x H x W x C_in, with a stride of 1
+        p = self.padding
+        x = np.pad(x, ((0, 0), (p, p), (p, p), (0, 0)))
+        # windows of shape B x H_out x W_out x C_in x k x k
+        self.windows = sliding_window_view(x, (self.k, self.k), axis=(1, 2))
+        z = np.tensordot(self.windows, self.W.data, axes=([4, 5, 3], [0, 1, 2]))
+        return z + self.b.data
+
+    def backward(self, delta):  # delta: B x H_out x W_out x C_out
+        k, p = self.k, self.padding
+        # sum over the images and the positions, of shape C_in x k x k x C_out
+        dW = np.tensordot(self.windows, delta, axes=([0, 1, 2], [0, 1, 2]))
+        self.W.grad += dW.transpose(1, 2, 0, 3)
+        self.b.grad += delta.sum(axis=(0, 1, 2))
+        delta = np.pad(delta, ((0, 0), (k - 1, k - 1), (k - 1, k - 1), (0, 0)))
+        windows = sliding_window_view(delta, (k, k), axis=(1, 2))
+        # full convolution, with the flipped filters
+        dx = np.tensordot(windows, self.W.data[::-1, ::-1], axes=([4, 5, 3], [0, 1, 3]))
+        return dx[:, p:dx.shape[1] - p, p:dx.shape[2] - p]  # without the padding
+
+    def parameters(self):
+        return [self.W, self.b]
+```
+
+The `backward` method pads the error with `k - 1` zeros on each side, for a kernel size `k`, and multiplies its windows by the flipped filters, which computes the full convolution above, and then removes the padding of the input. Then comes the max pooling layer, which has no parameters. Its `forward` method keeps the maximum of each window of $$2 \times 2$$, and its `backward` method passes the derivative of each output to the position of that maximum only, as the other inputs of the window do not change the output:
+
+```python
+class MaxPool2d(Layer):  # windows of 2 x 2 with a stride of 2
+    def forward(self, x):
+        self.shape = x.shape  # saved for the backward pass
+        B, H, W, C = x.shape
+        x = x.reshape(B, H // 2, 2, W // 2, 2, C).transpose(0, 1, 3, 5, 2, 4)
+        x = x.reshape(B, H // 2, W // 2, C, 4)  # each window in the last axis
+        self.idx = x.argmax(axis=-1)  # the position of the maximum of each window
+        return x.max(axis=-1)
+
+    def backward(self, delta):
+        B, H, W, C = self.shape
+        dx = np.zeros((B, H // 2, W // 2, C, 4))
+        np.put_along_axis(dx, self.idx[..., None], delta[..., None], axis=-1)
+        dx = dx.reshape(B, H // 2, W // 2, C, 2, 2).transpose(0, 1, 4, 2, 5, 3)
+        return dx.reshape(B, H, W, C)
+```
+
+Finally, `Flatten` turns the feature maps of each image into one vector, the input of the fully connected layers, and `Sequential` builds a network from a list of layers, with the `forward`, `backward` and `parameters` methods of the MLP of the DNN post. And that is all: the CNN of the picture above, with ReLU activations, is given by:
+
+```python
+class Flatten(Layer):
+    def forward(self, x):
+        self.shape = x.shape  # saved for the backward pass
+        return x.reshape(len(x), -1)
+
+    def backward(self, delta):
+        return delta.reshape(self.shape)
+
+class Sequential(MLP):
+    def __init__(self, *layers):
+        self.layers = list(layers)
+
+model = Sequential(Conv2d(3, 32, 3, padding=1), ReLU(), MaxPool2d(),
+                   Conv2d(32, 64, 3, padding=1), ReLU(), MaxPool2d(), Flatten(),
+                   Linear(4 * 4 * 64, 512), ReLU(), Linear(512, 2))
+```
+
+The model has 545,218 parameters, of which the first fully connected layer holds the 524,800 counted above. On a small CNN made of these layers, the derivatives agree with finite differences to about $$10^{-9}$$. In practice, deep learning libraries run these computations with optimized GPU kernels, and choose among several algorithms, such as im2col, the [fast Fourier transform](https://en.wikipedia.org/wiki/Fast_Fourier_transform) and Winograd's minimal filtering ([Lavin and Gray, 2015](https://arxiv.org/abs/1509.09308)), depending on the sizes of the filters and of the images.
+
 ## Skip Connections
 
 An issue with very deep networks is that the performance of the model drops as the depth of the architecture increases. This is known as the *degradation problem*. It is not caused by overfitting, since the training error increases as well.
@@ -112,6 +212,19 @@ $$
 
 where the first term passes the gradient of the layers above to the layers below unchanged, even when the derivatives of the skipped layers are small. Over a stack of blocks, the paper [Identity Mappings in Deep Residual Networks](https://arxiv.org/abs/1603.05027) showed that the gradient at any block contains the gradient at the last block as an additive term (Eq. 5 in the paper). Therefore, it does not vanish, even when the weights are arbitrarily small.
 
+In code, a residual block is a `Sequential` model of the skipped layers $$F$$, whose output is added to its input. Its `backward` method follows the equation above: it adds the derivative of the loss with respect to the output of the block, $$\partial \mathcal{L} / \partial y$$, to the derivative that the skipped layers return:
+
+```python
+class Residual(Sequential):  # y = x + F(x), with the layers of F
+    def forward(self, x):
+        return x + super().forward(x)
+
+    def backward(self, dy):
+        return dy + super().backward(dy)
+```
+
+As an example, `Residual(Conv2d(64, 64, 3, padding=1), ReLU(), Conv2d(64, 64, 3, padding=1))` followed by `ReLU()` is the basic block of ResNet, without its batch normalization layers. The padding keeps the size of the feature maps, so that $$x$$ and $$F(x)$$ can be added.
+
 With a concatenation, as in DenseNet, each layer receives the feature maps of all the layers before it, so the number of channels grows with every layer. If each layer produces $$k$$ feature maps (the *growth rate*), the layer $$H_l$$ receives $$k_0 + k(l-1)$$ of them, where $$k_0$$ is the number of channels of the input of the block (DenseNet paper, section 3). The following picture illustrates a dense block of DenseNet:
 
 {: .picture}
@@ -121,6 +234,22 @@ With a concatenation, as in DenseNet, each layer receives the feature maps of al
 A 5-layer dense block of DenseNet with a growth rate of $$k = 4$$: each layer $$H_i$$ (BN-ReLU-Conv) takes the feature maps $$x_0, \ldots, x_{i-1}$$ of all preceding layers as input and produces $$k$$ new feature maps $$x_i$$. The transition layer takes all of them. Adapted from: [Densely Connected Convolutional Networks](https://arxiv.org/abs/1608.06993)
 
 In the picture, the input $$x_0$$ has $$k_0 = 6$$ feature maps and $$k = 4$$, so the layer $$H_4$$ receives $$6 + 4 \times 3 = 18$$ feature maps, and the transition layer, which takes all of them, $$6 + 4 \times 4 = 22$$. To sum up, an addition (ResNet) keeps the number of channels constant, while a concatenation (DenseNet) lets every layer read the feature maps of all the layers before it. The price of DenseNet is an input that grows with the depth of the block, which is why it uses small growth rates ($$k$$ from 12 to 40 in its experiments).
+
+Similarly, each layer of a dense block concatenates its input and the output of its function $$H_l$$, along the channels. Its `backward` method splits the derivative of the loss along the same channels: the part of the input channels passes to the input unchanged, as with the addition of ResNet, and the rest goes through $$H_l$$:
+
+```python
+class Concat(Sequential):  # y = [x, H(x)] along the channels, with the layers of H
+    def forward(self, x):
+        self.c = x.shape[-1]  # channels of the input
+        return np.concatenate([x, super().forward(x)], axis=-1)
+
+    def backward(self, dy):
+        return dy[..., :self.c] + super().backward(dy[..., self.c:])
+
+block = Sequential(*[Concat(ReLU(), Conv2d(6 + 4 * l, 4, 3, padding=1)) for l in range(4)])
+```
+
+The dense block of the picture, with $$k_0 = 6$$ and $$k = 4$$, is the model `block` of four such layers, which take 6, 10, 14 and 18 channels and return the 22 channels that the transition layer takes. Each $$H_l$$ is a ReLU followed by a $$3 \times 3$$ convolution, without the batch normalization of DenseNet.
 
 There is currently a plethora of different implementations of CNNs with several layouts of skip connections. To know more, the curious reader can have a look at [ResNet](https://arxiv.org/abs/1512.03385), [DenseNet](https://arxiv.org/abs/1608.06993) and [U-net](https://arxiv.org/abs/1505.04597).
 
@@ -171,6 +300,25 @@ $$
 
 where $$m$$ is a hyper-parameter (the margin). In practice, the loss pulls similar pairs together, towards a distance of 0, and pushes dissimilar pairs apart, and a dissimilar pair contributes to the loss only while its distance is below $$m$$. The original paper is [Dimensionality Reduction by Learning an Invariant Mapping](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf), summarized in the <a href="{{ site.publications_permalink }}">publications bookmark</a>.
 
+The losses of this post follow the `MSELoss` of the post on [deep neural networks]({{ site.baseurl }}{% post_url 2018-03-27-dnn-backprop %}#training-loop): `forward` returns the loss averaged over a mini-batch of $$B$$ samples, and `backward` returns its derivatives with respect to the inputs of the loss, from which the backward pass of the network starts. For the contrastive loss, the derivative with respect to the embedding $$e_1$$ of the first input is $$(y \, \delta - (1-y) \max(0, m - \delta)) (e_1 - e_2) / \delta$$, and the one with respect to the embedding $$e_2$$ of the second input is its opposite:
+
+```python
+class ContrastiveLoss:
+    def __init__(self, m=1.0):
+        self.m = m  # margin
+
+    def forward(self, e1, e2, y):  # embeddings of the B pairs, and their labels 1 or 0
+        self.diff, self.y = e1 - e2, y
+        self.d = np.linalg.norm(self.diff, axis=1)  # distances delta
+        return np.mean(y * self.d**2 + (1 - y) * np.maximum(0, self.m - self.d)**2) / 2
+
+    def backward(self):  # derivatives with respect to e1 and e2
+        hinge = np.maximum(0, self.m - self.d)
+        scale = self.y - (1 - self.y) * hinge / np.maximum(self.d, 1e-12)
+        de1 = scale[:, None] * self.diff / len(self.d)
+        return de1, -de1
+```
+
 ### Triplet Loss
 
 **[Triplet loss](https://en.wikipedia.org/wiki/Triplet_loss)** is used in classification tasks where the number of classes is very large. Triplet loss helps by learning distributed embedding representations of data points such that, in the high-dimensional vector space, contextually similar data points are projected nearby, while dissimilar data points are projected far away from each other.
@@ -181,6 +329,24 @@ $${\displaystyle {\mathcal {L}}\left(x,x^{+},x^{-}\right)=\operatorname {max} \l
 
 where $$x$$ is an anchor input, $$x^{+}$$ is a positive input of the same class as $$x$$, $$x^{-}$$ is a negative input of a different class from $$x$$, $$m$$ is a margin between positive and negative pairs, and $$f$$ is an embedding. More details are given in the original paper, [FaceNet: A Unified Embedding for Face Recognition and Clustering](https://arxiv.org/abs/1503.03832).
 
+For a triplet with a positive loss, the derivatives with respect to $$f(x)$$, $$f(x^+)$$ and $$f(x^-)$$ are $$2(f(x^-) - f(x^+))$$, $$2(f(x^+) - f(x))$$ and $$2(f(x) - f(x^-))$$, and they are 0 for the other triplets. The default margin is the $$m = 0.2$$ of the FaceNet paper:
+
+```python
+class TripletLoss:
+    def __init__(self, m=0.2):
+        self.m = m  # margin
+
+    def forward(self, a, p, n):  # embeddings of the B anchors, positives and negatives
+        self.a, self.p, self.n = a, p, n
+        loss = np.sum((a - p)**2, axis=1) - np.sum((a - n)**2, axis=1) + self.m
+        self.active = (loss > 0)[:, None] / len(a)  # positive losses, divided by B
+        return np.mean(np.maximum(loss, 0))
+
+    def backward(self):  # derivatives with respect to a, p and n
+        return (2 * (self.n - self.p) * self.active, 2 * (self.p - self.a) * self.active,
+                2 * (self.a - self.n) * self.active)
+```
+
 The triplet loss is similar to, and often confused with, the contrastive loss, as both learn embeddings from examples of similar and dissimilar inputs. Yet, they constrain different distances. The contrastive loss constrains *absolute* distances: each similar pair is pulled towards a distance of 0, and each dissimilar pair is pushed beyond the margin $$m$$. The triplet loss constrains *relative* distances: the squared distance of the anchor to the negative must exceed the one to the positive by the margin $$m$$, whatever the distances themselves. In practice, the triplet loss considers the anchor-neighbor-distant triplets, while the contrastive loss deals with the anchor-neighbor and anchor-distant pairs of samples. As the FaceNet paper notes, a loss that pulls the faces of one person together "encourages all faces of one identity to be projected onto a single point in the embedding space", while the triplet loss "allows the faces for one identity to live on a manifold".
 
 ### Connectionist Temporal Classification Loss
@@ -188,6 +354,51 @@ The triplet loss is similar to, and often confused with, the contrastive loss, a
 **[Connectionist Temporal Classification (CTC)](https://en.wikipedia.org/wiki/Connectionist_temporal_classification)** is a classifier and loss function for noisy, unsegmented sequential input data, used to train [recurrent neural networks](https://en.wikipedia.org/wiki/Recurrent_neural_network) (RNNs) such as [LSTM](https://en.wikipedia.org/wiki/Long_short-term_memory) networks to tackle sequence problems where the timing is variable. CTC was published by Graves et al. in 2006, in [Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks](https://www.cs.toronto.edu/~graves/icml_2006.pdf).
 
 At each time step, the network outputs the probability of each label and of an extra *blank* label (no label). The probability of a target sequence is the sum of the probabilities of all the alignments (one output per time step) that give the target once repeated labels and blanks are removed. As an example, with the blank written "−", 7 of the 256 sequences of 4 outputs over the labels c, a, t and the blank give the target "cat": "ccat", "caat", "catt", "cat−", "ca−t", "c−at" and "−cat". The blank also separates repeated labels: "l−l" gives "ll", while "ll" gives "l". The CTC loss is the negative logarithm of this probability, computed by dynamic programming, as the number of alignments grows quickly with the number of time steps (28 for 5 time steps).
+
+The dynamic program runs over the target with a blank before, between and after its labels ("−c−a−t−" for "cat"), whose $$S = 2U + 1$$ symbols, for a target of $$U$$ labels, are the states of an alignment. An alignment starts in one of the first two states and ends in one of the last two, and at each time step it stays in its state, moves to the next one, or skips the blank between two different labels. The **forward variable** $$\alpha_t(s)$$, the probability of the beginnings of the alignments that are in the state $$s$$ at time $$t$$, is thus given by (section 4.1 of the paper):
+
+$$
+\alpha_t(s) = \left( \alpha_{t-1}(s) + \alpha_{t-1}(s-1) + [s \text{ may skip}] \, \alpha_{t-1}(s-2) \right) p^t_{l'_s}
+$$
+
+where $$l'_s$$ is the label of the state $$s$$, $$p^t_k$$ is the probability of the label $$k$$ at time $$t$$ ($$y^t_k$$ in the paper), and the last term counts only when $$l'_s$$ is a label different from $$l'_{s-2}$$. The probability of the target is the sum of $$\alpha_T(s)$$ over the last two states. Similarly, the **backward variable** $$\beta_t(s)$$ is the probability of the endings of these alignments after time $$t$$, computed from $$t = T$$ backwards (the paper's $$\beta_t(s)$$ also includes $$p^t_{l'_s}$$). Then, $$\alpha_t(s) \beta_t(s)$$, normalized over $$s$$, is the probability that an alignment is in the state $$s$$ at time $$t$$, and the derivative of the loss with respect to the logit of the label $$k$$ at time $$t$$ is $$p^t_k$$ minus the sum of these probabilities over the states of the label $$k$$ (Eq. 16 in the paper).
+
+In code, each row of $$\alpha$$ and $$\beta$$ is scaled to a sum of 1, against [underflow](https://en.wikipedia.org/wiki/Arithmetic_underflow), and the scale factors of $$\alpha$$ give the loss. First, `log_softmax` computes the logarithms of the probabilities without overflow. Then, `CTCLoss` computes the loss of one sequence and its derivatives with respect to the logits:
+
+```python
+def log_softmax(z):  # along the last axis, shifted by the maximum against overflow
+    z = z - z.max(axis=-1, keepdims=True)
+    return z - np.log(np.sum(np.exp(z), axis=-1, keepdims=True))
+
+class CTCLoss:  # one sequence, with the blank at index 0 of the C labels
+    def forward(self, z, target):  # logits z: T x C; target: labels from 1 to C-1
+        self.p = np.exp(log_softmax(z))
+        l = np.zeros(2 * len(target) + 1, dtype=int)
+        l[1::2] = target  # the target with a blank before, between and after its labels
+        # an alignment may go from the state s-2 to s, over a blank
+        skip = np.r_[False, False, (l[2:] != 0) & (l[2:] != l[:-2])]
+        y = self.p[:, l]  # T x S: probability of the label of each state
+        T, S = y.shape
+        alpha, beta, scale = np.zeros((T, S)), np.zeros((T, S)), np.zeros(T)
+        a = np.eye(S)[0]  # at t = -1, so that alignments start in the first two states
+        beta[-1, -2:] = 1  # alignments end in the last two states
+        for t in range(T):  # forward recursion, each row scaled to a sum of 1
+            a = (a + np.r_[0, a[:-1]] + np.r_[0, 0, a[:-2]] * skip) * y[t]
+            scale[t] = a.sum()
+            alpha[t] = a = a / scale[t]
+        for t in range(T - 1, 0, -1):  # backward recursion
+            b = beta[t] * y[t]
+            beta[t - 1] = b + np.r_[b[1:], 0] + np.r_[b[2:] * skip[2:], 0, 0]
+            beta[t - 1] /= beta[t - 1].sum()
+        self.gamma, self.labels = alpha * beta, np.eye(z.shape[1])[l]
+        return -np.sum(np.log(scale)) - np.log(alpha[-1, -2:].sum())
+
+    def backward(self):  # derivative with respect to the logits
+        gamma = self.gamma / self.gamma.sum(axis=1, keepdims=True)  # state probabilities
+        return self.p - gamma @ self.labels
+```
+
+On short sequences, the loss agrees with the sum over all the $$C^T$$ alignments, and its derivatives with finite differences. A mini-batch averages the losses of its sequences.
 
 ### Focal Loss
 
@@ -209,6 +420,33 @@ In practice, the factor $$(1 - p_t)^\gamma$$ is close to 0 for well-classified e
 
 {: .caption}
 The focal loss as a function of $$p_t$$, with $$\alpha_t = 1$$, for values of $$\gamma$$ from 0, the cross-entropy, to 5. A larger $$\gamma$$ lowers the loss of the well-classified examples ($$p_t > 0.5$$) the most, which puts more focus on the misclassified ones. Inspired by: [Focal Loss for Dense Object Detection](https://arxiv.org/abs/1708.02002)
+
+For softmax outputs, the chain rule through $$p_t$$ gives the derivative of the focal loss with respect to the logits $$z$$:
+
+$$
+\frac{\partial \mathcal{L}_{\text{focal}}}{\partial z} = \alpha_t \left( \gamma (1 - p_t)^{\gamma - 1} p_t \log(p_t) - (1 - p_t)^\gamma \right) (y - p)
+$$
+
+where $$p$$ is the vector of the predicted probabilities and $$y$$ the one-hot vector of the true class. With $$\gamma = 0$$ and $$\alpha_t = 1$$, it is $$p - y$$, the derivative of the cross-entropy. The argument `alpha` holds one balancing factor per class, e.g. `np.array([0.75, 0.25])` for the $$\alpha = 0.25$$ that the paper uses with $$\gamma = 2$$, the class 1 being the positive one:
+
+```python
+class FocalLoss:
+    def __init__(self, gamma=2.0, alpha=None):
+        self.gamma, self.alpha = gamma, alpha  # alpha: one factor per class, or None
+
+    def forward(self, z, y):  # logits z and one-hot targets y, of shape B x C
+        logp = log_softmax(z)
+        self.p, self.y = np.exp(logp), y
+        self.logpt = np.sum(logp * y, axis=1, keepdims=True)  # log(p_t)
+        self.at = 1 if self.alpha is None else y @ self.alpha[:, None]  # alpha_t
+        return -np.mean(self.at * (1 - np.exp(self.logpt))**self.gamma * self.logpt)
+
+    def backward(self):  # derivative with respect to the logits
+        g, pt = self.gamma, np.exp(self.logpt)
+        q = np.maximum(1 - pt, 1e-300)  # 1 - p_t, above 0 for the power g - 1
+        dpt = self.at * (g * q**(g - 1) * pt * self.logpt - q**g)  # p_t times dL/dp_t
+        return dpt * (self.y - self.p) / len(pt)
+```
 
 ### Dice Loss
 
@@ -246,6 +484,29 @@ $$
 $$
 
 where $$C$$ is the number of classes, and $$p_{i,c}$$ and $$g_{i,c}$$ are the predicted and ground truth values of the $$i$$-th pixel for class $$c$$. The Generalised Dice Loss of the paper linked above (Sudre et al., 2017) instead sums the terms of all classes in a single fraction. It weights those of each class $$c$$ by $$w_c = 1/(\sum_{i=1}^{M} g_{i,c})^2$$, the inverse of the square of its number of ground truth pixels, so that small structures count as much as large ones.
+
+For softmax outputs, the derivative of the multi-class Dice loss with respect to the probability $$p_{i,c}$$ is given by:
+
+$$
+\frac{\partial \mathcal{L}_{\text{Dice}}}{\partial p_{i,c}} = -\frac{2}{C} \, \frac{g_{i,c} S_c - I_c}{S_c^2}
+$$
+
+where $$I_c = \sum_{i=1}^{M} p_{i,c} \, g_{i,c}$$ and $$S_c = \sum_{i=1}^{M} p_{i,c} + \sum_{i=1}^{M} g_{i,c}$$ are the numerator, without the factor 2, and the denominator of the class $$c$$. The derivative with respect to the logits then follows through the softmax. The code averages the loss over the images of the mini-batch, with the shape $$B \times H \times W \times C$$ of the convolutional layers above:
+
+```python
+class DiceLoss:
+    def forward(self, z, g):  # logits z and one-hot ground truth g, of shape B x H x W x C
+        self.p, self.g = np.exp(log_softmax(z)), g
+        self.I = np.sum(self.p * g, axis=(1, 2))  # B x C intersections
+        self.S = np.sum(self.p, axis=(1, 2)) + np.sum(g, axis=(1, 2))  # B x C, |P| + |G|
+        return 1 - np.mean(2 * self.I / self.S)
+
+    def backward(self):  # derivative with respect to the logits
+        I, S = self.I[:, None, None], self.S[:, None, None]
+        dp = -2 * (self.g * S - I) / S**2 / self.I.size  # dL/dp
+        # through the softmax
+        return self.p * (dp - np.sum(self.p * dp, axis=-1, keepdims=True))
+```
 
 ### Comparison of the Loss Functions
 

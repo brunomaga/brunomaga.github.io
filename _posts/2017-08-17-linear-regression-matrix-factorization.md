@@ -67,7 +67,34 @@ $$
 
 The best line is thus $$f(x) = 0.83 + 1.5x$$. Its predictions, 0.83, 2.33 and 3.83, leave the errors 0.17, −0.33 and 0.17, which sum to 0, and no other line has a smaller sum of squared errors.
 
+In NumPy, the normal equations are solved with `np.linalg.solve`, which is faster and more accurate than computing the inverse of $$X^TX$$:
+
+```python
+import numpy as np
+
+X = np.array([[1, 0], [1, 1], [1, 2]])  # a column of ones, then the input of each point
+y = np.array([1, 2, 4])
+w = np.linalg.solve(X.T @ X, X.T @ y)  # [0.833, 1.5]
+```
+
+When $$X^TX$$ is close to singular, `np.linalg.lstsq(X, y)` is preferred: it computes the same solution from $$X$$ with the singular value decomposition, without forming $$X^TX$$, whose condition number is the square of the one of $$X$$.
+
 For the sake of comparison, the closed-form solution takes $$O(ND^2 + D^3)$$ operations, to compute $$X^TX$$ and to solve the normal equations, against $$O(ND)$$ for a step of gradient descent. The step computes the gradient of the MSE, $$\nabla L(w) = -\frac{2}{N} X^T(y - Xw)$$, with two products of a matrix and a vector. For $$N = 10^6$$ samples of $$D = 10^3$$ features, the closed form takes about $$10^{12}$$ operations, as many as 1,000 steps of gradient descent. The closed form is thus preferred for a small $$D$$, and gradient descent for a large one.
+
+The following function runs gradient descent with this gradient. Given a mini-batch size `B`, it runs mini-batch SGD instead, and SGD for `B=1`, with the gradient of the MSE of a random mini-batch at each step:
+
+```python
+def gradient_descent(X, y, eta, steps, B=None):
+    w = np.zeros(X.shape[1])
+    for _ in range(steps):
+        # a random mini-batch, or all the samples for GD
+        n = np.random.choice(len(y), B, replace=False) if B else slice(None)
+        Xn, yn = X[n], y[n]
+        w += 2 * eta / len(yn) * (Xn.T @ (yn - Xn @ w))  # step against the MSE gradient
+    return w
+```
+
+On the three points, 1,000 steps of gradient descent with $$\eta = 0.1$$ reach the closed-form solution $$(0.833, 1.5)$$. For $$\eta > 0.419$$, i.e. 2 divided by the largest eigenvalue of the Hessian $$\frac{2}{N} X^TX$$ of the MSE, the iterates diverge, as the post [Mathematics for ML]({{ site.baseurl }}{% post_url 2017-08-10-algebra-for-ml %}#gradient-descent) explains. With the same $$\eta = 0.1$$, SGD ends at a random point around the solution, with a standard deviation of about 0.08 for each weight, and mini-batch SGD with $$B = 2$$ of about 0.035. As the gradient of a mini-batch is not 0 at the minimum, a constant step size keeps the weights moving, and a decaying step size is needed for SGD to converge.
 
 ### Regularization
 
@@ -94,6 +121,14 @@ w = \left( \begin{bmatrix} 3 & 3 \\ 3 & 5 \end{bmatrix} + \begin{bmatrix} 0 & 0 
 $$
 
 The slope shrinks from 1.5 to 1.0, and the bias grows from 0.83 to 1.33. The line still passes through the mean of the points, $$(1, 2.33)$$: as $$w_0$$ is not penalized, the derivative of the loss with respect to $$w_0$$ still sets the sum of the errors to 0.
+
+In code, Ridge Regression adds $$\lambda$$ to the diagonal of $$X^TX$$, except for the entry of the bias:
+
+```python
+lam = 1.0
+I = np.diag([0, 1])  # the bias w_0 is not penalized
+w = np.linalg.solve(X.T @ X + lam * I, X.T @ y)  # [1.333, 1.0]
+```
 
 Note: in statistics, **[shrinkage](https://en.wikipedia.org/wiki/Shrinkage_(statistics))** is the reduction in the effects of sampling variation on the estimated parameters (e.g. a model overfitting the training data and not performing well on unseen data). Regularization attempts to do this by "shrinking" model parameters towards 0: LASSO sets some of them exactly to 0, while Ridge Regression makes all of them smaller, without setting them to 0.
 
@@ -171,7 +206,23 @@ $$
 w_d \leftarrow w_d + \eta \, e_{dn} \, z_n, \hspace{1cm} z_n \leftarrow z_n + \eta \, e_{dn} \, w_d
 $$
 
-where both updates use the values before the step, and $$\eta$$ is the step size. In practice, when the rating is underestimated ($$e_{dn} > 0$$), the step moves the features of the movie towards those of the user, and vice versa, which increases their dot product. With the regularizer, Koren et al. (2009) also subtract $$\eta \lambda_w w_d$$ and $$\eta \lambda_z z_n$$ from the two updates, which shrink both rows towards 0. Another approach minimizes the cost over one factor at a time, a form of coordinate descent.
+where both updates use the values before the step, and $$\eta$$ is the step size. In practice, when the rating is underestimated ($$e_{dn} > 0$$), the step moves the features of the movie towards those of the user, and vice versa, which increases their dot product. With the regularizer, Koren et al. (2009) also subtract $$\eta \lambda_w w_d$$ and $$\eta \lambda_z z_n$$ from the two updates, which shrink both rows towards 0.
+
+In code, `mask` is the $$D \times N$$ boolean matrix of the observed ratings $$\Omega$$, and each epoch runs one SGD step per observed rating, in a random order, with the same $$\lambda$$ for both factors. The factors start with small random values, as $$W = Z = 0$$ is a stationary point of the cost, where all the gradients are 0. Python evaluates the right side of an assignment before it assigns the values, so both updates use the values before the step:
+
+```python
+def mf_sgd(X, mask, K, eta=0.05, lam=0.01, epochs=50):
+    rng = np.random.default_rng(0)
+    W, Z = rng.normal(0, 0.1, (X.shape[0], K)), rng.normal(0, 0.1, (X.shape[1], K))
+    for _ in range(epochs):
+        for d, n in rng.permutation(np.argwhere(mask)):  # observed ratings, shuffled
+            e = X[d, n] - W[d] @ Z[n]
+            W[d], Z[n] = (W[d] + eta * (e * Z[n] - lam * W[d]),
+                          Z[n] + eta * (e * W[d] - lam * Z[n]))
+    return W, Z
+```
+
+Another approach minimizes the cost over one factor at a time, a form of coordinate descent.
 
 ### Coordinate Descent
 
@@ -208,6 +259,25 @@ The main advantage is that it is extremely simple to implement and does not requ
   $$
 
   - each row $$w_d$$ of $$W$$ is then computed from its observed ratings only, as $$w_d = (\sum_{n:(d,n) \in \Omega} z_n z_n^T + \lambda_w I_K)^{-1} \sum_{n:(d,n) \in \Omega} x_{dn} z_n$$, and similarly for each row $$z_n$$ of $$Z$$.
+
+Each step of ALS thus runs one Ridge Regression per row, of its observed ratings on the rows of the fixed factor, which solves a $$K \times K$$ linear system. The function `als_rows` computes all the rows of one factor, and `mf_als` alternates between the two factors, from a random $$Z$$:
+
+```python
+def als_rows(F, X, mask, lam):
+    """Each row of the other factor: a Ridge Regression of its observed ratings on F."""
+    I = lam * np.eye(F.shape[1])
+    rows = [np.linalg.solve(F[m].T @ F[m] + I, F[m].T @ x[m]) for x, m in zip(X, mask)]
+    return np.array(rows)
+
+def mf_als(X, mask, K, lam=0.1, iters=20):
+    Z = np.random.default_rng(0).normal(0, 0.1, (X.shape[1], K))
+    for _ in range(iters):
+        W = als_rows(Z, X, mask, lam)  # each row w_d, for a fixed Z
+        Z = als_rows(W, X.T, mask.T, lam)  # each row z_n, for a fixed W
+    return W, Z
+```
+
+As an example, take the product of two random factors of 3 columns, for 100 movies and 80 users, plus a Gaussian noise of standard deviation 0.1, with 20% of its entries observed. With $$K = 3$$, both functions predict the missing entries with an RMSE of about 0.09, against 1.6 for the mean of the observed ratings. Note that the SGD steps shrink a row at each of its ratings, as in the cost of Koren et al. (2009), which sums the regularizer over the observed ratings, so `mf_sgd` takes a smaller $$\lambda$$ than `mf_als`.
 
 SGD is in general easier and faster than ALS. However, ALS is favorable in two cases (source: [Koren et al., 2009]({{ site.assets }}/linear-regression-matrix-factorization/recommender-systems-netflix.pdf)). The first is parallel computing, as each row of $$W$$ (or of $$Z$$) is computed independently of the other rows. The second is implicit feedback, such as purchases or views instead of ratings, where the matrix records whether each user bought or watched each item. As this matrix is dense, looping over each of its entries, as SGD does, is not practical.
 

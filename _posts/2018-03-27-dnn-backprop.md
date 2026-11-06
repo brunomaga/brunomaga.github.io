@@ -313,6 +313,7 @@ class MLP:
     def backward(self, delta):
         for layer in reversed(self.layers):
             delta = layer.backward(delta)
+        return delta  # the derivative of the loss with respect to the input
 
     def parameters(self):
         return [theta for layer in self.layers for theta in layer.parameters()]
