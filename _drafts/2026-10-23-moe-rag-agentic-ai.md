@@ -2,12 +2,13 @@
 layout: post
 title:  "From Mixture-of-Experts to Retrieval-Augmented Generation (RAG) and Agentic AI"
 categories: ["Efficient Inference"]
-tags: ["LLM", "MoE", "RAG", "agentic AI", "multi-agent systems", "latency", "continuous batching"]
+tags: ["LLM", "MoE", "RAG", "similarity search", "agentic AI", "multi-agent systems", "latency", "continuous batching"]
+description: "How Mixture-of-Experts (MoE) models, retrieval-augmented generation (RAG) and static and dynamic agentic AI systems select their units, with latency models, Python code, production limitations and a comparison of the four."
 ---
 
 Selecting a few specialized components for each input is a recurring idea in large-model systems. [Mixture-of-Experts]({{ site.baseurl }}{% post_url 2024-01-19-mixture-of-experts %}) (MoE) models select experts per token inside the network, [retrieval-augmented generation](https://en.wikipedia.org/wiki/Retrieval-augmented_generation) (RAG) selects documents to read as context, and **agentic AI systems** (AAIs) select external agents to run. Along this progression, the selected units become coarser, more independent and more heterogeneous, which changes how latency must be modeled. Systems that combine such components are often called **[compound AI systems](https://bair.berkeley.edu/blog/2024/02/18/compound-ai-systems/)**.
 
-This post recaps the latency of MoE models, describes RAG, explains why agents are used rather than a larger model, and derives the latency of static and dynamic agentic systems. It then discusses the limitations of agentic systems in production, and compares MoE, RAG and agentic systems.
+This post recaps the latency of MoE models and describes RAG, with a short Python implementation of its retrieval. It explains why agents are used rather than a larger model, derives the latency of static and dynamic agentic systems, and implements both in Python. Finally, it discusses the limitations of agentic systems in production, and compares MoE, RAG and agentic systems.
 
 ## Mixture-of-Experts
 
@@ -15,6 +16,8 @@ As a short reminder, an MoE layer runs on a network of accelerators in three ste
 - **Gating**: a gate (or router) picks the top-k experts of each token, and their weights.
 - **Dispatch**: an [all-to-all]({{ site.baseurl }}{% post_url 2015-04-21-matrix-transpose %}) collective sends each token to the accelerators that hold its experts. Experts are typically feed-forward networks (FFNs) with different parameters.
 - **Combine**: the experts process their tokens, and each accelerator sums the outputs of each token, weighted by the gate. These partial sums are sent back to the accelerator that holds the token, where they are added up, as a global reduction.
+
+The [distributed implementation in PyTorch]({{ site.baseurl }}{% post_url 2024-01-19-mixture-of-experts %}#distributed-implementation-in-pytorch) of the MoE post shows the code of these three steps, with all-to-all collectives for the dispatch and the combine.
 
 The [prefill and decode]({{ site.baseurl }}{% post_url 2025-06-07-inference-prefill-decode-roofline-cache %}) latency of an MoE model of $$L_{\text{moe}}$$ layers, for $$n_{\text{in}}$$ input tokens and $$n_{\text{out}}$$ output tokens, is given by:
 
@@ -49,6 +52,41 @@ One MoE layer on two accelerators, with two experts each, and the terms of Eq. 2
 The RAG pipeline. Ahead of time, the chunks of the documents are embedded and stored in a vector database. At query time, the query is embedded with the same model, and the top-$$k$$ chunks $$c_1$$ to $$c_k$$ that the search returns are placed in the prompt of the LLM, between the system prompt (sys) and the query.
 
 The retrieval is a **similarity search**: it returns the $$k$$ chunks whose vectors are nearest to the vector of the query, usually by [cosine similarity](https://en.wikipedia.org/wiki/Cosine_similarity). This is the nearest-neighbor query of [spatial databases](https://en.wikipedia.org/wiki/Spatial_database), but in hundreds to thousands of dimensions, where spatial indexes such as [k-d trees](https://en.wikipedia.org/wiki/K-d_tree) and [R-trees](https://en.wikipedia.org/wiki/R-tree) become slower than a scan of all the vectors. Vector databases therefore use an [approximate nearest neighbor search](https://en.wikipedia.org/wiki/Nearest_neighbor_search#Approximation_methods) (e.g. [HNSW](https://en.wikipedia.org/wiki/Hierarchical_navigable_small_world)), which returns most of the true nearest neighbors for a small fraction of the work. The reason is the *curse of dimensionality*, which the [unsupervised learning post]({{ site.baseurl }}{% post_url 2017-11-01-unsupervised-learning %}#the-curse-of-dimensionality-and-nearest-neighbor-search) covers together with the main methods of approximate search.
+
+The following code implements this pipeline with an exact search. Here, `embed` stands for the embedding model, e.g. the `encode` method of a [Sentence Transformers](https://www.sbert.net/) model, which maps a list of texts to a matrix with one vector per row. First, the chunks are embedded ahead of time, and each vector is normalized to unit length, so that the cosine similarity of two vectors is their dot product:
+
+```python
+import numpy as np
+
+def normalize(v):
+  return v / np.linalg.norm(v, axis=-1, keepdims=True)
+
+index = normalize(embed(chunks))  # ahead of time: one unit vector per chunk
+```
+
+Then, at query time, the query is embedded in the same way, and the search scores all the chunks with one matrix-vector product and keeps the $$k$$ best. These chunks are placed in the prompt between the system prompt and the query, as in the picture above:
+
+```python
+def search(index, q, k):
+  scores = index @ normalize(q)              # cosine similarity to every row of the index
+  top = np.argpartition(-scores, k - 1)[:k]  # the k best scores, in any order
+  return top[np.argsort(-scores[top])]       # sorted from the best to the worst
+
+def rag_prompt(system, query, k=4):
+  top = search(index, embed([query])[0], k)
+  return "\n\n".join([system, *(chunks[i] for i in top), query])  # sys, c1 ... ck, query
+```
+
+This exact search reads all the vectors at each query, so its cost grows linearly with the number of chunks. An approximate search reads only a small part of them: with the [Faiss](https://en.wikipedia.org/wiki/FAISS) library, for example, an HNSW index of the same vectors is built once, ahead of time, and then searched at each query:
+
+```python
+import faiss
+
+M = 32  # links per vector in each layer of the graph (2M in the base layer)
+hnsw = faiss.IndexHNSWFlat(index.shape[1], M, faiss.METRIC_INNER_PRODUCT)
+hnsw.add(index)                                          # ahead of time
+scores, top = hnsw.search(normalize(embed([query])), k)  # approximate top-k
+```
 
 Vanilla RAG is thus a fixed retrieve-then-generate pipeline, in which only the retrieved content varies per query. Its overhead, one forward pass of the embedding model and one search, is small and predictable next to the LLM. Later work made retrieval adaptive, letting the model decide when to retrieve during generation (e.g. [Self-RAG](https://arxiv.org/abs/2310.11511), Asai et al., 2024). When an agent decides what and when to retrieve, possibly over several rounds, the approach is called **agentic RAG**.
 
@@ -93,6 +131,50 @@ where the agents are indexed by completion time, so that the maximum over the fi
 {: .caption}
 A static AAI with $$K = 3$$ agents, of which the first $$k = 2$$ results are used, and the terms of Eq. 3 under its stages. The router selects the agents, the query is dispatched to the three of them in parallel, and the synthesizer combines the first two results; the result of the third agent comes too late and is dropped. The orange arrows are network transfers.
 
+A static AAI can be written in Python with [asyncio](https://docs.python.org/3/library/asyncio.html), where each agent is called through an asynchronous function that sends the call and returns the result of the agent. First, the hedged fan-out starts all the calls and collects their results as they complete, until it has $$k$$ of them or the TTLT deadline passes. A failed call is skipped, and the calls still running at the end are canceled, as their results are no longer needed:
+
+```python
+import asyncio
+
+async def hedged_fanout(calls, k, ttlt):
+  tasks = [asyncio.create_task(call) for call in calls]
+  results = []
+  try:
+    async with asyncio.timeout(ttlt):  # the TTLT deadline
+      for next_done in asyncio.as_completed(tasks):
+        try:
+          results.append(await next_done)
+        except Exception:
+          continue                     # skip a failed call
+        if len(results) == k:
+          break
+  except TimeoutError:
+    pass                               # keep the results that arrived in time
+  for task in tasks:
+    task.cancel()                      # stop the calls that are still running
+  return results
+```
+
+Then, the static AAI routes the query once, calls the $$K$$ selected agents with a hedged fan-out, and passes the first $$k$$ results to the synthesizer, the three stages of Eq. 3:
+
+```python
+async def static_aai(query, agents, route, synthesize, K, k, ttlt):
+  selected = route(query, K)                          # routing: K agent names
+  calls = [agents[name](query) for name in selected]  # the K calls of the fan-out
+  results = await hedged_fanout(calls, k, ttlt)       # first k results within TTLT
+  return await synthesize(query, results)             # prefill and decode
+```
+
+The router can be any function that returns $$K$$ agent names. A similarity-search router, for example, is the retrieval of RAG above, run over the descriptions of the agents:
+
+```python
+names = list(descriptions)  # descriptions: agent name -> description
+agent_index = normalize(embed([descriptions[name] for name in names]))
+
+def route(query, K):
+  return [names[i] for i in search(agent_index, embed([query])[0], K)]
+```
+
 ### Dynamic AAI: the orchestrator architecture
 
 In a **dynamic AAI**, the agents are selected during execution by a central LLM, the **orchestrator** (or lead agent), which reads each output before deciding the next calls, as in [ReAct](https://arxiv.org/abs/2210.03629) (Yao et al., 2023), where a model interleaves reasoning with actions. At step $$s$$, the context has $$c_s$$ tokens, with $$c_0 = 0$$. The orchestrator prefills the $$c_s - c_{s-1}$$ tokens appended since the previous step, reusing the KV cache of the first $$c_{s-1}$$, and decodes $$n_s$$ tokens, which may include calls to $$K_s$$ agents. These calls run as a hedged fan-out that waits for the first $$k_s$$ results or for the TTLT deadline, and their outputs are appended to the context. The following picture illustrates this loop, and the context of the orchestrator after two steps:
@@ -117,6 +199,23 @@ Note that a step that calls no agents, such as the last one, adds no fan-out tim
 
 {: .caption}
 A run of a dynamic AAI over $$S = 3$$ steps. In step 1, the orchestrator calls two agents and continues with the first result ($$K_1 = 2$$, $$k_1 = 1$$), so the result of agent 2 is not used. In step 2, it calls agent 2 alone, which misses the TTLT deadline, so the orchestrator continues without its result. In step 3, it decodes the final answer. The idle boxes are the time in which the orchestrator waits for the agents.
+
+The dynamic AAI runs the same hedged fan-out inside a loop of at most $$S_{\max}$$ steps. Here, `llm` is the orchestrator: at each step, it prefills the new tokens of the context and decodes the tokens $$d_s$$. It returns their text and the agent calls in them, as pairs of an agent name and its input. For simplicity, each step waits for all its calls ($$k_s = K_s$$) up to the TTLT deadline, and the last step allows no calls, so that the orchestrator has to answer:
+
+```python
+async def dynamic_aai(system, query, agents, llm, ttlt, s_max):
+  context = [system, query]
+  for s in range(1, s_max + 1):
+    text, calls = await llm(context, allow_calls=(s < s_max))  # prefill and decode
+    context.append(text)                                       # the decoded tokens d_s
+    if not calls:                                              # no calls: final answer
+      return text
+    outputs = await hedged_fanout(
+      [agents[name](arg) for name, arg in calls], k=len(calls), ttlt=ttlt)
+    context.extend(outputs)                                    # the agent outputs a_s
+```
+
+And that is all: each iteration of the loop is one step of Eq. 4, the prefill and decode of the orchestrator followed by the fan-out of its calls.
 
 The post on the [multi-agent research system](https://www.anthropic.com/engineering/multi-agent-research-system) of Anthropic shows a diagram of such a dynamic AAI in production.
 
@@ -152,7 +251,7 @@ Finally, model servers run many requests together in a batch, and with **continu
 So the execution overhead lies in:
 - **Queueing at shared agents.** Each agent serves many orchestrators from a finite pool of accelerators. Under load, $$t_{\text{agent}}$$ is dominated by queueing rather than by computation or transport, and depends on the load of the replica that a call lands on.
 - **Stragglers and the TTLT cut-off.** A fan-out waits for the $$k$$-th fastest agent, up to TTLT. An agent that misses TTLT has used its compute for nothing, and the decision is made with fewer results: if it missed because of the network, the network lowered the quality of the answer.
-- **Wasted work.** Calls that lose a hedge or miss their deadline keep running unless cancelled, and cancellations often do not propagate across agent hops. Orchestrators also get stuck repeating the same call. While agents run, the KV cache of the orchestrator sits idle: keeping it wastes memory, dropping it forces a re-prefill, and swapping it costs transfers. Recomputing the context after each external call takes 37 to 40% of the model forwarding time ([InferCept](https://arxiv.org/abs/2402.01869), Abhyankar et al., 2024).
+- **Wasted work.** Calls that lose a hedge or miss their deadline keep running unless canceled, and cancellations often do not propagate across agent hops. Orchestrators also get stuck repeating the same call. While agents run, the KV cache of the orchestrator sits idle: keeping it wastes memory, dropping it forces a re-prefill, and swapping it costs transfers. Recomputing the context after each external call takes 37 to 40% of the model forwarding time ([InferCept](https://arxiv.org/abs/2402.01869), Abhyankar et al., 2024).
 - **Per-message overhead.** Token streaming turns each response into many small messages, so the cost of a proxy grows with the token rate rather than with the bytes.
 - **Redundant transfers.** Where bandwidth matters, part of it carries contexts re-sent at every step, duplicated hedged calls and repeated calls.
 
