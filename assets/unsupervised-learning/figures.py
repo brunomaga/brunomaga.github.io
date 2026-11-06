@@ -4,12 +4,13 @@ Each picture runs its method on the post's example or on data drawn with a fixed
 (Pictures): 1 unit = 1 px, text as glyph outlines, cropped to the drawn content plus 0.5 px.
 usage: python3 figures.py [NAME ...]   (needs matplotlib, scikit-learn, scipy and the fonts of CLAUDE.md)
 """
-import io, os, re, sys
+import io, os, re, sys, zipfile
 import numpy as np
 import matplotlib
 matplotlib.use('agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse, Polygon, Rectangle
+from matplotlib.transforms import offset_copy
 from PIL import Image
 from scipy.cluster.hierarchy import fcluster, leaves_list, linkage
 from scipy.optimize import linear_sum_assignment
@@ -21,7 +22,7 @@ from sklearn.mixture import GaussianMixture
 from sklearn.neighbors import KNeighborsClassifier
 
 TEXT, MATH = 'Source Sans 3', 'NewComputerModernSansMath'
-BLUE, GREEN, RED, GREY = '#6c8ebf', '#82b366', '#b85450', '#666666'  # accents, for small marks
+BLUE, GREEN, RED, ORANGE, GREY = '#6c8ebf', '#82b366', '#b85450', '#d79b00', '#666666'  # accents, for small marks
 PASTEL = {BLUE: '#dae8fc', GREEN: '#d5e8d4', RED: '#f8cecc'}
 DASH = (0, (3, 3))  # draw.io's default dash pattern, scaled by the line weight
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -137,7 +138,7 @@ def knn():
         if min([np.linalg.norm(p - o) for o in A + B]) > 0.2: B.append(p)
     X, y = np.vstack(A + B + [near[0]]), np.repeat([0, 1], [12, 13])
     colors = np.array([BLUE, GREEN])
-    def data_panel(ax, box):
+    def classes_panel(ax, box):
         for k in range(2):
             points(ax, X[y == k], colors[k])
         ax.plot(*q, 'o', ms=10, mfc='#ffffff', mec='k', mew=1.0, zorder=20)
@@ -157,8 +158,8 @@ def knn():
     legend = [(lambda c, x, y: c.square(x, y, BLUE), 8, 'Class A'),
               (lambda c, x, y: c.square(x, y, GREEN), 8, 'Class B'),
               (lambda c, x, y: c.circle(x, y, '#ffffff'), 10, 'Query')]
-    three_panels('knn', np.vstack([X, q]), [data_panel, knn_panel(1), knn_panel(3)],
-                 ['Data', ('𝑘 = 1', MATH), ('𝑘 = 3', MATH)], legend)
+    row('knn', square_box(np.vstack([X, q])), [classes_panel, knn_panel(1), knn_panel(3)],
+        ['Data', ('𝑘 = 1', MATH), ('𝑘 = 3', MATH)], legend=legend)
 
 
 def hierarchical_clustering():
@@ -264,19 +265,48 @@ def kmeans_panel(X, km, colors):
     return draw
 
 
-def three_panels(name, X, draws, labels, legend=None):
-    """Three panels over the same square box around X, an arrow after the first, and a legend column on the right."""
-    c, box = Canvas(830, 260), square_box(X)
-    xs = [10, 280, 520]
+def row(name, box, draws, labels, size=220, arrow=True, frame=True, legend=None):
+    """A row of square panels of size px over the same box, framed (frame) and 20 px apart, a block arrow after the
+    first panel (arrow), a label under each (a text or a (text, font) pair) and a legend column on the right."""
+    c = Canvas(830, size + 40)
+    xs = [10 + k * (size + 20) + (30 if arrow and k else 0) for k in range(len(draws))]
     for x, draw in zip(xs, draws):
-        draw(c.panel(x, 10, 220, 220, box[:2], box[2:]), box)
-    c.arrow(240, 120)
+        draw(c.panel(x, 10, size, size, box[:2], box[2:], frame), box)
+    if arrow:
+        c.arrow(size + 20, size / 2 + 10)
     for x, label in zip(xs, labels):
         text, font = label if isinstance(label, tuple) else (label, TEXT)
-        c.text(x + 110, 251, text, font=font)
+        c.text(x + size / 2, size + 31, text, font=font)
     if legend:
-        c.legend_column(756, 120, [(lambda x, y, f=f: f(c, x, y), sw, text) for f, sw, text in legend])
+        c.legend_column(xs[-1] + size + 16, size / 2 + 10,
+                        [(lambda x, y, f=f: f(c, x, y), sw, text) for f, sw, text in legend])
     c.save(name)
+
+
+def guides(ax, box):
+    """The coordinate axes through the origin, as grey dashed guide lines."""
+    ax.plot(box[:2], [0, 0], color=GREY, lw=1.0, ls=DASH, zorder=2)
+    ax.plot([0, 0], box[2:], color=GREY, lw=1.0, ls=DASH, zorder=2)
+
+
+def vector(ax, p0, p1):
+    """A thin arrow from p0 to p1 with the classic head of draw.io: 6.4 px long and wide, its notch at 3/4."""
+    p0, p1 = np.asarray(p0, float), np.asarray(p1, float)
+    px = 1 / np.ptp(ax.transData.transform([(0, 0), (1, 0)])[:, 0])  # a px in data units
+    d = (p1 - p0) / np.linalg.norm(p1 - p0)
+    n, back = np.array([-d[1], d[0]]), p1 - 6.4 * px * d
+    ax.add_patch(Polygon([p1, back + 3.2 * px * n, p1 - 4.8 * px * d, back - 3.2 * px * n], fc='k', lw=0, zorder=25))
+    ax.plot(*np.c_[p0, p1 - 4 * px * d], color='k', lw=1.4, zorder=25)
+
+
+def sub(ax, p, base, index, dx, dy):
+    """The arrow text base with the subscript index (13 and 11 px, in the math font, the index shifted down as the
+    font says), its right end dx px and its baseline dy px away from the point p, in data units."""
+    r = ax.figure.canvas.get_renderer()
+    t, i = (ax.text(*p, text, fontsize=f, fontfamily=MATH, zorder=25) for text, f in ((base, 13), (index, 11)))
+    wb, wi = (u.get_window_extent(r).width for u in (t, i))
+    t.set_transform(offset_copy(ax.transData, ax.figure, dx - wb - wi, dy, units='points'))
+    i.set_transform(offset_copy(ax.transData, ax.figure, dx - wi, dy - 0.247 * 13, units='points'))
 
 
 def spectral_clustering():
@@ -294,9 +324,9 @@ def spectral_clustering():
     def spectral_panel(ax, box):
         for k, col in enumerate(colors[match(sc.labels_, y)]):
             points(ax, X[sc.labels_ == k], col)
-    three_panels('spectral_clustering', X, [data_panel(X), kmeans_panel(X, km, colors[match(km.labels_, y)]),
-                                            spectral_panel],
-                 ['Data', 'k-means', 'Spectral clustering'])
+    row('spectral_clustering', square_box(X),
+        [data_panel(X), kmeans_panel(X, km, colors[match(km.labels_, y)]), spectral_panel],
+        ['Data', 'k-means', 'Spectral clustering'])
 
 
 def gmm():
@@ -316,13 +346,127 @@ def gmm():
                                  fc=PASTEL[col], ec='k', lw=1.0, zorder=1))
             points(ax, X[labels == k], col)
         means(ax, gm.means_, gcol)
-    three_panels('gmm', X, [data_panel(X), kmeans_panel(X, km, colors[match(km.labels_, y)]), gmm_panel],
-                 ['Data', 'k-means', 'Gaussian mixture model'])
+    row('gmm', square_box(X), [data_panel(X), kmeans_panel(X, km, colors[match(km.labels_, y)]), gmm_panel],
+        ['Data', 'k-means', 'Gaussian mixture model'])
     print('  ARI k-means:', round(adjusted_rand_score(y, km.labels_), 2),
           'GMM:', round(adjusted_rand_score(y, labels), 2))
 
 
-FIGURES = {f.__name__: f for f in [knn, hierarchical_clustering, dbscan, spectral_clustering, gmm]}
+def som_training():
+    """A SOM of 6 x 6 neurons trained on points drawn uniformly from the unit square, at four iterations."""
+    rng = np.random.default_rng(0)
+    n, T, shown = 6, 10000, [0, 500, 3000, 10000]
+    grid = np.array([(i, j) for i in range(n) for j in range(n)], float)  # the position of each neuron in the grid
+    W = 0.5 + 0.15 * rng.standard_normal((n * n, 2))  # the weights start in a small random cloud
+    snaps = {0: W.copy()}
+    for t in range(T):
+        x = rng.uniform(0, 1, 2)
+        j = np.argmin(((W - x) ** 2).sum(1))  # the winner
+        eta, width = 0.5 * 0.02 ** (t / T), 3 * (1 / 6) ** (t / T)  # from 0.5 to 0.01, and from 3 to 0.5
+        W += eta * np.exp(-((grid - grid[j]) ** 2).sum(1) / (2 * width ** 2))[:, None] * (x - W)
+        if t + 1 in shown:
+            snaps[t + 1] = W.copy()
+    def lattice(w):
+        def draw(ax, box):
+            ax.add_patch(Rectangle((0, 0), 1, 1, fc=PASTEL[BLUE], ec='k', lw=1.0, zorder=1))
+            g = w.reshape(n, n, 2)
+            for line in [*g, *g.transpose(1, 0, 2)]:  # the rows and the columns of the grid
+                ax.plot(*line.T, color='k', lw=1.4, zorder=5)
+            ax.plot(*w.T, 'o', ms=5, mfc='#ffffff', mec='k', mew=1.0, zorder=10)
+        return draw
+    row('som_training', (-0.1, 1.1, -0.1, 1.1), [lattice(snaps[t]) for t in shown],
+        [f'Iteration {t:,}' for t in shown], size=185, arrow=False)
+
+
+def som_mnist():
+    """SOMs of 6 x 6 neurons trained on the digits 0 to 3 of kohonen_mnist.zip, as its kohonen.py does: tuned, with a
+    high learning rate, and with a large neighborhood width."""
+    with zipfile.ZipFile(os.path.join(HERE, 'kohonen_mnist.zip')) as z:
+        X, y = (np.loadtxt(io.BytesIO(z.read(f'kohonen_mnist/{f}.txt'))) for f in ('data', 'labels'))
+    X, n, T = X[np.isin(y, [0, 1, 2, 3])], 6, 10000
+    grid = np.array([(i, j) for i in range(n) for j in range(n)], float)
+    def som(eta, width):
+        rng = np.random.default_rng(0)
+        W = rng.uniform(0, 255, (n * n, X.shape[1]))
+        for i in rng.permutation(np.arange(T) % len(X)):  # each digit in turn, in a random order
+            j = np.argmin(((W - X[i]) ** 2).sum(1))
+            W += eta * np.exp(-((grid - grid[j]) ** 2).sum(1) / (2 * width ** 2))[:, None] * (X[i] - W)
+        return W
+    def tiles(W):
+        def draw(ax, box):
+            img = W.reshape(n, n, 28, 28).transpose(0, 2, 1, 3).reshape(n * 28, n * 28)  # neuron (i, j) at row i
+            ax.imshow(255 - img, cmap='gray', vmin=0, vmax=255, interpolation='none', extent=(0, n, 0, n), zorder=1)
+            for k in range(1, n):
+                ax.plot([k, k], [0, n], color='#999999', lw=0.4, zorder=2)
+                ax.plot([0, n], [k, k], color='#999999', lw=0.4, zorder=2)
+            ax.add_patch(Rectangle((0, 0), n, n, fill=False, ec='k', lw=1.2, joinstyle='miter', zorder=3))
+        return draw
+    row('som_mnist', (0, n, 0, n), [tiles(som(0.2, 1)), tiles(som(0.9, 1)), tiles(som(0.2, 4))],
+        ['Tuned', 'High learning rate', 'Large neighborhood width'], size=240, arrow=False, frame=False)
+
+
+def pca():
+    """A Gaussian centered at (1, 3), with standard deviations of 3 along (0.866, 0.5) and of 1 across, as in the PCA
+    picture of Wikipedia: centered, rotated onto its eigenvectors, and reduced to its first principal component."""
+    rng = np.random.default_rng(2)
+    u = np.array([np.cos(np.pi / 6), np.sin(np.pi / 6)])
+    X = np.array([1, 3]) + rng.standard_normal((30, 2)) * [3, 1] @ np.array([u, [-u[1], u[0]]])
+    Xc = X - X.mean(0)
+    lam, F = np.linalg.eigh(np.cov(Xc.T))
+    lam, v1 = lam[::-1], F[:, 1] * np.sign(F[0, 1])  # the eigenvalues in decreasing order; v1 points right
+    F = np.c_[v1, [-v1[1], v1[0]]]  # v2 is v1 turned by 90 degrees, so that F is a rotation
+    Dn = Xc @ F  # the columns of D_n = F^T D_c, as rows
+    def scatter(P, arrows=False):
+        def draw(ax, box):
+            guides(ax, box)
+            points(ax, P, GREY)
+            for k, (dx, dy) in enumerate([(-2, 7), (-3, 6)] if arrows else []):  # each eigenvector, 3 std long
+                tip = 3 * np.sqrt(lam[k]) * F[:, k]
+                vector(ax, (0, 0), tip)
+                sub(ax, tip, '𝑣', str(k + 1), dx, dy)
+        return draw
+    row('pca', square_box(np.vstack([X, Xc, Dn])), [scatter(X), scatter(Xc, True), scatter(Dn), scatter(Dn * [1, 0])],
+        ['1. Data', '2. Centered', '3. Rotated', '4. First component'], size=185, arrow=False)
+    print('  eigenvalues:', lam.round(2), 'variance of the first component:', round(lam[0] / lam.sum(), 3))
+
+
+def ica():
+    """Two independent uniform sources of unit variance, mixed, whitened, and separated by FastICA with the kurtosis,
+    as in the post; the colors mark the quadrants of the sources."""
+    rng = np.random.default_rng(0)
+    cells = np.indices((9, 9)).reshape(2, -1).T  # one point in each cell of a 9 x 9 grid, for an even spread
+    S = np.sqrt(3) * ((cells + rng.uniform(size=cells.shape)) * 2 / 9 - 1)
+    X = S @ np.array([[1, 0.6], [0.4, 1]]).T  # x = A s
+    Xc = X - X.mean(0)
+    lam, F = np.linalg.eigh(np.cov(Xc.T))
+    Z = Xc @ F / np.sqrt(lam)  # z = V x, with V = Λ^(-1/2) F^T
+    U = np.zeros((2, 2))
+    for k in range(2):  # each row w of U, by the fixed-point iteration of FastICA, orthogonal to the previous rows
+        w = np.eye(2)[k]
+        for _ in range(100):
+            w = (Z * (Z @ w)[:, None] ** 3).mean(0) - 3 * w
+            w -= U[:k].T @ (U[:k] @ w)
+            w /= np.linalg.norm(w)
+        U[k] = w
+    Y = Z @ U.T  # s = U z
+    C, R = np.corrcoef(Y.T, S.T)[:2, 2:], np.zeros_like(Y)  # the correlations of Y with the sources
+    for k, j in zip(*linear_sum_assignment(-np.abs(C))):  # ICA cannot recover their order and signs: match them
+        R[:, j] = np.sign(C[k, j]) * Y[:, k]
+    col = np.array([BLUE, GREEN, ORANGE, RED])[(S[:, 0] < 0) + 2 * (S[:, 1] < 0)]  # by the quadrant of the source
+    def scatter(P):
+        def draw(ax, box):
+            guides(ax, box)
+            for c in np.unique(col):
+                points(ax, P[col == c], c)
+        return draw
+    r = 1.24 * np.abs(np.vstack([S, X, Z, R])).max()
+    row('ica', (-r, r, -r, r), [scatter(P) for P in (S, X, Z, R)],
+        ['1. Sources', '2. Observed', '3. Whitened', '4. Recovered'], size=185, arrow=False)
+    print('  correlations with the sources:', np.abs(C).max(1).round(3))
+
+
+FIGURES = {f.__name__: f for f in [knn, hierarchical_clustering, dbscan, spectral_clustering, gmm, som_training,
+                                   som_mnist, pca, ica]}
 
 if __name__ == '__main__':
     for name in sys.argv[1:] or FIGURES:

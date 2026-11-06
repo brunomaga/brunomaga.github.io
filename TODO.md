@@ -619,19 +619,15 @@ that is not wrong.
 
 ### Unsupervised Learning methods (2017-11-01-unsupervised-learning.md)
 
-- `unsupervised-learning/gaussianscatterpca.svg`: the arrow heads end past the scaled eigenvectors, at 3.75 and 1.75
-  instead of 3 and 1, the lengths in the Wikipedia figure it follows. Fix: arrow heads that end at the tips of the
-  vectors.
 - `unsupervised-learning/kohonen2.svg`: the outline of the input-space sheet is 1.4 px, a weight that no rule of
   CLAUDE.md gives this shape. Fix: leave it, or 1.8 px, as the frame of a 2D domain.
-- Optional: `unsupervised-learning/kohonen_1.svg`, `kohonen_2.svg` and `kohonen_3.svg` have no caption; the list
-  before them describes the three maps. Fix: one caption under the three pictures, e.g. "The weights of the 6x6
-  neurons of the SOM, each drawn as a 28x28 image, for the digits 0 to 3: a tuned SOM (left), a high learning rate
-  (center) and a large neighbourhood width (right)." (no credit: the pictures come from the post's own code).
-- The captions of `unsupervised-learning/gaussianscatterpca.svg` and `kohonen.svg`, and the label "Input fibres" of
-  `kohonen.svg` (draw.io cell kohonen-13), use British spellings, while the text uses American ones. Fix: "centered",
-  "fibers", "neighbors" and "Input fibers", and "neighborhood" in the caption proposed above for kohonen_1 to
-  kohonen_3.
+- The caption of `unsupervised-learning/kohonen.svg` and `kohonen2.svg`, and the label "Input fibres" of
+  `kohonen.svg` (draw.io cell kohonen-13), use British spellings, while the text uses American ones. Fix: "fibers",
+  "neighbors" and "Input fibers".
+- Pictures that do not follow the one style of the post yet (CLAUDE.md, Pictures, section 1): `voronoi.svg` and the
+  k-means GIF of Wikimedia Commons; and kernel PCA, t-SNE, Apriori, FP-growth, isolation forest, LOF and the curse of
+  dimensionality have no picture. Fix: draw them with `figures.py`, as framed panels of the steps or iterations of
+  each method.
 
 ### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-dnn-backprop.md)
 
@@ -1146,6 +1142,9 @@ Content problems that need the author's decision, such as overlap between posts.
   the subsample of an isolation forest ($$\psi$$ in its paper), and $$k$$ has several uses. Proposed fix: write the
   expectation as $$\mathbb{E}$$ in ICA, as the statistics posts and the isolation forest section do, and keep the
   others, which each section defines.
+- ICA: the text writes the absolute value of the kurtosis as `$$\mid \mathrm{kurt}(w^Tz) \mid$$`, where `\mid` is a
+  relation with wide spaces around it, while the gradient below writes `\vert`. Fix: `$$\vert \mathrm{kurt}(w^T z)
+  \vert$$`.
 
 ### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-dnn-backprop.md)
 

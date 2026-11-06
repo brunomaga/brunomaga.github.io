@@ -268,6 +268,12 @@ sections 6 and 7, and the font section 4.
 - The algorithm pictures of the distributed sort and the load balancing (slicing) posts describe the
   algorithm, not an implementation: their steps say send, receive, broadcast, scatter, gather, reduce, share
   or transpose, never the name of an MPI call. The MPI calls of an implementation go in the caption.
+- The pictures of the unsupervised learning post share one style, at the user's request (2026-11-06): framed 2D
+  panels in a row of 1x3 or 1x4, or in 2x3 or 2x4, that show the data before and after a method (a block arrow after
+  the first panel) or the steps or the iterations of an algorithm (numbered labels or iteration counts under the
+  panels), with grey data points, accent marks and pastel regions. KNN and hierarchical clustering are drawn in 2D
+  too. These pictures are charts drawn from data by assets/unsupervised-learning/figures.py, which runs each method
+  on the post's example or on data drawn with a fixed seed.
 - Shapes that stand for sizes are drawn to scale: in the product of an M x N matrix and an N x O matrix, the
   three rectangles are M x N, N x O and M x O, with their splits (the Megatron-LM pictures).
 - Third person, as the post text: no "I", "we", "our", "ours", "us", "you" or "your" in a picture. A paper's
@@ -571,7 +577,6 @@ sections 6 and 7, and the font section 4.
     odd_even_sort, balance, split, sbs): a 1.8 px black outline, at the user's request;
   - the lines between the samples (rows) of the token tables of variable_batch_lr and
     variable_batch_lr_pipeline: 1.2 px black, at the user's request, so that each sample stands apart;
-  - the grey backgrounds of kohonen_1, kohonen_2 and kohonen_3: no outline, at the user's request;
   - the grid of solver_grid_neuron: thin grey #666666 lines, at the user's request;
   - the outlines of the Generator and Discriminator trapezoids of gan: 1.8 px, at the user's request, as in the
     original figure;
