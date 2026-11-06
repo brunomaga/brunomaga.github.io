@@ -178,7 +178,7 @@ where both updates use the values before the step, and $$\eta$$ is the step size
 The [**coordinate descent**](https://en.wikipedia.org/wiki/Coordinate_descent) optimization method iterates over individual coordinates (keeping the others fixed) to minimize the loss function, as illustrated below:
 
 {: .picture}
-<img width="36.4%" height="36.4%" src="{{ site.assets }}/linear-regression-matrix-factorization/coordinate_descent.svg">
+<img width="37.1%" height="37.1%" src="{{ site.assets }}/linear-regression-matrix-factorization/coordinate_descent.svg">
 
 {: .caption}
 Coordinate descent on $$f(x, y) = 5x^2 - 6xy + 5y^2$$ from $$(-0.5, -1)$$: each step minimizes $$f$$ along one coordinate, alternating $$y$$ and $$x$$, and the iterates converge to the minimum at the origin. Adapted from: [Coordinate descent](https://en.wikipedia.org/wiki/Coordinate_descent)
