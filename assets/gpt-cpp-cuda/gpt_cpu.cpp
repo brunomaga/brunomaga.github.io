@@ -129,9 +129,8 @@ void block_forward(const Block& p, dt* x, const Buffers& t, int B, int S) {
 int main(int argc, char* argv[]) {
   int batch = argc > 1 ? std::atoi(argv[1]) : B, M = batch*S;
 
-  // the parameters of the L blocks, with the deterministic values of gpt.h
-  unsigned int i = 0;
-  auto linear_param = [&](int n) { dt* p = new dt[n]; for (int j = 0; j < n; j++) p[j] = init_value(i++, 0.02); return p; };
+  // the parameters of the L blocks, with the random values of gpt.h
+  auto linear_param = [](int n) { dt* p = new dt[n]; for (int j = 0; j < n; j++) p[j] = init_value(0.02); return p; };
   auto norm_param = [](int n, dt c) { dt* p = new dt[n]; std::fill(p, p + n, c); return p; };
   std::vector<Block> blocks(L);
   for (Block& p : blocks) {
@@ -145,7 +144,7 @@ int main(int argc, char* argv[]) {
                 new dt[(long) batch*H*S*S] };
   std::vector<dt> x0(M*E), x(M*E);
   for (int j = 0; j < M*E; j++)
-    x0[j] = init_value(j, 1);
+    x0[j] = init_value(1);
 
   std::chrono::steady_clock::time_point start;
   for (int it = 0; it < warmup_iters + benchmark_iters; it++) {

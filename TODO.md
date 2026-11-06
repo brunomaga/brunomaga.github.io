@@ -1161,15 +1161,15 @@ Content problems that need the author's decision, such as overlap between posts.
 - Optional: once both drafts are published, "knowledge distillation" in the introduction could link to the
   distillation post instead of Wikipedia.
 
-### GPT from scratch in C++ and CUDA vs. fused PyTorch (_drafts/2026-08-17-gpt-cpp-cuda.md)
+### GPT from scratch in LibTorch, NumPy, C++ and CUDA (_drafts/2026-08-17-gpt-cpp-cuda.md)
 
 - The results that need GPUs are placeholders in bold brackets: the runtimes of `tiledMultiply` and cuBLAS, the
-  benchmark table and the CPU runtime, the hardware and the versions, and the discussion of the results. The CUDA and
-  LibTorch programs build, but have not run on a GPU: the CPU code prints the outputs of PyTorch in FP32, and a CPU
-  emulation of the CUDA kernels prints those of PyTorch in BF16. The kernels of
-  `torch.compile` were listed on the CPU, and the 5 passes over the attention weights come from the source of
-  TorchInductor. Fix: run the commands of the Benchmark section and of `assets/gpt-cpp-cuda/README.md` on a GPU
-  node, the compiled model with `TORCH_LOGS=output_code`, then fill in the placeholders and write the discussion.
+  benchmark table and the CPU runtimes, the hardware and the versions, and the discussion of the results. The CUDA and
+  LibTorch programs build, but have not run on a GPU: the C++ and NumPy code prints the outputs of PyTorch in FP32,
+  and a CPU emulation of the CUDA kernels prints those of PyTorch in BF16. The kernels of `torch.compile` were listed
+  on the CPU, and the 5 passes over the attention weights come from the source of TorchInductor. Fix: run the commands
+  of the Benchmark section and of `assets/gpt-cpp-cuda/README.md` on a GPU node, the compiled model with
+  `TORCH_LOGS=output_code`, then fill in the placeholders and write the discussion.
 - The draft's section "Kernel fusion and torch.compile", and its subsection "Graph breaks and communication", cover
   the first section of the kernel fusion post for tensor parallelism (kernel fusion, `torch.compile`, and the
   collective as a fusion boundary). Fix: when the draft is published, the kernel fusion post links to it and keeps

@@ -66,12 +66,13 @@ written by Claude read as if the author had written them from the beginning, not
   that is all: ..."), and each snippet is preceded by what it does.
 - The same code in several languages or libraries is shown in tabs, at the user's request (2026-11-06): a
   `<div class="code-tabs" markdown="1">` holds one `<div class="tab" data-title="..." markdown="1">` per
-  implementation, in the same order in every group of the post (PyTorch first), and each tab holds the text and
-  the code of its implementation. The text that applies to all implementations, or to several of them, stays
+  implementation, in the same order in every group of the post (PyTorch first; PyTorch, LibTorch, NumPy, C++ and
+  CUDA in the GPT C++ and CUDA post, at the user's request, 2026-11-06), and each tab holds the text and the code of
+  its implementation. The text that applies to all implementations, or to several of them, stays
   outside the tabs, before or after the group. `assets/js/code-tabs.js` shows one tab at a time, and a tab picked
   in one group is picked in all groups of the page. A grey line under each group shows where the text of the post goes
   on, at the user's request (2026-11-06). An implementation that is a single call is named in the text,
-  with no tab, at the user's request (2026-11-06): the `A @ B` of PyTorch and the `torch::matmul(A, B)` of
+  with no tab, at the user's request (2026-11-06): the `A @ B` of PyTorch and NumPy and the `torch::matmul(A, B)` of
   LibTorch. Variants of one algorithm that the text compares are tabs of the group too, each with its text, code and
   picture, at the user's request (2026-11-06): the matrix multiplication of the GPT C++ and CUDA post is one group of
   five tabs, C++, CUDA Simple, CUDA Coalesced and CUDA Shared Mem (the three kernels of the CUDA C++ Best Practices
@@ -247,7 +248,7 @@ word helps:
   site's font, about 85 characters, so that it also fits with wider system fonts.
 - A text task does not change titles: it proposes new ones in the title issues of `TODO.md`. The user approved
   the titles of seven posts on 2026-10-18, and on 2026-11-06 the title Algebra for ML of the maths post and the title
-  of the GPT C++ and CUDA draft, GPT from scratch in LibTorch, C++ and CUDA vs. compiled PyTorch; they are applied.
+  of the GPT C++ and CUDA draft, GPT from scratch in LibTorch, NumPy, C++ and CUDA; they are applied.
 
 ### TODO list
 

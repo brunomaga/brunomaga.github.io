@@ -167,15 +167,14 @@ int main(int argc, char* argv[]) {
   int batch = argc > 1 ? std::atoi(argv[1]) : B, M = batch*S;
   cublasCreate(&handle);
 
-  // the parameters of the L blocks, with the deterministic values of gpt.h, copied to the GPU
+  // the parameters of the L blocks, with the random values of gpt.h, copied to the GPU
   auto to_gpu = [](const std::vector<dt>& v) {
     dt* p;
     cudaMalloc(&p, v.size() * sizeof(dt));
     cudaMemcpy(p, v.data(), v.size() * sizeof(dt), cudaMemcpyHostToDevice);
     return p;
   };
-  unsigned int i = 0;
-  auto linear_param = [&](int n) { std::vector<dt> v(n); for (dt& w : v) w = init_value(i++, 0.02); return to_gpu(v); };
+  auto linear_param = [&](int n) { std::vector<dt> v(n); for (dt& w : v) w = init_value(0.02); return to_gpu(v); };
   auto norm_param = [&](int n, float c) { return to_gpu(std::vector<dt>(n, c)); };
   std::vector<Block> blocks(L);
   for (Block& p : blocks) {
@@ -189,7 +188,7 @@ int main(int argc, char* argv[]) {
   Buffers t = { alloc(M*E), alloc(M*E), alloc(M*E), alloc(M*E), alloc(M*E), alloc(M*4*E), alloc((long) batch*H*S*S) };
   std::vector<dt> host(M*E);
   for (int j = 0; j < M*E; j++)
-    host[j] = init_value(j, 1);
+    host[j] = init_value(1);
   dt *x0 = to_gpu(host), *x = alloc(M*E);
 
   std::chrono::steady_clock::time_point start;
