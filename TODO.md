@@ -113,6 +113,9 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
   `x[t,:]` raises an `IndexError` (NumPy 1.12 and later refuse float indices), even once `hash.mat` is added to the
   zip. Fix: `t = int(np.mod(s, x.shape[0]))`, or set `targetdigits = [0, 1, 2, 3]` directly, as the `hash.mat` item
   proposes.
+- `assets/unsupervised-learning/figures.py` sets its own fonts, colors and SVG options instead of importing
+  `_tools/charts.py`, as the chart rule of CLAUDE.md (Pictures, section 2) asks; its pictures already have the same
+  fonts, palette and line weights. Fix: import `charts` for the constants, and keep its `Canvas` class and ink crop.
 
 ### Dropout, CNNs, Skip Connections and Embeddings (2018-04-01-dropout-cnns-skip-connections-embeddings.md)
 
