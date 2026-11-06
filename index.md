@@ -21,7 +21,7 @@ layout: default
 
 <!-- introduction paragraph -->
 <p class="home-intro">
-Hi 👋🏽! I am an ML Researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research</a>, working on efficient Transformers, MoE, diffusion and agents, from embedded inference to distributed training. Previously, I was an ML Researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research</a>, an HPC Engineer and PhD Computational Neuroscience at <a href="https://epfl.ch">EPFL</a>, and MSc Computing at <a href="https://www.imperial.ac.uk/computing/">Imperial</a>.
+Hi 👋🏽! I’m Bruno, an ML Researcher at <span class="home-flagged"><a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research</a> <img class="home-flag" src="{{ site.assets }}/home/flag-ch.svg" alt="Switzerland"></span>, and before at <span class="home-flagged"><a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research</a> <img class="home-flag" src="{{ site.assets }}/home/flag-uk.svg" alt="United Kingdom"></span>, working on efficient Transformers, MoE, diffusion and agents, from embedded inference to distributed training. I was an HPC Engineer and PhD Computational Neuroscience at <a href="https://epfl.ch">EPFL</a>, and MSc Computing at <a href="https://www.imperial.ac.uk/computing/">Imperial</a>.
 </p>
 
 <p class="home-text">
