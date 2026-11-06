@@ -11,16 +11,18 @@ matplotlib.use('agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse, Polygon, Rectangle
 from PIL import Image
-from scipy.cluster.hierarchy import linkage
+from scipy.cluster.hierarchy import fcluster, leaves_list, linkage
 from scipy.optimize import linear_sum_assignment
+from scipy.spatial import ConvexHull
 from sklearn.cluster import DBSCAN, KMeans, SpectralClustering
 from sklearn.datasets import make_blobs, make_moons
 from sklearn.metrics import adjusted_rand_score
 from sklearn.mixture import GaussianMixture
+from sklearn.neighbors import KNeighborsClassifier
 
 TEXT, MATH = 'Source Sans 3', 'NewComputerModernSansMath'
-BLUE, GREEN, RED, ORANGE, GREY = '#6c8ebf', '#82b366', '#b85450', '#d79b00', '#666666'  # accents, for small marks
-PASTEL = {BLUE: '#dae8fc', GREEN: '#d5e8d4', RED: '#f8cecc', ORANGE: '#ffe6cc'}
+BLUE, GREEN, RED, GREY = '#6c8ebf', '#82b366', '#b85450', '#666666'  # accents, for small marks
+PASTEL = {BLUE: '#dae8fc', GREEN: '#d5e8d4', RED: '#f8cecc'}
 DASH = (0, (3, 3))  # draw.io's default dash pattern, scaled by the line weight
 HERE = os.path.dirname(os.path.abspath(__file__))
 plt.rcParams.update({'font.family': TEXT, 'svg.fonttype': 'path', 'svg.hashsalt': 'unsupervised-learning',
@@ -60,15 +62,6 @@ class Canvas:
     def circle(self, x, y, color, size=10):
         self.top.add_patch(Ellipse((x, y), size, size, fc=color, ec='k', lw=1.0))
 
-    def legend(self, xc, y, entries):
-        """A row of (swatch, swatch width, label) centered at xc: label 4 px right of its swatch, 16 px apart."""
-        widths = [sw + 4 + text_width(self.fig, label, 14) for _, sw, label in entries]
-        x = xc - (sum(widths) + 16 * (len(entries) - 1)) / 2
-        for (swatch, sw, label), w in zip(entries, widths):
-            swatch(x + sw / 2, y)
-            self.text(x + sw + 4, y, label, va='center_baseline', ha='left')
-            x += w + 16
-
     def legend_column(self, x, yc, entries):
         """A column of (swatch, swatch width, label) from x, centered at yc, with rows 20 px apart."""
         sw_max = max(sw for _, sw, _ in entries)
@@ -97,11 +90,10 @@ class Canvas:
         print(f'{name}.svg: {w:.1f} x {h:.1f} px, P = {w / 880 * 100:.1f}%')
 
 
-def text_width(fig, s, size, font=TEXT):
-    t = fig.text(0, 0, s, fontsize=size, fontfamily=font)
-    w = t.get_window_extent(renderer=fig.canvas.get_renderer()).width
-    t.remove()
-    return w
+def square_box(X):
+    """The (x0, x1, y0, y1) limits of a square around the points X, with a margin of 12% of their extent."""
+    mid, span = (X.min(0) + X.max(0)) / 2, 1.24 * np.ptp(X, 0).max()
+    return mid[0] - span / 2, mid[0] + span / 2, mid[1] - span / 2, mid[1] + span / 2
 
 
 def points(ax, xy, color, size=8, z=10):
@@ -131,74 +123,92 @@ def means(ax, centers, colors):
 
 
 def knn():
-    """The example of the post: A at 0, 1, 2 and B at 3.5, 6, 7 on a line, and the query 3."""
-    A, B, q = np.array([0, 1, 2.]), np.array([3.5, 6, 7.]), 3.0
-    c = Canvas(640, 220)
-    sx = lambda v: 80 + (v + 0.5) * 56  # px of a value of the line, from -0.5 to 7.5
-    rows = [('Data', TEXT, None), ('𝑘 = 1', MATH, 1), ('𝑘 = 3', MATH, 3)]
-    for r, (label, font, k) in enumerate(rows):
-        y = 30 + 52 * r
-        c.text(66, y, label, font=font, ha='right', va='center_baseline')
-        color = '#ffffff'
-        if k:
-            near = sorted(np.concatenate([A, B]), key=lambda v: abs(v - q))[:k]
-            dist = abs(near[-1] - q)  # the band covers the k nearest neighbors
-            c.top.add_patch(Rectangle((sx(q - dist) - 6, y - 11), sx(q + dist) - sx(q - dist) + 12, 22,
-                                      fc='#fff2cc', ec='k', lw=1.0, zorder=1))
-            vote = 'A' if sum(v in A for v in near) > k / 2 else 'B'
-            color = BLUE if vote == 'A' else ORANGE
-            c.text(sx(7.5) + 16, y, 'predicts ' + vote, ha='left', va='center_baseline')
-        c.top.plot([sx(-0.5), sx(7.5)], [y, y], color='k', lw=1.4, zorder=2)
-        for v in range(8):
-            c.top.plot([sx(v), sx(v)], [y, y + 8], color='k', lw=1.4, zorder=2)
-        for v in A: c.square(sx(v), y, BLUE)
-        for v in B: c.square(sx(v), y, ORANGE)
-        c.circle(sx(q), y, color)
-    c.text(sx(q), 30 - 12, 'query', size=12)
-    for v in range(8):
-        c.text(sx(v), 30 + 52 * 2 + 23, str(v), size=12)
-    band = lambda x, y: c.top.add_patch(Rectangle((x - 10, y - 6), 20, 12, fc='#fff2cc', ec='k', lw=1.0))
-    c.legend(sx(3.5), 186, [(lambda x, y: c.square(x, y, BLUE), 8, 'Class A'),
-                            (lambda x, y: c.square(x, y, ORANGE), 8, 'Class B'),
-                            (lambda x, y: c.circle(x, y, '#ffffff'), 10, 'Query'),
-                            (band, 20, 'Nearest neighbors')])
-    c.save('knn')
+    """Two classes and a query next to a single point of B among the points of A: k = 1 predicts B, k = 3 predicts A."""
+    rng = np.random.default_rng(0)
+    q = np.array([-0.7, -0.4])
+    at = lambda r, deg: q + r * np.array([np.cos(np.radians(deg)), np.sin(np.radians(deg))])
+    near = [at(0.3, 120), at(0.42, 300), at(0.46, 200)]  # the 3 nearest neighbors of the query: B, A, A
+    A, B = [near[1], near[2]], []
+    while len(A) < 12:  # the other points keep away from the query and from each other
+        p = rng.normal([-0.8, -0.5], 0.55)
+        if np.linalg.norm(p - q) > 0.62 and min(np.linalg.norm(p - o) for o in A + [near[0]]) > 0.2: A.append(p)
+    while len(B) < 12:
+        p = rng.normal([0.9, 0.6], 0.5)
+        if min([np.linalg.norm(p - o) for o in A + B]) > 0.2: B.append(p)
+    X, y = np.vstack(A + B + [near[0]]), np.repeat([0, 1], [12, 13])
+    colors = np.array([BLUE, GREEN])
+    def data_panel(ax, box):
+        for k in range(2):
+            points(ax, X[y == k], colors[k])
+        ax.plot(*q, 'o', ms=10, mfc='#ffffff', mec='k', mew=1.0, zorder=20)
+    def knn_panel(k):
+        def draw(ax, box):
+            model = KNeighborsClassifier(k).fit(X, y)
+            gx, gy = np.meshgrid(np.linspace(box[0], box[1], 441), np.linspace(box[2], box[3], 441))
+            grid = model.predict(np.c_[gx.ravel(), gy.ravel()]).reshape(gx.shape)  # the class at each position
+            ax.contourf(gx, gy, grid, levels=[-0.5, 0.5, 1.5], colors=[PASTEL[col] for col in colors], zorder=1)
+            ax.contour(gx, gy, grid, levels=[0.5], colors='k', linewidths=1.0, zorder=2)
+            for cls in range(2):
+                points(ax, X[y == cls], colors[cls])
+            r = np.sort(np.linalg.norm(X - q, axis=1))[k - 1]  # the radius of the k nearest neighbors
+            ax.add_patch(Ellipse(q, 2 * r, 2 * r, fill=False, ec='k', lw=1.4, ls=DASH, zorder=15))
+            ax.plot(*q, 'o', ms=10, mfc=colors[model.predict([q])[0]], mec='k', mew=1.0, zorder=20)
+        return draw
+    legend = [(lambda c, x, y: c.square(x, y, BLUE), 8, 'Class A'),
+              (lambda c, x, y: c.square(x, y, GREEN), 8, 'Class B'),
+              (lambda c, x, y: c.circle(x, y, '#ffffff'), 10, 'Query')]
+    three_panels('knn', np.vstack([X, q]), [data_panel, knn_panel(1), knn_panel(3)],
+                 ['Data', ('𝑘 = 1', MATH), ('𝑘 = 3', MATH)], legend)
 
 
 def hierarchical_clustering():
-    """The example of the post: the points 0, 1, 3, 4 and 8, with single and complete linkage, cut at 3."""
-    x = np.array([0, 1, 3, 4, 8.])
-    c = Canvas(790, 290)
-    for p, method in enumerate(['single', 'complete']):
-        Z = linkage(x[:, None], method)
-        left = 70 + 380 * p
-        ax = c.panel(left, 20, 300, 200, (-0.6, 8.6), (0, 9), frame=False)
-        pos, top = {i: v for i, v in enumerate(x)}, {i: 0.0 for i in range(len(x))}
-        for n, (a, b, h, _) in enumerate(Z, start=len(x)):  # each merge joins two clusters at height h
-            a, b = int(a), int(b)
-            ax.plot([pos[a], pos[a], pos[b], pos[b]], [top[a], h, h, top[b]], color='k', lw=1.8, zorder=5,
-                    solid_joinstyle='miter')
-            pos[n], top[n] = (pos[a] + pos[b]) / 2, h
-        groups, label = {}, {}
-        for i in range(len(x)):  # the clusters below the cut at 3
-            root = i
-            for n, (a, b, h, _) in enumerate(Z, start=len(x)):
-                if h <= 3 and root in (a, b): root = n
-            label[i] = groups.setdefault(root, [BLUE, GREEN, ORANGE][len(groups)])
-        ax.plot([-0.6, 8.6], [3, 3], color=GREY, lw=1.0, ls=DASH, zorder=3)
-        ax.text(8.72, 3, 'cut', fontsize=12, color=GREY, ha='left', va='center_baseline')
-        ax.plot([-0.6, 8.6], [0, 0], color='k', lw=1.8, zorder=6)
-        ax.plot([-0.6, -0.6], [0, 9], color='k', lw=1.8, zorder=6)
-        for i, v in enumerate(x):
-            ax.plot(v, 0, 's', ms=8, mfc=label[i], mec='k', mew=1.0, zorder=7, clip_on=False)
-        for v in range(9):
-            ax.text(v, -0.75, str(v), fontsize=12, ha='center', va='top')
-        for v in range(0, 10, 2):
-            ax.plot([-0.6, -0.8], [v, v], color='k', lw=1.8, zorder=6, clip_on=False)
-            ax.text(-0.95, v, str(v), fontsize=12, ha='right', va='center_baseline')
-        c.text(left + 150, 272, ['Single linkage', 'Complete linkage'][p])
-    c.text(30, 120, 'Merge distance', rotation=90, va='center', ha='center')
+    """Three groups of points: the single linkage dendrogram, cut at a height of 1.5, gives three clusters."""
+    # each point, and the side of the point where its number goes
+    data = [((1.1, 3.0), (-1, 0)), ((1.45, 3.15), (0, 1)), ((1.8, 2.6), (1, 0)),
+            ((-0.3, 0.2), (-1, 0)), ((0.0, -0.05), (0, -1)), ((0.15, 0.95), (0, 1)),
+            ((2.4, 0.3), (-1, 0)), ((2.95, 0.2), (1, 0)), ((2.7, 0.95), (0, 1))]
+    X, side = np.array([p for p, _ in data]), np.array([o for _, o in data])
+    Z, cut = linkage(X, 'single'), 1.5
+    leaf = np.argsort(leaves_list(Z))  # the position of each point among the leaves, which also numbers it
+    groups = fcluster(Z, cut, 'distance')
+    col = {g: [BLUE, GREEN, RED][i] for i, g in enumerate(dict.fromkeys(groups[leaves_list(Z)]))}  # in leaf order
+    c, box = Canvas(830, 260), square_box(X)
+    a = c.panel(10, 10, 220, 220, box[:2], box[2:])
+    points(a, X, GREY)
+    px = (box[1] - box[0]) / 220  # data units per px
+    for i, p in enumerate(X):
+        a.text(*(p + side[i] * [10 * px, 11.5 * px]), str(leaf[i] + 1), fontsize=12, ha='center',
+               va='center_baseline', zorder=20)
+    c.arrow(240, 120)
+    d = c.panel(322, 10, 180, 195, (-0.5, len(X) - 0.5), (0, 2.5), frame=False)
+    pos, top = {i: float(leaf[i]) for i in range(len(X))}, {i: 0.0 for i in range(len(X))}
+    for n, (i, j, h, _) in enumerate(Z, start=len(X)):  # each merge joins two clusters at height h
+        i, j = int(i), int(j)
+        d.plot([pos[i], pos[i], pos[j], pos[j]], [top[i], h, h, top[j]], color='k', lw=1.8, zorder=5,
+               solid_joinstyle='miter')
+        pos[n], top[n] = (pos[i] + pos[j]) / 2, h
+    d.plot([-0.5, len(X) - 0.5], [cut, cut], color=GREY, lw=1.0, ls=DASH, zorder=3)
+    d.text(len(X) - 0.4, cut, 'cut', fontsize=12, color=GREY, ha='left', va='center_baseline')
+    d.plot([-0.5, len(X) - 0.5], [0, 0], color='k', lw=1.8, zorder=6)
+    d.plot([-0.5, -0.5], [0, 2.5], color='k', lw=1.8, zorder=6)
+    for i in range(len(X)):
+        d.plot(leaf[i], 0, 's', ms=8, mfc=col[groups[i]], mec='k', mew=1.0, zorder=7, clip_on=False)
+        d.text(leaf[i], -0.2, str(leaf[i] + 1), fontsize=12, ha='center', va='top')
+    for v in range(3):
+        d.plot([-0.5, -0.65], [v, v], color='k', lw=1.8, zorder=6, clip_on=False)
+        d.text(-0.8, v, str(v), fontsize=12, ha='right', va='center_baseline')
+    c.text(293, 107.5, 'Merge distance', rotation=90, va='center', ha='center')
+    b = c.panel(540, 10, 220, 220, box[:2], box[2:])
+    for g in np.unique(groups):  # each cluster in a hull 12 px away from its points
+        P = X[groups == g]
+        ring = np.vstack([P + 12 * px * np.c_[np.cos(t), np.sin(t)] for t in np.linspace(0, 2 * np.pi, 72)])
+        hull = ring[ConvexHull(ring).vertices]
+        b.add_patch(Polygon(hull, closed=True, fc=PASTEL[col[g]], ec='k', lw=1.0, zorder=1))
+        points(b, P, col[g])
+    for x, label in ((120, 'Data'), (412, 'Dendrogram'), (650, 'Clusters')):
+        c.text(x, 251, label)
     c.save('hierarchical_clustering')
+    print('  merge heights:', Z[:, 2].round(2))
 
 
 def dbscan():
@@ -239,6 +249,11 @@ def match(labels, y):
     return linear_sum_assignment(-common)[1]
 
 
+def data_panel(X):
+    """Draw the points of X in grey, as they are before clustering."""
+    return lambda ax, box: points(ax, X, GREY)
+
+
 def kmeans_panel(X, km, colors):
     """Draw the Voronoi cells of the k-means means, the points of each cluster and the means."""
     def draw(ax, box):
@@ -249,21 +264,18 @@ def kmeans_panel(X, km, colors):
     return draw
 
 
-def three_panels(name, X, results, labels):
-    """The data, an arrow, then one panel per clustering, all over the same square box."""
-    pad = 0.12 * (X.max(0) - X.min(0)).max()
-    lo, hi = X.min(0) - pad, X.max(0) + pad
-    span = (hi - lo).max()
-    lo, hi = (lo + hi) / 2 - span / 2, (lo + hi) / 2 + span / 2
-    box = (lo[0], hi[0], lo[1], hi[1])
-    c = Canvas(760, 260)
+def three_panels(name, X, draws, labels, legend=None):
+    """Three panels over the same square box around X, an arrow after the first, and a legend column on the right."""
+    c, box = Canvas(830, 260), square_box(X)
     xs = [10, 280, 520]
-    points(c.panel(xs[0], 10, 220, 220, box[:2], box[2:]), X, GREY)
-    c.arrow(xs[0] + 230, 120)
-    for x, draw in zip(xs[1:], results):
+    for x, draw in zip(xs, draws):
         draw(c.panel(x, 10, 220, 220, box[:2], box[2:]), box)
+    c.arrow(240, 120)
     for x, label in zip(xs, labels):
-        c.text(x + 110, 251, label)
+        text, font = label if isinstance(label, tuple) else (label, TEXT)
+        c.text(x + 110, 251, text, font=font)
+    if legend:
+        c.legend_column(756, 120, [(lambda x, y, f=f: f(c, x, y), sw, text) for f, sw, text in legend])
     c.save(name)
 
 
@@ -282,7 +294,8 @@ def spectral_clustering():
     def spectral_panel(ax, box):
         for k, col in enumerate(colors[match(sc.labels_, y)]):
             points(ax, X[sc.labels_ == k], col)
-    three_panels('spectral_clustering', X, [kmeans_panel(X, km, colors[match(km.labels_, y)]), spectral_panel],
+    three_panels('spectral_clustering', X, [data_panel(X), kmeans_panel(X, km, colors[match(km.labels_, y)]),
+                                            spectral_panel],
                  ['Data', 'k-means', 'Spectral clustering'])
 
 
@@ -303,7 +316,7 @@ def gmm():
                                  fc=PASTEL[col], ec='k', lw=1.0, zorder=1))
             points(ax, X[labels == k], col)
         means(ax, gm.means_, gcol)
-    three_panels('gmm', X, [kmeans_panel(X, km, colors[match(km.labels_, y)]), gmm_panel],
+    three_panels('gmm', X, [data_panel(X), kmeans_panel(X, km, colors[match(km.labels_, y)]), gmm_panel],
                  ['Data', 'k-means', 'Gaussian mixture model'])
     print('  ARI k-means:', round(adjusted_rand_score(y, km.labels_), 2),
           'GMM:', round(adjusted_rand_score(y, labels), 2))
