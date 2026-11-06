@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "From Mixture-of-Experts to RAG and Agentic AI Systems"
+title:  "From Mixture-of-Experts to Retrieval-Augmented Generation (RAG) and Agentic AI"
 categories: ["Efficient Inference"]
 tags: ["LLM", "MoE", "RAG", "agentic AI", "multi-agent systems", "latency", "continuous batching"]
 ---
