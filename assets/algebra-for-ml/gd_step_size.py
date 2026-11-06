@@ -1,6 +1,6 @@
 """Draw gd_step_size.svg: gradient descent on f(x) = x^2 from x_0 = 1, with the step sizes 0.1 and 1.1.
 
-Each iteration computes x_{i+1} = (1 - 2 gamma) x_i, the example of the post Mathematics for ML.
+Each iteration computes x_{i+1} = (1 - 2 gamma) x_i, the example of the post Algebra for ML.
 usage: python3 gd_step_size.py   (needs matplotlib, numpy and the fonts of CLAUDE.md, Pictures, section 4)
 """
 import os, sys
