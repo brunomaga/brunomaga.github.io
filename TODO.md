@@ -1318,9 +1318,10 @@ category that the home page puts before it, fits on one line of the home page on
 
 ### Unsupervised Learning basics and Principal Component Analysis (2017-11-01-unsupervised-learning.md)
 
-- To do later. The title names only PCA, but the post also covers ICA, k-means, Gaussian mixtures, hierarchical
-  clustering, DBSCAN, spectral clustering, self-organizing maps, t-SNE, UMAP and self-supervised learning.
-  Proposed: "Dimensionality Reduction, Clustering and Self-Supervised Learning" (652 px).
+- To do later. The title names only PCA, but the post covers clustering (k-means, KNN, hierarchical clustering,
+  DBSCAN, spectral clustering, Gaussian mixtures, self-organizing maps), dimensionality reduction (PCA, t-SNE, ICA),
+  association rules, anomaly detection and nearest-neighbor search. Proposed: "Clustering, Dimensionality
+  Reduction, Association Rules and Outliers" (86 characters with the category; check that it is under 690 px).
 
 ### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-deep-neural-networks.md)
 
