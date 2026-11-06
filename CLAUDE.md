@@ -106,6 +106,12 @@ word helps:
   author's "very" and "Note that" stay where they carry meaning.
 - Say each thing once. No repeated definitions, no paragraph that restates the previous one, no summary that
   only repeats the post.
+- Across the machine learning posts, each topic is presented once, in the first post (by date) that needs it, and
+  later posts link back to it, at the user's request (2026-11-06). The fundamentals run in this order: Mathematics
+  for ML (gradient descent), Statistics for ML (the cross-entropy of information theory), Linear Regression and
+  Matrix Factorization (SGD, least squares, risk and the MSE), the unsupervised learning post, Deep Neural Networks,
+  Backpropagation and Optimization (the cross-entropy loss, backpropagation, autodiff, optimizers), then Dropout,
+  CNNs, Skip Connections and Embeddings (with the losses of other tasks).
 - A post is about as long as the author's original, plus the additions above and minus the redundant sentences.
   The author's explanations, examples, derivations, numbers and results stay, unless they are wrong or
   redundant.

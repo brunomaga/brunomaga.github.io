@@ -3,13 +3,13 @@ layout: post
 title:  "Mathematics for ML"
 redirect_from: /algebra
 categories: ["Machine Learning"]
-tags: ["linear algebra", "matrix decompositions", "eigendecomposition", "SVD", "vector calculus", "automatic differentiation", "backpropagation", "optimization", "gradient descent", "Adam"]
-description: "A summary of the mathematics behind machine learning: matrices, linear systems and least squares, vector spaces, eigendecomposition and SVD, gradients and automatic differentiation, and optimization with gradient descent and Adam."
+tags: ["linear algebra", "matrix decompositions", "eigendecomposition", "SVD", "vector calculus", "Taylor series", "Newton's method", "optimization", "convexity", "gradient descent"]
+description: "A summary of the mathematics behind machine learning: matrices, linear systems and least squares, vector spaces, eigendecomposition and SVD, gradients, Taylor series and Newton's method, convexity, gradient descent and constrained optimization."
 ---
 
 In 1847, Augustin-Louis Cauchy proposed a general method to solve systems of simultaneous equations, to shorten the long computations of the orbits of celestial bodies. Instead of eliminating the unknowns one at a time, the method minimizes the sum of the squares of the equations. At each step, it moves all the unknowns at once against the partial derivatives of that sum, i.e. in the direction in which the sum decreases the fastest ([Cauchy and the Gradient Method](https://ems.press/books/dms/251/4938)). This was [gradient descent](https://en.wikipedia.org/wiki/Gradient_descent). Today, linear algebra, calculus and optimization are the mathematics behind most machine learning models. Their data and parameters are vectors and matrices, and their training follows the gradient of a loss function towards a minimum, as Cauchy's method did.
 
-This post is a brief summary of the topics in mathematics that are relevant to ML engineers on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. It covers matrices and systems of linear equations, vector spaces, linear mappings, analytic geometry, matrix decompositions, vector calculus, backpropagation and automatic differentiation, and continuous optimization.
+This post is a brief summary of the topics in mathematics that are relevant to ML engineers on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. It covers matrices and systems of linear equations, vector spaces, linear mappings, analytic geometry, matrix decompositions, vector calculus and continuous optimization.
 
 ## Properties of Matrices
 
@@ -263,6 +263,8 @@ $$
 \end{align*}
 $$
 
+The chain rule is the basis of [backpropagation]({{ site.baseurl }}{% post_url 2018-03-27-dnn-backprop %}#backpropagation), which computes the gradient of the loss of a neural network with respect to all its parameters.
+
 The **[Hessian](https://en.wikipedia.org/wiki/Hessian_matrix)** $$\mathbf{H}_f$$ (also written $$\nabla^2 f$$) of a function $$f : \mathbb{R}^n \rightarrow \mathbb{R}$$ is the collection of all second-order partial derivatives of all variables with respect to all other variables, defined by the following matrix (*symmetric* if the second-order partial derivatives are continuous):
 
 $$
@@ -321,92 +323,6 @@ For multivariate functions, the division is not defined, so it is replaced by mu
 {: .caption}
 Newton's method: the tangent of $$f$$ at each guess crosses the $$x$$ axis at the next, improved guess, and the guesses converge to the zero of $$f$$. The animation numbers the initial guess $$x_1$$ (the text's $$x_0$$), and its legend reads \"Funktion\" (the function $$f$$) and \"Tangente\" (the tangent). Source: [Newton's method](https://en.wikipedia.org/wiki/Newton%27s_method)
 
-## Backpropagation and Automatic Differentiation
-
-The output $$y$$ of a deep neural network (DNN) of $$K$$ layers $$f_1, ..., f_K$$ is computed as the composition of its layers:
-
-$$
-y = (f_K ◦ f_{K−1} ◦ ... ◦ f_1)(x) = f_K(f_{K−1}( ... (f_1(x)) ... ))
-$$
-
-The **[chain rule](https://en.wikipedia.org/wiki/Chain_rule)** allows the partial derivatives to be described as follows:
-
-$$
-\begin{align*}
-\frac{\partial L}{\partial \boldsymbol{\theta}_{K-1}} & = \frac{\partial L}{\partial \boldsymbol{f}_K} {\color{#0000FF} \frac{\partial \boldsymbol{f}_K}{\partial \boldsymbol{\theta}_{K-1}}} \\
-\frac{\partial L}{\partial \boldsymbol{\theta}_{K-2}} & = \frac{\partial L}{\partial \boldsymbol{f}_K} \boxed{ {\color{#FF7300} \frac{\partial \boldsymbol{f}_K}{\partial \boldsymbol{f}_{K-1}}} {\color{#0000FF} \frac{\partial \boldsymbol{f}_{K-1}}{\partial \boldsymbol{\theta}_{K-2}}} } \\
-\frac{\partial L}{\partial \boldsymbol{\theta}_{K-3}} & = \frac{\partial L}{\partial \boldsymbol{f}_K} {\color{#FF7300} \frac{\partial \boldsymbol{f}_K}{\partial \boldsymbol{f}_{K-1}}} \boxed{ {\color{#FF7300} \frac{\partial \boldsymbol{f}_{K-1}}{\partial \boldsymbol{f}_{K-2}}} {\color{#0000FF} \frac{\partial \boldsymbol{f}_{K-2}}{\partial \boldsymbol{\theta}_{K-3}}} } \\
-\frac{\partial L}{\partial \boldsymbol{\theta}_i} & = \frac{\partial L}{\partial \boldsymbol{f}_K} {\color{#FF7300} \frac{\partial \boldsymbol{f}_K}{\partial \boldsymbol{f}_{K-1}}} \cdots \boxed{ {\color{#FF7300} \frac{\partial \boldsymbol{f}_{i+2}}{\partial \boldsymbol{f}_{i+1}}} {\color{#0000FF} \frac{\partial \boldsymbol{f}_{i+1}}{\partial \boldsymbol{\theta}_i}} }
-\end{align*}
-$$
-
-where $$L$$ is the loss and $$\boldsymbol{\theta}_i$$ are the parameters of the layer $$\boldsymbol{f}_{i+1}$$. The orange terms are partial derivatives of a layer with respect to its inputs, and the blue terms are partial derivatives of a layer with respect to its parameters. The boxed terms are the only new terms of each line; the rest is reused from the line above.
-
-[Backpropagation](https://en.wikipedia.org/wiki/Backpropagation) is a special case of the **[automatic differentiation](https://en.wikipedia.org/wiki/Automatic_differentiation)** algorithm, a technique to evaluate the gradient of a function by working with intermediate variables and dependencies and applying the chain rule. As an example, consider the function
-
-$$
-f(x) = \sqrt{x^2 + \exp(x^2)} + \cos\left(x^2 + \exp(x^2)\right) \, .
-$$
-
-By application of the chain rule, and noting that differentiation is linear, the gradient is computed as
-
-$$
-\begin{align*}
-\frac{\mathrm{d}f}{\mathrm{d}x} & = \frac{2x + 2x \exp(x^2)}{2 \sqrt{x^2 + \exp(x^2)}} - \sin\left(x^2 + \exp(x^2)\right) \left(2x + 2x \exp(x^2)\right) \\
-& = 2x \left( \frac{1}{2 \sqrt{x^2 + \exp(x^2)}} - \sin\left(x^2 + \exp(x^2)\right) \right) \left(1 + \exp(x^2)\right) \, .
-\end{align*}
-$$
-
-As the <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a> book notes in section 5.6, where this example comes from:
-
-> Writing out the gradient in this explicit way is often impractical since it often results in a very lengthy expression for a derivative. In practice, it means that, if we are not careful, the implementation of the gradient could be significantly more expensive than computing the function, which imposes unnecessary overhead.
-
-If the automatic differentiation algorithm is used instead, the *forward* pass can be done efficiently by reusing intermediate results, and the *backpropagation* algorithm can be broken into partial derivatives that propagate backwards through the graph.
-
-If the function $$f$$ above were implemented on a computer, some computation could be saved by using *intermediate variables*:
-
-$$
-\begin{align*}
-a & = x^2 \, , \\
-b & = \exp(a) \, , \\
-c & = a + b \, , \\
-d & = \sqrt{c} \, , \\
-e & = \cos(c) \, , \\
-f & = d + e \, .
-\end{align*}
-$$
-
-The following picture illustrates the resulting computation graph, where each variable is computed from the variables on its incoming arrows:
-
-{: .picture}
-<img width="65%" height="65%" src="{{ site.assets }}/algebra-for-ml/autodiff.svg"/>
-
-{: .caption}
-Computation graph of $$f(x) = \sqrt{x^2 + \exp(x^2)} + \cos(x^2 + \exp(x^2))$$, with the intermediate variables $$a = x^2$$, $$b = \exp(a)$$, $$c = a + b$$, $$d = \sqrt{c}$$ and $$e = \cos(c)$$, and $$f = d + e$$. Adapted from: [Mathematics for Machine Learning, Example 5.14](https://mml-book.github.io/)
-
-This is the same kind of thinking process that occurs when applying the chain rule. Note that the preceding set of equations requires fewer operations than a direct implementation of the function $$f(x)$$.
-
-The backward pass then computes the derivative of the output with respect to each variable, from $$f$$ back to $$x$$. Each step needs only the derivatives of the elementary operations with respect to their inputs:
-
-$$
-\frac{\partial a}{\partial x} = 2x, \quad \frac{\partial b}{\partial a} = \exp(a), \quad \frac{\partial c}{\partial a} = 1 = \frac{\partial c}{\partial b}, \quad \frac{\partial d}{\partial c} = \frac{1}{2\sqrt{c}}, \quad \frac{\partial e}{\partial c} = -\sin(c), \quad \frac{\partial f}{\partial d} = 1 = \frac{\partial f}{\partial e}
-$$
-
-Following the arrows of the graph backwards, the chain rule sums the contributions of all the paths that leave a variable:
-
-$$
-\begin{align*}
-\frac{\partial f}{\partial c} & = \frac{\partial f}{\partial d} \frac{\partial d}{\partial c} + \frac{\partial f}{\partial e} \frac{\partial e}{\partial c} \, , \\
-\frac{\partial f}{\partial b} & = \frac{\partial f}{\partial c} \frac{\partial c}{\partial b} \, , \\
-\frac{\partial f}{\partial a} & = \frac{\partial f}{\partial b} \frac{\partial b}{\partial a} + \frac{\partial f}{\partial c} \frac{\partial c}{\partial a} \, , \\
-\frac{\partial f}{\partial x} & = \frac{\partial f}{\partial a} \frac{\partial a}{\partial x} \, .
-\end{align*}
-$$
-
-As an example, at $$x = 1$$ the forward pass computes $$a = 1$$, $$b = \exp(1) = 2.718$$, $$c = 3.718$$, $$d = 1.928$$, $$e = -0.838$$ and $$f = 1.090$$. The backward pass then gives $$\partial f / \partial c = 1/(2d) - \sin(c) = 0.805$$, $$\partial f / \partial b = \partial f / \partial c = 0.805$$, $$\partial f / \partial a = b \, \partial f / \partial b + \partial f / \partial c = 2.992$$ and $$\partial f / \partial x = 2x \, \partial f / \partial a = 5.98$$, the value of the closed-form derivative above at $$x = 1$$. Each step of the backward pass costs a few operations, so the derivative costs about as much as the function itself.
-
-This backward pass is the **reverse mode** of automatic differentiation. One pass from the output back to the inputs gives the derivatives of the output with respect to all the inputs, at a small constant factor of the cost of the function. The **forward mode** propagates the derivatives from one input to all the outputs instead, so it needs one pass per input. A neural network has millions of parameters and one scalar loss, so it is trained with the reverse mode, of which backpropagation is the special case for neural networks.
-
 ## Continuous Optimization
 
 Training a machine learning model means finding the parameters that minimize a loss function. To check whether a stationary point is a minimum or maximum of a function, one needs to check if the second derivative is positive or negative at that point. Thus, $$\frac{d^2f(x)}{dx^2}$$ is computed and evaluated at all stationary points: if $$f′′(x)>0$$, the function is concave up and that point is a minimum. If $$<0$$, it is concave down, and the point is a maximum; if it is zero, the test is inconclusive.
@@ -429,35 +345,7 @@ $$
 
 The step size (the *learning rate*) decides whether the iteration converges. As an example, for $$f(x) = x^2$$, whose derivative is $$2x$$, the update is $$x_{i+1} = x_i - 2\gamma x_i = (1 - 2\gamma) x_i$$. From $$x_0 = 1$$, a step size $$\gamma = 0.1$$ multiplies $$x$$ by 0.8 at each iteration, and reaches $$x_{10} = 0.107$$ and $$x_{20} = 0.0115$$, close to the minimum at 0. A step size $$\gamma = 1.1$$ multiplies $$x$$ by $$-1.2$$: the iterates jump over the minimum, from one side to the other, and grow to $$x_{10} = 6.19$$ and $$x_{20} = 38.3$$. Gradient descent converges on this function only if $$\gamma < 1 = 2/f''(x)$$, and, more generally, on a quadratic function only if $$\gamma$$ is smaller than 2 divided by the largest eigenvalue of its Hessian.
 
-**Gradient Descent with Momentum** stores the value of the update $$\Delta x_i$$ at each iteration $$i$$ to determine the next update as a linear combination of the current and previous gradients, which dampens oscillations and smooths out the updates:
-
-$$
-x_{i+1} = x_i − γ_i((∇f)(x_i))^{\intercal} + α∆x_i
-$$
-
-where $$∆x_i = x_i − x_{i−1} = α∆x_{i−1} − γ_{i−1}((∇f)(x_{i−1}))^{\intercal}$$ and $$\alpha \in [0,1]$$. $$\alpha$$ is a hyper-parameter (user defined), close to $$1$$. If $$\alpha=0$$, this performs regular Gradient Descent.
-
-**[Stochastic Gradient Descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent)** (SGD) is a computationally cheaper and noisy approximation of gradient descent that only takes a subset of the inputs (a mini-batch) at each iteration, which makes it the usual choice for large datasets.
-
-### Adam Optimizer
-
-**Adam** (ADAptive Moment estimation), introduced by [Kingma and Ba (2015)](https://arxiv.org/abs/1412.6980), uses estimates of the first and second moments of the gradient to adapt the learning rate for each weight of the neural network. It computes the exponential moving averages of the gradients and of the squared gradients, and corrects their bias towards zero, as both averages start at zero. With the gradient $$g_i = ((∇f)(x_{i-1}))^{\intercal}$$ at iteration $$i = 1, 2, ...$$, starting from $$x_0$$ and $$m_0 = v_0 = 0$$, the update rule is (Algorithm 1 in the paper):
-
-$$
-\begin{align*}
-m_i & = \beta_1 m_{i-1} + (1 - \beta_1) \, g_i \\
-v_i & = \beta_2 v_{i-1} + (1 - \beta_2) \, g_i^2 \\
-\hat{m}_i & = \frac{m_i}{1 - \beta_1^i}, \quad \hat{v}_i = \frac{v_i}{1 - \beta_2^i} \\
-x_i & = x_{i-1} - \gamma \, \frac{\hat{m}_i}{\sqrt{\hat{v}_i} + \epsilon}
-\end{align*}
-$$
-
-where the square, the square root and the division are element-wise, the parameters $$\beta_1$$ and $$\beta_2$$ control the decay rates of the moving averages, and $$\epsilon$$ avoids a division by zero. The defaults of the paper are $$\gamma = 0.001$$, $$\beta_1 = 0.9$$, $$\beta_2 = 0.999$$ and $$\epsilon = 10^{-8}$$. Moreover:
-- the second moment is not the second derivative (the *curvature*), which would be too expensive to compute, but the uncentered variance of the gradient of each parameter;
-- "The method computes individual adaptive learning rates for different parameters from estimates of first and second moments of the gradients." As $$\vert \mathbb{E}[g_i] \vert \le \sqrt{\mathbb{E}[g_i^2]}$$, the ratio $$\hat{m}_i / \sqrt{\hat{v}_i}$$ is at most about 1 in magnitude, so the step of each parameter is at most about $$\gamma$$, whatever the scale of its gradient (section 2.1 of the paper);
-- in some cases, Adam does not converge to the optimal solution, but SGD does ([Reddi et al., 2018](https://arxiv.org/abs/1904.09237)). According to [Keskar and Socher (2017)](https://arxiv.org/abs/1712.07628), switching to SGD in some cases shows better generalization performance than Adam alone;
-- Adam is a combination of two gradient descent methods: Momentum, for the first moment, and RMSProp, which divides the learning rate of each weight by a running average of the magnitudes of its recent gradients, for the second moment;
-- Adam keeps two moving averages per parameter, while momentum keeps one and SGD none: for a model of a billion parameters, the moments of Adam take 8 GB in FP32.
+In practice, large models are trained with variants of gradient descent: stochastic gradient descent, which computes the gradient on a random subset of the data, presented in the post on [linear regression]({{ site.baseurl }}{% post_url 2017-08-17-linear-regression-matrix-factorization %}#gradient-descent), and optimizers such as momentum and Adam, presented in the post on [deep neural networks]({{ site.baseurl }}{% post_url 2018-03-27-dnn-backprop %}#optimizers).
 
 ### Constrained optimization
 
