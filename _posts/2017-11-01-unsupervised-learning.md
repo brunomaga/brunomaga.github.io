@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Unsupervised Learning basics and Principal Component Analysis"
+title:  "Unsupervised Learning methods"
 categories: ["Machine Learning"]
 tags: ["unsupervised learning", "clustering", "k-means", "KNN", "DBSCAN", "GMM", "self-organizing maps", "dimensionality reduction", "PCA", "t-SNE", "ICA", "association rules", "Apriori", "FP-growth", "anomaly detection", "isolation forest", "LOF", "curse of dimensionality", "nearest neighbor search", "RAG"]
 description: "Unsupervised learning: clustering with k-means, KNN, DBSCAN, Gaussian mixtures and self-organizing maps, dimensionality reduction with PCA, t-SNE and ICA, association rules, anomaly detection, and nearest-neighbor search for RAG."
@@ -8,7 +8,7 @@ description: "Unsupervised learning: clustering with k-means, KNN, DBSCAN, Gauss
 
 In 1901, Karl Pearson described the method known today as principal component analysis, in the paper [On lines and planes of closest fit to systems of points in space](https://doi.org/10.1080/14786440109462720). In 1957, Stuart Lloyd proposed the algorithm known today as k-means, to quantize signals, although his paper [Least squares quantization in PCM](https://doi.org/10.1109/TIT.1982.1056489) was only published in 1982.
 
-Unsupervised learning is the field of machine learning dedicated to learning without supervision or reward signals. Unlike in [reinforcement learning](https://en.wikipedia.org/wiki/Reinforcement_learning) and [supervised learning](https://en.wikipedia.org/wiki/Supervised_learning), the data is the only information given to the method. Still, these methods are very powerful, and are commonly used for image compression, dimensionality reduction, clustering, visualization and the detection of anomalies. This post starts with the clustering methods (k-means, the k-nearest neighbors, hierarchical clustering, DBSCAN, spectral clustering, Gaussian mixtures and self-organizing maps). It then covers dimensionality reduction, with principal component analysis (PCA) and kernel PCA, t-SNE and independent component analysis (ICA), association rule mining (Apriori, ECLAT and FP-growth), and anomaly detection (isolation forests and the local outlier factor). It ends with the curse of dimensionality, and with the nearest-neighbor search in high dimensions that retrieval-augmented generation relies on.
+Unsupervised learning is the field of machine learning dedicated to learning without supervision or reward signals. Unlike in [reinforcement learning](https://en.wikipedia.org/wiki/Reinforcement_learning) and [supervised learning](https://en.wikipedia.org/wiki/Supervised_learning), the data is the only information given to the method. Still, these methods are very powerful, and are commonly used for image compression, dimensionality reduction, clustering, visualization and the detection of anomalies. This post starts with clustering (k-means, k-nearest neighbors, hierarchical clustering, DBSCAN, spectral clustering, Gaussian mixtures and self-organizing maps). It then covers dimensionality reduction, with principal component analysis (PCA) and kernel PCA, t-SNE and independent component analysis (ICA), association rule mining (Apriori, ECLAT and FP-growth), and anomaly detection (isolation forests and the local outlier factor). It ends with the curse of dimensionality, and with the nearest-neighbor search in high dimensions that retrieval-augmented generation relies on.
 
 ## Clustering
 
@@ -49,7 +49,10 @@ $$
 where $$w_i$$ is the mean of the points in $$C_i$$. The standard algorithm, also called **Lloyd's algorithm**, iterates over 2 steps:
 - assignment step: assign each observation to the closest mean, based on e.g. the [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance);
 - update step: compute the new means as the centroids of the observations in each new cluster:
-  $$ w_i^{(t+1)} = \frac{1}{\mid C^{(t)}_i \mid} \sum_{x_j \in C_i^{(t)}} x_j $$
+
+$$
+w_i^{(t+1)} = \frac{1}{\vert C^{(t)}_i \vert} \sum_{x_j \in C_i^{(t)}} x_j
+$$
 
 The algorithm converges when the assignments no longer change, and the means are then the centers of mass of their clusters. With the update $$\Delta w_i = \eta \sum_{u \in C_i} (x_u - w_i)$$ over the $$\vert C_i \vert$$ points of cluster $$C_i$$, convergence means $$\Delta w_i = 0$$, so it must hold that:
 
@@ -81,11 +84,11 @@ $$
 \Delta w_i = \eta (x_u - w_i)
 $$
 
-which is [Oja's rule](https://en.wikipedia.org/wiki/Oja%27s_rule), a form of [Hebbian learning](https://en.wikipedia.org/wiki/Hebbian_theory) ("*neurons that fire together wire together*"), for a winner-take-all neuron, i.e. with an output $$y_i = 1$$ for the winner and $$0$$ for all other neurons.
+which is [Oja's rule](https://en.wikipedia.org/wiki/Oja%27s_rule), a form of [Hebbian learning](https://en.wikipedia.org/wiki/Hebbian_theory) ("*if they fire together, they wire together*"), for a winner-take-all neuron, i.e. with an output $$y_i = 1$$ for the winner and $$0$$ for all other neurons.
 
 ### K-Nearest Neighbors
 
-The **[k-nearest neighbors](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm)** algorithm (KNN, [Cover and Hart, 1967](https://doi.org/10.1109/TIT.1967.1053964)) is not to be confused with k-means. It is not a clustering method either: it is a supervised classifier, as it needs the labels of the training points. It is covered here because its core operation, finding the $$k$$ points closest to a query, is the building block of many unsupervised methods of this post. DBSCAN counts the neighbors of each point within a radius, spectral clustering connects each point to its nearest neighbors, t-SNE and UMAP compute their similarities from the neighbors of each point, and the local outlier factor compares the density around a point with the density around its neighbors.
+The **[k-nearest neighbors](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm)** algorithm (KNN), proposed by [Fix and Hodges (1951)](https://apps.dtic.mil/sti/pdfs/ADA800276.pdf) and analyzed by [Cover and Hart (1967)](https://doi.org/10.1109/TIT.1967.1053964), is not to be confused with k-means. It is not a clustering method either: it is a supervised classifier, as it needs the labels of the training points. It is covered here because its core operation, finding the $$k$$ points closest to a query, is the building block of many unsupervised methods of this post. DBSCAN counts the neighbors of each point within a radius, spectral clustering connects each point to its nearest neighbors, t-SNE and UMAP compute their similarities from the neighbors of each point, and the local outlier factor compares the density around a point with the density around its neighbors.
 
 Given a query point $$x$$, KNN finds the $$k$$ training points closest to it, and predicts the most common label among them (classification), or the average of their values (regression). It has no training step: the model is the training set itself, which is why KNN is called a *lazy* learner. As an example, take the points 0, 1 and 2 of class A and the points 3.5, 6 and 7 of class B on a line, and the query point 3. With $$k = 1$$, its nearest neighbor is 3.5, at a distance of 0.5, and the query is labeled B. With $$k = 3$$, its neighbors are 3.5, 2 and 1, at the distances 0.5, 1 and 2, and the vote gives A, by 2 to 1. A small $$k$$ follows the training data closely and is sensitive to noise, such as a single point of B among the points of A, while a large $$k$$ gives smoother boundaries between classes, but blurs the small classes. In practice, $$k$$ is chosen by [cross-validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics)), and an odd $$k$$ avoids ties between two classes.
 
@@ -408,9 +411,23 @@ To find more about the topic, the book [Pattern Recognition and Machine Learning
 ## Association Rule Mining
 
 **[Association rule learning](https://en.wikipedia.org/wiki/Association_rule_learning)** finds the items that often appear together in a database of transactions. It was introduced by [Agrawal, Imieliński and Swami (1993)](https://doi.org/10.1145/170035.170072) for *market basket analysis*, i.e. finding the products that the customers of a supermarket buy together, and it is also used in web usage mining, recommendation systems and bioinformatics. A rule $$X \Rightarrow Y$$, e.g. $$\{\text{butter}\} \Rightarrow \{\text{eggs}\}$$, says that the transactions that hold the itemset $$X$$ often hold the itemset $$Y$$ too, with $$X \cap Y = \emptyset$$. For a set of transactions $$T$$, the quality of a rule is measured by:
-- the **support** of an itemset, the fraction of the transactions that contain it: $$\text{supp}(X) = \vert \{ t \in T : X \subseteq t \} \vert / \vert T \vert$$;
-- the **confidence** of a rule, the fraction of the transactions with $$X$$ that also contain $$Y$$: $$\text{conf}(X \Rightarrow Y) = \text{supp}(X \cup Y) / \text{supp}(X)$$;
-- the **lift** of a rule, its confidence divided by the support of $$Y$$: $$\text{lift}(X \Rightarrow Y) = \text{conf}(X \Rightarrow Y) / \text{supp}(Y)$$. A lift above 1 means that $$X$$ and $$Y$$ appear together more often than if they were independent.
+- the **support** of an itemset, the fraction of the transactions that contain it:
+
+$$
+\text{supp}(X) = \frac{\vert \{ t \in T : X \subseteq t \} \vert}{\vert T \vert}
+$$
+
+- the **confidence** of a rule, the fraction of the transactions with $$X$$ that also contain $$Y$$:
+
+$$
+\text{conf}(X \Rightarrow Y) = \frac{\text{supp}(X \cup Y)}{\text{supp}(X)}
+$$
+
+- the **lift** of a rule, its confidence divided by the support of $$Y$$, above 1 when $$X$$ and $$Y$$ appear together more often than if they were independent:
+
+$$
+\text{lift}(X \Rightarrow Y) = \frac{\text{conf}(X \Rightarrow Y)}{\text{supp}(Y)}
+$$
 
 The rules are mined in two steps. First, find all the *frequent itemsets*, whose support is at least a minimum support. Then, split each frequent itemset into rules whose confidence is at least a minimum confidence. The second step is cheap, as all the supports it needs were computed in the first one. The first step is the hard one: $$m$$ items form $$2^m - 1$$ itemsets, too many to count one by one. The algorithms of this section differ in how they search this space.
 
@@ -454,8 +471,17 @@ Each tree is built on a small random subsample of the data, e.g. the 256 points 
 
 The **[local outlier factor](https://en.wikipedia.org/wiki/Local_outlier_factor)** (LOF, [Breunig et al., 2000](https://doi.org/10.1145/342009.335388)) compares the density around a point with the density around its neighbors. A point in a sparse region is not an outlier when its neighbors lie in a sparse region too, so LOF finds outliers relative to their local neighborhood, also in data with clusters of different densities, where a single distance threshold fails. With the $$k$$ nearest neighbors $$N_k(p)$$ of a point $$p$$, and the distance $$d_k(o)$$ from a point $$o$$ to its $$k$$-th nearest neighbor:
 - the *reachability distance* of $$p$$ from $$o$$ is $$\text{reach}_k(p, o) = \max \{ d_k(o), d(p, o) \}$$, i.e. the distance between them, but at least $$d_k(o)$$, which smooths the distances within a dense region;
-- the *local reachability density* of $$p$$ is the inverse of its average reachability distance from its neighbors: $$\text{lrd}_k(p) = \left( \frac{1}{k} \sum_{o \in N_k(p)} \text{reach}_k(p, o) \right)^{-1}$$;
-- the LOF of $$p$$ is the average ratio between the densities of its neighbors and its own: $$\text{LOF}_k(p) = \frac{1}{k} \sum_{o \in N_k(p)} \text{lrd}_k(o) / \text{lrd}_k(p)$$.
+- the *local reachability density* of $$p$$ is the inverse of its average reachability distance from its neighbors:
+
+$$
+\text{lrd}_k(p) = \left( \frac{1}{k} \sum_{o \in N_k(p)} \text{reach}_k(p, o) \right)^{-1}
+$$
+
+- the LOF of $$p$$ is the average ratio between the densities of its neighbors and its own:
+
+$$
+\text{LOF}_k(p) = \frac{1}{k} \sum_{o \in N_k(p)} \frac{\text{lrd}_k(o)}{\text{lrd}_k(p)}
+$$
 
 A LOF close to 1 means that the point is as dense as its neighbors, and a LOF much larger than 1 that it is an outlier. As an example, take the points 0, 1, 2, 3 and 10 on a line, with $$k = 2$$. The points 0 to 3 each have an average reachability distance of 1.5, i.e. a local reachability density of 2/3, and a LOF of 1. The point 10 has the neighbors 3 and 2, at the reachability distances 7 and 8, so its density is 1/7.5, and its LOF is (2/3) / (1/7.5) = 5.
 
@@ -479,4 +505,4 @@ An exact search over $$n$$ vectors of $$d$$ dimensions costs $$O(nd)$$ operation
 - **product quantization** (PQ, [Jégou, Douze and Schmid, 2011](https://doi.org/10.1109/TPAMI.2010.57)): each vector is split into sub-vectors, and each sub-vector is replaced by the index of its closest centroid in a small k-means codebook. Split into 64 sub-vectors with 256 centroids each, an embedding of 1,024 FP32 values (4 KB) takes 64 bytes, and its distances to a query are computed with table lookups;
 - **graph indexes**, such as [HNSW](https://en.wikipedia.org/wiki/Hierarchical_navigable_small_world) (Hierarchical Navigable Small World, [Malkov and Yashunin, 2016](https://arxiv.org/abs/1603.09320)): each vector is a node connected to its approximate nearest neighbors, in a hierarchy of graphs of increasing density, and a query walks greedily from node to node towards its nearest neighbors, in about $$O(\log n)$$ steps.
 
-Libraries such as FAISS ([Johnson, Douze and Jégou, 2017](https://arxiv.org/abs/1702.08734)) combine these methods, e.g. IVF with PQ, and run them on GPUs. Embeddings escape the curse of dimensionality only in part: the embedding model is trained so that related texts are close, so the embeddings lie near a manifold of much lower intrinsic dimension than their 1,024 coordinates, and the nearest neighbors of a query still stand out from the rest. Thus, the ideas of this post (k-means clustering, Voronoi cells, quantization and the graphs of nearest neighbors) are what makes the search over billions of embeddings fast enough for RAG.
+Libraries such as [FAISS](https://en.wikipedia.org/wiki/FAISS) ([Johnson, Douze and Jégou, 2017](https://arxiv.org/abs/1702.08734)) combine these methods, e.g. IVF with PQ, and run them on GPUs. Embeddings escape the curse of dimensionality only in part: the embedding model is trained so that related texts are close, so the embeddings lie near a manifold of much lower intrinsic dimension than their 1,024 coordinates, and the nearest neighbors of a query still stand out from the rest. Thus, the ideas of this post (k-means clustering, Voronoi cells, quantization and the graphs of nearest neighbors) are what makes the search over billions of embeddings fast enough for RAG.
