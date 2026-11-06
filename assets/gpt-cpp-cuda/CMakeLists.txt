@@ -25,13 +25,6 @@ target_link_libraries(gpt_cuda PRIVATE CUDA::cublas)
 add_executable(matmul matmul.cu)
 target_link_libraries(matmul PRIVATE CUDA::cublas)
 
-# the ring algorithm on the GPUs of a node, with NCCL
-find_path(NCCL_INCLUDE_DIR nccl.h REQUIRED)
-find_library(NCCL_LIBRARY nccl REQUIRED)
-add_executable(ring_matmul ring_matmul.cu)
-target_include_directories(ring_matmul PRIVATE ${NCCL_INCLUDE_DIR})
-target_link_libraries(ring_matmul PRIVATE CUDA::cublas ${NCCL_LIBRARY})
-
 # the LibTorch implementation. find_package(Torch) adds the CUDA architectures of PyTorch to the flags of all the
 # CUDA targets, so the flags are restored after it
 set(CUDA_FLAGS "${CMAKE_CUDA_FLAGS}")

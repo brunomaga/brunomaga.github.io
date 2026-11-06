@@ -967,8 +967,7 @@ that is not wrong.
 ### GPT from scratch in C++ and CUDA vs. fused PyTorch (_drafts/2026-08-17-gpt-cpp-cuda.md)
 
 - Optional: the matrix multiplication section has no picture. Fix: a picture of the tiles of `tiledMultiply` (the row
-  of tiles of A and the column of tiles of B that one thread block reads for its tile of C), and one of the ring
-  algorithm (the blocks of B passed between the ranks at each step).
+  of tiles of A and the column of tiles of B that one thread block reads for its tile of C).
 
 ### Publication Summaries (publications.md)
 
@@ -1210,16 +1209,17 @@ Content problems that need the author's decision, such as overlap between posts.
 
 ### GPT from scratch in C++ and CUDA vs. fused PyTorch (_drafts/2026-08-17-gpt-cpp-cuda.md)
 
-- The results that need GPUs are placeholders in bold brackets: the runtimes of `tiledMultiply` and cuBLAS, of the
-  ring on several GPUs, the benchmark table and the CPU runtime, the hardware and the versions, and the discussion of
-  the results. The CUDA, LibTorch and NCCL programs build, but have not run on a GPU: the CPU code prints the outputs
-  of PyTorch in fp32, and a CPU emulation of the CUDA kernels prints those of PyTorch in bf16. The kernels of
+- The results that need GPUs are placeholders in bold brackets: the runtimes of `tiledMultiply` and cuBLAS, the
+  benchmark table and the CPU runtime, the hardware and the versions, and the discussion of the results. The CUDA and
+  LibTorch programs build, but have not run on a GPU: the CPU code prints the outputs of PyTorch in FP32, and a CPU
+  emulation of the CUDA kernels prints those of PyTorch in BF16. The kernels of
   `torch.compile` were listed on the CPU, and the 5 passes over the attention weights come from the source of
   TorchInductor. Fix: run the commands of the Benchmark section and of `assets/gpt-cpp-cuda/README.md` on a GPU
   node, the compiled model with `TORCH_LOGS=output_code`, then fill in the placeholders and write the discussion.
-- The draft's section "Kernel fusion on several GPUs" covers the first section of the kernel fusion post for tensor
-  parallelism. Fix: when the draft is published, the kernel fusion post links to it and keeps only its own points in
-  that section; the user decides.
+- The draft's section "Kernel fusion and torch.compile", and its subsection "Graph breaks and communication", cover
+  the first section of the kernel fusion post for tensor parallelism (kernel fusion, `torch.compile`, and the
+  collective as a fusion boundary). Fix: when the draft is published, the kernel fusion post links to it and keeps
+  only its own points in that section; the user decides.
 - The draft replaces the post GPT in C++: LibTorch vs. PyTorch, TorchScript and torch.compile, and its
   `redirect_from: /gptlite-cpp` sends the links to that post to the draft, but only once the draft is published:
   until then, /gptlite-cpp gives a 404. Fix: publish the draft (move it to `_posts`) when its results are in.

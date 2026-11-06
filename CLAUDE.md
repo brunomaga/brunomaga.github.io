@@ -64,6 +64,12 @@ written by Claude read as if the author had written them from the beginning, not
   four sentences.
 - Implementation sections are hands-on: the code is introduced step by step ("First, ...", "Then, ...", "And
   that is all: ..."), and each snippet is preceded by what it does.
+- The same code in several languages or libraries is shown in tabs, at the user's request (2026-11-06): a
+  `<div class="code-tabs" markdown="1">` holds one `<div class="tab" data-title="..." markdown="1">` per
+  implementation, in the same order in every group of the post (PyTorch first), and each tab holds the text and
+  the code of its implementation. The text that applies to all implementations stays outside the tabs, before or
+  after the group. `assets/js/code-tabs.js` shows one tab at a time, and a tab picked in one group is picked in
+  all groups of the page.
 - Plain, precise words. The author's mild informal words stay ("trickier", "handy"), slang goes ("lingo"), and
   contractions are written out ("does not", "it is").
 

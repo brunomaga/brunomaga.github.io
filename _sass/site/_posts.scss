@@ -67,3 +67,54 @@ mjx-container.math-scroll {
 }
 
 .post-content .caption { font-size: 14px; }
+
+// the tabs of a post (assets/js/code-tabs.js): a row of titles, in the style of the labels, over the tabs, of which
+// one is shown, with its title in the link color and underlined
+.code-tabs { margin-bottom: $spacing-unit / 2; }
+
+.tab-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 18px;
+  margin-bottom: $spacing-unit / 2;
+  border-bottom: 1px solid $grey-light;
+}
+
+.tab-bar > button {
+  padding: 6px 0;
+  margin-bottom: -1px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: none;
+  font-family: inherit;
+  font-size: $label-font-size;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $grey;
+  cursor: pointer;
+}
+
+.tab-bar > button[aria-selected="true"] {
+  color: $brand-color;
+  border-bottom-color: $brand-color;
+}
+
+// a hidden tab keeps the width of the page, so that MathJax breaks its equations at that width
+.tab--hidden {
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+}
+
+// without the script, the tabs are shown one below the other, each under its title
+.code-tabs:not(.code-tabs--ready) > .tab::before {
+  content: attr(data-title);
+  display: block;
+  margin-bottom: 6px;
+  font-size: $label-font-size;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $grey;
+}

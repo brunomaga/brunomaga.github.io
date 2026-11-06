@@ -34,35 +34,44 @@ void relu(dt* x, int n) {
     x[i] = std::max(x[i], 0.0f);
 }
 
+// softmax of the n values of x, shifted by their maximum for numerical stability
+void softmax(dt* x, int n) {
+  dt max_val = *std::max_element(x, x + n), sum = 0;
+  for (int j = 0; j < n; j++) {
+    x[j] = std::exp(x[j] - max_val);
+    sum += x[j];
+  }
+  for (int j = 0; j < n; j++)
+    x[j] /= sum;
+}
+
 // masked multi-head attention softmax(q k^T / sqrt(D) + mask) v of each head of B sequences of S tokens, where
-// q, k, v and the output o are (B*S x E), with the H heads of D values side by side in each row
-void attention(const dt* q, const dt* k, const dt* v, dt* o, int B, int S) {
+// q, k, v and the output o are (B*S x E), with the H heads of D values side by side in each row, and wei holds the
+// attention weights (B*H x S x S)
+void attention(const dt* q, const dt* k, const dt* v, dt* o, dt* wei, int B, int S) {
   #pragma omp parallel for collapse(2)
   for (int b = 0; b < B; b++)
     for (int h = 0; h < H; h++) {
-      std::vector<dt> w(S);                    // attention weights of a token
-      for (int i = 0; i < S; i++) {
-        const dt* qi = q + (b*S + i)*E + h*D;
-        dt max_val = -INFINITY, sum = 0;
-        for (int j = 0; j <= i; j++) {         // the mask: token i attends to the tokens 0 to i only
+      dt* w = wei + (long) (b*H + h) * S*S;   // the S x S attention weights of the head h of the sequence b
+      for (int i = 0; i < S; i++)              // w = q k^T / sqrt(D) + mask, where the mask is -infinity for j > i
+        for (int j = 0; j < S; j++) {
+          const dt* qi = q + (b*S + i)*E + h*D;
           const dt* kj = k + (b*S + j)*E + h*D;
-          w[j] = 0;
+          dt score = 0;
           for (int d = 0; d < D; d++)
-            w[j] += qi[d] * kj[d];
-          w[j] /= std::sqrt((dt) D);
-          max_val = std::max(max_val, w[j]);
+            score += qi[d] * kj[d];
+          w[i*S + j] = j <= i ? score / std::sqrt((dt) D) : -INFINITY;
         }
-        for (int j = 0; j <= i; j++) {         // softmax, shifted by the maximum for numerical stability
-          w[j] = std::exp(w[j] - max_val);
-          sum += w[j];
-        }
+      for (int i = 0; i < S; i++)              // softmax of each row
+        softmax(w + i*S, S);
+      for (int i = 0; i < S; i++) {            // o = w v
         dt* oi = o + (b*S + i)*E + h*D;
         for (int d = 0; d < D; d++)
           oi[d] = 0;
-        for (int j = 0; j <= i; j++) {
+        for (int j = 0; j < S; j++) {
           const dt* vj = v + (b*S + j)*E + h*D;
           for (int d = 0; d < D; d++)
-            oi[d] += w[j] / sum * vj[d];
+            oi[d] += w[i*S + j] * vj[d];
         }
       }
     }
@@ -99,7 +108,7 @@ struct Block {
 
 // intermediate results of a block
 struct Buffers {
-  dt *h, *q, *k, *v, *a, *f;
+  dt *h, *q, *k, *v, *a, *f, *wei;
 };
 
 // forward pass of a block on x (B*S x E): x = x + attention(layernorm(x)), then x = x + ffn(layernorm(x))
@@ -109,7 +118,7 @@ void block_forward(const Block& p, dt* x, const Buffers& t, int B, int S) {
   linear(t.h, p.Wq, p.bq, t.q, M, E, E);
   linear(t.h, p.Wk, p.bk, t.k, M, E, E);
   linear(t.h, p.Wv, p.bv, t.v, M, E, E);
-  attention(t.q, t.k, t.v, t.a, B, S);
+  attention(t.q, t.k, t.v, t.a, t.wei, B, S);
   linear(t.a, p.Wo, p.bo, t.h, M, E, E);
   add(x, t.h, M*E);
   layernorm(x, p.ln2_w, p.ln2_b, t.h, M, E);
@@ -134,7 +143,8 @@ int main(int argc, char* argv[]) {
     p.ln2_w = norm_param(E, 1); p.ln2_b = norm_param(E, 0);
     p.W1 = linear_param(E*4*E); p.b1 = linear_param(4*E); p.W2 = linear_param(4*E*E); p.b2 = linear_param(E);
   }
-  Buffers t = { new dt[M*E], new dt[M*E], new dt[M*E], new dt[M*E], new dt[M*E], new dt[M*4*E] };
+  Buffers t = { new dt[M*E], new dt[M*E], new dt[M*E], new dt[M*E], new dt[M*E], new dt[M*4*E],
+                new dt[(long) batch*H*S*S] };
   std::vector<dt> x0(M*E), x(M*E);
   for (int j = 0; j < M*E; j++)
     x0[j] = init_value(j, 1);
