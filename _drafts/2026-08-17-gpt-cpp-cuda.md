@@ -303,7 +303,7 @@ $$
 x = x + \text{Attention}(\text{LayerNorm}_1(x)), \quad x = x + \text{FFN}(\text{LayerNorm}_2(x))
 $$
 
-where $$\text{Attention}$$ is the masked multi-head attention and $$\text{FFN}$$ the feed-forward network. Each sum is a [skip connection](https://en.wikipedia.org/wiki/Residual_neural_network) (or residual connection), from the residual networks (ResNets) of the paper [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385), where it lets the gradients of very deep networks flow through the identity during training. The next sections implement the FFN, the attention and the layer normalization in PyTorch, in LibTorch, in NumPy, in C++ loops on the CPU and in CUDA on the GPU, and the last one puts them together in the block, with the skip connections. The code of each part is shown in five tabs, one per implementation, and the choice of a tab applies to all parts. The PyTorch version, in `gpt.py`, is the code of the GPTlite post, with the change of the attention described below, LibTorch follows it line by line, and NumPy, in `gpt_numpy.py`, writes the same operations on arrays, with the weights of the C++ version.
+where $$\text{Attention}$$ is the masked multi-head attention and $$\text{FFN}$$ the feed-forward network. Each sum is a [skip connection](https://en.wikipedia.org/wiki/Residual_neural_network) (or residual connection), from the residual networks (ResNets) of the paper [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385), where it lets the gradients of very deep networks flow through the identity during training. The next sections implement the FFN, the attention and the layer normalization in PyTorch, in LibTorch, in NumPy, in C++ loops on the CPU and in CUDA on the GPU, and the last one puts them together in the block, with the skip connections. The code of each part is shown in five tabs, one per implementation, and the choice of a tab applies to all parts. The PyTorch version, in `gpt.py`, is the code of the GPTlite post, with the change of the attention described below, LibTorch follows it line by line, and NumPy writes the same operations on arrays, with the weights of the C++ version.
 
 ### Dimensions and data types
 
@@ -340,7 +340,7 @@ Only the dimensions come from GPT-3 Small. The block is the one of GPTlite, with
 
 On the GPU, the values are stored in BF16 and summed in FP32 ([mixed precision](https://en.wikipedia.org/wiki/Mixed-precision_arithmetic)), as PyTorch does in a BF16 model. The Tensor Cores multiply BF16 values and add them in FP32, and the kernels of the softmax and of the layer normalization compute in FP32 and store BF16. On the CPU, all values are FP32, which keeps the code short. The CUDA compiler, [nvcc](https://en.wikipedia.org/wiki/Nvidia_CUDA_Compiler), defines the macro `__CUDACC__` when it compiles CUDA code, so `dt` is `__nv_bfloat16` in `gpt_cuda.cu`, and `float` in `gpt_cpu.cpp`.
 
-Moreover, to compare the outputs of the implementations, all of them use the same random values. `init_value` draws them from a uniform distribution of the C++ standard library, with a [Mersenne Twister](https://en.wikipedia.org/wiki/Mersenne_Twister) generator (`std::mt19937`) and a fixed seed, in the same order in all programs. The weights and the biases of the linear layers take values in $$[-0.02, 0.02)$$, with each $$W$$ stored as (in × out) in row-major order, the input takes values in $$[-1, 1)$$, and the layer normalizations keep the defaults of PyTorch (a weight of 1 and a bias of 0). The Python programs, `gpt.py` and `gpt_numpy.py`, draw the same values with NumPy, whose `RandomState` runs the same generator from the same seed, and turn each 32-bit value of the generator into a float as the C++ standard library of GCC (libstdc++) does:
+Moreover, to compare the outputs of the implementations, all of them use the same random values. `init_value` draws them from a uniform distribution of the C++ standard library, with a [Mersenne Twister](https://en.wikipedia.org/wiki/Mersenne_Twister) generator (`std::mt19937`) and a fixed seed, in the same order in all programs. The weights and the biases of the linear layers take values in $$[-0.02, 0.02)$$, with each $$W$$ stored as (in × out) in row-major order, the input takes values in $$[-1, 1)$$, and the layer normalizations keep the defaults of PyTorch (a weight of 1 and a bias of 0). The PyTorch and NumPy versions draw the same values with NumPy, whose `RandomState` runs the same generator from the same seed, and turn each 32-bit value of the generator into a float as the C++ standard library of GCC (libstdc++) does:
 
 ```python
 rng = np.random.RandomState(19)   # the generator of gpt.h, std::mt19937, with the same seed
@@ -1315,7 +1315,7 @@ The benchmark runs the forward pass of the $$L = 12$$ blocks on sequences of $$S
 2. PyTorch with `torch.compile`, in its default mode (`gpt.py --compile`);
 3. LibTorch (`gpt_libtorch.cpp`);
 4. CUDA and cuBLAS (`gpt_cuda.cu`);
-5. NumPy on the CPU (`gpt_numpy.py`);
+5. NumPy on the CPU, with the code of the NumPy tabs and the constants of `gpt.h`;
 6. C++ loops on the CPU (`gpt_cpu.cpp`).
 
 The two CPU implementations compute in FP32, on a batch of one sequence only, as they are much slower.
@@ -1373,7 +1373,6 @@ python ../gpt.py --batch 8
 python ../gpt.py --batch 8 --compile
 ./gpt_libtorch 8
 ./gpt_cuda 8
-python ../gpt_numpy.py --batch 1
 ./gpt_cpu 1
 ```
 

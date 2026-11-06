@@ -81,6 +81,8 @@ written by Claude read as if the author had written them from the beginning, not
   sync with the snippets, at the user's request (2026-11-06). A file that the post shows whole without
   explaining it line by line, such as a `CMakeLists.txt`, goes in an expandable `<details markdown="1">` block.
   The code files of the asset folder stay as the version that builds and runs, and every snippet matches them.
+  Code that only the snippets need gets no file of its own, at the user's request (2026-11-06): the NumPy version of
+  the GPT C++ and CUDA post is only in its snippets.
 - A snippet that explains an algorithm is short NumPy (or plain Python) code that implements it, rather than a call
   to a library that hides it; the library (e.g. Faiss for the similarity search) is named in the text as the option
   for large-scale or production use, at the user's request (2026-11-06).

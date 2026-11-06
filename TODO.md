@@ -1169,7 +1169,8 @@ Content problems that need the author's decision, such as overlap between posts.
   and a CPU emulation of the CUDA kernels prints those of PyTorch in BF16. The kernels of `torch.compile` were listed
   on the CPU, and the 5 passes over the attention weights come from the source of TorchInductor. Fix: run the commands
   of the Benchmark section and of `assets/gpt-cpp-cuda/README.md` on a GPU node, the compiled model with
-  `TORCH_LOGS=output_code`, then fill in the placeholders and write the discussion.
+  `TORCH_LOGS=output_code`, and the code of the NumPy tabs on its CPU, then fill in the placeholders and write the
+  discussion.
 - The draft's section "Kernel fusion and torch.compile", and its subsection "Graph breaks and communication", cover
   the first section of the kernel fusion post for tensor parallelism (kernel fusion, `torch.compile`, and the
   collective as a fusion boundary). Fix: when the draft is published, the kernel fusion post links to it and keeps
