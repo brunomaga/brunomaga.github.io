@@ -325,7 +325,7 @@ For completeness, very good step-by-step overviews of the backpropagation theory
 
 ## Optimizers
 
-Backpropagation computes the gradient $$g_t$$ of the loss with respect to the parameters $$\theta$$ of the network (all its weights and biases), at the step $$t$$ of the training. An **optimizer** uses this gradient to update the parameters. The simplest one, gradient descent (GD), presented in the post [Mathematics for ML]({{ site.baseurl }}{% post_url 2017-08-10-algebra-for-ml %}#gradient-descent), takes a step against the gradient, of a size set by the learning rate $$\eta$$:
+Backpropagation computes the gradient $$g_t$$ of the loss with respect to the parameters $$\theta$$ of the network (all its weights and biases), at the step $$t$$ of the training. An **optimizer** uses this gradient to update the parameters. The simplest one, gradient descent (GD), presented in the post [Algebra for ML]({{ site.baseurl }}{% post_url 2017-08-10-algebra-for-ml %}#gradient-descent), takes a step against the gradient, of a size set by the learning rate $$\eta$$:
 
 $$
 \theta_t = \theta_{t-1} - \eta \, g_t

@@ -107,8 +107,8 @@ word helps:
 - Say each thing once. No repeated definitions, no paragraph that restates the previous one, no summary that
   only repeats the post.
 - Across the machine learning posts, each topic is presented once, in the first post (by date) that needs it, and
-  later posts link back to it, at the user's request (2026-11-06). The fundamentals run in this order: Mathematics
-  for ML (gradient descent), Linear Regression and Matrix Factorization (SGD, least squares, risk and the MSE), the
+  later posts link back to it, at the user's request (2026-11-06). The fundamentals run in this order: Algebra for
+  ML (gradient descent), Linear Regression and Matrix Factorization (SGD, least squares, risk and the MSE), the
   unsupervised learning post, Deep Neural Networks, Backpropagation and Optimization (the cross-entropy loss,
   backpropagation, autodiff, optimizers), Dropout, CNNs, Skip Connections and Embeddings (with the losses of other
   tasks), then Statistics for ML (probability, distributions and information theory), before the Bayesian posts that
@@ -227,7 +227,8 @@ word helps:
   the home page on a desktop screen. The title column is 735 px wide at 16 px: keep the line under 690 px in the
   site's font, about 85 characters, so that it also fits with wider system fonts.
 - A text task does not change titles: it proposes new ones in the title issues of `TODO.md`. The user approved
-  the titles of seven posts on 2026-10-18; they are applied.
+  the titles of seven posts on 2026-10-18, and the title Algebra for ML of the maths post on 2026-11-06; they are
+  applied.
 
 ### TODO list
 

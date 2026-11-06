@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Mathematics for ML"
+title:  "Algebra for ML"
 redirect_from: /algebra
 categories: ["Machine Learning"]
 tags: ["linear algebra", "matrix decompositions", "eigendecomposition", "SVD", "vector calculus", "Taylor series", "Newton's method", "optimization", "convexity", "gradient descent"]

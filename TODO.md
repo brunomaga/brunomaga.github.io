@@ -605,7 +605,7 @@ that is not wrong.
   the tick label 4, under the 2.5 px of section 6 of CLAUDE.md. Fix: the tick labels and t (ms) under the traces in
   both panels, as in the 1000 ms chart.
 
-### Mathematics for ML (2017-08-10-algebra-for-ml.md)
+### Algebra for ML (2017-08-10-algebra-for-ml.md)
 
 - `algebra-for-ml/svd_example.svg`: the panels are crops of the "Lenna" test image, which IEEE no longer allows in its
   publications since April 1, 2024, and the panels with 50 and 85 singular values look like ranks 25 to 35. Optional
