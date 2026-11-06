@@ -7966,6 +7966,463 @@
         <mxCell id="hca-note" value="&lt;b&gt;DeepSeek-V4: Heavily Compressed Attention (HCA)&lt;/b&gt;&lt;br&gt;Every m tokens are compressed into one entry, without overlap; each query attends to all the visible entries and to the uncompressed tokens of a sliding window" vertex="1" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=14;fontFamily=Source Sans 3;">
           <mxGeometry x="1000" y="5173.08" width="480" height="120" as="geometry" />
         </mxCell>
+        <mxCell id="masked_sparse_attention-label" value="masked_sparse_attention.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
+          <mxGeometry x="0" y="4046.9" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="0" y="4086.9" width="488" height="307.8" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-note" value="&lt;b&gt;Masked and sparse attention&lt;/b&gt;&lt;br&gt;The same causal sliding window of w = 3 keys over S = 8 tokens: masked attention computes all the scores and masks those outside the window, sparse attention computes only those inside it" vertex="1" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=14;fontFamily=Source Sans 3;">
+          <mxGeometry x="948.35" y="4086.9" width="480" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-1" value="Masked attention" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;fontFamily=Source Sans 3;spacing=0;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="79.82" y="0" width="108.36" height="20.8" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-2" value="keys" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;spacing=0;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="120.86" y="26" width="26.28" height="20.8" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-3" value="queries" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;spacing=0;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="4.56" y="121.6" width="43.44" height="20.8" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-4" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="54" y="52" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-5" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="74" y="52" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-6" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="94" y="52" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-7" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="114" y="52" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-8" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="134" y="52" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-9" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="154" y="52" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-10" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="174" y="52" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-11" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="194" y="52" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-12" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="54" y="72" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-13" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="74" y="72" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-14" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="94" y="72" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-15" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="114" y="72" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-16" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="134" y="72" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-17" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="154" y="72" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-18" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="174" y="72" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-19" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="194" y="72" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-20" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="54" y="92" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-21" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="74" y="92" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-22" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="94" y="92" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-23" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="114" y="92" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-24" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="134" y="92" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-25" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="154" y="92" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-26" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="174" y="92" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-27" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="194" y="92" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-28" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="54" y="112" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-29" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="74" y="112" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-30" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="94" y="112" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-31" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="114" y="112" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-32" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="134" y="112" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-33" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="154" y="112" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-34" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="174" y="112" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-35" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="194" y="112" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-36" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="54" y="132" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-37" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="74" y="132" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-38" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="94" y="132" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-39" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="114" y="132" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-40" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="134" y="132" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-41" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="154" y="132" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-42" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="174" y="132" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-43" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="194" y="132" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-44" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="54" y="152" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-45" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="74" y="152" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-46" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="94" y="152" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-47" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="114" y="152" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-48" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="134" y="152" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-49" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="154" y="152" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-50" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="174" y="152" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-51" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="194" y="152" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-52" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="54" y="172" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-53" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="74" y="172" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-54" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="94" y="172" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-55" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="114" y="172" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-56" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="134" y="172" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-57" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="154" y="172" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-58" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="174" y="172" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-59" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="194" y="172" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-60" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="54" y="192" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-61" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="74" y="192" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-62" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="94" y="192" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-63" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="114" y="192" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-64" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="134" y="192" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-65" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="154" y="192" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-66" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="174" y="192" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-67" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="194" y="192" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-68" value="" edge="1" parent="masked_sparse_attention-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=0.6;"><mxGeometry relative="1" as="geometry"><mxPoint x="74" y="52" as="sourcePoint" /><mxPoint x="214" y="192" as="targetPoint" /><Array as="points"><mxPoint x="74" y="72" /><mxPoint x="94" y="72" /><mxPoint x="94" y="92" /><mxPoint x="114" y="92" /><mxPoint x="114" y="112" /><mxPoint x="134" y="112" /><mxPoint x="134" y="132" /><mxPoint x="154" y="132" /><mxPoint x="154" y="152" /><mxPoint x="174" y="152" /><mxPoint x="174" y="172" /><mxPoint x="194" y="172" /><mxPoint x="194" y="192" /></Array></mxGeometry></mxCell>
+        <mxCell id="masked_sparse_attention-69" value="" edge="1" parent="masked_sparse_attention-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=0.6;"><mxGeometry relative="1" as="geometry"><mxPoint x="54" y="112" as="sourcePoint" /><mxPoint x="154" y="212" as="targetPoint" /><Array as="points"><mxPoint x="74" y="112" /><mxPoint x="74" y="132" /><mxPoint x="94" y="132" /><mxPoint x="94" y="152" /><mxPoint x="114" y="152" /><mxPoint x="114" y="172" /><mxPoint x="134" y="172" /><mxPoint x="134" y="192" /><mxPoint x="154" y="192" /></Array></mxGeometry></mxCell>
+        <mxCell id="masked_sparse_attention-70" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=1.2;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="54" y="52" width="160" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-71" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=0;size=0.5;fillColor=none;strokeColor=#000000;strokeWidth=1.0;direction=north;fontFamily=Source Sans 3;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="154" y="216" width="60" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-72" value="𝑤 = 3" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;spacing=0;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="168.25" y="228" width="31.5" height="18.4" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-73" value="64 scores computed" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;spacing=0;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="75.28" y="250" width="117.43" height="20.8" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-74" value="Sparse attention" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;fontFamily=Source Sans 3;spacing=0;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="356.31" y="0" width="103.38" height="20.8" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-75" value="keys" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;spacing=0;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="394.86" y="26" width="26.28" height="20.8" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-76" value="queries" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;spacing=0;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="278.56" y="121.6" width="43.44" height="20.8" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-77" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="328" y="52" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-78" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="348" y="52" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-79" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="368" y="52" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-80" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="388" y="52" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-81" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="408" y="52" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-82" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="428" y="52" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-83" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="448" y="52" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-84" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="468" y="52" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-85" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="328" y="72" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-86" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="348" y="72" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-87" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="368" y="72" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-88" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="388" y="72" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-89" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="408" y="72" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-90" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="428" y="72" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-91" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="448" y="72" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-92" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="468" y="72" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-93" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="328" y="92" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-94" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="348" y="92" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-95" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="368" y="92" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-96" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="388" y="92" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-97" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="408" y="92" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-98" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="428" y="92" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-99" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="448" y="92" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-100" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="468" y="92" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-101" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="328" y="112" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-102" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="348" y="112" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-103" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="368" y="112" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-104" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="388" y="112" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-105" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="408" y="112" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-106" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="428" y="112" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-107" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="448" y="112" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-108" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="468" y="112" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-109" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="328" y="132" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-110" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="348" y="132" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-111" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="368" y="132" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-112" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="388" y="132" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-113" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="408" y="132" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-114" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="428" y="132" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-115" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="448" y="132" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-116" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="468" y="132" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-117" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="328" y="152" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-118" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="348" y="152" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-119" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="368" y="152" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-120" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="388" y="152" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-121" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="408" y="152" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-122" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="428" y="152" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-123" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="448" y="152" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-124" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="468" y="152" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-125" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="328" y="172" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-126" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="348" y="172" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-127" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="368" y="172" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-128" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="388" y="172" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-129" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="408" y="172" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-130" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="428" y="172" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-131" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="448" y="172" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-132" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="468" y="172" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-133" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="328" y="192" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-134" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="348" y="192" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-135" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="368" y="192" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-136" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="388" y="192" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-137" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="408" y="192" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-138" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="428" y="192" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-139" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="448" y="192" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-140" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontStyle=0;strokeColor=#999999;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="468" y="192" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-141" value="" edge="1" parent="masked_sparse_attention-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=0.6;"><mxGeometry relative="1" as="geometry"><mxPoint x="348" y="52" as="sourcePoint" /><mxPoint x="488" y="192" as="targetPoint" /><Array as="points"><mxPoint x="348" y="72" /><mxPoint x="368" y="72" /><mxPoint x="368" y="92" /><mxPoint x="388" y="92" /><mxPoint x="388" y="112" /><mxPoint x="408" y="112" /><mxPoint x="408" y="132" /><mxPoint x="428" y="132" /><mxPoint x="428" y="152" /><mxPoint x="448" y="152" /><mxPoint x="448" y="172" /><mxPoint x="468" y="172" /><mxPoint x="468" y="192" /></Array></mxGeometry></mxCell>
+        <mxCell id="masked_sparse_attention-142" value="" edge="1" parent="masked_sparse_attention-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=0.6;"><mxGeometry relative="1" as="geometry"><mxPoint x="328" y="112" as="sourcePoint" /><mxPoint x="428" y="212" as="targetPoint" /><Array as="points"><mxPoint x="348" y="112" /><mxPoint x="348" y="132" /><mxPoint x="368" y="132" /><mxPoint x="368" y="152" /><mxPoint x="388" y="152" /><mxPoint x="388" y="172" /><mxPoint x="408" y="172" /><mxPoint x="408" y="192" /><mxPoint x="428" y="192" /></Array></mxGeometry></mxCell>
+        <mxCell id="masked_sparse_attention-143" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=1.2;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="328" y="52" width="160" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-144" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=0;size=0.5;fillColor=none;strokeColor=#000000;strokeWidth=1.0;direction=north;fontFamily=Source Sans 3;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="428" y="216" width="60" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-145" value="𝑤 = 3" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;spacing=0;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="442.25" y="228" width="31.5" height="18.4" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-146" value="21 scores computed" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;spacing=0;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="349.28" y="250" width="117.43" height="20.8" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-147" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="0.26" y="291.4" width="20" height="12" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-148" value="computed and kept" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;spacing=0;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="24.26" y="287" width="114.87" height="20.8" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-149" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="155.13" y="291.4" width="20" height="12" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-150" value="computed, then masked to &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;−∞&lt;/span&gt;" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;spacing=0;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="179.13" y="287" width="185.43" height="20.8" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-151" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontColor=#000000;strokeColor=#666666;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="380.56" y="291.4" width="20" height="12" as="geometry" />
+        </mxCell>
+        <mxCell id="masked_sparse_attention-152" value="not computed" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;spacing=0;" vertex="1" parent="masked_sparse_attention-figure">
+          <mxGeometry x="404.56" y="287" width="83.19" height="20.8" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
