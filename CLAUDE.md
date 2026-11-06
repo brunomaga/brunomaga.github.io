@@ -64,6 +64,20 @@ written by Claude read as if the author had written them from the beginning, not
   four sentences.
 - Implementation sections are hands-on: the code is introduced step by step ("First, ...", "Then, ...", "And
   that is all: ..."), and each snippet is preceded by what it does.
+- The same code in several languages or libraries is shown in tabs, at the user's request (2026-11-06): a
+  `<div class="code-tabs" markdown="1">` holds one `<div class="tab" data-title="..." markdown="1">` per
+  implementation, in the same order in every group of the post (PyTorch first), and each tab holds the text and
+  the code of its implementation. The text that applies to all implementations, or to several of them, stays
+  outside the tabs, before or after the group. `assets/js/code-tabs.js` shows one tab at a time, and a tab picked
+  in one group is picked in all groups of the page. An implementation that is a single call is named in the text,
+  with no tab, at the user's request (2026-11-06): the `A @ B` of PyTorch and the `torch::matmul(A, B)` of
+  LibTorch. Variants of one algorithm that the text compares are tabs of the group too, each with its text, code and
+  picture, at the user's request (2026-11-06): the matrix multiplication of the GPT C++ and CUDA post is one group of
+  five tabs, C++, the three kernels of the CUDA C++ Best Practices Guide and the Tensor Cores.
+- The code of a post is shown in snippets in the post, not left to external files, which are hard to keep in
+  sync with the snippets, at the user's request (2026-11-06). A file that the post shows whole without
+  explaining it line by line, such as a `CMakeLists.txt`, goes in an expandable `<details markdown="1">` block.
+  The code files of the asset folder stay as the version that builds and runs, and every snippet matches them.
 - A snippet that explains an algorithm is short NumPy (or plain Python) code that implements it, rather than a call
   to a library that hides it; the library (e.g. Faiss for the similarity search) is named in the text as the option
   for large-scale or production use, at the user's request (2026-11-06).
@@ -324,8 +338,7 @@ sections 6 and 7, and the font section 4.
   to its original file on upload.wikimedia.org, with no copy in assets.
 - A picture used by a post and by the publications page is stored once, in the post's asset folder, and
   both pages link to that file. The same holds for a picture used by two posts (for example
-  matrix-transpose/all_to_all.svg in the matrix transpose and mixture-of-experts posts, and gptlite/gptlite.svg in
-  the two GPT-lite posts).
+  matrix-transpose/all_to_all.svg in the matrix transpose and mixture-of-experts posts).
 - Charts drawn from data (plots, benchmarks, histograms) keep their data and the script or spreadsheet that
   draws them next to the SVG, and follow the same palette, font and sizes as the diagrams. A chart drawn with
   matplotlib imports the shared style of _tools/charts.py, which saves the SVG with its text as glyph outlines.
@@ -802,7 +815,9 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
   same on every device, whatever fonts it has, as in the kernel paper figures.
 - Source Sans 3 (Google Fonts) and New Computer Modern Sans Math (NewCMSansMath-Regular.otf, from the
   newcomputermodern package on CTAN) must be installed where the export runs: without them draw.io draws
-  other fonts, with other widths.
+  other fonts, with other widths. Where CTAN cannot be reached, the npm package web-computer-modern holds the
+  same font as "WebCM Math Sans Regular.woff2": converted to TTF and renamed to the family NewComputerModernSansMath
+  (fontTools), it renders the same glyphs. Check with `fc-match NewComputerModernSansMath` before an export.
 - Transparent background, no embedded fonts. Stencils from mxgraph.* libraries need the real draw.io CLI
   to render; do not export them with another renderer.
 - Check every exported SVG at its page size (P% of 880 px) before committing: no overlapping text, no

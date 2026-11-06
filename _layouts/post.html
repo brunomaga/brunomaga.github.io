@@ -34,3 +34,7 @@ layout: default
 </article>
 
 <div class="post-labels">{% include back-link.html %}</div>
+{%- comment -%} the tabs of the posts that have some {%- endcomment -%}
+{%- if content contains 'class="code-tabs"' %}
+<script src="{{ "/assets/js/code-tabs.js" | relative_url }}"></script>
+{%- endif %}
