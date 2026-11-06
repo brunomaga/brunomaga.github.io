@@ -21,7 +21,7 @@ layout: default
 
 <!-- introduction paragraph -->
 <p class="home-intro">
-Hi 👋🏽! I am Bruno, an ML Systems Researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research Switzerland</a>. Previously, I was an ML Researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a>, and an HPC Engineer and PhD in Computational Neuroscience at <a href="https://epfl.ch">EPFL</a>. I focus on ML efficiency, from embedded inference to distributed training, for Transformer, MoE, diffusion and agentic models.
+Hi 👋🏽! I am an ML Researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research</a>, working on efficient Transformers, MoE, diffusion and agents, from embedded inference to distributed training. Previously, I was an ML Researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research</a>, an HPC Engineer and PhD Computational Neuroscience at <a href="https://epfl.ch">EPFL</a>, and MSc Computing at <a href="https://www.imperial.ac.uk/computing/">Imperial</a>.
 </p>
 
 <p class="home-text">
