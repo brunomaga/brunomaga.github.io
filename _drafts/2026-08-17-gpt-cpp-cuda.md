@@ -155,6 +155,8 @@ __global__ void sharedABMultiply(const dt* A, const dt* B, dt* C, int O) {
 {: .caption}
 The reads of `sharedABMultiply`: the warp first copies the row $$i$$ of $$A$$ into its row of `aTile`, and the warps of the thread block copy the tile of $$B$$ into `bTile`, one row per warp, both in shared memory. In the iteration $$k$$, the 32 threads of the warp read $$A_{ik}$$ and the row $$k$$ of `bTile` from shared memory. Inspired by: [CUDA C++ Best Practices Guide](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#shared-memory-in-matrix-multiplication-c-ab)
 
+The guide notes that the gains of `coalescedMultiply` and `sharedABMultiply` are not due to a better coalescing, but to fewer redundant transfers from global memory.
+
 </div>
 <div class="tab" data-title="Tensor Cores" markdown="1">
 
@@ -176,8 +178,6 @@ The function `cublasGemmEx` computes $$C = \alpha AB + \beta C$$, here with $$\a
 
 </div>
 </div>
-
-The guide notes that the gains are not due to a better coalescing, but to fewer redundant transfers from global memory.
 
 The kernels of the guide only work for $$N = 32$$. For a larger $$N$$, a multiple of 32, each thread block loops over the $$N / 32$$ tiles of its row of tiles of $$A$$ and of its column of tiles of $$B$$, multiplies each pair of tiles as `sharedABMultiply` does, and adds the products:
 
