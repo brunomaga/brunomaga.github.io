@@ -280,8 +280,10 @@ sections 6 and 7, and the font section 4.
   panels in a row of 1x3 or 1x4, or in 2x3 or 2x4, that show the data before and after a method (a block arrow after
   the first panel) or the steps or the iterations of an algorithm (numbered labels or iteration counts under the
   panels), with grey data points, accent marks and pastel regions. KNN and hierarchical clustering are drawn in 2D
-  too. These pictures are charts drawn from data by assets/unsupervised-learning/figures.py, which runs each method
-  on the post's example or on data drawn with a fixed seed.
+  too, the Voronoi diagram is one panel, and the curse of dimensionality a row of histograms. The association rule
+  pictures show the post's example as tables and an FP-tree in the same layout, with green frequent, red infrequent
+  and white pruned itemsets. These pictures are charts drawn from data by assets/unsupervised-learning/figures.py,
+  which runs each method on the post's example or on data drawn with a fixed seed.
 - Shapes that stand for sizes are drawn to scale: in the product of an M x N matrix and an N x O matrix, the
   three rectangles are M x N, N x O and M x O, with their splits (the Megatron-LM pictures).
 - Third person, as the post text: no "I", "we", "our", "ours", "us", "you" or "your" in a picture. A paper's
@@ -315,8 +317,8 @@ sections 6 and 7, and the font section 4.
   and their draw.io or TikZ sources from the paper repositories, and adapts the pictures of the kernel fusion
   posts to them: a changed figure is redrawn again in this repo (copied again for ep_stages.svg and
   ep_pipeline.svg), and a new figure that the post does not show yet is reported to the user.
-- A picture or an animation shown unchanged from Wikimedia Commons (the Newton's method and k-means GIFs)
-  links to its original file on upload.wikimedia.org, with no copy in assets.
+- A picture or an animation shown unchanged from Wikimedia Commons (the Newton's method GIF) links
+  to its original file on upload.wikimedia.org, with no copy in assets.
 - A picture used by a post and by the publications page is stored once, in the post's asset folder, and
   both pages link to that file. The same holds for a picture used by two posts (for example
   matrix-transpose/all_to_all.svg in the matrix transpose and mixture-of-experts posts, and gptlite/gptlite.svg in

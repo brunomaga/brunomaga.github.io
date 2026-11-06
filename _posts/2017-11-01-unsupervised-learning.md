@@ -27,10 +27,10 @@ This kind of partitioning underlies problems such as the [Voronoi diagram](https
 
 
 {: .picture}
-<img width="36.7%" height="36.7%" src="{{ site.assets }}/unsupervised-learning/voronoi.svg">
+<img width="27.6%" height="27.6%" src="{{ site.assets }}/unsupervised-learning/voronoi.svg">
 
 {: .caption}
-The Voronoi diagram of 20 prototypes (black dots) in 2D: each colored cell holds the points closer to its prototype than to any other, in Euclidean distance. Adapted from: [Voronoi diagram](https://en.wikipedia.org/wiki/Voronoi_diagram)
+The Voronoi diagram of 20 prototypes (black dots) drawn at random in a square: each colored cell holds the points closer to its prototype than to any other, in Euclidean distance. Inspired by: [Voronoi diagram](https://en.wikipedia.org/wiki/Voronoi_diagram)
 
 Such methods can be applied to e.g. image compression, where one may reduce every RGB pixel in the range $$[0, 255]^3$$ to the closest color of a smaller set, a *palette*, a process called [color quantization](https://en.wikipedia.org/wiki/Color_quantization). With a palette of 16 colors, the prototypes, each pixel is stored as a 4-bit index into the palette instead of its 24 bits: the image takes 6 times less memory, plus the 48 bytes of the palette.
 
@@ -72,10 +72,10 @@ which is the definition of the center of mass of cluster $$i$$. Neither step inc
 In a 2D space, one can imagine a 3-cluster run as:
 
 {: .picture}
-<img width="30%" height="30%" src="https://upload.wikimedia.org/wikipedia/commons/e/ea/K-means_convergence.gif">
+<img width="91.3%" height="91.3%" src="{{ site.assets }}/unsupervised-learning/kmeans_iterations.svg">
 
 {: .caption}
-Iterations of k-means with $$k = 3$$ on 2D data, with the Voronoi borders of the current means, until the assignments no longer change. Source: [k-means clustering](https://en.wikipedia.org/wiki/K-means_clustering)
+Iterations of k-means with $$k = 3$$ on 90 points of three Gaussian clusters, from three of the points as initial means. Each panel shows the means (circles), their Voronoi cells and their clusters, and the lines trace the means of the previous iterations. Two initial means fall in the same cluster, so 26 points change cluster in iteration 1 and 5 in iteration 2, and in iteration 3 the assignments no longer change. Inspired by: [k-means clustering](https://en.wikipedia.org/wiki/K-means_clustering)
 
 
 The update rule above is a **batch learning rule**, as it updates the weights based on a set (*batch*) of inputs. The converse rule is the **online update** rule, which updates the weights of the winning prototype $$i$$ at the introduction of every new input $$x_u$$:
@@ -315,6 +315,14 @@ PCA only finds linear structure. **[Kernel PCA](https://en.wikipedia.org/wiki/Ke
 - compute the eigenvalues $$\lambda_m$$ and eigenvectors $$\alpha^{(m)}$$ of $$\tilde{K}$$, and scale each eigenvector so that $$\lambda_m \, \alpha^{(m)T} \alpha^{(m)} = 1$$, which gives the corresponding direction in the feature space a unit norm;
 - the $$m$$-th principal component of a data point $$x_j$$ is $$\sum_{i=1}^n \alpha_i^{(m)} \tilde{K}_{ij}$$, i.e. the $$j$$-th entry of $$\tilde{K} \alpha^{(m)} = \lambda_m \alpha^{(m)}$$.
 
+The following picture compares PCA and kernel PCA on the two rings of the spectral clustering example:
+
+{: .picture}
+<img width="83.3%" height="83.3%" src="{{ site.assets }}/unsupervised-learning/kernel_pca.svg">
+
+{: .caption}
+Two concentric rings of 50 and 25 points, and their first two principal components (horizontal and vertical axes) computed by PCA and by kernel PCA with a Gaussian kernel of $$\sigma = 0.25$$. PCA only rotates the data, and no direction separates the rings. Kernel PCA separates them along its first principal component.
+
 The eigendecomposition of an $$n \times n$$ matrix limits kernel PCA to datasets of moderate size, and mapping a point back to the input space (the *pre-image* problem) is only approximate. For the sake of comparison, the cost of PCA grows only linearly with the number of data points, as the size of its covariance matrix depends only on the number of features.
 
 ### t-SNE (t-Distributed Stochastic Neighbor Embedding)
@@ -340,6 +348,14 @@ $$
 $$
 
 The heavy tails of the t-distribution let moderately distant points move far apart in the embedding. This avoids the *crowding problem* that a Gaussian would have in low dimensions, and produces well-separated clusters. Two caveats: the sizes of the clusters and the distances between them in a t-SNE plot carry little meaning, and the result depends on the perplexity and the random initialization. Each iteration costs $$O(n^2)$$, or $$O(n \log n)$$ with the [Barnes-Hut approximation](https://en.wikipedia.org/wiki/Barnes%E2%80%93Hut_simulation).
+
+The following picture illustrates the iterations of t-SNE on the handwritten digits of the self-organizing maps example:
+
+{: .picture}
+<img width="87.1%" height="87.1%" src="{{ site.assets }}/unsupervised-learning/tsne.svg">
+
+{: .caption}
+t-SNE of 100 images of each digit 0 to 3 (784 dimensions), with a perplexity of 30, colored by their digit, which t-SNE does not see. The embedding starts as a small random cloud. As in the paper, the first 50 iterations multiply the $$p_{ij}$$ by 4 (*early exaggeration*), which pulls the points of each digit together, and the following iterations spread the clusters apart. Each panel has its own scale.
 
 **[UMAP](https://umap-learn.readthedocs.io/)** (Uniform Manifold Approximation and Projection, [McInnes et al., 2018](https://arxiv.org/abs/1802.03426)) follows the same idea with a different construction. It builds a weighted graph of the $$k$$ nearest neighbors of each point, with weights:
 
@@ -471,7 +487,13 @@ The **[Apriori algorithm](https://en.wikipedia.org/wiki/Apriori_algorithm)** ([A
 - scan the database to count the support of each candidate, and keep the frequent ones, $$L_k$$;
 - stop when $$L_k$$ is empty.
 
-As an example, take five transactions: {bread, milk}, {bread, butter, eggs}, {milk, butter, eggs, cola}, {bread, milk, butter, eggs} and {bread, milk, butter, cola}, with a minimum support of 3 transactions (60%). Bread, milk and butter appear in 4 transactions, eggs in 3 and cola in 2, so $$L_1$$ holds all items but cola. Among the 6 pairs of the 4 frequent items, {bread, milk}, {bread, butter}, {milk, butter} and {butter, eggs} appear 3 times, and {bread, eggs} and {milk, eggs} only twice. Of the 3 candidates of size 3, {bread, butter, eggs} and {milk, butter, eggs} are pruned without a scan, as {bread, eggs} and {milk, eggs} are not frequent, and {bread, milk, butter} appears in only 2 transactions, so the search stops. The rule $$\{\text{eggs}\} \Rightarrow \{\text{butter}\}$$ has a confidence of 3/3 = 100%, as every transaction with eggs has butter, and a lift of 1/0.8 = 1.25. The rule $$\{\text{bread}\} \Rightarrow \{\text{milk}\}$$ has a confidence of 3/4 = 75%, but a lift of 0.75/0.8 = 0.94: milk is in 80% of the transactions anyway, and bread makes it slightly less likely.
+As an example, take five transactions: {bread, milk}, {bread, butter, eggs}, {milk, butter, eggs, cola}, {bread, milk, butter, eggs} and {bread, milk, butter, cola}, with a minimum support of 3 transactions (60%). Bread, milk and butter appear in 4 transactions, eggs in 3 and cola in 2, so $$L_1$$ holds all items but cola. Among the 6 pairs of the 4 frequent items, {bread, milk}, {bread, butter}, {milk, butter} and {butter, eggs} appear 3 times, and {bread, eggs} and {milk, eggs} only twice. Of the 3 candidates of size 3, {bread, butter, eggs} and {milk, butter, eggs} are pruned without a scan, as {bread, eggs} and {milk, eggs} are not frequent, and {bread, milk, butter} appears in only 2 transactions, so the search stops. The rule $$\{\text{eggs}\} \Rightarrow \{\text{butter}\}$$ has a confidence of 3/3 = 100%, as every transaction with eggs has butter, and a lift of 1/0.8 = 1.25. The rule $$\{\text{bread}\} \Rightarrow \{\text{milk}\}$$ has a confidence of 3/4 = 75%, but a lift of 0.75/0.8 = 0.94: milk is in 80% of the transactions anyway, and bread makes it slightly less likely. The steps of this example are illustrated below:
+
+{: .picture}
+<img width="74.5%" height="74.5%" src="{{ site.assets }}/unsupervised-learning/apriori.svg">
+
+{: .caption}
+The candidate itemsets of each size $$k$$ of the example, with a minimum support of 3 transactions. The frequent itemsets of size $$k - 1$$ form the candidates of size $$k$$, and the candidates with an infrequent subset are pruned without a scan of the database.
 
 Apriori scans the database once per itemset size, and the number of candidates grows very large when the minimum support is low: $$10^4$$ frequent items give about $$5 \times 10^7$$ candidate pairs.
 
@@ -479,7 +501,13 @@ Apriori scans the database once per itemset size, and the number of candidates g
 
 **ECLAT** (Equivalence Class Transformation, [Zaki, 2000](https://doi.org/10.1109/69.846291)) changes the layout of the database. Instead of a list of items per transaction (the *horizontal* layout), it stores, for each item, the set of the transactions that hold it, its *tidset* (the *vertical* layout). The support of an itemset is then the size of the intersection of the tidsets of its items, with no scan of the database. In the example above, the tidsets of butter and eggs are {2, 3, 4, 5} and {2, 3, 4}, and their intersection {2, 3, 4} gives the support 3 of {butter, eggs}. ECLAT searches the itemsets depth-first, extending each itemset with one item at a time and intersecting their tidsets, which is fast as long as the tidsets fit in memory.
 
-**FP-growth** (Frequent Pattern growth, [Han, Pei and Yin, 2000](https://doi.org/10.1145/342009.335372)) generates no candidates at all. It scans the database twice: first, to count the support of each item; then, to insert each transaction, with its frequent items sorted by decreasing support, into a prefix tree, the *FP-tree*. Transactions that share a prefix share a path in the tree, and each node counts the transactions that pass through it, so the tree is a compressed copy of the database. Then, for each item, from the least frequent one, FP-growth collects the paths of the tree that end at that item (its *conditional pattern base*), builds a smaller FP-tree from them, and mines it recursively. In the example above, with the order bread, milk, butter, eggs, the 15 frequent items of the five transactions fit in an FP-tree of 9 nodes. The conditional pattern base of eggs is {bread, milk, butter}, {bread, butter} and {milk, butter}, one transaction each, in which only butter reaches the minimum support of 3, which gives the frequent itemset {butter, eggs}.
+**FP-growth** (Frequent Pattern growth, [Han, Pei and Yin, 2000](https://doi.org/10.1145/342009.335372)) generates no candidates at all. It scans the database twice: first, to count the support of each item; then, to insert each transaction, with its frequent items sorted by decreasing support, into a prefix tree, the *FP-tree*. Transactions that share a prefix share a path in the tree, and each node counts the transactions that pass through it, so the tree is a compressed copy of the database. Then, for each item, from the least frequent one, FP-growth collects the paths of the tree that end at that item (its *conditional pattern base*), builds a smaller FP-tree from them, and mines it recursively. In the example above, with the order bread, milk, butter, eggs, the 15 frequent items of the five transactions fit in an FP-tree of 9 nodes. The conditional pattern base of eggs is {bread, milk, butter}, {bread, butter} and {milk, butter}, one transaction each, in which only butter reaches the minimum support of 3, which gives the frequent itemset {butter, eggs}. The FP-tree of the example, and the mining of eggs, are illustrated below:
+
+{: .picture}
+<img width="87.3%" height="87.3%" src="{{ site.assets }}/unsupervised-learning/fp_growth.svg">
+
+{: .caption}
+**1.** The FP-tree of the example, with the frequent items of each transaction in the order bread, milk, butter, eggs, and the number of transactions that pass through each node. **2.** The conditional pattern base of eggs: the items on the path from the root to each node of eggs, with the count of that node. **3.** The support of each item of these paths together with eggs: only {butter, eggs} reaches the minimum support of 3.
 
 In practice, FP-growth is usually faster than Apriori, as it scans the database only twice and generates no candidates, while ECLAT is fast on dense datasets whose tidsets fit in memory. Apriori is the simplest of the three, and suits sparse data with a high minimum support.
 
@@ -495,7 +523,13 @@ $$
 s(x, m) = 2^{- \mathbb{E}[h(x)] / c(m)}
 $$
 
-where $$m$$ is the number of points used to build each tree, and $$c(m) = 2 H(m-1) - 2(m-1)/m$$ is the average path length of an unsuccessful search in a [binary search tree](https://en.wikipedia.org/wiki/Binary_search_tree) of $$m$$ points, which normalizes $$h(x)$$, with the [harmonic number](https://en.wikipedia.org/wiki/Harmonic_number) $$H(i) \approx \ln(i) + 0.5772$$. A score close to 1 marks an anomaly, a score well below 0.5 a normal point, and when all points have a score close to 0.5, the data has no distinct anomalies. As an example, for trees of $$m = 256$$ points, $$c(256) = 10.24$$: a point isolated after 2 splits on average has a score of $$2^{-2/10.24} = 0.87$$, and a point isolated after 15 splits a score of 0.36.
+where $$m$$ is the number of points used to build each tree, and $$c(m) = 2 H(m-1) - 2(m-1)/m$$ is the average path length of an unsuccessful search in a [binary search tree](https://en.wikipedia.org/wiki/Binary_search_tree) of $$m$$ points, which normalizes $$h(x)$$, with the [harmonic number](https://en.wikipedia.org/wiki/Harmonic_number) $$H(i) \approx \ln(i) + 0.5772$$. A score close to 1 marks an anomaly, a score well below 0.5 a normal point, and when all points have a score close to 0.5, the data has no distinct anomalies. As an example, for trees of $$m = 256$$ points, $$c(256) = 10.24$$: a point isolated after 2 splits on average has a score of $$2^{-2/10.24} = 0.87$$, and a point isolated after 15 splits a score of 0.36. The following picture illustrates the splits of isolation trees, and the scores of a forest:
+
+{: .picture}
+<img width="88.2%" height="88.2%" src="{{ site.assets }}/unsupervised-learning/isolation_forest.svg">
+
+{: .caption}
+60 points of a 2D Gaussian and 3 anomalies. Left and center: the random splits of an isolation tree until an anomaly (red) or a normal point (blue) is alone in its cell; over 100 trees, they take 3.3 and 9.8 splits on average. Right: the anomaly score of a forest of 1,000 trees built on all 63 points, from 0.72 to 0.74 for the anomalies and at most 0.6 for the other points. The axis-parallel splits give the score map its cross shape. Inspired by: [Isolation Forest](https://doi.org/10.1109/ICDM.2008.17)
 
 Each tree is built on a small random subsample of the data, e.g. the 256 points and 100 trees of the paper, and its depth can be limited to about $$\log_2 m$$, as only the short paths matter. Thus, an isolation forest computes no distances, its cost grows linearly with the number of points, and it scales to large and high-dimensional datasets.
 
@@ -517,13 +551,25 @@ $$
 
 A LOF close to 1 means that the point is as dense as its neighbors, and a LOF much larger than 1 that it is an outlier. As an example, take the points 0, 1, 2, 3 and 10 on a line, with $$k = 2$$. The points 0 to 3 each have an average reachability distance of 1.5, i.e. a local reachability density of 2/3, and a LOF of 1. The point 10 has the neighbors 3 and 2, at the reachability distances 7 and 8, so its density is 1/7.5, and its LOF is (2/3) / (1/7.5) = 5.
 
-LOF needs the $$k$$ nearest neighbors of each point, i.e. $$O(n^2)$$ distances with a brute-force search, and its scores are relative, so the threshold that separates the outliers depends on the data. For the sake of comparison, an isolation forest is faster and scales to large datasets, while LOF finds the local outliers next to a dense cluster that a global method may miss.
+LOF needs the $$k$$ nearest neighbors of each point, i.e. $$O(n^2)$$ distances with a brute-force search, and its scores are relative, so the threshold that separates the outliers depends on the data. For the sake of comparison, an isolation forest is faster and scales to large datasets, while LOF finds the local outliers next to a dense cluster that a global method may miss. The following picture compares LOF with a global method, the distance to the $$k$$-th nearest neighbor, on two clusters of different densities:
+
+{: .picture}
+<img width="83.3%" height="83.3%" src="{{ site.assets }}/unsupervised-learning/lof.svg">
+
+{: .caption}
+A sparse cluster, a dense cluster, a global outlier (top) and a local outlier under the dense cluster, with the two points of highest score of each method in red, for $$k = 5$$. The distance to the 5th nearest neighbor flags the global outlier and a point of the sparse cluster, while the local outlier ranks only 5th. LOF flags both outliers, with factors of 2.7 and 6.0, while the other points have at most 2.0. Inspired by: [LOF: Identifying Density-Based Local Outliers](https://doi.org/10.1145/342009.335388)
 
 ## The Curse of Dimensionality and Nearest-Neighbor Search
 
 Distance-based methods, such as k-means, KNN, DBSCAN and LOF, struggle with high-dimensional data, in particular with Euclidean distances. This is due to a phenomenon called the **[curse of dimensionality](https://en.wikipedia.org/wiki/Curse_of_dimensionality)**: as the number of dimensions increases, the distances between any two points become similar, which makes the distance metric almost irrelevant. For example, for points with independent and identically distributed coordinates, the relative difference between the distances from a point to its farthest and nearest neighbors, $$(d_{max} - d_{min}) / d_{min}$$, tends to 0 as the number of dimensions grows ([Beyer et al., 1999](https://link.springer.com/chapter/10.1007/3-540-49257-7_15)).
 
-For 1,000 points drawn uniformly in the unit cube, this relative difference has a median of 67 in 2 dimensions, 2.8 in 10, 0.43 in 100 and 0.12 in 1,000, over 100 random query points. The reason is that the squared distance between two such points is a sum of one independent term per dimension, the squared difference of two uniform coordinates, of mean 1/6 and variance 7/180. Its mean grows with the number of dimensions, while its standard deviation grows only with the square root of that number. Thus, the standard deviation relative to the mean is $$\sqrt{7/5}$$ divided by the square root of the number of dimensions: 84% in 2 dimensions, 12% in 100 and 3.7% in 1,000.
+For 1,000 points drawn uniformly in the unit cube, this relative difference has a median of 65 in 2 dimensions, 2.6 in 10, 0.44 in 100 and 0.12 in 1,000, over 100 random query points. The reason is that the squared distance between two such points is a sum of one independent term per dimension, the squared difference of two uniform coordinates, of mean 1/6 and variance 7/180. Its mean grows with the number of dimensions, while its standard deviation grows only with the square root of that number. Thus, the standard deviation relative to the mean is $$\sqrt{7/5}$$ divided by the square root of the number of dimensions: 84% in 2 dimensions, 12% in 100 and 3.7% in 1,000. The following picture shows how the distances concentrate around their mean as the number of dimensions grows:
+
+{: .picture}
+<img width="91.4%" height="91.4%" src="{{ site.assets }}/unsupervised-learning/curse_of_dimensionality.svg">
+
+{: .caption}
+Histograms of the distances from 100 random query points to 1,000 points drawn uniformly in the unit cube, each divided by the mean distance from its query point. In 2 dimensions, the distances range from almost 0 to more than twice the mean, and in 1,000 dimensions from 0.91 to 1.08 times the mean.
 
 The general proof of the claim is not detailed here, but this [blog post](https://medium.com/towards-data-science/that-cursing-dimensionality-ac317fb0fdcc) covers the curse of dimensionality in more detail. This phenomenon is one more reason to reduce the dimensionality of the data, e.g. with PCA, before clustering it.
 
