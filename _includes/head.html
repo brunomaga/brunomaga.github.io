@@ -59,7 +59,9 @@
           const mark = () => document.querySelectorAll('mjx-container:not([display])').forEach((m) => {
             m.classList.remove('math-scroll');
             range.selectNodeContents(m);  /* covers every part of the formula, also when it breaks over lines */
-            if (range.getBoundingClientRect().right > m.parentElement.getBoundingClientRect().right + 1) {
+            /* the block that holds its line, as an inline parent such as <em> ends where the formula ends */
+            const line = m.closest('p, li, td, th, blockquote') || m.parentElement;
+            if (range.getBoundingClientRect().right > line.getBoundingClientRect().right + 1) {
               m.classList.add('math-scroll');
             }
           });
@@ -71,7 +73,7 @@
             }
             if (!math.display) {
               clearTimeout(marking);
-              marking = setTimeout(mark, 50);
+              marking = setTimeout(() => document.fonts.ready.then(mark), 50);  /* the fonts change the layout */
             }
           });
           window.addEventListener('resize', mark);
