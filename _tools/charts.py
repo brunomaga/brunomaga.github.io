@@ -12,8 +12,9 @@ from matplotlib import transforms
 
 MATH = 'NewComputerModernSansMath'
 BLACK, GREY = '#000000', '#666666'
-BLUE, GREEN, ORANGE, RED, PURPLE = '#6c8ebf', '#82b366', '#d79b00', '#b85450', '#9673a6'  # accents
-BLUE_FILL, GREEN_FILL, RED_FILL = '#dae8fc', '#d5e8d4', '#f8cecc'
+BLUE, GREEN, ORANGE, YELLOW, RED, PURPLE = '#6c8ebf', '#82b366', '#d79b00', '#d6b656', '#b85450', '#9673a6'  # accents
+BLUE_FILL, GREEN_FILL, ORANGE_FILL, YELLOW_FILL, RED_FILL, PURPLE_FILL = ('#dae8fc', '#d5e8d4', '#ffe6cc', '#fff2cc',
+                                                                        '#f8cecc', '#e1d5e7')  # their pastel fills
 DOT = dict(marker='o', markersize=6, markeredgecolor=BLACK, markeredgewidth=1.0, linestyle='none', zorder=2.2)
 
 

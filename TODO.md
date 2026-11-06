@@ -626,10 +626,6 @@ that is not wrong.
 - The caption of `unsupervised-learning/kohonen.svg` and `kohonen2.svg`, and the label "Input fibres" of
   `kohonen.svg` (draw.io cell kohonen-13), use British spellings, while the text uses American ones. Fix: "fibers",
   "neighbors" and "Input fibers".
-- Pictures that do not follow the one style of the post yet (CLAUDE.md, Pictures, section 1): `voronoi.svg` and the
-  k-means GIF of Wikimedia Commons; and kernel PCA, t-SNE, Apriori, FP-growth, isolation forest, LOF and the curse of
-  dimensionality have no picture. Fix: draw them with `figures.py`, as framed panels of the steps or iterations of
-  each method.
 
 ### Deep Neural Networks, Backpropagation and Optimization (2018-03-27-dnn-backprop.md)
 
