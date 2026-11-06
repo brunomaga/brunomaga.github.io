@@ -306,15 +306,7 @@ def gmm(X, K, steps=100, seed=0):
 
 ### Self-Organizing Maps and Kohonen Maps
 
-A **self-organizing map** (SOM) is an unsupervised artificial neural network, typically a 2D grid of neurons, that represents a discretization of the input space (or of the training set). It was introduced by Teuvo Kohonen in the paper [Self-organized formation of topologically correct feature maps](https://link.springer.com/article/10.1007/BF00337288) (1982), hence its other name, the Kohonen map. Its main purpose is to represent the training data by neurons, each standing for a localized region of similar inputs, with neighboring neurons of the grid representing nearby regions of the input space. Like k-means, a SOM is a prototype method, whose prototypes are the weights of its neurons; unlike k-means, its prototypes are ordered on a grid. The following picture illustrates Kohonen's model (top) and one step of its learning algorithm (bottom):
-
-{: .picture}
-<img width="46%" height="46%" src="{{ site.assets }}/unsupervised-learning/kohonen.svg"><br>
-<img width="37%" height="37%" src="{{ site.assets }}/unsupervised-learning/kohonen2.svg">
-
-{: .caption}
-**Top:** the neuron layer of Kohonen's model. The input fibers running horizontally carry the input signal (the stimulus) and excite the neurons of the layer through synaptic connections. Lateral interactions between the neurons confine the response to a spatially bounded local excitation zone. The layer acts as a topographic feature map if the position $$s$$ of the excitation zone varies continuously with the stimulus features of interest. **Bottom:** the adaptation step. The input $$v$$ in the input space $$V$$ selects the winner neuron $$s$$ in the lattice of neurons $$A$$ ($$\phi$$ is the map from $$V$$ to $$A$$). The winner and its neighbors shift their weight vectors towards $$v$$, by an amount that decreases with the distance from $$s$$, shown by the sizes and gray levels of the neurons. Only the shift $$\Delta w_s$$ of the winner's weights $$w_s$$ is drawn. In the algorithm below, $$v$$ is the input $$x_u$$ and $$s$$ is the winner $$j^*$$. Adapted from: [Neural Computation and Self-Organizing Maps, H. Ritter, T. Martinetz and K. Schulten, 1992, Figures 4.1 and 4.2](https://tcbg.illinois.edu/Services/Class/PHYS498TBP/spring2002/neuro_4.pdf)
-
+A **self-organizing map** (SOM) is an unsupervised artificial neural network, typically a 2D grid of neurons, that represents a discretization of the input space (or of the training set). It was introduced by Teuvo Kohonen in the paper [Self-organized formation of topologically correct feature maps](https://link.springer.com/article/10.1007/BF00337288) (1982), hence its other name, the Kohonen map. Its main purpose is to represent the training data by neurons, each standing for a localized region of similar inputs, with neighboring neurons of the grid representing nearby regions of the input space. Like k-means, a SOM is a prototype method, whose prototypes are the weights of its neurons; unlike k-means, its prototypes are ordered on a grid.
 
 The algorithm is the following:
 - the weights of the neurons are initialized at random in the input space;
@@ -348,13 +340,13 @@ def som(X, size=6, steps=10000, eta=0.2, width=1.0, seed=0):
     return W
 ```
 
-Very nice videos demonstrating an iterative execution of the Kohonen map can be found [in this link](https://www.youtube.com/watch?v=IixbH1gDhsg) and [this link](https://www.youtube.com/watch?v=zeOtwCAI3Fs). The following picture illustrates such an execution on 2D inputs:
+Very nice videos demonstrating an iterative execution of the Kohonen map can be found [in this link](https://www.youtube.com/watch?v=IixbH1gDhsg) and [this link](https://www.youtube.com/watch?v=zeOtwCAI3Fs). The following picture illustrates such an execution on 2D inputs, with the first update of the weights in its first panel:
 
 {: .picture}
 <img width="91.3%" height="91.3%" src="{{ site.assets }}/unsupervised-learning/som_training.svg">
 
 {: .caption}
-A SOM of 6x6 neurons, trained on 2D inputs drawn uniformly from a square (blue). Each circle is the weight vector of a neuron, and the lines join the neurons that are neighbors in the grid. The weights start in a small random cloud, where the grid is tangled. The first iterations order the grid, and the following ones spread it over the square, as $$\eta$$ decreases from 0.5 to 0.01 and the width of the Gaussian $$h$$ from 3 to 0.5 neurons.
+A SOM of 3x12 neurons, trained on 2D inputs drawn uniformly from the letter C (blue). Each circle is the weight vector of a neuron, and the lines join the neurons that are neighbors in the grid. The weights start at random, and the first panel draws only the first update: the input $$x_u$$ (red) selects the winner $$j^*$$ (black), the closest neuron, and the winner and its neighbors in the grid (grey) move towards $$x_u$$ (red arrows), even the neighbors that are far from it. The winner moves half of the way, with $$\eta = 0.5$$, and its neighbors 44% of theirs, with $$h(j, j^*) = 0.88$$; the other neurons move less, and their arrows are left out. The following iterations order the grid into a strip, which then spreads until it covers the letter, as $$\eta$$ decreases from 0.5 to 0.01 and the width of the Gaussian $$h$$ from 2 to 0.5 neurons.
 
 A good example is the clustering of handwritten digits from the [MNIST database](http://yann.lecun.com/exdb/mnist/).
 Each digit is a 28x28 (=784) pixel array, represented as a data point in a 784-dimensional space. Each pixel is monochromatic, so each dimension takes values between 0 and 255.
@@ -372,7 +364,7 @@ The goal is to fine-tune the neighborhood width and the learning rate $$\eta$$ o
 {: .caption}
 SOMs of 6x6 neurons, trained for 10,000 iterations on the digits 0 to 3 of the example, with each neuron drawn as the 28x28 image of its weights. The tuned SOM has $$\eta = 0.2$$ and a Gaussian $$h$$ of width 1, the second SOM $$\eta = 0.9$$, and the third a width of 4.
 
-More examples can be found in the [Wikipedia entry for self-organizing maps](https://en.wikipedia.org/wiki/Self-organizing_map#Examples).
+More examples can be found in the [Wikipedia entry for self-organizing maps](https://en.wikipedia.org/wiki/Self-organizing_map#Examples), and the theory of Kohonen's model in [Neural Computation and Self-Organizing Maps](https://tcbg.illinois.edu/Services/Class/PHYS498TBP/spring2002/neuro_4.pdf), by H. Ritter, T. Martinetz and K. Schulten (1992).
 
 ### Comparison of the Clustering Methods
 
@@ -551,6 +543,52 @@ $$
 
 with stochastic gradient descent and negative sampling. The second term pushes apart the points that are not neighbors, and UMAP tends to preserve more of the global structure than t-SNE, although mostly due to its spectral initialization ([Kobak and Linderman, 2021](https://www.nature.com/articles/s41587-020-00809-z)). It is also faster, scales to millions of points and can embed new points, so it is used as a general dimensionality reduction method too, and not only for visualization.
 
+The following function implements UMAP. First, it finds each $$\sigma_i$$ by bisection, as t-SNE does for the perplexity, and builds the symmetric weights $$v_{ij}$$. Then, it fits $$a$$ and $$b$$ with SciPy's `curve_fit`, so that $$w_{ij}$$ is close to 1 up to the distance `min_dist` and decays exponentially beyond it. It starts from the spectral embedding of the graph, i.e. the eigenvectors of the second and third smallest eigenvalues of the Laplacian $$L_{sym}$$ of spectral clustering. At each epoch, it samples each edge with probability $$v_{ij}$$, moves the first point of each sampled edge towards the second one, which decreases the first term of the cross-entropy, and moves it away from a few random points, which decreases the second term (negative sampling):
+
+```python
+from scipy.optimize import curve_fit
+
+def umap(X, k=15, steps=500, min_dist=0.1, negatives=5, seed=0):
+    n = len(X)
+    D = np.sqrt(((X[:, None] - X) ** 2).sum(2))
+    nn = np.argsort(D, 1)[:, 1:k + 1]  # the k nearest neighbors of each point
+    d = np.take_along_axis(D, nn, 1)
+    rho, lo, hi = d[:, :1], np.zeros((n, 1)), np.full((n, 1), D.max())
+    for _ in range(60):  # sigma_i by bisection, so that sum_j v_j|i = log2 k
+        sigma = (lo + hi) / 2
+        big = np.exp(-(d - rho) / sigma).sum(1, keepdims=True) > np.log2(k)
+        lo, hi = np.where(big, lo, sigma), np.where(big, sigma, hi)
+    V = np.zeros((n, n))
+    np.put_along_axis(V, nn, np.exp(-(d - rho) / sigma), 1)  # v_j|i
+    V = V + V.T - V * V.T  # the symmetric weights v_ij
+    x = np.linspace(0, 3, 300)  # w fitted to 1 up to min_dist, and to exp(min_dist - x)
+    w = lambda x, a, b: 1 / (1 + a * x ** (2 * b))
+    (a, b), _ = curve_fit(w, x, np.where(x < min_dist, 1, np.exp(min_dist - x)))
+    deg = V.sum(1)
+    L = np.eye(n) - V / np.sqrt(np.outer(deg, deg))  # the Laplacian L_sym of the graph
+    Y = np.linalg.eigh(L)[1][:, 1:3]  # spectral initialization
+    Y *= 10 / np.abs(Y).max()  # coordinates within [-10, 10]
+    rng = np.random.default_rng(seed)
+    i, j = np.nonzero(V)  # the edges of the graph, in both directions
+    for t in range(steps):
+        lr = 1 - t / steps  # the learning rate decreases linearly to 0
+        e = rng.random(len(i)) < V[i, j]  # each edge is sampled with probability v_ij
+        p, q = i[e], j[e]
+        diff = Y[p] - Y[q]
+        d2 = (diff**2).sum(1, keepdims=True) + 1e-9  # avoids 0 ** (b - 1)
+        g = -2 * a * b * d2 ** (b - 1) / (1 + a * d2**b)  # attraction, from log w_ij
+        np.add.at(Y, p, lr * np.clip(g * diff, -4, 4))  # steps clipped to [-4, 4]
+        p = np.repeat(p, negatives)  # negative sampling: random points q
+        q = rng.integers(n, size=len(p))
+        diff = Y[p] - Y[q]
+        d2 = (diff**2).sum(1, keepdims=True)
+        g = 2 * b / ((1e-3 + d2) * (1 + a * d2**b))  # repulsion, from log(1 - w_ij)
+        np.add.at(Y, p, lr * np.clip(g * diff, -4, 4))
+    return Y
+```
+
+For the sake of comparison, on the 400 digits of the t-SNE picture, the majority digit of the 5 nearest neighbors of a point (the KNN classifier with $$k = 5$$) is its own digit for 94% of the points in the 2D embedding of the `umap` function above, and for 96% in that of the `tsne` function, at least as many as in the 784 dimensions of the images (93%), but only for 86% in the first two principal components of PCA. In practice, t-SNE and UMAP are the methods to visualize clusters, as they keep the neighborhoods of the points, while PCA is the method to compress the data or to prepare it for other methods, as it is fast, linear and keeps the large distances.
+
 ### Independent Component Analysis (ICA)
 
 This section was largely inspired by the lecture notes of Tatsuya Yokota (Tokyo Institute of Technology, 2012).
@@ -657,6 +695,20 @@ print(np.corrcoef(fast_ica(x).T, s.T)[:2, 2:].round(2))  # ±1 for the matching 
 ```
 
 As a final remark, *kurtosis is very sensitive to outliers, because it is a fourth-order function*. A more robust alternative is the [negentropy](https://en.wikipedia.org/wiki/Negentropy). It is omitted here for brevity, but the details are in the [original lecture notes](https://www.slideshare.net/yokotatsuya/independent-component-analysis-11359849).
+
+### Comparison of the Dimensionality Reduction Methods
+
+The following table sums up the dimensionality reduction methods of this section:
+
+| Method | Keeps | Linear | Cost | New points | When to use it |
+|---|---|---|---|---|---|
+| PCA | The directions of largest variance | Yes | An SVD of the data, linear in $$n$$ | Projected on the components | Compression, denoising, and a first step before other methods |
+| Kernel PCA | The directions of largest variance in the feature space of a kernel | No | An eigendecomposition of the $$n \times n$$ kernel matrix | With their kernel values to the training points | Non-linear structure in small to medium datasets |
+| t-SNE | The neighborhoods of the points | No | $$O(n^2)$$ per iteration, or $$O(n \log n)$$ with Barnes-Hut | Not in its standard form | Visualization of clusters in 2D or 3D |
+| UMAP | The neighborhoods of the points, and more of the global structure | No | Close to linear in $$n$$, with an approximate search of the nearest neighbors | Yes | Visualization, and non-linear reduction of large datasets |
+| ICA | The directions of independent, non-Gaussian signals | Yes | Whitening as in PCA, then a fixed-point iteration per component | Multiplied by $$B$$ | Blind source separation, e.g. the cocktail party problem |
+
+These methods are often combined: t-SNE and UMAP are usually run on the first 30 to 50 principal components of the data, which removes noise and makes the distances cheaper to compute.
 
 To find more about the topic, the book [Pattern Recognition and Machine Learning](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/) by Christopher Bishop covers k-means, Gaussian mixtures and the EM algorithm (chapter 9), and PCA, kernel PCA and ICA (chapter 12).
 
@@ -956,5 +1008,57 @@ def pq_search(books, codes, q, k):
     dist = sum(table[codes[:, j]] for j, table in enumerate(tables))  # table lookups
     return np.argsort(dist)[:k]
 ```
+
+The following functions implement HNSW. `search_layer` is a best-first search in one layer of the graph: it keeps the `ef` nearest nodes that it has found, and expands the nearest of them that it has not expanded yet, i.e. computes the distances to its neighbors, until all of them are expanded. `select` picks the links of a node with the heuristic of the paper: a candidate is kept only if it is closer to the node than to the candidates kept before it, so that the links point in diverse directions, e.g. towards a nearby cluster, instead of only towards the nearest nodes of the same cluster.
+
+`hnsw_index` inserts the vectors one by one. Each vector gets a random top layer, from an exponential distribution, so that each layer holds about $$1/M$$ of the nodes of the layer below. The new node descends greedily from the top layer of the graph to its own top layer, and from there down to the bottom layer, it is linked to up to $$M$$ of the `ef` nearest nodes found in each layer, and back, with up to $$2M$$ links per node in the bottom layer, as in the paper. A query descends greedily through the upper layers, and searches the bottom layer with `ef` candidates:
+
+```python
+def search_layer(X, graph, q, entries, ef):  # the ef nearest nodes to q that it finds
+    found = sorted(zip(((X[entries] - q) ** 2).sum(1), entries))  # (distance, node)
+    seen, done = set(entries), set()
+    while todo := [i for _, i in found if i not in done]:  # the nodes not expanded yet
+        done.add(todo[0])  # expand the nearest of them
+        new = [j for j in graph[todo[0]] if j not in seen]
+        seen.update(new)
+        found = sorted(found + list(zip(((X[new] - q) ** 2).sum(1), new)))[:ef]
+    return [i for _, i in found]
+
+def select(X, i, nodes, M):  # up to M neighbors of node i, in diverse directions
+    dist = lambda a, b: ((X[a] - X[b]) ** 2).sum()
+    out = []
+    for j in sorted(nodes, key=lambda j: dist(i, j)):
+        if len(out) < M and all(dist(i, j) < dist(j, o) for o in out):
+            out.append(j)  # j is closer to i than to the neighbors kept before it
+    return out
+
+def hnsw_index(X, M=8, ef=32, seed=0):
+    rng = np.random.default_rng(seed)
+    graphs, entry = [], 0  # graphs[l][i]: the neighbors of node i in layer l
+    for i in range(len(X)):
+        top = int(rng.exponential() / np.log(M))  # the top layer of node i
+        ep = [entry]
+        for l in range(len(graphs) - 1, -1, -1):  # from the top layer down
+            ep = search_layer(X, graphs[l], X[i], ep, ef if l <= top else 1)
+            if l <= top:  # links to its neighbors, and back
+                graphs[l][i] = select(X, i, ep, M)
+                Mmax = 2 * M if l == 0 else M  # more links in layer 0
+                for j in graphs[l][i]:
+                    graphs[l][j] = select(X, j, graphs[l][j] + [i], Mmax)
+        if top >= len(graphs):  # new layers, with node i as their entry point
+            graphs += [{i: []} for _ in range(top + 1 - len(graphs))]
+            entry = i
+    return graphs, entry
+
+def hnsw_search(X, graphs, entry, q, k, ef=32):
+    ep = [entry]
+    for graph in graphs[:0:-1]:  # a greedy descent through the upper layers
+        ep = search_layer(X, graph, q, ep, 1)
+    return search_layer(X, graphs[0], q, ep, max(ef, k))[:k]
+```
+
+For the sake of comparison, on 5,000 vectors of 32 dimensions in 50 clusters, normalized to unit length, and with the default parameters of the functions above, IVF finds all of the 10 nearest neighbors of a query by scanning 5.7% of the vectors, LSH finds 99% of them by ranking 6.7%, and HNSW 99% by computing the distances to 2.5%. PQ alone finds only 54% of them, as its distances are approximate, but all of them once its 100 best candidates are ranked again by their exact distances, a common way to use it.
+
+Each method has its trade-off. LSH needs no training, but it needs many hash tables, i.e. much memory, for a high recall. IVF and PQ need a k-means training, and PQ stores each vector in a few bytes. HNSW reaches the highest recall for a given query time in benchmarks ([Aumüller, Bernhardsson and Faithfull, 2018](https://arxiv.org/abs/1807.05614)), but its index is slow to build and keeps the full vectors in memory. Thus, HNSW is the usual choice when the vectors fit in memory, and PQ when they do not.
 
 Libraries such as [FAISS](https://en.wikipedia.org/wiki/FAISS) ([Johnson, Douze and Jégou, 2017](https://arxiv.org/abs/1702.08734)) combine these methods, e.g. IVF with PQ, and run them on GPUs. Embeddings escape the curse of dimensionality only in part: the embedding model is trained so that related texts are close, so the embeddings lie near a manifold of much lower intrinsic dimension than their 1,024 coordinates, and the nearest neighbors of a query still stand out from the rest. Thus, the ideas of this post (k-means clustering, Voronoi cells, quantization and the graphs of nearest neighbors) are what make the search over billions of embeddings fast enough for RAG.

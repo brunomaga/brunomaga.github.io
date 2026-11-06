@@ -13,7 +13,9 @@ import charts
 from charts import BLUE, GREEN, GREY, MATH, ORANGE, PURPLE, RED, YELLOW
 import matplotlib.pyplot as plt
 from matplotlib import transforms
-from matplotlib.patches import Ellipse, Polygon, Rectangle
+from matplotlib.font_manager import FontProperties
+from matplotlib.patches import Ellipse, PathPatch, Polygon, Rectangle
+from matplotlib.textpath import TextPath
 from PIL import Image
 from scipy.cluster.hierarchy import fcluster, leaves_list, linkage
 from scipy.optimize import linear_sum_assignment
@@ -392,29 +394,59 @@ def gmm():
           'GMM:', round(adjusted_rand_score(y, labels), 2))
 
 
+def letter(ch):
+    """The outline of the letter ch in Source Sans 3 Bold, scaled to fit the unit square and centered in it."""
+    path = TextPath((0, 0), ch, size=1, prop=FontProperties(family='Source Sans 3', weight='bold'))
+    box = path.get_extents()
+    s = 1 / max(box.width, box.height)
+    return path.transformed(transforms.Affine2D().translate(-box.x0, -box.y0).scale(s)
+                            .translate((1 - box.width * s) / 2, (1 - box.height * s) / 2))
+
+
 def som_training():
-    """A SOM of 6 x 6 neurons trained on points drawn uniformly from the unit square, at four iterations."""
-    rng = np.random.default_rng(0)
-    n, T, shown = 6, 10000, [0, 500, 3000, 10000]
-    grid = np.array([(i, j) for i in range(n) for j in range(n)], float)  # the position of each neuron in the grid
-    W = 0.5 + 0.15 * rng.standard_normal((n * n, 2))  # the weights start in a small random cloud
-    snaps = {0: W.copy()}
-    for t in range(T):
-        x = rng.uniform(0, 1, 2)
+    """A SOM of 3 x 12 neurons trained on points drawn uniformly from a bold letter C, from random weights; the first
+    panel shows the first update: the input, the winner and its neighbors in the grid, and how far each one moves."""
+    rng = np.random.default_rng(333390)  # a first update with arrows long enough to see and room for its labels
+    (r, q), T, shown = (3, 12), 10000, [0, 1000, 3000, 10000]
+    C = letter('C')
+    lo, hi = C.get_extents().min, C.get_extents().max
+    grid = np.indices((r, q)).reshape(2, -1).T  # the position of each neuron in the grid
+    W = rng.uniform(lo, hi, (r * q, 2))  # random weights in the box of the letter
+    X = rng.uniform(lo, hi, (3 * T, 2))
+    X = X[C.contains_points(X)][:T]  # T inputs drawn uniformly from the letter
+    snaps = {0: W}
+    for t, x in enumerate(X):
         j = np.argmin(((W - x) ** 2).sum(1))  # the winner
-        eta, width = 0.5 * 0.02 ** (t / T), 3 * (1 / 6) ** (t / T)  # from 0.5 to 0.01, and from 3 to 0.5
-        W += eta * np.exp(-((grid - grid[j]) ** 2).sum(1) / (2 * width ** 2))[:, None] * (x - W)
+        eta, width = 0.5 * 0.02 ** (t / T), 2 * 0.25 ** (t / T)  # from 0.5 to 0.01, and from 2 to 0.5
+        dW = eta * np.exp(-((grid - grid[j]) ** 2).sum(1) / (2 * width ** 2))[:, None] * (x - W)
+        if t == 0:
+            first = (x, j, dW)
+        W = W + dW
         if t + 1 in shown:
-            snaps[t + 1] = W.copy()
-    def lattice(w):
+            snaps[t + 1] = W
+    def lattice(w, step=None):
         def draw(ax, box):
-            ax.add_patch(Rectangle((0, 0), 1, 1, fc=PASTEL[BLUE], ec='k', lw=1.0, zorder=1))
-            g = w.reshape(n, n, 2)
-            for line in [*g, *g.transpose(1, 0, 2)]:  # the rows and the columns of the grid
+            ax.add_patch(PathPatch(C, fc=PASTEL[BLUE], ec='k', lw=1.0, zorder=1))
+            g = w.reshape(r, q, 2)
+            for line in [] if step else [*g, *g.transpose(1, 0, 2)]:  # the rows and the columns of the grid
                 ax.plot(*line.T, color='k', lw=1.4, zorder=5)
             ax.plot(*w.T, 'o', ms=5, mfc='#ffffff', mec='k', mew=1.0, zorder=10)
+            if step:  # the input, the winner and its links to its neighbors in the grid, and their updates
+                x, j, dW = step
+                nb = np.flatnonzero(np.abs(grid - grid[j]).sum(1) == 1)
+                for m in nb:
+                    ax.plot(*w[[j, m]].T, color='k', lw=1.4, zorder=5)
+                for m in [j, *nb]:
+                    charts.arrow(ax, w[m], w[m] + dW[m], color=RED, gap0=3, zorder=15)
+                ax.plot(*w[nb].T, 'o', ms=5, mfc=GREY, mec='k', mew=1.0, zorder=16)
+                ax.plot(*w[j], 'o', ms=5, mfc='k', mec='k', mew=1.0, zorder=16)
+                ax.plot(*x, 'o', ms=7, mfc=RED, mec='k', mew=1.0, zorder=17)
+                for p, parts, dx, dy in [(x, charts.sub('𝑥', '𝑢'), -10.7, -12.4),
+                                         (w[j], [('𝑗', MATH, 14, 0), ('∗', MATH, 12, 4.5)], 16.0, -4.2)]:
+                    charts.runs(ax, *p, parts, 'center', transforms.offset_copy(ax.transData, ax.figure, dx, dy,
+                                                                                 units='dots'))  # dx, dy px away
         return draw
-    row('som_training', (-0.1, 1.1, -0.1, 1.1), [lattice(snaps[t]) for t in shown],
+    row('som_training', (-0.1, 1.1, -0.1, 1.1), [lattice(snaps[0], first), *[lattice(snaps[t]) for t in shown[1:]]],
         [f'Iteration {t:,}' for t in shown], size=185, arrow=False)
 
 
