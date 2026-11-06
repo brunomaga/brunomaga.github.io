@@ -4,7 +4,7 @@ Each picture runs its method on the post's example or on data drawn with a fixed
 chart style of _tools/charts.py (1 unit = 1 px, text as glyph outlines), cropped to the drawn content plus 0.5 px.
 usage: python3 figures.py [NAME ...]   (needs matplotlib, scikit-learn, scipy and the fonts of CLAUDE.md)
 """
-import io, os, re, sys, zipfile
+import io, os, re, sys
 from collections import Counter
 import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -418,11 +418,17 @@ def som_training():
         [f'Iteration {t:,}' for t in shown], size=185, arrow=False)
 
 
+def mnist():
+    """The 5,000 MNIST digits of the SOM example, 500 of each digit, as rows of 784 pixels from 0 to 255, and their
+    labels."""
+    with np.load(os.path.join(HERE, 'mnist_digits.npz')) as d:
+        return d['X'].astype(float), d['y'].astype(float)
+
+
 def som_mnist():
-    """SOMs of 6 x 6 neurons trained on the digits 0 to 3 of kohonen_mnist.zip, as its kohonen.py does: tuned, with a
-    high learning rate, and with a large neighborhood width."""
-    with zipfile.ZipFile(os.path.join(HERE, 'kohonen_mnist.zip')) as z:
-        X, y = (np.loadtxt(io.BytesIO(z.read(f'kohonen_mnist/{f}.txt'))) for f in ('data', 'labels'))
+    """SOMs of 6 x 6 neurons trained on the digits 0 to 3, as the som function of the post does: tuned, with a high
+    learning rate, and with a large neighborhood width."""
+    X, y = mnist()
     X, n, T = X[np.isin(y, [0, 1, 2, 3])], 6, 10000
     grid = np.array([(i, j) for i in range(n) for j in range(n)], float)
     def som(eta, width):
@@ -504,10 +510,9 @@ def kernel_pca():
 
 
 def tsne():
-    """t-SNE of 100 of each digit 0 to 3 of kohonen_mnist.zip, perplexity 30, optimized as in its paper: exaggeration by
-    4 for 50 iterations, learning rate 100 with adaptive gains, momentum 0.5, then 0.8 from iteration 250."""
-    with zipfile.ZipFile(os.path.join(HERE, 'kohonen_mnist.zip')) as z:
-        X, y = (np.loadtxt(io.BytesIO(z.read(f'kohonen_mnist/{f}.txt'))) for f in ('data', 'labels'))
+    """t-SNE of 100 of each digit 0 to 3, perplexity 30, optimized as in its paper: exaggeration by 4 for 50 iterations,
+    learning rate 100 with adaptive gains, momentum 0.5, then 0.8 from iteration 250."""
+    X, y = mnist()
     rng = np.random.default_rng(0)
     keep = np.concatenate([rng.choice(np.flatnonzero(y == d), 100, replace=False) for d in range(4)])
     X, y, n = X[keep] / 255, y[keep].astype(int), len(keep)
