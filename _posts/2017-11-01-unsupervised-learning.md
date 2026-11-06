@@ -364,7 +364,7 @@ The goal is to fine-tune the neighborhood width and the learning rate $$\eta$$ o
 {: .caption}
 SOMs of 6x6 neurons, trained for 10,000 iterations on the digits 0 to 3 of the example, with each neuron drawn as the 28x28 image of its weights. The tuned SOM has $$\eta = 0.2$$ and a Gaussian $$h$$ of width 1, the second SOM $$\eta = 0.9$$, and the third a width of 4.
 
-More examples can be found in the [Wikipedia entry for self-organizing maps](https://en.wikipedia.org/wiki/Self-organizing_map#Examples), and the theory of Kohonen's model in [Neural Computation and Self-Organizing Maps](https://tcbg.illinois.edu/Services/Class/PHYS498TBP/spring2002/neuro_4.pdf), by H. Ritter, T. Martinetz and K. Schulten (1992).
+More examples can be found in the [Wikipedia entry for self-organizing maps](https://en.wikipedia.org/wiki/Self-organizing_map#Examples), and the theory of Kohonen's model in chapter 4 of [Neural Computation and Self-Organizing Maps](https://tcbg.illinois.edu/Services/Class/PHYS498TBP/spring2002/neuro_4.pdf), by H. Ritter, T. Martinetz and K. Schulten (1992).
 
 ### Comparison of the Clustering Methods
 
