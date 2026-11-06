@@ -40,7 +40,13 @@ where $$W^{(l)}$$ is the matrix of the weights $$w_{i,j}^{(l)}$$ of layer $$l$$,
 - Leaky ReLU: $$\phi(x) = \max \{\alpha x,x\}$$, with $$0 < \alpha < 1$$. Fixes the *dying ReLU* problem of non-leaky rectified linear units;
   - In brief, if the dot product of the input to a ReLU with its weights is negative, the output is 0. The gradient of $$ \max\{ 0,x \} $$ is $$0$$ when the output is $$0$$. If for any reason the output is consistently $$0$$ (for example, if the ReLU has a large negative bias), then the gradient will be consistently 0. The error signal backpropagated from later layers gets multiplied by this 0, so no error signal ever passes to earlier layers. The ReLU has died. With leaky ReLUs, the gradient is never 0, and this problem is avoided.
 
-In practice, ReLU and its variants are the default choice for hidden layers, while the sigmoid and *tanh* are used where a bounded output is needed, e.g. a probability at the output of a binary classifier.
+In practice, ReLU and its variants are the default choice for hidden layers, while the sigmoid and *tanh* are used where a bounded output is needed, e.g. a probability at the output of a binary classifier. The following picture shows these functions and their derivatives:
+
+{: .picture}
+<img width="77.6%" height="77.6%" src="{{ site.assets }}/dnn-backprop/activation_functions.svg">
+
+{: .caption}
+The sigmoid, *tanh*, ReLU and Leaky ReLU (with $$\alpha = 0.1$$) activation functions (left) and their derivatives (right). The derivatives of the sigmoid and *tanh* vanish for large $$\vert x \vert$$, while the derivative of ReLU is 1 for every positive input and 0 for every negative input.
 
 As an example, a network with two inputs, one hidden layer of two ReLU neurons and one output with no activation function computes the XOR that a single perceptron cannot learn. With the weights given in the [Deep Learning](https://www.deeplearningbook.org/) book (section 6.1), the hidden layer computes $$x_1^{(1)} = \max\{0, x_1^{(0)} + x_2^{(0)}\}$$ and $$x_2^{(1)} = \max\{0, x_1^{(0)} + x_2^{(0)} - 1\}$$, and the output is $$\hat{y} = x_1^{(1)} - 2 x_2^{(1)}$$. The four inputs $$(0, 0)$$, $$(0, 1)$$, $$(1, 0)$$ and $$(1, 1)$$ give the hidden outputs $$(0, 0)$$, $$(1, 0)$$, $$(1, 0)$$ and $$(2, 1)$$, and the outputs 0, 1, 1 and 0. The hidden layer maps the two inputs of output 1 to the same point, $$(1, 0)$$, where a linear output layer can separate them from the other two.
 
@@ -389,6 +395,14 @@ class Adam(Optimizer):
             v_hat = v / (1 - self.beta2**self.t)
             theta.data -= self.eta * m_hat / (np.sqrt(v_hat) + self.eps)
 ```
+
+The following picture compares the paths of GD, momentum and Adam on a loss with a long, narrow valley:
+
+{: .picture}
+<img width="71.4%" height="71.4%" src="{{ site.assets }}/dnn-backprop/optimizer_paths.svg">
+
+{: .caption}
+The first 40 steps of GD ($$\eta = 0.035$$), momentum ($$\eta = 0.006$$, $$\mu = 0.9$$) and Adam ($$\eta = 0.2$$, with the default $$\beta_1$$, $$\beta_2$$ and $$\epsilon$$) on the loss $$\theta_1^2/2 + 25 \theta_2^2$$ (black contours), with its exact gradient, from the same starting point (black dot) toward the minimum (cross). GD zig-zags across the narrow valley and moves slowly along it, momentum oscillates across the valley but gains speed along it, and Adam moves each parameter by about $$\eta$$ per step at first, whatever the scale of its gradient.
 
 In practice, Adam needs less tuning of the learning rate than SGD, and Adam or its variants train most Transformers, while SGD with momentum remains common for CNNs. However, in some cases, Adam does not converge to the optimal solution, but SGD does ([Reddi et al., 2018](https://arxiv.org/abs/1904.09237)), and switching from Adam to SGD during training can generalize better than Adam alone ([Keskar and Socher, 2017](https://arxiv.org/abs/1712.07628)).
 

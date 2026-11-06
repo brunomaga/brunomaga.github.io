@@ -314,9 +314,10 @@ sections 6 and 7, and the font section 4.
   matrix-transpose/all_to_all.svg in the matrix transpose and mixture-of-experts posts, and gptlite/gptlite.svg in
   the two GPT-lite posts).
 - Charts drawn from data (plots, benchmarks, histograms) keep their data and the script or spreadsheet that
-  draws them next to the SVG, and follow the same palette, font and sizes as the diagrams. A chart whose data
-  or script is not in the repository is restyled in its SVG: its font, text sizes, colors and line weights
-  change, its data and marks stay.
+  draws them next to the SVG, and follow the same palette, font and sizes as the diagrams. A chart drawn with
+  matplotlib imports the shared style of _tools/charts.py, which saves the SVG with its text as glyph outlines.
+  A chart whose data or script is not in the repository is restyled in its SVG: its font, text sizes, colors
+  and line weights change, its data and marks stay.
 - Paper figures are redrawn in this style too, and their captions credit the paper (section 9).
 
 ### 3. Page width and scale

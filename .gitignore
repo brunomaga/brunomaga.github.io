@@ -6,3 +6,4 @@ vendor
 Gemfile.lock
 .DS_Store
 _data/last_update.yml
+__pycache__

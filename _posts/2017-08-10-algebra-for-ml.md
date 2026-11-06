@@ -343,7 +343,13 @@ $$
 x_{i+1} = x_i − γ((∇f)(x_i))^{\intercal}
 $$
 
-The step size (the *learning rate*) decides whether the iteration converges. As an example, for $$f(x) = x^2$$, whose derivative is $$2x$$, the update is $$x_{i+1} = x_i - 2\gamma x_i = (1 - 2\gamma) x_i$$. From $$x_0 = 1$$, a step size $$\gamma = 0.1$$ multiplies $$x$$ by 0.8 at each iteration, and reaches $$x_{10} = 0.107$$ and $$x_{20} = 0.0115$$, close to the minimum at 0. A step size $$\gamma = 1.1$$ multiplies $$x$$ by $$-1.2$$: the iterates jump over the minimum, from one side to the other, and grow to $$x_{10} = 6.19$$ and $$x_{20} = 38.3$$. Gradient descent converges on this function only if $$\gamma < 1 = 2/f''(x)$$, and, more generally, on a quadratic function only if $$\gamma$$ is smaller than 2 divided by the largest eigenvalue of its Hessian.
+The step size (the *learning rate*) decides whether the iteration converges. As an example, for $$f(x) = x^2$$, whose derivative is $$2x$$, the update is $$x_{i+1} = x_i - 2\gamma x_i = (1 - 2\gamma) x_i$$. From $$x_0 = 1$$, a step size $$\gamma = 0.1$$ multiplies $$x$$ by 0.8 at each iteration, and reaches $$x_{10} = 0.107$$ and $$x_{20} = 0.0115$$, close to the minimum at 0. A step size $$\gamma = 1.1$$ multiplies $$x$$ by $$-1.2$$: the iterates jump over the minimum, from one side to the other, and grow to $$x_{10} = 6.19$$ and $$x_{20} = 38.3$$. Gradient descent converges on this function only if $$\gamma < 1 = 2/f''(x)$$, and, more generally, on a quadratic function only if $$\gamma$$ is smaller than 2 divided by the largest eigenvalue of its Hessian. The following picture shows the first iterations with both step sizes:
+
+{: .picture}
+<img width="63.5%" height="63.5%" src="{{ site.assets }}/algebra-for-ml/gd_step_size.svg"/>
+
+{: .caption}
+Gradient descent on $$f(x) = x^2$$ from $$x_0 = 1$$: the first 10 iterations with the step size $$\gamma = 0.1$$ (left), which approach the minimum, and the first 5 with $$\gamma = 1.1$$ (right), which jump over the minimum and diverge.
 
 In practice, large models are trained with variants of gradient descent: stochastic gradient descent, which computes the gradient on a random subset of the data, presented in the post on [linear regression]({{ site.baseurl }}{% post_url 2017-08-17-linear-regression-matrix-factorization %}#gradient-descent), and optimizers such as momentum and Adam, presented in the post on [deep neural networks]({{ site.baseurl }}{% post_url 2018-03-27-dnn-backprop %}#optimizers).
 

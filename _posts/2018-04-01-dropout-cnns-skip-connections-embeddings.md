@@ -202,7 +202,13 @@ where:
 - $$\alpha_t$$ is a balancing factor, equal to $$α$$ for the positive class and to $$1-α$$ for the negative class (especially useful for imbalanced datasets).
 - $$γ$$ is the focusing parameter, usually set to 2, which adjusts the focus on hard-to-classify examples.
 
-In practice, the factor $$(1 - p_t)^\gamma$$ is close to 0 for well-classified examples, where $$p_t$$ is close to 1, and close to 1 for misclassified examples. With $$\gamma = 2$$, an example classified with $$p_t = 0.9$$ has a loss 100 times lower than with the cross-entropy, as $$(1 - 0.9)^2 = 0.01$$, and one classified with $$p_t \approx 0.968$$ a loss 1,000 times lower (section 3.2 of the paper). A misclassified example with $$p_t = 0.1$$ keeps 81% of its loss. Thus, the many easy examples of the background no longer dominate the loss. With $$\gamma = 0$$, the focal loss is the cross-entropy weighted by $$\alpha_t$$ (Eq. 3 in the paper). For multi-class classification, the same formula applies, with one balancing factor per class, $$\alpha_t$$ being the one of the true class.
+In practice, the factor $$(1 - p_t)^\gamma$$ is close to 0 for well-classified examples, where $$p_t$$ is close to 1, and close to 1 for misclassified examples. With $$\gamma = 2$$, an example classified with $$p_t = 0.9$$ has a loss 100 times lower than with the cross-entropy, as $$(1 - 0.9)^2 = 0.01$$, and one classified with $$p_t \approx 0.968$$ a loss 1,000 times lower (section 3.2 of the paper). A misclassified example with $$p_t = 0.1$$ keeps 81% of its loss. Thus, the many easy examples of the background no longer dominate the loss. With $$\gamma = 0$$, the focal loss is the cross-entropy weighted by $$\alpha_t$$ (Eq. 3 in the paper). For multi-class classification, the same formula applies, with one balancing factor per class, $$\alpha_t$$ being the one of the true class. The following picture shows the focal loss for several values of $$\gamma$$:
+
+{: .picture}
+<img width="48.3%" height="48.3%" src="{{ site.assets }}/dropout-cnns-skip-connections-embeddings/focal_loss.svg">
+
+{: .caption}
+The focal loss as a function of $$p_t$$, with $$\alpha_t = 1$$, for values of $$\gamma$$ from 0, the cross-entropy, to 5. A larger $$\gamma$$ lowers the loss of the well-classified examples ($$p_t > 0.5$$) the most, which puts more focus on the misclassified ones. Inspired by: [Focal Loss for Dense Object Detection](https://arxiv.org/abs/1708.02002)
 
 ### Dice Loss
 
