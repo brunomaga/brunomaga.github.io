@@ -565,7 +565,7 @@ that is not wrong.
   the tick label 4, under the 2.5 px of section 6 of CLAUDE.md. Fix: the tick labels and t (ms) under the traces in
   both panels, as in the 1000 ms chart.
 
-### Mathematics for ML (2017-08-10-algebra-for-ml.md)
+### Algebra for ML (2017-08-10-algebra-for-ml.md)
 
 - `algebra-for-ml/svd_example.svg`: the panels are crops of the "Lenna" test image, which IEEE no longer allows in its
   publications since April 1, 2024, and the panels with 50 and 85 singular values look like ranks 25 to 35. Optional
@@ -573,15 +573,6 @@ that is not wrong.
   results.
 - Optional, `algebra-for-ml/mml_eigenvalues_and_eigenvectors.svg`: the plots have unequal axis scales. Fix: the same
   scale on both axes.
-
-### Statistics for ML (2017-08-12-statistics-for-ml.md)
-
-- `statistics-for-ml/bivariate_gaussian.svg`: the picture labels the marginals p(X) and p(Y), while the text and the
-  caption write p(x) and p(y), and the caption calls a conditional distribution "a slice" of the joint density. Fix:
-  p(x) and p(y) in the picture, and "a normalized slice" in the caption.
-- `statistics-for-ml/confidence_interval.svg`: the drawing has no source. Fix: name the source of the drawing, or
-  redraw it. Optional: the curve is centered at X̄, as in many textbooks, but the sampling distribution of X̄ is
-  centered at μ; a curve centered at μ, with the interval drawn around one sample mean X̄, is exact.
 
 ### Linear Regression and Matrix Factorization (2017-08-17-linear-regression-matrix-factorization.md)
 
@@ -626,6 +617,15 @@ that is not wrong.
   title "Fully Connected", while the original picture (cnn.png at commit c1a083b4) has "1024x[512]" and "512x[2]", the
   shapes of the weights (4·4·64 = 1,024 inputs), under two titles. Fix: keep the activation shapes, which match the
   other labels, or restore the labels and the two titles of the original.
+
+### Statistics for ML (2018-06-15-statistics-for-ml.md)
+
+- `statistics-for-ml/bivariate_gaussian.svg`: the picture labels the marginals p(X) and p(Y), while the text and the
+  caption write p(x) and p(y), and the caption calls a conditional distribution "a slice" of the joint density. Fix:
+  p(x) and p(y) in the picture, and "a normalized slice" in the caption.
+- `statistics-for-ml/confidence_interval.svg`: the drawing has no source. Fix: name the source of the drawing, or
+  redraw it. Optional: the curve is centered at X̄, as in many textbooks, but the sampling distribution of X̄ is
+  centered at μ; a curve centered at μ, with the interval drawn around one sample mean X̄, is exact.
 
 ### Bayesian Linear Regression, Maximum Likelihood and Maximum a Posteriori (2018-08-20-bayesian-linear-regression.md)
 
