@@ -69,8 +69,12 @@ mjx-container.math-scroll {
 .post-content .caption { font-size: 14px; }
 
 // the tabs of a post (assets/js/code-tabs.js): a row of titles, in the style of the labels, over the tabs, of which
-// one is shown, with its title in the link color and underlined
-.code-tabs { margin-bottom: $spacing-unit / 2; }
+// one is shown, with its title in the link color and underlined, and a grey line under the group, where the text of the
+// post goes on
+.code-tabs {
+  margin-bottom: $spacing-unit / 2;
+  border-bottom: 1px solid $grey-light;
+}
 
 .tab-bar {
   display: flex;

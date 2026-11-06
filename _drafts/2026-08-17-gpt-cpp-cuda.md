@@ -1,19 +1,19 @@
 ---
 layout: post
-title:  "GPT from scratch in C++ and CUDA vs. fused PyTorch"
+title:  "GPT from scratch in LibTorch, NumPy, C++ and CUDA"
 redirect_from: /gptlite-cpp
 categories: ["Efficient Inference"]
-tags: ["GPT", "LLM", "C++", "CUDA", "LibTorch", "cuBLAS", "Tensor Cores", "kernel fusion", "torch.compile", "TorchDynamo", "TorchInductor", "graph breaks", "benchmarking"]
-description: "A GPT block and its matrix multiplication written in PyTorch, LibTorch, and from scratch in C++ and CUDA, benchmarked against torch.compile, with its kernel fusion and graph breaks explained."
+tags: ["GPT", "LLM", "C++", "CUDA", "LibTorch", "NumPy", "cuBLAS", "Tensor Cores", "kernel fusion", "torch.compile", "TorchDynamo", "TorchInductor", "graph breaks", "benchmarking"]
+description: "A GPT block and its matrix multiplication written in PyTorch, LibTorch, NumPy, and from scratch in C++ and CUDA, benchmarked against torch.compile, with its kernel fusion and graph breaks explained."
 ---
 
-The [matrix multiplication](https://en.wikipedia.org/wiki/Matrix_multiplication) is the core operation of machine learning. The linear layers and the attention of a [Transformer](https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture)) spend most of their time in it, and the libraries and the hardware of ML, from the [BLAS](https://en.wikipedia.org/wiki/Basic_Linear_Algebra_Subprograms) libraries of CPUs to the Tensor Cores of GPUs, are built around it.
+In the [PyTorch 2.x release announcement](https://pytorch.org/get-started/pytorch-2.0/), the Torch developers announced `torch.compile`, a method to perform [JIT compilation](https://en.wikipedia.org/wiki/Just-in-time_compilation) and optimization of the execution graph that speeds up execution.
 
-On top of these libraries, PyTorch runs a model from Python. In the [PyTorch 2.x release announcement](https://pytorch.org/get-started/pytorch-2.0/), the Torch developers moved parts of PyTorch from a Python interface over a C++ core (highly efficient) to a Python-based implementation that lowers its operations to a small set of primitive operators (developer-friendly). They also announced `torch.compile`, a method to perform [JIT compilation](https://en.wikipedia.org/wiki/Just-in-time_compilation) and optimization of the execution graph that speeds up execution.
-
-So the main questions are: how much faster are model implementations in C++ compared to Python ones? Can a model written from scratch, in plain C++ and [CUDA](https://en.wikipedia.org/wiki/CUDA), run faster than PyTorch? How good is `torch.compile` in practice? To answer them, this post implements the matrix multiplication and the block of a [GPT](https://en.wikipedia.org/wiki/Generative_pre-trained_transformer) model from scratch, in C++ on the CPU and in CUDA on the GPU, and in LibTorch, the C++ API of PyTorch. It then explains how `torch.compile` fuses the kernels of a model and why the communication between GPUs stops it, the topic of the posts that follow, and benchmarks all implementations against PyTorch, with and without `torch.compile`.
+So the main questions are: how much faster are model implementations in C++ compared to Python ones? Can a model written from scratch, in plain C++ and [CUDA](https://en.wikipedia.org/wiki/CUDA), run faster than PyTorch? How good is `torch.compile` in practice? To answer them, this post first implements the main block of a [GPT](https://en.wikipedia.org/wiki/Generative_pre-trained_transformer) model in LibTorch (the C++ API of PyTorch), [NumPy](https://en.wikipedia.org/wiki/NumPy), C++ and CUDA, and compares their runtimes with the compiled PyTorch model. It also explains how `torch.compile` fuses the kernels of a model, and why the communication between GPUs stops it, the topic of the posts that follow.
 
 ## Matrix multiplication
+
+The [matrix multiplication](https://en.wikipedia.org/wiki/Matrix_multiplication) is the core operation of machine learning. The linear layers and the attention of a [Transformer](https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture)) spend most of their time in it, and the libraries and the hardware of ML, from the [BLAS](https://en.wikipedia.org/wiki/Basic_Linear_Algebra_Subprograms) libraries of CPUs to the Tensor Cores of GPUs, are built around it.
 
 Take a matrix $$A$$ of size $$M \times N$$ and a matrix $$B$$ of size $$N \times O$$. Their product $$C = AB$$ is a matrix of size $$M \times O$$, whose values are given by:
 
@@ -23,7 +23,7 @@ $$
 
 where $$i$$ and $$j$$ are the row and the column of a value of $$C$$, i.e. each value of $$C$$ is the dot product of a row of $$A$$ and a column of $$B$$. The product takes $$MNO$$ multiplications and as many additions, i.e. $$2MNO$$ floating-point operations ([FLOPs](https://en.wikipedia.org/wiki/FLOPS)), or $$2n^3$$ for square matrices of size $$n$$, a cubic complexity. However, it reads only $$MN + NO$$ values and writes $$MO$$, so that for square matrices each value of $$A$$ and $$B$$ is used $$n$$ times. Thus, a large matrix multiplication is *compute-bound*: its speed depends on the arithmetic units of the hardware, and on how well an implementation reuses the data that it reads (see the [roofline model]({{ site.baseurl }}{% post_url 2025-06-07-inference-prefill-decode-roofline-cache %}#roofline-model)).
 
-In PyTorch, the product is written with the operator `@`, as `C = A @ B` (or `torch.matmul(A, B)`), and LibTorch, the C++ distribution of PyTorch, writes it `torch::matmul(A, B)`, as C++ has no operator `@`. Both call the matrix multiplication of a library of the device: a BLAS library on the CPU (e.g. MKL or OpenBLAS), and [cuBLAS](https://docs.nvidia.com/cuda/cublas/index.html) on NVIDIA GPUs. The rest of this section writes the product from scratch, with loops on the CPU and with kernels on the GPU.
+In PyTorch and NumPy, the product is written with the operator `@`, as `C = A @ B` (or `torch.matmul(A, B)` and `np.matmul(A, B)`), and LibTorch writes it `torch::matmul(A, B)`, as C++ has no operator `@`. They call the matrix multiplication of a library of the device: a BLAS library on the CPU (e.g. MKL or OpenBLAS), and [cuBLAS](https://docs.nvidia.com/cuda/cublas/index.html) on NVIDIA GPUs. The rest of this section writes the product from scratch, with loops on the CPU and with kernels on the GPU.
 
 A GPU runs a function, called a **kernel**, on thousands of threads at once. The threads are grouped in [thread blocks](https://en.wikipedia.org/wiki/Thread_block_(CUDA_programming)), and each block runs on one Streaming Multiprocessor (SM) of the GPU. The threads of a block share a small and fast on-chip **shared memory**, while all threads read and write the large and slower global memory, the [high-bandwidth memory](https://en.wikipedia.org/wiki/High_Bandwidth_Memory) (HBM). A block runs as groups of 32 threads, called **warps**, whose threads execute the same instruction ([SIMT](https://en.wikipedia.org/wiki/Single_instruction,_multiple_threads)), and a warp reads global memory fastest when its 32 threads read consecutive addresses, i.e. when the access is *coalesced*.
 
@@ -67,7 +67,7 @@ The values that the inner loop of the product reads. (a) In the textbook order, 
 Faster CPU implementations also split the loops into tiles that fit the caches of the CPU ([loop nest optimization](https://en.wikipedia.org/wiki/Loop_nest_optimization)). This is also the idea of `coalescedMultiply` and `sharedABMultiply`, in the next tabs, which read tiles of the matrices into the shared memory of the GPU.
 
 </div>
-<div class="tab" data-title="simpleMultiply" markdown="1">
+<div class="tab" data-title="CUDA Simple" markdown="1">
 
 `simpleMultiply` ("Unoptimized matrix multiplication") reads $$A$$ and $$B$$ from global memory. The 32 threads of a warp read consecutive values of $$B$$, but they all read the same value of $$A$$, which wastes most of each memory transaction. It reaches 119.9 GB/s:
 
@@ -90,7 +90,7 @@ __global__ void simpleMultiply(const dt* A, const dt* B, dt* C, int O) {
 The reads of `simpleMultiply` in the iteration $$k$$: the 32 threads of the warp that computes 32 values of the row $$i$$ of $$C$$ all read $$A_{ik}$$, and each thread reads one value of the row $$k$$ of the tile of $$B$$, both from global memory. Inspired by: [CUDA C++ Best Practices Guide](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#shared-memory-in-matrix-multiplication-c-ab)
 
 </div>
-<div class="tab" data-title="coalescedMultiply" markdown="1">
+<div class="tab" data-title="CUDA Coalesced" markdown="1">
 
 `coalescedMultiply` ("Using shared memory to improve the global memory load efficiency in matrix multiplication") first reads the tile of $$A$$ into shared memory, where each warp reads one row of the tile with coalesced reads. In the loop, shared memory then *broadcasts* each value of $$A$$ to all threads of the warp. The barrier `__syncwarp()` is enough, as each warp reads only the row of the tile that it wrote. It reaches 144.4 GB/s:
 
@@ -116,7 +116,7 @@ __global__ void coalescedMultiply(const dt* A, const dt* B, dt* C, int O) {
 The reads of `coalescedMultiply`: the warp first copies the row $$i$$ of $$A$$ into its row of the tile `aTile` in shared memory. In the iteration $$k$$, its 32 threads read $$A_{ik}$$ from shared memory, and the row $$k$$ of the tile of $$B$$ from global memory. Inspired by: [CUDA C++ Best Practices Guide](https://docs.nvidia.com/cuda/cuda-c-best-practices-guide/index.html#shared-memory-in-matrix-multiplication-c-ab)
 
 </div>
-<div class="tab" data-title="sharedABMultiply" markdown="1">
+<div class="tab" data-title="CUDA Shared Mem" markdown="1">
 
 `sharedABMultiply` ("Improvement by reading additional data into shared memory") also reads the tile of $$B$$ into shared memory, so that each value of $$B$$ is read once per thread block instead of once per warp. The barrier is now `__syncthreads()`, as a warp reads values of $$B$$ written by the other warps of the block. It reaches 195.5 GB/s:
 
@@ -145,7 +145,7 @@ The reads of `sharedABMultiply`: the warp first copies the row $$i$$ of $$A$$ in
 The guide notes that the gains of `coalescedMultiply` and `sharedABMultiply` are not due to a better coalescing, but to fewer redundant transfers from global memory.
 
 </div>
-<div class="tab" data-title="Tensor Cores" markdown="1">
+<div class="tab" data-title="CUDA Tensor Cores" markdown="1">
 
 Each thread of the kernels of the guide computes one multiply-add per instruction on the CUDA cores of the SM. In 2017, the [Volta](https://en.wikipedia.org/wiki/Volta_(microarchitecture)) GPUs of NVIDIA added **Tensor Cores**, units that multiply two small matrices and add the result to a third one in a single operation, i.e. a matrix [multiply-accumulate](https://en.wikipedia.org/wiki/Multiply%E2%80%93accumulate_operation). The first ones multiplied $$4 \times 4$$ matrices of [FP16](https://en.wikipedia.org/wiki/Half-precision_floating-point_format) values with sums in FP32, and the Ampere GPUs (2020) added BF16 values, among other types. As an example, the Tensor Cores of an A100 compute 312 TFLOP/s in BF16, 16 times the 19.5 TFLOP/s of its FP32 CUDA cores ([NVIDIA Ampere Architecture In-Depth](https://developer.nvidia.com/blog/nvidia-ampere-architecture-in-depth)).
 
@@ -207,7 +207,7 @@ tiledMultiply<<<tiles, threads>>>(A, B, C, N, O);
 {: .caption}
 The tiles of $$32 \times 32$$ values of `tiledMultiply`, for $$M = 96$$, $$N = 128$$ and $$O = 160$$: the thread block that computes the tile of $$C$$ reads the pairs of tiles of its row of tiles of $$A$$ and of its column of tiles of $$B$$ into shared memory, one pair per iteration, in the order of their numbers, and adds their products.
 
-Each value of $$A$$ and $$B$$ is now read from global memory once per thread block, i.e. $$O/32$$ and $$M/32$$ times, with coalesced reads, while `simpleMultiply` reads each value of $$B$$ once per row of $$C$$, i.e. $$M$$ times. On **[GPU]**, for $$M = N = O = 4096$$, the tiled kernel `tiledMultiply` computes **[x]** TFLOP/s, and cuBLAS **[y]** TFLOP/s. The program `matmul.cu` times each kernel, and compares its output with the product of cuBLAS of the Tensor Cores tab:
+Each value of $$A$$ and $$B$$ is now read from global memory once per thread block, i.e. $$O/32$$ and $$M/32$$ times, with coalesced reads, while `simpleMultiply` reads each value of $$B$$ once per row of $$C$$, i.e. $$M$$ times. On **[GPU]**, for $$M = N = O = 4096$$, the tiled kernel `tiledMultiply` computes **[x]** TFLOP/s, and cuBLAS **[y]** TFLOP/s. The program `matmul.cu` times each kernel, and compares its output with the product of cuBLAS of the CUDA Tensor Cores tab:
 
 <details markdown="1">
 <summary>Click here to expand the benchmark of the matrix multiplication kernels</summary>
@@ -303,11 +303,11 @@ $$
 x = x + \text{Attention}(\text{LayerNorm}_1(x)), \quad x = x + \text{FFN}(\text{LayerNorm}_2(x))
 $$
 
-where $$\text{Attention}$$ is the masked multi-head attention and $$\text{FFN}$$ the feed-forward network. Each sum is a [skip connection](https://en.wikipedia.org/wiki/Residual_neural_network) (or residual connection), from the residual networks (ResNets) of the paper [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385), where it lets the gradients of very deep networks flow through the identity during training. The next sections implement the FFN, the attention and the layer normalization in PyTorch, in LibTorch, in C++ loops on the CPU and in CUDA on the GPU, and the last one puts them together in the block, with the skip connections. The code of each part is shown in four tabs, one per implementation, and the choice of a tab applies to all parts. The PyTorch version, in `gpt.py`, is the code of the GPTlite post, with the change of the attention described below, and LibTorch follows it line by line.
+where $$\text{Attention}$$ is the masked multi-head attention and $$\text{FFN}$$ the feed-forward network. Each sum is a [skip connection](https://en.wikipedia.org/wiki/Residual_neural_network) (or residual connection), from the residual networks (ResNets) of the paper [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385), where it lets the gradients of very deep networks flow through the identity during training. The next sections implement the FFN, the attention and the layer normalization in PyTorch, in LibTorch, in NumPy, in C++ loops on the CPU and in CUDA on the GPU, and the last one puts them together in the block, with the skip connections. The code of each part is shown in five tabs, one per implementation, and the choice of a tab applies to all parts. The PyTorch version, in `gpt.py`, is the code of the GPTlite post, with the change of the attention described below, LibTorch follows it line by line, and NumPy writes the same operations on arrays, with the weights of the C++ version.
 
 ### Dimensions and data types
 
-All implementations share the header `gpt.h`, with the dimensions of GPT-3 Small, the smallest model of the paper [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (GPT-3, Table 2.1 in the paper), the type `dt` of the values, and the numbers of iterations of the benchmark:
+The C++ and CUDA programs share the header `gpt.h`, with the dimensions of GPT-3 Small, the smallest model of the paper [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (GPT-3, Table 2.1 in the paper), the type `dt` of the values, the numbers of iterations of the benchmark, and the function `init_value` that draws the values of the input and of the parameters:
 
 ```cpp
 // the dimensions of GPT-3 Small, Table 2.1 of "Language Models are Few-Shot Learners", Brown et al., 2020
@@ -329,30 +329,33 @@ using dt = float;
 
 constexpr int warmup_iters = 5;      // iterations before the timed ones
 constexpr int benchmark_iters = 20;  // timed iterations
+
+// the next random value in [-scale, scale), from the same generator and seed in every implementation, which draws
+// the weights and biases of the linear layers of each block (Wq, bq, ..., W2, b2), and then the input
+inline std::mt19937 generator(19);
+inline float init_value(float scale) { return scale * std::uniform_real_distribution<float>(-1, 1)(generator); }
 ```
 
 Only the dimensions come from GPT-3 Small. The block is the one of GPTlite, with a ReLU where GPT-3 uses a GELU, and with dense attention in all blocks, where GPT-3 alternates dense and locally banded sparse attention. Also, the batch size $$B$$ is the number of sequences of the benchmark, not the batch size of the paper (0.5M tokens), which is a setting of the training.
 
 On the GPU, the values are stored in BF16 and summed in FP32 ([mixed precision](https://en.wikipedia.org/wiki/Mixed-precision_arithmetic)), as PyTorch does in a BF16 model. The Tensor Cores multiply BF16 values and add them in FP32, and the kernels of the softmax and of the layer normalization compute in FP32 and store BF16. On the CPU, all values are FP32, which keeps the code short. The CUDA compiler, [nvcc](https://en.wikipedia.org/wiki/Nvidia_CUDA_Compiler), defines the macro `__CUDACC__` when it compiles CUDA code, so `dt` is `__nv_bfloat16` in `gpt_cuda.cu`, and `float` in `gpt_cpu.cpp`.
 
-Moreover, to compare the outputs of the implementations, the input and the parameters are not random: their values come from an integer hash of their index, in the same order in all implementations, computed by `init_value` in `gpt.h`:
+Moreover, to compare the outputs of the implementations, all of them use the same random values. `init_value` draws them from a uniform distribution of the C++ standard library, with a [Mersenne Twister](https://en.wikipedia.org/wiki/Mersenne_Twister) generator (`std::mt19937`) and a fixed seed, in the same order in all programs. The weights and the biases of the linear layers take values in $$[-0.02, 0.02)$$, with each $$W$$ stored as (in × out) in row-major order, the input takes values in $$[-1, 1)$$, and the layer normalizations keep the defaults of PyTorch (a weight of 1 and a bias of 0). The PyTorch and NumPy versions draw the same values with NumPy, whose `RandomState` runs the same generator from the same seed, and turn each 32-bit value of the generator into a float as the C++ standard library of GCC (libstdc++) does:
 
-```cpp
-// the same deterministic values in every implementation: the input is init_value(i, 1), and the weights and biases
-// of the linear layers are init_value(i, 0.02), where i counts their values block after block, in the order Wq, bq,
-// Wk, bk, Wv, bv, Wo, bo, W1, b1, W2, b2, with each W stored as (in x out) in row-major order. The layer
-// normalizations keep the defaults of PyTorch (weight 1, bias 0)
-inline float init_value(unsigned int i, double scale) {
-  i = (i ^ 61) ^ (i >> 16);   // Thomas Wang's integer hash of i, on 32 bits
-  i *= 9;
-  i ^= i >> 4;
-  i *= 0x27d4eb2d;
-  i ^= i >> 15;
-  return (float) (scale * (2.0 * i / 4294967295.0 - 1.0));   // from [0, 2^32 - 1] to [-scale, scale]
-}
+```python
+rng = np.random.RandomState(19)   # the generator of gpt.h, std::mt19937, with the same seed
+
+
+def init_values(shape, scale):
+  """ the next values of init_value(scale) of gpt.h: libstdc++ turns each 32-bit value r of the generator into the fp32
+  value u = r / 2^32, and then into 2u - 1, in [-1, 1) """
+  u = rng.randint(0, 2**32, size=shape, dtype=np.uint32).astype(np.float32) / np.float32(2**32)
+  return np.float32(scale) * (u * 2 - 1)
 ```
 
-Each program prints the first three values of the output of the first sequence, and the mean of the absolute values of this output. In FP32, the C++ code on the CPU prints the same values as PyTorch (0.7254, 0.0187 and 1.1980, with a mean absolute value of 0.6332), and PyTorch in BF16 on the CPU prints 0.7188, 0.0156 and 1.1953, with the same mean.
+The distribution computes $$a + (b - a) \, u$$ from a value $$u$$ of $$[0, 1)$$, and `init_value` scales a value of $$[-1, 1)$$ rather than drawing in $$[-\text{scale}, \text{scale})$$: with $$b - a = 2$$, the product $$(b - a) \, u$$ is exact, so the [fused multiply-add](https://en.wikipedia.org/wiki/Multiply%E2%80%93accumulate_operation) instructions that `-march=native` enables give the same values as a multiplication and an addition. Also, the C++ standard fixes the values of `std::mt19937`, but not the algorithm of the distribution, so the standard libraries of other compilers may draw other values. Even libstdc++ changed it in GCC 16, in the rare case where $$u$$ rounds to 1 (once in $$2^{25}$$ values on average): GCC 16 draws a new value, and the older versions take the largest float below 1. The seed 19 is one for which no value of the benchmark rounds to 1, so that all versions of GCC draw the same values.
+
+Each program prints the first three values of the output of the first sequence, and the mean of the absolute values of this output. In FP32, the C++ code and NumPy print the same values as PyTorch and LibTorch on the CPU (−0.4817, 1.0697 and 0.2294, with a mean absolute value of 0.6358), and PyTorch in BF16 on the CPU prints −0.4863, 1.0781 and 0.2324, with the same mean.
 
 ### Feed-forward network
 
@@ -417,6 +420,18 @@ There are two options to create this iterator, and this post uses both:
 2. `register_parameter`, `register_buffer` and `register_module` register the parameters, buffers or modules during initialization, and LibTorch keeps track of them internally.
 
 </div>
+<div class="tab" data-title="NumPy" markdown="1">
+
+In NumPy, the FFN is a function of the input `x` and of the parameters `p` of the block, a dictionary of arrays, where the operator `@` multiplies matrices and `np.maximum` applies the ReLU to each value:
+
+```python
+def ffn(x, p):
+  return np.maximum(x @ p["W1"] + p["b1"], 0) @ p["W2"] + p["b2"]
+```
+
+The input `x` has the shape (B, S, E), and `@` multiplies the matrix of each sequence by the weights, with the BLAS library of NumPy. The bias, a vector, is added to each row, as NumPy [broadcasts](https://numpy.org/doc/stable/user/basics.broadcasting.html) an array along the dimensions that it lacks.
+
+</div>
 <div class="tab" data-title="C++" markdown="1">
 
 On the CPU, a linear layer is the matrix multiplication of the previous section, followed by the addition of the bias to each row, and the ReLU applies the `std::max` of the standard library to each value:
@@ -472,7 +487,7 @@ The thread `i` handles the value `i`, so the 32 threads of a warp read and write
 </div>
 </div>
 
-In the C++ and CUDA code, the weights `W` are stored as (in × out), so that a linear layer is the product $$xW$$, while `nn.Linear` stores the transposed weights, as (out × in), and computes $$xW^T$$. The function `init_params` of the PyTorch and LibTorch versions thus copies the transposed values.
+In the NumPy, C++ and CUDA code, the weights `W` are stored as (in × out), so that a linear layer is the product $$xW$$, while `nn.Linear` stores the transposed weights, as (out × in), and computes $$xW^T$$. The function `init_params` of the PyTorch and LibTorch versions thus copies the transposed values.
 
 ### Masked multi-head attention
 
@@ -578,6 +593,28 @@ struct MultiHeadAttention : nn::Module {
 As in Python, the local `B` and `S` hide the constants of `gpt.h`. The slice `tril[:S, :S]` of Python is written `tril.slice(0, 0, S).slice(1, 0, S)`, where `slice(d, start, end)` slices the dimension `d`.
 
 The members are declared as `nn::Linear query{nullptr}`, and this is not accidental: all LibTorch modules hold a shared pointer to the implementation of their class. E.g. the linear layer `nn::Linear` is a wrapper around `std::shared_ptr<nn::LinearImpl>`, where `nn::LinearImpl` is the implementation, so all `torch::nn` modules can be passed by value directly. Because of this, the documentation suggests initializing modules with `nullptr` as the default value of the pointer, and creating the implementation later. The alternative of not initializing the pointer would call the default constructor, `Linear()`, which is not defined, and lead to a compilation error. Finally, LibTorch has no named arguments as in Python (e.g. `bias=False`): they are wrapped inside an options object, as in `nn::Linear(nn::LinearOptions(E, E).bias(false))`.
+
+</div>
+<div class="tab" data-title="NumPy" markdown="1">
+
+In NumPy, the attention follows the PyTorch code, with `reshape` for `view`, `np.where` for `masked_fill`, and the softmax written out, as NumPy has no function for it:
+
+```python
+def attention(x, p):
+  B, S, _ = x.shape
+  # the H heads, from (B, S, E) to (B, H, S, D)
+  q = (x @ p["Wq"] + p["bq"]).reshape(B, S, H, D).transpose(0, 2, 1, 3)
+  k = (x @ p["Wk"] + p["bk"]).reshape(B, S, H, D).transpose(0, 2, 1, 3)
+  v = (x @ p["Wv"] + p["bv"]).reshape(B, S, H, D).transpose(0, 2, 1, 3)
+  wei = q @ k.transpose(0, 1, 3, 2) * D**-0.5                         # (B, H, S, S)
+  wei = np.where(np.tril(np.ones((S, S), dtype=bool)), wei, -np.inf)
+  wei = np.exp(wei - wei.max(axis=-1, keepdims=True))                 # softmax of each row
+  wei /= wei.sum(axis=-1, keepdims=True)
+  out = wei @ v                                                       # (B, H, S, D)
+  return out.transpose(0, 2, 1, 3).reshape(B, S, E) @ p["Wo"] + p["bo"]   # (B, S, E)
+```
+
+The method `transpose` of NumPy takes the new order of all the dimensions: (0, 2, 1, 3) swaps the dimensions of the tokens and of the heads, and (0, 1, 3, 2) transposes the keys of each head. As in PyTorch, `@` multiplies the matrices of the last two dimensions, for each sequence and head. `np.where` keeps the scores where the lower-triangular matrix `np.tril` is true, and writes $$-\infty$$ elsewhere, and the softmax subtracts the maximum of each row before the exponential, as in the formula above.
 
 </div>
 <div class="tab" data-title="C++" markdown="1">
@@ -749,6 +786,18 @@ In PyTorch, the layer normalizations are modules of the block, shown in the next
 In LibTorch, the layer normalizations are modules of the block, shown in the next section, with a subtle difference from Python. By design, `LayerNorm` takes the list of the normalized dimensions. In Python, a single `int` normalizes the last dimension of the input, of that size. However, in C++, `LayerNorm` has no constructor with a single integer argument, so the general constructor is used, with the dimension passed as a singleton list: `nn::LayerNorm(std::vector<int64_t> {E})`.
 
 </div>
+<div class="tab" data-title="NumPy" markdown="1">
+
+In NumPy, `mean` and `var` compute the mean and the variance of the last dimension, of size $$E$$, and `keepdims=True` keeps this dimension with a size of 1, so that the results broadcast over the $$E$$ values of each token:
+
+```python
+def layernorm(x, w, b):
+  mean = x.mean(axis=-1, keepdims=True)
+  var = x.var(axis=-1, keepdims=True)
+  return (x - mean) / np.sqrt(var + eps) * w + b
+```
+
+</div>
 <div class="tab" data-title="C++" markdown="1">
 
 On the CPU, the standard library would compute the mean with `std::accumulate` and the sum of squares with `std::inner_product`, and the loops over the values of each token do the same:
@@ -801,9 +850,9 @@ __global__ void layernorm(const dt* x, const dt* w, const dt* b, dt* y, int N) {
 </div>
 </div>
 
-In the C++ and CUDA code, `w` and `b` are $$\gamma$$ and $$\beta$$, the `weight` and the `bias` of `nn.LayerNorm`. Note that the variance is computed in a second pass over the values, as the mean of $$(x_j - \mu)^2$$, and not in a single pass as the mean of $$x_j^2$$ minus $$\mu^2$$. The single pass subtracts two large and close numbers when the mean is large compared to the spread of the values, and loses precision ([algorithms for calculating variance](https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance)).
+In the NumPy, C++ and CUDA code, `w` and `b` are $$\gamma$$ and $$\beta$$, the `weight` and the `bias` of `nn.LayerNorm`. Note that the variance is computed in a second pass over the values, as `np.var` does, as the mean of $$(x_j - \mu)^2$$, and not in a single pass as the mean of $$x_j^2$$ minus $$\mu^2$$. The single pass subtracts two large and close numbers when the mean is large compared to the spread of the values, and loses precision ([algorithms for calculating variance](https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance)).
 
-### The block
+### Full GPT block
 
 Finally, the block runs the three parts in turn, and adds the output of the attention and of the FFN to their input, i.e. the skip connections.
 
@@ -856,6 +905,20 @@ struct Block : nn::Module {
 ```
 
 The attention and the FFN are created with `std::make_shared`, as `register_module` takes a shared pointer to a module, the same pointer that the holders of `torch::nn` wrap.
+
+</div>
+<div class="tab" data-title="NumPy" markdown="1">
+
+In NumPy, the block is a function that calls the functions of the previous sections with the parameters `p` of the block:
+
+```python
+def block(x, p):
+  x = x + attention(layernorm(x, p["ln1_w"], p["ln1_b"]), p)
+  x = x + ffn(layernorm(x, p["ln2_w"], p["ln2_b"]), p)
+  return x
+```
+
+Each operation of NumPy returns a new array, so the skip connections allocate their result, where the C++ code updates `x` in place.
 
 </div>
 <div class="tab" data-title="C++" markdown="1">
@@ -939,35 +1002,22 @@ void block_forward(const Block& p, dt* x, const Buffers& t, int B, int S) {
 
 ### The main program
 
-And that is all: the main program of each implementation initializes the parameters of the $$L$$ blocks with the values of `gpt.h`, runs the blocks on the input, 5 times to warm up and then 20 times under the clock, and prints the average runtime of a forward pass and the values that compare the outputs of the implementations.
+And that is all: the main program of each implementation initializes the parameters of the $$L$$ blocks with the random values of `gpt.h`, runs the blocks on the input, 5 times to warm up and then 20 times under the clock, and prints the average runtime of a forward pass and the values that compare the outputs of the implementations.
 
 <div class="code-tabs" markdown="1">
 <div class="tab" data-title="PyTorch" markdown="1">
 
-In PyTorch, `init_values` computes the values of `init_value` of `gpt.h` on a tensor of indices, and `init_params` copies them into the parameters of the linear layers. The main program stacks the $$L$$ blocks in an `nn.Sequential`, initializes their parameters, moves the model to the GPU in BF16, and compiles it with the option `--compile`:
+In PyTorch, `init_params` copies the values of `init_values`, shown in the section on the [dimensions and data types](#dimensions-and-data-types), into the parameters of the linear layers, where `torch.from_numpy` turns a NumPy array into a tensor without a copy. The main program stacks the $$L$$ blocks in an `nn.Sequential`, initializes their parameters, moves the model to the GPU in BF16, and compiles it with the option `--compile`:
 
 ```python
-def init_values(i, n, scale):
-  """ the deterministic values init_value(i, scale) to init_value(i+n-1, scale) of gpt.h """
-  i = torch.arange(i, i + n, dtype=torch.int64)
-  i = (i ^ 61) ^ (i >> 16)   # Thomas Wang's integer hash, on 32 bits
-  i = (i * 9) & 0xFFFFFFFF
-  i = i ^ (i >> 4)
-  i = (i * 0x27d4eb2d) & 0xFFFFFFFF
-  i = i ^ (i >> 15)
-  return (scale * (2.0 * i.double() / 4294967295.0 - 1.0)).float()
-
-
 @torch.no_grad()
 def init_params(blocks):
   """ the parameters of gpt.h, where nn.Linear stores the transposed weights W^T (out x in) """
-  i = 0
   for block in blocks:
     for linear in [block.sa.query, block.sa.key, block.sa.value, block.sa.proj, block.ffwd.net[0], block.ffwd.net[2]]:
       n_out, n_in = linear.weight.shape
-      linear.weight.copy_(init_values(i, n_in*n_out, 0.02).view(n_in, n_out).t())
-      linear.bias.copy_(init_values(i + n_in*n_out, n_out, 0.02))
-      i += n_in*n_out + n_out
+      linear.weight.copy_(torch.from_numpy(init_values((n_in, n_out), 0.02)).t())
+      linear.bias.copy_(torch.from_numpy(init_values(n_out, 0.02)))
 
 
 def main():
@@ -982,7 +1032,7 @@ def main():
   model = model.to(torch.bfloat16).eval()
   if args.compile:
     model = torch.compile(model)
-  x = init_values(0, args.batch*S*E, 1).view(args.batch, S, E).to(torch.bfloat16)
+  x = torch.from_numpy(init_values((args.batch, S, E), 1)).to("cuda", torch.bfloat16)
 
   with torch.inference_mode():
     for it in range(warmup_iters + benchmark_iters):
@@ -998,35 +1048,33 @@ def main():
   print(f"output: {y[0, 0]:.4f} {y[0, 1]:.4f} {y[0, 2]:.4f} ..., mean |y| {y.abs().mean():.4f}")
 ```
 
-The call `torch.set_default_device("cuda")` creates all tensors on the GPU, the parameters of the model included, and `torch.inference_mode()` turns off the tracking of gradients in its scope.
+The call `torch.set_default_device("cuda")` creates the parameters of the model on the GPU, where `copy_` and `to` copy the values of `init_values` from the CPU, and `torch.inference_mode()` turns off the tracking of gradients in its scope.
 
 </div>
 <div class="tab" data-title="LibTorch" markdown="1">
 
-In LibTorch, `init_values` and `init_params` are the same as in Python, with `torch::NoGradGuard` for `@torch.no_grad()`. The main program stacks the $$L$$ blocks in an `nn::Sequential`, initializes their parameters, and moves the model to the GPU in BF16:
+In LibTorch, `init_values` collects the next values of `init_value` in a tensor, and `init_params` is the same as in Python, with `torch::NoGradGuard` for `@torch.no_grad()`. The main program stacks the $$L$$ blocks in an `nn::Sequential`, initializes their parameters, and moves the model to the GPU in BF16:
 
 ```cpp
-// the values init_value(i, scale) to init_value(i+n-1, scale) of gpt.h
-Tensor init_values(unsigned int i, int n, double scale) {
+// the next n values of init_value(scale) of gpt.h
+Tensor init_values(int n, float scale) {
   std::vector<float> v(n);
   for (float& x : v)
-    x = init_value(i++, scale);
+    x = init_value(scale);
   return torch::tensor(v);
 }
 
 // the parameters of gpt.h, where nn::Linear stores the transposed weights W^T (out x in)
 void init_params(nn::Sequential& blocks) {
   torch::NoGradGuard no_grad;
-  unsigned int i = 0;
   for (auto& module : blocks->children()) {
     Block* block = module->as<Block>();
     for (nn::LinearImpl* linear : { block->sa->query.get(), block->sa->key.get(), block->sa->value.get(),
                                     block->sa->proj.get(), block->ffwd->net[0]->as<nn::Linear>(),
                                     block->ffwd->net[2]->as<nn::Linear>() }) {
       int n_out = linear->weight.size(0), n_in = linear->weight.size(1);
-      linear->weight.copy_(init_values(i, n_in*n_out, 0.02).view({n_in, n_out}).t());
-      linear->bias.copy_(init_values(i + n_in*n_out, n_out, 0.02));
-      i += n_in*n_out + n_out;
+      linear->weight.copy_(init_values(n_in*n_out, 0.02).view({n_in, n_out}).t());
+      linear->bias.copy_(init_values(n_out, 0.02));
     }
   }
 }
@@ -1040,7 +1088,7 @@ int main(int argc, char* argv[]) {
   init_params(model);
   model->to(device, torch::kBFloat16);
   model->eval();
-  Tensor x = init_values(0, batch*S*E, 1).view({batch, S, E}).to(device, torch::kBFloat16);
+  Tensor x = init_values(batch*S*E, 1).view({batch, S, E}).to(device, torch::kBFloat16);
 
   c10::InferenceMode guard;   // the C++ equivalent of torch.inference_mode() in Python
   Tensor y;
@@ -1065,17 +1113,54 @@ int main(int argc, char* argv[]) {
 As an important remark, LibTorch does not include a C++ equivalent to `torch.set_default_device`, so the input and the model are moved to the GPU explicitly. And because every parameter, buffer and module was registered, `model->to(device, torch::kBFloat16)` recursively copies all the contents of the model to the GPU, in BF16. Also, containers in C++ are declared for a fixed element type: `nn::Sequential` stores elements of type `nn::Module`, so `init_params` casts each of them dynamically to its derived type with `module->as<Block>()` before it accesses the members of the block. The guard `c10::InferenceMode` turns off the tracking of gradients in its scope, as `torch.inference_mode()` does in Python.
 
 </div>
+<div class="tab" data-title="NumPy" markdown="1">
+
+In NumPy, the main program creates the dictionary of the parameters of each block, with the names of the structure `Block` of the C++ version, draws the input after the parameters, and runs the blocks on it:
+
+```python
+def main():
+  parser = argparse.ArgumentParser()
+  parser.add_argument("--batch", type=int, default=B, help="batch size")
+  args = parser.parse_args()
+
+  # the parameters of the L blocks, with the random values of gpt.h, where the weights W are stored as (in x out)
+  blocks = []
+  for _ in range(L):
+    p = {}
+    for name, n_in, n_out in [("q", E, E), ("k", E, E), ("v", E, E), ("o", E, E), ("1", E, 4*E), ("2", 4*E, E)]:
+      p["W" + name] = init_values((n_in, n_out), 0.02)
+      p["b" + name] = init_values(n_out, 0.02)
+    for name in ["ln1", "ln2"]:   # the defaults of PyTorch
+      p[name + "_w"], p[name + "_b"] = np.ones(E, np.float32), np.zeros(E, np.float32)
+    blocks.append(p)
+  x = init_values((args.batch, S, E), 1)
+
+  for it in range(warmup_iters + benchmark_iters):
+    if it == warmup_iters:
+      start = time.perf_counter()
+    y = x
+    for p in blocks:
+      y = block(y, p)
+  ms = (time.perf_counter() - start) * 1000 / benchmark_iters
+
+  y = y[0]   # the output of the first sequence, to compare implementations
+  print(f"NumPy, batch size {args.batch}: {ms:.1f} ms per forward pass")
+  print(f"output: {y[0, 0]:.4f} {y[0, 1]:.4f} {y[0, 2]:.4f} ..., mean |y| {np.abs(y).mean():.4f}")
+```
+
+NumPy runs its matrix multiplications on all the cores of the CPU, in its BLAS library, and its other operations on a single core.
+
+</div>
 <div class="tab" data-title="C++" markdown="1">
 
-On the CPU, the main program creates the parameters of the $$L$$ blocks with the values of `gpt.h`, where the layer normalizations keep the defaults of PyTorch (a weight of 1 and a bias of 0), allocates the buffers, and runs the blocks on a copy `x` of the input `x0`, as the blocks update `x` in place:
+On the CPU, the main program creates the parameters of the $$L$$ blocks with the random values of `gpt.h`, where the layer normalizations keep the defaults of PyTorch (a weight of 1 and a bias of 0), allocates the buffers, and runs the blocks on a copy `x` of the input `x0`, as the blocks update `x` in place:
 
 ```cpp
 int main(int argc, char* argv[]) {
   int batch = argc > 1 ? std::atoi(argv[1]) : B, M = batch*S;
 
-  // the parameters of the L blocks, with the deterministic values of gpt.h
-  unsigned int i = 0;
-  auto linear_param = [&](int n) { dt* p = new dt[n]; for (int j = 0; j < n; j++) p[j] = init_value(i++, 0.02); return p; };
+  // the parameters of the L blocks, with the random values of gpt.h
+  auto linear_param = [](int n) { dt* p = new dt[n]; for (int j = 0; j < n; j++) p[j] = init_value(0.02); return p; };
   auto norm_param = [](int n, dt c) { dt* p = new dt[n]; std::fill(p, p + n, c); return p; };
   std::vector<Block> blocks(L);
   for (Block& p : blocks) {
@@ -1089,7 +1174,7 @@ int main(int argc, char* argv[]) {
                 new dt[(long) batch*H*S*S] };
   std::vector<dt> x0(M*E), x(M*E);
   for (int j = 0; j < M*E; j++)
-    x0[j] = init_value(j, 1);
+    x0[j] = init_value(1);
 
   std::chrono::steady_clock::time_point start;
   for (int it = 0; it < warmup_iters + benchmark_iters; it++) {
@@ -1119,15 +1204,14 @@ int main(int argc, char* argv[]) {
   int batch = argc > 1 ? std::atoi(argv[1]) : B, M = batch*S;
   cublasCreate(&handle);
 
-  // the parameters of the L blocks, with the deterministic values of gpt.h, copied to the GPU
+  // the parameters of the L blocks, with the random values of gpt.h, copied to the GPU
   auto to_gpu = [](const std::vector<dt>& v) {
     dt* p;
     cudaMalloc(&p, v.size() * sizeof(dt));
     cudaMemcpy(p, v.data(), v.size() * sizeof(dt), cudaMemcpyHostToDevice);
     return p;
   };
-  unsigned int i = 0;
-  auto linear_param = [&](int n) { std::vector<dt> v(n); for (dt& w : v) w = init_value(i++, 0.02); return to_gpu(v); };
+  auto linear_param = [&](int n) { std::vector<dt> v(n); for (dt& w : v) w = init_value(0.02); return to_gpu(v); };
   auto norm_param = [&](int n, float c) { return to_gpu(std::vector<dt>(n, c)); };
   std::vector<Block> blocks(L);
   for (Block& p : blocks) {
@@ -1141,7 +1225,7 @@ int main(int argc, char* argv[]) {
   Buffers t = { alloc(M*E), alloc(M*E), alloc(M*E), alloc(M*E), alloc(M*E), alloc(M*4*E), alloc((long) batch*H*S*S) };
   std::vector<dt> host(M*E);
   for (int j = 0; j < M*E; j++)
-    host[j] = init_value(j, 1);
+    host[j] = init_value(1);
   dt *x0 = to_gpu(host), *x = alloc(M*E);
 
   std::chrono::steady_clock::time_point start;
@@ -1178,18 +1262,16 @@ A kernel launch returns before the kernel ends, as the GPU runs the kernels asyn
 
 ## Kernel fusion and torch.compile
 
-**Kernel fusion** merges consecutive operations into a single kernel, so that intermediate results stay in registers or on-chip memory instead of going through the global memory of the GPU (HBM). Typical candidates are the chains of element-wise operations after a matrix multiplication (bias, activation function, dropout, residual addition) and the normalization layers. [FlashAttention](https://arxiv.org/abs/2205.14135) is an extreme example of fusion, as it fuses the whole attention into a single kernel (see the post on [faster attention]({{ site.baseurl }}{% post_url 2025-12-30-inference-attention %}#flashattention)).
+**Kernel fusion** merges consecutive operations into a single kernel, so that intermediate results stay in registers or on-chip memory instead of going through global memory. Typical candidates are the element-wise operations after a matrix multiplication and the normalization layers, while [FlashAttention](https://arxiv.org/abs/2205.14135) fuses the whole attention into a single kernel (see the post on [faster attention]({{ site.baseurl }}{% post_url 2025-12-30-inference-attention %}#flashattention)).
 
-The CUDA code above launches one kernel per operation, as PyTorch does, where every operation launches one or more GPU kernels. Fusion saves two costs of these kernels. Each launch costs a few microseconds of CPU and driver time, and each kernel reads its inputs from global memory and writes its outputs back. For large batches, the launches are hidden, as the CPU queues the next kernels while the GPU runs the current one. However, for small models and batches, the kernels are short, and the GPU spends much of its time idle, waiting for the next launch. The memory round-trips cost time at every batch size: an element-wise kernel computes a few operations per value, so its runtime is the time to read and write its tensors in global memory.
+The CUDA code above launches one kernel per operation, as PyTorch does. Fusion saves two costs of these kernels: the CPU time of their launches, which leaves the GPU idle when the kernels are short, and the round-trips of their intermediate results through global memory, which take most of the runtime of an element-wise kernel.
 
 ### torch.compile
 
-The big announcement of PyTorch 2.x was `torch.compile`, which "makes PyTorch code run faster by JIT-compiling PyTorch code into optimized kernels, all while requiring minimal code changes" (from the [tutorial](https://pytorch.org/tutorials/intermediate/torch_compile_tutorial.html)). It is a one-line change, `model = torch.compile(model)`.
-
-To fuse operations, a compiler needs to see several of them at once, i.e. the **graph** of the model: a [directed acyclic graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph) whose nodes are the operations and whose edges are the tensors passed between them. In eager mode, PyTorch runs each operation as soon as Python reaches it, and never sees the graph. PyTorch 1.x captured it with [TorchScript](https://docs.pytorch.org/docs/stable/jit.html), which either recorded the operations of one run of the model (`torch.jit.trace`), and missed the branches that this run did not take, or compiled a subset of Python (`torch.jit.script`), and rejected the code outside it. `torch.compile` captures the graph from the Python code as it runs, and compiles it in three steps:
-1. **graph acquisition**: TorchDynamo hooks into the frame evaluation of the CPython interpreter ([PEP 523](https://peps.python.org/pep-0523/)), and reads the [bytecode](https://en.wikipedia.org/wiki/Bytecode) of each function before it runs. It executes the bytecode symbolically and records the PyTorch operations into a graph (an FX graph), together with *guards*, i.e. checks of the shapes, types and constants that the graph assumes. A call whose inputs fail a guard, e.g. with another sequence length, triggers a recompilation. For training, AOTAutograd also traces the graph of the backward pass, ahead of time;
-2. **graph lowering**: the 2000+ operations of PyTorch (counting overloads) are decomposed into a set of about 250 primitive operators (PrimTorch), so that a backend has to implement only these;
-3. **graph compilation**: TorchInductor, the default backend, turns the graph into kernels. It writes each operation as a loop over the values of its output, and fuses the loops of an operation and of the operations that read its output, e.g. a chain of element-wise operations, or the reductions and the element-wise operations of a softmax. Then, it generates the code of each fused kernel, in [Triton](https://triton-lang.org/main/index.html) for GPUs and in C++ with OpenMP for CPUs. A fused kernel keeps the intermediate values of its operations in registers, and reads and writes global memory only for its inputs and outputs.
+`torch.compile` is a one-line change, `model = torch.compile(model)` (see the [tutorial](https://pytorch.org/tutorials/intermediate/torch_compile_tutorial.html)). To fuse operations, it needs the **graph** of the model, the [directed acyclic graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph) of its operations and of the tensors between them, which eager mode never sees. Unlike the [TorchScript](https://docs.pytorch.org/docs/stable/jit.html) of PyTorch 1.x, which traced one run of the model or compiled a subset of Python, `torch.compile` captures the graph from the Python code as it runs, in three steps:
+1. **graph acquisition**: TorchDynamo hooks into the frame evaluation of CPython ([PEP 523](https://peps.python.org/pep-0523/)), executes the [bytecode](https://en.wikipedia.org/wiki/Bytecode) of each function symbolically, and records its PyTorch operations into an FX graph, with *guards* on the shapes and types that it assumes, which trigger a recompilation when they fail. For training, AOTAutograd also traces the backward pass ahead of time;
+2. **graph lowering**: the 2000+ operations of PyTorch are decomposed into about 250 primitive operators (PrimTorch), so that a backend implements only these;
+3. **graph compilation**: TorchInductor, the default backend, fuses each operation with the operations that read its output, and generates the fused kernels in [Triton](https://triton-lang.org/main/index.html) for GPUs and in C++ with OpenMP for CPUs.
 
 The following diagram illustrates the three steps on a function that applies a convolution, a batch normalization and a ReLU:
 
@@ -1199,26 +1281,24 @@ The following diagram illustrates the three steps on a function that applies a c
 {: .caption}
 A diagram of the three steps of `torch.compile`. Adapted from: [PyTorch 2.0 technology overview](https://pytorch.org/get-started/pytorch-2.0/#technology-overview)
 
-When TorchDynamo meets code that it cannot trace, e.g. a `print`, a call to a function of a C extension, or control flow that depends on the values of a tensor, it ends the graph before this code, runs the code in plain Python, and starts a new graph after it. This is a **graph break**: each graph is compiled on its own, so no kernel fuses operations across the break, and the CPU goes back to Python at every break.
+Code that TorchDynamo cannot trace, e.g. a `print`, a function of a C extension, or control flow that depends on the values of a tensor, runs in plain Python between two graphs. This is a **graph break**: no kernel fuses operations across it.
 
-The kernels that TorchInductor generates for a model are printed with the environment variable `TORCH_LOGS=output_code`. On the GPT blocks of this post, it keeps the 8 matrix multiplications of each block in cuBLAS, as calls to `extern_kernels.addmm` (with the bias) and `extern_kernels.bmm`, and fuses the operations between them. Among others, it fuses the scale, the mask and the softmax of the attention into one kernel, and each skip connection with the layer normalization that follows it, also across two blocks. However, it does not turn the attention into FlashAttention: TorchInductor replaces some patterns of attention with a call to the fused attention of PyTorch, `scaled_dot_product_attention`, but not the masked attention of GPTlite.
+On the GPT blocks of this post, the kernels printed with `TORCH_LOGS=output_code` keep the 8 matrix multiplications of each block in cuBLAS, and fuse the operations between them, e.g. the scale, the mask and the softmax of the attention into one kernel, and each skip connection with the layer normalization that follows it. However, TorchInductor does not replace this masked attention with the fused attention of PyTorch, `scaled_dot_product_attention`, which can run FlashAttention.
 
-In practice, the largest tensor of the block is the matrix of the attention weights, with $$B \cdot H \cdot S^2$$ values, i.e. 805 MB in BF16 for a batch of 8 sequences. PyTorch writes it in the first batched matrix multiplication, reads and writes it in its `mul` and `softmax` kernels and in the two kernels of `masked_fill`, which copies the matrix before it writes the mask into the copy, and reads it in the second multiplication, i.e. 10 passes over the matrix in global memory. The fused kernel of `torch.compile` reads it twice, once for the maximum and the sum of the softmax and once for its output, and writes it once, i.e. 5 passes in total. The CUDA code of this post, with one kernel per operation, makes 6.5 passes, as its mask kernel reads nothing and writes only the masked half of the matrix.
+The largest tensor of the block is the matrix of the attention weights, with $$B \cdot H \cdot S^2$$ values, i.e. 805 MB in BF16 for 8 sequences. PyTorch makes 10 passes over it in global memory, `torch.compile` 5, and the CUDA code of this post 6.5, as its mask kernel reads nothing and writes only the masked half of the matrix.
 
-Two settings of `torch.compile` are worth mentioning, written here with their default values: `torch.compile(model, mode='default', fullgraph=False)`. The flag `fullgraph=True` turns every graph break into an error, for the users who need a single graph. The option `mode` selects the trade-off between runtime and memory (from the [docs](https://pytorch.org/get-started/pytorch-2.0/#user-experience) and [API](https://pytorch.org/docs/stable/generated/torch.compile.html#torch.compile)):
-- `default` optimizes for large models, with low compile time and no extra memory overhead. It is "a good balance between performance and overhead";
-- `reduce-overhead` reduces the Python overhead with [CUDA graphs](https://pytorch.org/blog/accelerating-pytorch-with-cuda-graphs/), described below. It is faster than the previous mode but uses some extra memory, and it helps speed up small models;
-- `max-autotune` leverages Triton-based matrix multiplications and convolutions. It enables CUDA graphs by default. It produces the fastest model, but takes a very long time to compile. `max-autotune-no-cudagraphs` is analogous, but without CUDA graphs.
-
-Even after fusion, a forward pass launches many kernels from Python, one after the other. The CUDA graphs of the `reduce-overhead` and `max-autotune` modes record the whole sequence of kernel launches once, and replay it with a single launch, removing almost all the CPU overhead. The recording fixes the shapes and memory addresses of all tensors, so the inputs must have static shapes. For text generation, this requires a static KV cache (the cache of the keys and values of the previous tokens), preallocated to its maximum length.
+Two options of `torch.compile` are worth mentioning ([docs](https://pytorch.org/get-started/pytorch-2.0/#user-experience) and [API](https://pytorch.org/docs/stable/generated/torch.compile.html#torch.compile)): `fullgraph=True` turns every graph break into an error, and `mode` selects the trade-off between runtime, memory and compile time:
+- `default` optimizes for large models, with a low compile time and no extra memory;
+- `reduce-overhead` records the kernel launches of the model into [CUDA graphs](https://pytorch.org/blog/accelerating-pytorch-with-cuda-graphs/), which replay them with a single launch. It speeds up small models, but uses some extra memory and needs static shapes, e.g. a KV cache preallocated to its maximum length for text generation;
+- `max-autotune` also uses CUDA graphs, and tunes Triton kernels for the matrix multiplications, for the fastest model after a very long compilation.
 
 ### Graph breaks and communication
 
-Kernel fusion speeds up the computation, but not the communication. When a model runs on several GPUs, e.g. with [tensor parallelism]({{ site.baseurl }}{% post_url 2023-09-02-tensor-parallelism %}), each block exchanges partial results between the GPUs with [collective operations](https://en.wikipedia.org/wiki/Collective_operation), such as an all-reduce after the attention and another after the FFN. Fusion shrinks the time of the computation and leaves the communication as it is, so the share of the communication in the runtime grows, and the speedup on $$p$$ GPUs moves further away from $$p$$ ([Amdahl's law](https://en.wikipedia.org/wiki/Amdahl%27s_law)).
+Kernel fusion speeds up the computation, but not the communication, e.g. the all-reduces of [tensor parallelism]({{ site.baseurl }}{% post_url 2023-09-02-tensor-parallelism %}) after the attention and the FFN, [collective operations](https://en.wikipedia.org/wiki/Collective_operation) that exchange partial results between the GPUs. Thus, the share of the communication in the runtime grows, and the speedup on $$p$$ GPUs moves further away from $$p$$ ([Amdahl's law](https://en.wikipedia.org/wiki/Amdahl%27s_law)).
 
-Moreover, the communication splits the fused computation. An asynchronous collective of `torch.distributed` (`async_op=True`) breaks the graph, and so do, by default, the point-to-point transfers of `batch_isend_irecv`. With `DistributedDataParallel`, TorchDynamo even breaks the graph on purpose at the boundaries of the buckets of gradients, so that the all-reduce of a bucket overlaps with the backward pass of the rest of the model. A synchronous collective is traced into the graph, but it is still a kernel of NCCL of its own, between the fused kernels of the computation. Thus, every collective is a *fusion boundary*: the kernel before it writes its full output to global memory, the collective exchanges it, and only then does the next kernel start. The optimizations of TorchInductor for several GPUs do not fuse them either: the reordering of the collectives overlaps them with independent computation, and the [asynchronous tensor parallelism](https://discuss.pytorch.org/t/distributed-w-torchtitan-introducing-async-tensor-parallelism-in-pytorch/209487) splits a collective and its matrix multiplication into smaller operations that overlap.
+Moreover, every collective is a *fusion boundary*. An asynchronous collective of `torch.distributed` (`async_op=True`) breaks the graph, and a synchronous collective is traced into the graph but runs as a kernel of NCCL of its own, after the kernel before it has written its full output to global memory. The optimizations of TorchInductor for several GPUs, such as the [asynchronous tensor parallelism](https://discuss.pytorch.org/t/distributed-w-torchtitan-introducing-async-tensor-parallelism-in-pytorch/209487), overlap the collectives with computation, but do not fuse them either.
 
-The following picture illustrates the kernels of a block in eager mode, with `torch.compile` on one GPU, and with `torch.compile` and tensor parallelism, where the all-reduces split the graph into sub-graphs:
+The following picture illustrates the kernels of a block in eager mode, with `torch.compile`, and with `torch.compile` and tensor parallelism:
 
 {: .picture}
 <img width="92.2%" height="92.2%" src="{{ site.assets }}/gpt-cpp-cuda/graph_breaks.svg"/>
@@ -1226,16 +1306,19 @@ The following picture illustrates the kernels of a block in eager mode, with `to
 {: .caption}
 The kernels of a block, from the scores of the attention to the FFN, where each arrow is a tensor that a kernel writes to global memory and the next kernel reads. (a) In eager mode, each operation runs one or more kernels of its own. (b) `torch.compile` keeps the matrix multiplications in cuBLAS and fuses the operations between them, in one graph. (c) With tensor parallelism, the all-reduces (in red) of the partial outputs of $$W^O$$ and $$W_2$$ split the graph into sub-graphs, with no fusion across them, and the biases of $$W^O$$ and $$W_2$$ are added after the all-reduce. The projections of the queries, keys and values and the copies of the heads are not shown.
 
-Fusing the communication into the kernel of the computation needs communication at the level of thread blocks, from inside the kernel. Each thread block then sends its tile of the output as soon as it is computed, and the receiving thread blocks wait only for the tiles that they need. This is possible with device-initiated communication, such as [NVSHMEM](https://docs.nvidia.com/nvshmem/api/introduction.html), in which a kernel reads and writes the memory of the other GPUs directly, or the [device API of NCCL](https://docs.nvidia.com/deeplearning/nccl/user-guide/docs/usage/deviceapi.html) (since NCCL 2.28). The usual collectives of NCCL are different: the CPU launches them as kernels of their own, after the computation, on full buffers in global memory. As `torch.compile` does not generate fused kernels of computation and communication, they are written by hand, which is the topic of the next posts: [kernel fusion for tensor parallelism]({{ site.baseurl }}{% post_url 2026-08-18-kernel-fusion-tensor-parallelism %}) and [kernel fusion for MoE expert parallelism]({{ site.baseurl }}{% post_url 2026-10-09-kernel-fusion-expert-parallelism %}).
+Fusing the communication into the computation needs communication from inside the kernel, where each thread block sends its tile of the output as soon as it is computed, and the receiving thread blocks wait only for the tiles that they need. This is possible with device-initiated communication, such as [NVSHMEM](https://docs.nvidia.com/nvshmem/api/introduction.html), in which a kernel reads and writes the memory of the other GPUs directly, or the [device API of NCCL](https://docs.nvidia.com/deeplearning/nccl/user-guide/docs/usage/deviceapi.html) (since NCCL 2.28). As `torch.compile` does not generate such kernels, they are written by hand, the topic of the next posts: [kernel fusion for tensor parallelism]({{ site.baseurl }}{% post_url 2026-08-18-kernel-fusion-tensor-parallelism %}) and [kernel fusion for MoE expert parallelism]({{ site.baseurl }}{% post_url 2026-10-09-kernel-fusion-expert-parallelism %}).
 
 ## Benchmark
 
-The benchmark runs the forward pass of the $$L = 12$$ blocks on sequences of $$S = 2048$$ tokens, 5 times to warm up and 20 times under the clock, and reports the average runtime of a forward pass. It compares five implementations of the same model, on the same input:
+The benchmark runs the forward pass of the $$L = 12$$ blocks on sequences of $$S = 2048$$ tokens, 5 times to warm up and 20 times under the clock, and reports the average runtime of a forward pass. It compares six implementations of the same model, on the same input:
 1. PyTorch, with the GPTlite code (`gpt.py`);
 2. PyTorch with `torch.compile`, in its default mode (`gpt.py --compile`);
 3. LibTorch (`gpt_libtorch.cpp`);
 4. CUDA and cuBLAS (`gpt_cuda.cu`);
-5. C++ loops on the CPU (`gpt_cpu.cpp`), in FP32, on a batch of one sequence only, as it is much slower.
+5. NumPy on the CPU, with the code of the NumPy tabs and the constants of `gpt.h`;
+6. C++ loops on the CPU (`gpt_cpu.cpp`).
+
+The two CPU implementations compute in FP32, on a batch of one sequence only, as they are much slower.
 
 The build follows the [instructions in the LibTorch documentation](https://pytorch.org/cppdocs/installing.html) and uses the [CMake](https://en.wikipedia.org/wiki/CMake) build system, which finds LibTorch in the installation of PyTorch. The four C++ and CUDA programs are built with the following `CMakeLists.txt`:
 
@@ -1293,7 +1376,7 @@ python ../gpt.py --batch 8 --compile
 ./gpt_cpu 1
 ```
 
-where the argument is the batch size $$B$$. The GPU implementations ran on **[GPU]**, with CUDA **[version]** and PyTorch **[version]**, and the CPU one on **[CPU]**, with **[cores]** cores. The runtimes of a forward pass are the following:
+where the argument is the batch size $$B$$. The GPU implementations ran on **[GPU]**, with CUDA **[version]** and PyTorch **[version]**, and the CPU ones on **[CPU]**, with **[cores]** cores. The runtimes of a forward pass are the following:
 
 | Runtime of a forward pass (ms) | $$B = 1$$ | $$B = 8$$ |
 |:-------------------------------|:---------:|:---------:|
@@ -1302,7 +1385,7 @@ where the argument is the batch size $$B$$. The GPU implementations ran on **[GP
 | LibTorch                       | **[ ]**   | **[ ]**   |
 | CUDA                           | **[ ]**   | **[ ]**   |
 
-The C++ code on the CPU takes **[x]** ms per forward pass, on a batch of one sequence.
+On the CPU, NumPy takes **[x]** ms per forward pass, and the C++ code **[y]** ms, on a batch of one sequence.
 
 **[Discussion of the results.]**
 

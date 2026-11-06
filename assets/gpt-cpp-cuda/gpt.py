@@ -3,6 +3,7 @@
 import argparse
 import time
 
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -61,27 +62,24 @@ class Block(nn.Module):
     return x
 
 
-def init_values(i, n, scale):
-  """ the deterministic values init_value(i, scale) to init_value(i+n-1, scale) of gpt.h """
-  i = torch.arange(i, i + n, dtype=torch.int64)
-  i = (i ^ 61) ^ (i >> 16)   # Thomas Wang's integer hash, on 32 bits
-  i = (i * 9) & 0xFFFFFFFF
-  i = i ^ (i >> 4)
-  i = (i * 0x27d4eb2d) & 0xFFFFFFFF
-  i = i ^ (i >> 15)
-  return (scale * (2.0 * i.double() / 4294967295.0 - 1.0)).float()
+rng = np.random.RandomState(19)   # the generator of gpt.h, std::mt19937, with the same seed
+
+
+def init_values(shape, scale):
+  """ the next values of init_value(scale) of gpt.h: libstdc++ turns each 32-bit value r of the generator into the fp32
+  value u = r / 2^32, and then into 2u - 1, in [-1, 1) """
+  u = rng.randint(0, 2**32, size=shape, dtype=np.uint32).astype(np.float32) / np.float32(2**32)
+  return np.float32(scale) * (u * 2 - 1)
 
 
 @torch.no_grad()
 def init_params(blocks):
   """ the parameters of gpt.h, where nn.Linear stores the transposed weights W^T (out x in) """
-  i = 0
   for block in blocks:
     for linear in [block.sa.query, block.sa.key, block.sa.value, block.sa.proj, block.ffwd.net[0], block.ffwd.net[2]]:
       n_out, n_in = linear.weight.shape
-      linear.weight.copy_(init_values(i, n_in*n_out, 0.02).view(n_in, n_out).t())
-      linear.bias.copy_(init_values(i + n_in*n_out, n_out, 0.02))
-      i += n_in*n_out + n_out
+      linear.weight.copy_(torch.from_numpy(init_values((n_in, n_out), 0.02)).t())
+      linear.bias.copy_(torch.from_numpy(init_values(n_out, 0.02)))
 
 
 def main():
@@ -96,7 +94,7 @@ def main():
   model = model.to(torch.bfloat16).eval()
   if args.compile:
     model = torch.compile(model)
-  x = init_values(0, args.batch*S*E, 1).view(args.batch, S, E).to(torch.bfloat16)
+  x = torch.from_numpy(init_values((args.batch, S, E), 1)).to("cuda", torch.bfloat16)
 
   with torch.inference_mode():
     for it in range(warmup_iters + benchmark_iters):

@@ -70,27 +70,25 @@ struct Block : nn::Module {
   std::shared_ptr<FeedForward> ffwd;
 };
 
-// the values init_value(i, scale) to init_value(i+n-1, scale) of gpt.h
-Tensor init_values(unsigned int i, int n, double scale) {
+// the next n values of init_value(scale) of gpt.h
+Tensor init_values(int n, float scale) {
   std::vector<float> v(n);
   for (float& x : v)
-    x = init_value(i++, scale);
+    x = init_value(scale);
   return torch::tensor(v);
 }
 
 // the parameters of gpt.h, where nn::Linear stores the transposed weights W^T (out x in)
 void init_params(nn::Sequential& blocks) {
   torch::NoGradGuard no_grad;
-  unsigned int i = 0;
   for (auto& module : blocks->children()) {
     Block* block = module->as<Block>();
     for (nn::LinearImpl* linear : { block->sa->query.get(), block->sa->key.get(), block->sa->value.get(),
                                     block->sa->proj.get(), block->ffwd->net[0]->as<nn::Linear>(),
                                     block->ffwd->net[2]->as<nn::Linear>() }) {
       int n_out = linear->weight.size(0), n_in = linear->weight.size(1);
-      linear->weight.copy_(init_values(i, n_in*n_out, 0.02).view({n_in, n_out}).t());
-      linear->bias.copy_(init_values(i + n_in*n_out, n_out, 0.02));
-      i += n_in*n_out + n_out;
+      linear->weight.copy_(init_values(n_in*n_out, 0.02).view({n_in, n_out}).t());
+      linear->bias.copy_(init_values(n_out, 0.02));
     }
   }
 }
@@ -104,7 +102,7 @@ int main(int argc, char* argv[]) {
   init_params(model);
   model->to(device, torch::kBFloat16);
   model->eval();
-  Tensor x = init_values(0, batch*S*E, 1).view({batch, S, E}).to(device, torch::kBFloat16);
+  Tensor x = init_values(batch*S*E, 1).view({batch, S, E}).to(device, torch::kBFloat16);
 
   c10::InferenceMode guard;   // the C++ equivalent of torch.inference_mode() in Python
   Tensor y;
