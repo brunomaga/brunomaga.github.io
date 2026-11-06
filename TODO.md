@@ -1252,7 +1252,10 @@ Content problems that need the author's decision, such as overlap between posts.
   chunks of RAG (top-k) and the number of agent results used; $$d$$ is the decode index of the sums and the decoded
   tokens $$d_s$$ of the context of the orchestrator (the Execution table and the aai_dynamic picture). Proposed fix:
   keep top-k as the name of the selection, and name the agent results and the decoded tokens with other letters
-  (e.g. $$r$$ and $$o_s$$), in the text, the formulas, the tables and the pictures.
+  (e.g. $$r$$ and $$o_s$$), in the text, the formulas, the tables, the pictures and the comments of the code.
+- The draft writes Faiss, as its authors do ([The Faiss library](https://arxiv.org/abs/2401.08281), Douze et al.,
+  2024), and the unsupervised learning post writes FAISS, as the title of its Wikipedia article. Proposed fix: Faiss
+  in both posts, with the same Wikipedia link.
 
 ### Publication Summaries (publications.md)
 
