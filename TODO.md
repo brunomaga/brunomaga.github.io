@@ -113,14 +113,17 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
   `x[t,:]` raises an `IndexError` (NumPy 1.12 and later refuse float indices), even once `hash.mat` is added to the
   zip. Fix: `t = int(np.mod(s, x.shape[0]))`, or set `targetdigits = [0, 1, 2, 3]` directly, as the `hash.mat` item
   proposes.
+- `assets/unsupervised-learning/figures.py` sets its own fonts, colors and SVG options instead of importing
+  `_tools/charts.py`, as the chart rule of CLAUDE.md (Pictures, section 2) asks; its pictures already have the same
+  fonts, palette and line weights. Fix: import `charts` for the constants, and keep its `Canvas` class and ink crop.
 
-### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-dnn-backprop.md)
+### Dropout, CNNs, Skip Connections and Embeddings (2018-04-01-dropout-cnns-skip-connections-embeddings.md)
 
-- Deep neural networks, dropout snippet: `MyDropout` reads `self.p` but defines no `__init__` that sets it, so the
-  first call fails with an `AttributeError`; also, `torch.distributions.binomial.Binomial(probs=1-self.p)` samples its
-  mask on the CPU, so `X * mask` fails for an input `X` on a GPU. Proposed fix: add `def __init__(self, p=0.5):
-  super().__init__(); self.p = p`, and draw the mask on the device of `X`, e.g. `mask = (torch.rand_like(X) >=
-  self.p).to(X.dtype)` and `return X * mask / (1 - self.p)`.
+- Dropout snippet: `MyDropout` reads `self.p` but defines no `__init__` that sets it, so the first call fails with an
+  `AttributeError`; also, `torch.distributions.binomial.Binomial(probs=1-self.p)` samples its mask on the CPU, so `X *
+  mask` fails for an input `X` on a GPU. Proposed fix: add `def __init__(self, p=0.5): super().__init__(); self.p =
+  p`, and draw the mask on the device of `X`, e.g. `mask = (torch.rand_like(X) >= self.p).to(X.dtype)` and `return X *
+  mask / (1 - self.p)`.
 
 ### Bayesian Linear Regression, Maximum Likelihood and Maximum a Posteriori (2018-08-20-bayesian-linear-regression.md)
 
@@ -430,7 +433,7 @@ that is not wrong.
   of 2026-10-22, which fixed some of them: 178 boxes in 15 figures keep the rounded corners of the original with a
   corner radius of 2 to 4.5 px instead of 5 px (for example the GPT-lite pictures and
   `publications/visual_transformer.svg`); 147 arrows in 19 figures are curved but are neither pointers nor loops (for
-  example in `dnn-backprop/densenet.svg`, `lif-brunel/diagram_class.svg` and
+  example in `dropout-cnns-skip-connections-embeddings/densenet.svg`, `lif-brunel/diagram_class.svg` and
   `publications/graphconvnets.svg`); 176 filled cells of `distributed-training/imgs/mixture_of_depths.svg`, and a few
   in other figures, have no outline; `learning-from-sequences/transformer_attention.svg` uses a color outside the
   palette (#97afd2, a heat map shade); 3 figures have lines thinner than 0.4 px. Fix: set them to the values of
@@ -440,7 +443,8 @@ that is not wrong.
   (48 of them with 4.6 to 5.9 px, as the 6 px heads take more of short arrows, for example in
   `gptlite-cpp/torch_compile.svg` and the three `distributed-training/imgs/dnn_multiproc*.svg`), 197 lines through
   the text box of a label, 55 labels that run into a box, 28 heads on text and 8 overlapping boxes. Most are in dense
-  pictures from papers: `matrix-transpose/xcrs_format.svg` (48), `dnn-backprop/densenet.svg` (42) and
+  pictures from papers: `matrix-transpose/xcrs_format.svg` (48),
+  `dropout-cnns-skip-connections-embeddings/densenet.svg` (42) and
   `publications/performers.svg` (21); some are text boxes larger than their text. Fix: run the check again, check
   each picture at its page size, move the labels and arrows that touch, and lengthen the short arrows (move their
   bend, or the boxes they join).
@@ -612,7 +616,25 @@ that is not wrong.
   the tick label 4, under the 2.5 px of section 6 of CLAUDE.md. Fix: the tick labels and t (ms) under the traces in
   both panels, as in the 1000 ms chart.
 
-### Linear Regression, Matrix Factorization and Loss Functions (2017-08-17-linear-regression-matrix-factorization.md)
+### Mathematics for ML (2017-08-10-algebra-for-ml.md)
+
+- `algebra-for-ml/svd_example.svg`: the panels are crops of the "Lenna" test image, which IEEE no longer allows in its
+  publications since April 1, 2024, and the panels with 50 and 85 singular values look like ranks 25 to 35. Optional
+  fix: the same experiment (all 256, then 20, 50 and 85 singular values) on another test image, with the computed
+  results.
+- Optional, `algebra-for-ml/mml_eigenvalues_and_eigenvectors.svg`: the plots have unequal axis scales. Fix: the same
+  scale on both axes.
+
+### Statistics for ML (2017-08-12-statistics-for-ml.md)
+
+- `statistics-for-ml/bivariate_gaussian.svg`: the picture labels the marginals p(X) and p(Y), while the text and the
+  caption write p(x) and p(y), and the caption calls a conditional distribution "a slice" of the joint density. Fix:
+  p(x) and p(y) in the picture, and "a normalized slice" in the caption.
+- `statistics-for-ml/confidence_interval.svg`: the drawing has no source. Fix: name the source of the drawing, or
+  redraw it. Optional: the curve is centered at X̄, as in many textbooks, but the sampling distribution of X̄ is
+  centered at μ; a curve centered at μ, with the interval drawn around one sample mean X̄, is exact.
+
+### Linear Regression and Matrix Factorization (2017-08-17-linear-regression-matrix-factorization.md)
 
 - Optional, `linear-regression-matrix-factorization/matrix-factorization.svg`: the rating 6 (movie 1, user 7) is
   outside a scale of 1 to 5 stars. Fix: a rating from 1 to 5.
@@ -629,47 +651,32 @@ that is not wrong.
   dimensionality have no picture. Fix: draw them with `figures.py`, as framed panels of the steps or iterations of
   each method.
 
-### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-dnn-backprop.md)
+### Deep Neural Networks, Backpropagation and Optimization (2018-03-27-dnn-backprop.md)
 
-- Optional, `dnn-backprop/fully_sparse_connectivity.svg` and its caption keep the symbols of Figure 9.2 of
-  the Deep Learning book: inputs x1 to x5 and outputs s1 to s5. The text writes the input of a layer as $$x^{(0)}$$
-  and its output as $$x^{(1)}$$, as `dnn.svg` does, and says that the $$x_i$$ and $$s_i$$ of the picture stand for
-  them. Fix: inputs x₁⁽⁰⁾ to x₅⁽⁰⁾ and outputs x₁⁽¹⁾ to x₅⁽¹⁾ in both rows, and
-  the caption "... where the input $$x_3^{(0)}$$ affects only the outputs $$x_2^{(1)}$$, $$x_3^{(1)}$$ and
-  $$x_4^{(1)}$$. Bottom: a fully connected layer, where $$x_3^{(0)}$$ affects every output."
-- Optional, `dnn-backprop/fully_sparse_connectivity.svg`, dense panel: the arrows from the far inputs reach
-  s1 and s5 only 6 to 11 degrees apart, so 2 to 3 heads overlap into one dark mark (less at s2 and s4). CLAUDE.md
-  lets heads that converge on one node of a dense network touch. Fix: end the five arrows into each output at points
-  about 7 px apart along the lower half of its circle.
-- `dnn-backprop/densenet.svg`: the curved arrows into the fourth BN-ReLU-Conv box and into the Transition
-  Layer arrive horizontally on their slanted (24 degree) top edges, and the lower barb of each head touches the edge.
-  Fix: end each curve perpendicular to the edge (its last control point on the normal of the edge), with the whole
-  head outside the shape.
-- `dnn-backprop/cnn.svg`: the fully connected layers read "Nx[512]" and "Nx[2]" under one title "Fully
-  Connected", while the original picture (cnn.png at commit c1a083b4) has "1024x[512]" and "512x[2]", the shapes of
-  the weights (4·4·64 = 1,024 inputs), under two titles. Fix: keep the activation shapes, which match the other
-  labels, or restore the labels and the two titles of the original.
+- `dnn-backprop/autodiff.svg`: the square-root node (cell `autodiff-x12`) writes √ in Source Sans 3 and the argument
+  as a raised dot, so it renders as a small √ under a dot. Fix: the label "√( · )" in NewComputerModernSansMath only,
+  like "exp( · )" and "cos( · )", then export the picture again.
 
-### Mathematics for ML (2018-04-20-algebra-for-ml.md)
+### Dropout, CNNs, Skip Connections and Embeddings (2018-04-01-dropout-cnns-skip-connections-embeddings.md)
 
-- `algebra-for-ml/svd_example.svg`: the panels are crops of the "Lenna" test image, which IEEE no longer allows in its
-  publications since April 1, 2024, and the panels with 50 and 85 singular values look like ranks 25 to 35. Optional
-  fix: the same experiment (all 256, then 20, 50 and 85 singular values) on another test image, with the computed
-  results.
-- Optional, `algebra-for-ml/mml_eigenvalues_and_eigenvectors.svg`: the plots have unequal axis scales. Fix: the same
-  scale on both axes.
-- `algebra-for-ml/autodiff.svg`: the square-root node (cell `autodiff-x12`) writes √ in Source Sans 3 and the
-  argument as a raised dot, so it renders as a small √ under a dot. Fix: the label "√( · )" in
-  NewComputerModernSansMath only, like "exp( · )" and "cos( · )", then export the picture again.
-
-### Statistics for ML (2018-06-15-statistics-for-ml.md)
-
-- `statistics-for-ml/bivariate_gaussian.svg`: the picture labels the marginals p(X) and p(Y), while the text and the
-  caption write p(x) and p(y), and the caption calls a conditional distribution "a slice" of the joint density. Fix:
-  p(x) and p(y) in the picture, and "a normalized slice" in the caption.
-- `statistics-for-ml/confidence_interval.svg`: the drawing has no source. Fix: name the source of the drawing, or
-  redraw it. Optional: the curve is centered at X̄, as in many textbooks, but the sampling distribution of X̄ is
-  centered at μ; a curve centered at μ, with the interval drawn around one sample mean X̄, is exact.
+- Optional, `dropout-cnns-skip-connections-embeddings/fully_sparse_connectivity.svg` and its caption keep the symbols
+  of Figure 9.2 of the Deep Learning book: inputs x1 to x5 and outputs s1 to s5. The text writes the input of a layer
+  as $$x^{(0)}$$ and its output as $$x^{(1)}$$, as `dnn-backprop/dnn.svg` does, and says that the $$x_i$$ and $$s_i$$
+  of the picture stand for them. Fix: inputs x₁⁽⁰⁾ to x₅⁽⁰⁾ and outputs x₁⁽¹⁾ to x₅⁽¹⁾ in both rows, and the caption
+  "... where the input $$x_3^{(0)}$$ affects only the outputs $$x_2^{(1)}$$, $$x_3^{(1)}$$ and $$x_4^{(1)}$$. Bottom:
+  a fully connected layer, where $$x_3^{(0)}$$ affects every output."
+- Optional, `dropout-cnns-skip-connections-embeddings/fully_sparse_connectivity.svg`, dense panel: the arrows from the
+  far inputs reach s1 and s5 only 6 to 11 degrees apart, so 2 to 3 heads overlap into one dark mark (less at s2 and
+  s4). CLAUDE.md lets heads that converge on one node of a dense network touch. Fix: end the five arrows into each
+  output at points about 7 px apart along the lower half of its circle.
+- `dropout-cnns-skip-connections-embeddings/densenet.svg`: the curved arrows into the fourth BN-ReLU-Conv box and into
+  the Transition Layer arrive horizontally on their slanted (24 degree) top edges, and the lower barb of each head
+  touches the edge. Fix: end each curve perpendicular to the edge (its last control point on the normal of the edge),
+  with the whole head outside the shape.
+- `dropout-cnns-skip-connections-embeddings/cnn.svg`: the fully connected layers read "Nx[512]" and "Nx[2]" under one
+  title "Fully Connected", while the original picture (cnn.png at commit c1a083b4) has "1024x[512]" and "512x[2]", the
+  shapes of the weights (4·4·64 = 1,024 inputs), under two titles. Fix: keep the activation shapes, which match the
+  other labels, or restore the labels and the two titles of the original.
 
 ### Bayesian Linear Regression, Maximum Likelihood and Maximum a Posteriori (2018-08-20-bayesian-linear-regression.md)
 
@@ -1146,13 +1153,25 @@ Content problems that need the author's decision, such as overlap between posts.
   relation with wide spaces around it, while the gradient below writes `\vert`. Fix: `$$\vert \mathrm{kurt}(w^T z)
   \vert$$`.
 
-### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-dnn-backprop.md)
+### Deep Neural Networks, Backpropagation and Optimization (2018-03-27-dnn-backprop.md)
 
-- `dnn-backprop/cnn.svg` gives no filter size, so the text assumes 3×3 filters: the first layer has 896
-  parameters, 7,000 times fewer than a dense layer, and the fully connected layers hold 96.4% of the 545,218
-  parameters. With 5×5 filters, these numbers become 2,432 parameters, 2,600 times fewer, and 90.7% of 579,522.
-  Proposed fix: confirm the filter size of the network of the picture, and keep or change the numbers; "more than all
-  the convolutional layers together" holds either way.
+- The example of the automatic differentiation section, from the MML book, names its intermediate variables $$a$$ to
+  $$f$$, as its picture `dnn-backprop/autodiff.svg` does, while the post writes $$a_c$$ for the logits of the
+  cross-entropy and $$b^{(l)}$$ for the biases; and the binary cross-entropy is written $$H(p)$$, the entropy of the
+  post Statistics for ML. Proposed fix: keep the symbols of the example, which its picture and the book use, and write
+  the binary cross-entropy as $$H(y, p(x))$$.
+
+### Dropout, CNNs, Skip Connections and Embeddings (2018-04-01-dropout-cnns-skip-connections-embeddings.md)
+
+- `dropout-cnns-skip-connections-embeddings/cnn.svg` gives no filter size, so the text assumes 3×3 filters: the first
+  layer has 896 parameters, 7,000 times fewer than a dense layer, and the fully connected layers hold 96.4% of the
+  545,218 parameters. With 5×5 filters, these numbers become 2,432 parameters, 2,600 times fewer, and 90.7% of
+  579,522. Proposed fix: confirm the filter size of the network of the picture, and keep or change the numbers; "more
+  than all the convolutional layers together" holds either way.
+- Some letters stand for two quantities, as the sections follow their papers: $$p$$ is the probability of dropping a
+  unit, while the focal and Dice losses write $$p_t$$ and $$p_i$$ for predicted probabilities; $$m$$ is a pixel index
+  of the convolutions and the margin of the contrastive and triplet losses; and $$k$$ is the growth rate of DenseNet
+  and the step of message passing. Proposed fix: leave them, or rename the margin of the two losses.
 
 ### Exponential Family of Distributions (2019-03-20-exponential-family.md)
 
@@ -1311,17 +1330,10 @@ category that the home page puts before it, fits on one line of the home page on
 
 - The capitalization is mixed: the posts up to 2019 use title case, most posts since 2023 use sentence case, and
   a few titles mix both. Fix: one style for all titles.
-- With the 880 px page, eight post titles are longer than 690 px on the home page (they still fit its 735 px
+- With the 880 px page, seven post titles are longer than 690 px on the home page (they still fit its 735 px
   column in the site's font, but may wrap with a wider system font): faster attention (693 px), variable sequence
   lengths (725 px), learning from sequences (694 px), VAEs and GANs (729 px), Bayesian linear regression (718 px),
-  deep neural networks (708 px), variable timestep (720 px) and the LIF neuron and Brunel network (694 px). Fix:
-  shorter titles, under 690 px.
-
-### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-dnn-backprop.md)
-
-- The title does not name the optimizers (SGD, momentum, Adam) or the NumPy implementation of a network and its
-  training loop that the post covers, and it is 708 px wide. Proposed: "DNNs, Backpropagation, Optimizers, Dropout,
-  CNNs and Embeddings" (671 px with the category).
+  variable timestep (720 px) and the LIF neuron and Brunel network (694 px). Fix: shorter titles, under 690 px.
 
 ### Variational Autoencoders (VAEs) and Generative Adversarial Networks (GANs) (2019-10-12-vae-gan.md)
 

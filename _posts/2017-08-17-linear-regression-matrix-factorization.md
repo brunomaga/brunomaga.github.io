@@ -1,14 +1,14 @@
 ---
 layout: post
-title:  "Linear Regression, Matrix Factorization and Loss Functions"
+title:  "Linear Regression and Matrix Factorization"
 categories: ["Machine Learning"]
-tags: ["supervised learning", "linear regression", "least squares", "gradient descent", "regularization", "matrix factorization", "alternating least squares", "loss functions"]
-description: "Linear regression with gradient descent, least squares and regularization (LASSO, ridge), matrix factorization with SGD and alternating least squares, and the common loss functions, from cross-entropy to the focal and Dice losses."
+tags: ["supervised learning", "linear regression", "least squares", "gradient descent", "regularization", "matrix factorization", "alternating least squares", "empirical risk minimization", "maximum likelihood"]
+description: "Linear regression with gradient descent, least squares and regularization (LASSO, ridge), matrix factorization with SGD and alternating least squares, and the squared loss as empirical risk minimization and maximum likelihood."
 ---
 
 On 1 January 1801, the astronomer Giuseppe Piazzi discovered the dwarf planet [Ceres](https://en.wikipedia.org/wiki/Ceres_(dwarf_planet)). Piazzi tracked its path for 40 days, until it was lost in the glare of the Sun. To find it again, astronomers needed its orbit, computed from these few observations. The prediction that allowed them to find Ceres, on 31 December 1801, came from the 24-year-old Carl Friedrich Gauss, who fitted the orbit to the observations with the method of least squares.
 
-The method of least squares is the earliest form of [regression](https://en.wikipedia.org/wiki/Regression_analysis). It was published by Legendre in 1805 and by Gauss in 1809, to determine the orbits of comets and minor planets from astronomical observations, and Gauss claimed to have used it since 1795. This post derives the closed-form solution of linear regression, presents gradient descent, regularization and matrix factorization, and reviews the most common loss functions.
+The method of least squares is the earliest form of [regression](https://en.wikipedia.org/wiki/Regression_analysis). It was published by Legendre in 1805 and by Gauss in 1809, to determine the orbits of comets and minor planets from astronomical observations, and Gauss claimed to have used it since 1795. This post derives the closed-form solution of linear regression, presents gradient descent, regularization and matrix factorization, and relates the squared loss to the empirical risk and to the maximum likelihood.
 
 ## Linear Regression
 
@@ -26,7 +26,7 @@ An error or **loss function** $$L(w)$$ indicates how good the estimation is. As 
 
 In brief, the goal is to find the weight values that minimize the loss function. A naive approach is **Grid Search**, a brute-force method that tests all combinations of $$w$$ in a given interval. This is usually inefficient and only works on very low-dimensional problems, as the number of combinations grows exponentially with the number of weights: with 10 values per weight, a model of 10 weights already needs $$10^{10}$$ evaluations of the loss.
 
-An alternative is to optimize the loss function by computing its gradient, which points in the direction in which the loss increases the fastest, and stepping $$w$$ in the opposite direction, towards the values that minimize the loss. The most common methods are [gradient descent](https://en.wikipedia.org/wiki/Gradient_descent) and its variants:
+An alternative is to optimize the loss function by computing its gradient, which points in the direction in which the loss increases the fastest, and stepping $$w$$ in the opposite direction, towards the values that minimize the loss. The most common methods are [gradient descent](https://en.wikipedia.org/wiki/Gradient_descent), whose convergence is discussed in the post [Mathematics for ML]({{ site.baseurl }}{% post_url 2017-08-10-algebra-for-ml %}#gradient-descent), and its variants:
 - **Gradient Descent**: $$w^{t+1} = w^{t} - \eta \nabla L(w^t)$$, for the step size (or [learning rate](https://en.wikipedia.org/wiki/Learning_rate)) $$\eta$$ and the gradient $$\nabla L(w) = [\frac{\partial L(w)}{\partial w_0}, ..., \frac{\partial L(w)}{\partial w_D}]^T$$;
 - **[Stochastic Gradient Descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent)** (SGD): $$w^{t+1} = w^{t} - \eta \nabla L_n(w^t)$$, for a randomly chosen input $$n$$ with loss $$L_n$$, where $$L = \frac{1}{N} \sum_{n=1}^N L_n$$. A computationally cheap but unbiased estimate of the gradient, as the mean of $$\nabla L_n$$ over all inputs is $$\nabla L$$;
 - **Mini-batch SGD**: $$w^{t+1} = w^{t} - \eta \frac{1}{\vert B \vert} \sum_{n \in B} \nabla L_n(w^t)$$, for a random subset $$B \subseteq [N]$$ of the inputs, where $$[N] = \{1, ..., N\}$$. For each sample $$n$$, the gradient is computed at the same current point $$w^t$$. This is a *compromise* between the two: less noisy than SGD, and cheaper per step than gradient descent.
@@ -97,7 +97,13 @@ The slope shrinks from 1.5 to 1.0, and the bias grows from 0.83 to 1.33. The lin
 
 Note: in statistics, **[shrinkage](https://en.wikipedia.org/wiki/Shrinkage_(statistics))** is the reduction in the effects of sampling variation on the estimated parameters (e.g. a model overfitting the training data and not performing well on unseen data). Regularization attempts to do this by "shrinking" model parameters towards 0: LASSO sets some of them exactly to 0, while Ridge Regression makes all of them smaller, without setting them to 0.
 
-The difference shows on a single weight $$w$$, whose loss $$(w - \hat{w})^2$$ has its minimum at the least squares value $$\hat{w}$$. Minimizing $$(w - \hat{w})^2 + \lambda \vert w \vert$$ gives $$w = \text{sign}(\hat{w}) \max(\vert \hat{w} \vert - \lambda/2, 0)$$, while minimizing $$(w - \hat{w})^2 + \lambda w^2$$ gives $$w = \hat{w}/(1 + \lambda)$$. With $$\lambda = 1$$, LASSO moves $$\hat{w} = 2$$ to 1.5 and $$\hat{w} = 0.4$$ to 0, while Ridge Regression moves them to 1.0 and 0.2. In practice, LASSO subtracts a constant from the magnitude of the weight and stops at 0, while Ridge Regression divides it by a constant and never reaches 0.
+The difference shows on a single weight $$w$$, whose loss $$(w - \hat{w})^2$$ has its minimum at the least squares value $$\hat{w}$$. Minimizing $$(w - \hat{w})^2 + \lambda \vert w \vert$$ gives $$w = \text{sign}(\hat{w}) \max(\vert \hat{w} \vert - \lambda/2, 0)$$, while minimizing $$(w - \hat{w})^2 + \lambda w^2$$ gives $$w = \hat{w}/(1 + \lambda)$$. With $$\lambda = 1$$, LASSO moves $$\hat{w} = 2$$ to 1.5 and $$\hat{w} = 0.4$$ to 0, while Ridge Regression moves them to 1.0 and 0.2. In practice, LASSO subtracts a constant from the magnitude of the weight and stops at 0, while Ridge Regression divides it by a constant and never reaches 0. The following picture illustrates the difference with two weights $$w_1$$ and $$w_2$$:
+
+{: .picture}
+<img width="65.6%" height="65.6%" src="{{ site.assets }}/linear-regression-matrix-factorization/l1_l2_regularization.svg">
+
+{: .caption}
+The contours of a squared loss (black ellipses) around its least squares solution, and the regions $$\lVert w \rVert_1 \le 1$$ of L1 regularization (left) and $$\lVert w \rVert_2 \le 1$$ of L2 regularization (right). Minimizing the regularized loss is equivalent to minimizing the loss inside such a region, of a size that depends on $$\lambda$$: the solution is the point where the smallest contour touches the region, often a corner for L1 regularization, where a weight is 0. Inspired by: [The Elements of Statistical Learning, figure 3.11](https://web.stanford.edu/~hastie/ElemStatLearn/)
 
 Other techniques that do not add a regularization term to the loss function, but help improve model accuracy:
 - [dropout](https://jmlr.org/papers/v15/srivastava14a.html): a method to *drop out* (ignore) neurons in a (deep) neural network at every batch during training, while using all neurons at validation. Dropout was shown to increase generalization by forcing the model to train without relying on specific weights.
@@ -172,7 +178,7 @@ where both updates use the values before the step, and $$\eta$$ is the step size
 The [**coordinate descent**](https://en.wikipedia.org/wiki/Coordinate_descent) optimization method iterates over individual coordinates (keeping the others fixed) to minimize the loss function, as illustrated below:
 
 {: .picture}
-<img width="36.4%" height="36.4%" src="{{ site.assets }}/linear-regression-matrix-factorization/coordinate_descent.svg">
+<img width="37.1%" height="37.1%" src="{{ site.assets }}/linear-regression-matrix-factorization/coordinate_descent.svg">
 
 {: .caption}
 Coordinate descent on $$f(x, y) = 5x^2 - 6xy + 5y^2$$ from $$(-0.5, -1)$$: each step minimizes $$f$$ along one coordinate, alternating $$y$$ and $$x$$, and the iterates converge to the minimum at the origin. Adapted from: [Coordinate descent](https://en.wikipedia.org/wiki/Coordinate_descent)
@@ -223,10 +229,6 @@ $$
 
 For linear regression with Gaussian noise, this minimization is equivalent to the Least Squares problem above. If $$y_n = f(x_n) + \epsilon_n$$, with independent Gaussian noise $$\epsilon_n$$ of mean 0 and variance $$\sigma^2$$, the negative log-likelihood of the outputs is $$\frac{1}{2\sigma^2} \lVert y - Xw \rVert^2 + \frac{N}{2} \log(2\pi\sigma^2)$$, whose minimum over $$w$$ is the least squares solution.
 
-The choice of the loss function depends on the task. The most common ones are the MSE for regression, the cross-entropy for classification, the contrastive and triplet losses to learn [embeddings](https://en.wikipedia.org/wiki/Embedding_(machine_learning)), the CTC loss for unsegmented sequences, and the focal and Dice losses for imbalanced classes and image segmentation. The following sections present them in this order, and a table at the end of the post compares them.
-
-### Mean Squared Error
-
 Most regression tasks use the Mean Squared Error loss function:
 
 $$
@@ -235,108 +237,7 @@ $$
 
 or the Mean Absolute Error, which is similar to the MSE but uses the absolute value of the difference between $$y$$ and $$\hat{y}$$ instead of its square. The MSE is the negative log-likelihood of Gaussian noise, as shown above, and the MAE the one of noise with a [Laplace distribution](https://en.wikipedia.org/wiki/Laplace_distribution), whose heavier tails make large errors more likely. For a constant prediction, the MSE is minimized by the mean of the outputs, which one outlier can move far, and the MAE by their median, which an outlier hardly moves. Thus, the MSE suits data with Gaussian noise, and the MAE data with outliers.
 
-### Cross-Entropy
-
-With [one-hot](https://en.wikipedia.org/wiki/One-hot) labels, the [cross-entropy](https://en.wikipedia.org/wiki/Cross-entropy) is equivalent to the negative log-likelihood (of the [softmax](https://en.wikipedia.org/wiki/Softmax_function), when the output of the model is not a distribution). However, to avoid numerical instabilities and overflows, implementations compute it directly from the output of the model, with the [log-sum-exp](https://en.wikipedia.org/wiki/LogSumExp) trick. For the outputs (*logits*) $$a_1, ..., a_C$$ of the model, the loss of a sample of class $$c$$ is $$-\log \text{softmax}(a)_c = -a_c + a_{\max} + \log \sum_{j=1}^C \exp(a_j - a_{\max})$$, where $$a_{\max} = \max_j a_j$$, so that no exponential overflows. Most classification tasks use the binary or multi-class cross-entropy loss functions:
-- binary: $$H(p) = -(y \log p(x) + (1-y) \log (1-p(x)))$$, where $$p(x)$$ is the predicted probability that the input $$x$$ is of class 1, i.e. it simplifies to $$-\log p(x)$$ for true label $$y=1$$, and to $$-\log (1-p(x))$$ for true label $$y=0$$;
-- multi-class: $$H(q,p) = -\sum_{c=1}^{C} q_c \log p_c$$, over the $$C$$ classes, for the true distribution $$q$$ and the predicted distribution $$p$$. With a one-hot label, only the term of the true class remains.
-
-As an example, a prediction of 0.9 for the true class costs $$-\log 0.9 = 0.105$$, while a prediction of 0.1 costs $$-\log 0.1 = 2.303$$, 22 times more: the cross-entropy penalizes confident mistakes heavily.
-
-### Contrastive Loss
-
-The **[contrastive loss](https://en.wikipedia.org/wiki/Siamese_neural_network)** trains siamese networks, two copies of one network with shared weights, against pairs of inputs labeled as similar or dissimilar (1 or 0). It is formulated in terms of the similarity label $$y$$ (1 for similar, 0 for dissimilar) and the Euclidean distance $$\delta$$ between the embeddings of the two inputs, as:
-
-$$
-L = \frac{1}{2} ⋅y⋅\delta^2 + \frac{1}{2} ⋅(1−y)⋅\max(0,m-\delta)^2
-$$
-
-where $$m$$ is a hyper-parameter (the margin). In practice, the loss pulls similar pairs together, towards a distance of 0, and pushes dissimilar pairs apart, and a dissimilar pair contributes to the loss only while its distance is below $$m$$. The original paper is [Dimensionality Reduction by Learning an Invariant Mapping](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf), summarized in the <a href="{{ site.publications_permalink }}">publications bookmark</a>.
-
-### Triplet Loss
-
-**[Triplet loss](https://en.wikipedia.org/wiki/Triplet_loss)** is used in classification tasks where the number of classes is very large. Triplet loss helps by learning distributed embedding representations of data points such that, in the high-dimensional vector space, contextually similar data points are projected nearby, while dissimilar data points are projected far away from each other.
-
-The network is trained against triplets of images: an **anchor image** of a person, a **positive image**, which is another image of the same person, and a **negative image**, which is a picture of another person. The Triplet Loss minimizes the Euclidean distance between the anchor and the positive, and maximizes the distance between the anchor and the negative. Tasks that can be performed: face recognition ("who is this person?"), verification ("are these the same person?") and clustering ("find the most similar people"). The formulation is:
-
-$${\displaystyle {\mathcal {L}}\left(x,x^{+},x^{-}\right)=\operatorname {max} \left({\|\operatorname {f} \left(x\right)-\operatorname {f} \left(x^{+}\right)\|}^{2}-{\|\operatorname {f} \left(x\right)-\operatorname {f} \left(x^{-}\right)\|}^{2}+m ,0\right)}$$
-
-where $$x$$ is an anchor input, $$x^{+}$$ is a positive input of the same class as $$x$$, $$x^{-}$$ is a negative input of a different class from $$x$$, $$m$$ is a margin between positive and negative pairs, and $$f$$ is an embedding. More details are given in the original paper, [FaceNet: A Unified Embedding for Face Recognition and Clustering](https://arxiv.org/abs/1503.03832).
-
-The triplet loss is similar to, and often confused with, the contrastive loss, as both learn embeddings from examples of similar and dissimilar inputs. Yet, they constrain different distances. The contrastive loss constrains *absolute* distances: each similar pair is pulled towards a distance of 0, and each dissimilar pair is pushed beyond the margin $$m$$. The triplet loss constrains *relative* distances: the squared distance of the anchor to the negative must exceed the one to the positive by the margin $$m$$, whatever the distances themselves. In practice, the triplet loss considers the anchor-neighbor-distant triplets, while the contrastive loss deals with the anchor-neighbor and anchor-distant pairs of samples. As the FaceNet paper notes, a loss that pulls the faces of one person together "encourages all faces of one identity to be projected onto a single point in the embedding space", while the triplet loss "allows the faces for one identity to live on a manifold".
-
-### Connectionist Temporal Classification Loss
-
-**[Connectionist Temporal Classification (CTC)](https://en.wikipedia.org/wiki/Connectionist_temporal_classification)** is a classifier and loss function for noisy, unsegmented sequential input data, used to train [recurrent neural networks](https://en.wikipedia.org/wiki/Recurrent_neural_network) (RNNs) such as [LSTM](https://en.wikipedia.org/wiki/Long_short-term_memory) networks to tackle sequence problems where the timing is variable. CTC was published by Graves et al. in 2006, in [Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks](https://www.cs.toronto.edu/~graves/icml_2006.pdf).
-
-At each time step, the network outputs the probability of each label and of an extra *blank* label (no label). The probability of a target sequence is the sum of the probabilities of all the alignments (one output per time step) that give the target once repeated labels and blanks are removed. As an example, with the blank written "−", 7 of the 256 sequences of 4 outputs over the labels c, a, t and the blank give the target "cat": "ccat", "caat", "catt", "cat−", "ca−t", "c−at" and "−cat". The blank also separates repeated labels: "l−l" gives "ll", while "ll" gives "l". The CTC loss is the negative logarithm of this probability, computed by dynamic programming, as the number of alignments grows quickly with the number of time steps (28 for 5 time steps).
-
-### Focal Loss
-
-**[Focal Loss](https://arxiv.org/abs/1708.02002)** (Lin et al., 2017) is an extension of the Cross-Entropy Loss designed to address class imbalance, a common issue in e.g. dense [object detection](https://en.wikipedia.org/wiki/Object_detection) and medical image segmentation, where the background (non-lesion regions) is much more prevalent than the foreground (lesion regions). In dense detection, a detector evaluates about 100,000 candidate locations per image, and the paper gives an imbalance of 1:1000 between foreground and background as an example. Focal Loss focuses on hard-to-classify examples and down-weights the loss contribution from easy examples. For binary classification, it is defined as (Eq. 5 in the paper):
-
-$$
-\mathcal{L}_{\text{focal}} = -\alpha_t (1 - p_t)^\gamma \log(p_t)
-$$
-
-where:
-- $$p_t$$ is the model’s estimated probability for the true class.
-- $$\alpha_t$$ is a balancing factor, equal to $$α$$ for the positive class and to $$1-α$$ for the negative class (especially useful for imbalanced datasets).
-- $$γ$$ is the focusing parameter, usually set to 2, which adjusts the focus on hard-to-classify examples.
-
-In practice, the factor $$(1 - p_t)^\gamma$$ is close to 0 for well-classified examples, where $$p_t$$ is close to 1, and close to 1 for misclassified examples. With $$\gamma = 2$$, an example classified with $$p_t = 0.9$$ has a loss 100 times lower than with the cross-entropy, as $$(1 - 0.9)^2 = 0.01$$, and one classified with $$p_t \approx 0.968$$ a loss 1,000 times lower (section 3.2 of the paper). A misclassified example with $$p_t = 0.1$$ keeps 81% of its loss. Thus, the many easy examples of the background no longer dominate the loss. With $$\gamma = 0$$, the focal loss is the cross-entropy weighted by $$\alpha_t$$ (Eq. 3 in the paper). For multi-class classification, the same formula applies, with one balancing factor per class, $$\alpha_t$$ being the one of the true class.
-
-### Dice Loss
-
-**[Dice loss](https://arxiv.org/abs/1707.03237)** (or Dice Similarity Coefficient Loss) is a loss function used specifically for [image segmentation](https://en.wikipedia.org/wiki/Image_segmentation) tasks, to evaluate the overlap between predicted and ground truth segmentation masks, and was first used to train neural networks in [V-Net](https://arxiv.org/abs/1606.04797). It is based on the [Dice coefficient](https://en.wikipedia.org/wiki/Dice-S%C3%B8rensen_coefficient), which measures the similarity between two sets, with values ranging from 0 (no overlap) to 1 (perfect overlap). Dice Loss is typically used when precise object boundaries are important, such as segmenting organs, tumors, or any region of interest in medical imaging where the goal is to accurately delineate the object of interest from the surrounding tissue. Key benefits of Dice Loss:
-- Direct Focus on Overlap: Dice loss directly optimizes the overlap between predicted and ground truth masks, which is crucial for segmentation tasks where precise boundary delineation matters.
-- Effective for Imbalanced Classes: It works well when there is a significant class imbalance between foreground and background, as it evaluates segmentation performance based on the overlap of the foreground regions rather than pixel accuracy.
-- Works Well with Small Objects: Dice loss is particularly effective in medical imaging tasks where the objects of interest (e.g. tumors, organs) might occupy a small portion of the image.
-
-$$
-\mathcal{L}_{\text{Dice}} = 1 - \frac{2 |P \cap G|}{|P| + |G|}
-$$
-
-where:
-- $$P$$ is the set of predicted pixels.
-- $$G$$ is the set of ground truth pixels.
-- $$\vert P \cap G \vert$$ is the size of the intersection of the predicted and ground truth sets, representing the overlap.
-
-As an example, take an image of 100 pixels, of which 4 belong to an object. A prediction of background everywhere has a pixel accuracy of 96%, but a Dice coefficient of 0, i.e. a Dice loss of 1. A prediction that finds 2 of the 4 object pixels, plus 2 false positives, has the same pixel accuracy of 96%, but a Dice coefficient of $$2 \cdot 2 / (4 + 4) = 0.5$$. Unlike the pixel accuracy, the Dice loss rewards the overlap with the small object.
-
-For practical implementation, as sets are not differentiable, Dice Loss is often computed as:
-
-$$
-\mathcal{L}_{\text{Dice}} = 1 - \frac{2 \sum_{i=1}^{M} p_i g_i}{\sum_{i=1}^{M} p_i + \sum_{i=1}^{M} g_i}
-$$
-
-where:
-- $$p_i$$ is the predicted value for the $$i$$-th pixel.
-- $$g_i$$ is the ground truth value for the $$i$$-th pixel.
-- $$M$$ is the number of pixels of the image.
-
-For multi-class segmentation, a generalized form of Dice Loss is:
-
-$$
-\mathcal{L}_{\text{Dice}} = 1 - \frac{1}{C} \sum_{c=1}^{C} \frac{2 \sum_{i=1}^{M} p_{i,c} \, g_{i,c}}{\sum_{i=1}^{M} p_{i,c} + \sum_{i=1}^{M} g_{i,c}}
-$$
-
-where $$C$$ is the number of classes, and $$p_{i,c}$$ and $$g_{i,c}$$ are the predicted and ground truth values of the $$i$$-th pixel for class $$c$$. The Generalised Dice Loss of the paper linked above (Sudre et al., 2017) instead sums the terms of all classes in a single fraction. It weights those of each class $$c$$ by $$w_c = 1/(\sum_{i=1}^{M} g_{i,c})^2$$, the inverse of the square of its number of ground truth pixels, so that small structures count as much as large ones.
-
-### Comparison of the Loss Functions
-
-The following table sums up the loss functions of this post:
-
-| Loss | Task | Penalizes | When to use it |
-|---|---|---|---|
-| MSE | Regression | The squared error | Gaussian noise: large errors are rare |
-| MAE | Regression | The absolute error | Data with outliers |
-| Cross-entropy | Classification | A low probability of the true class | Most classification tasks |
-| Contrastive | Embeddings | Similar pairs far apart, and dissimilar pairs closer than $$m$$ | Pairs labeled as similar or dissimilar |
-| Triplet | Embeddings | A negative not farther from the anchor than the positive by $$m$$ | Many classes, as the identities of face recognition |
-| CTC | Sequence labeling | A low probability of the target, summed over all alignments | An unknown alignment of the target to the input, as in speech recognition |
-| Focal | Classification | As the cross-entropy, scaled down for easy examples | Many easy examples, as the background of dense detection |
-| Dice | Segmentation | A small overlap of the predicted and true masks | Small objects in large images |
+Classification tasks use the cross-entropy, presented in the post [Deep Neural Networks, Backpropagation and Optimization]({{ site.baseurl }}{% post_url 2018-03-27-dnn-backprop %}#loss-functions), and the losses of other tasks, such as learning embeddings and segmenting images, are presented in the post [Dropout, CNNs, Skip Connections and Embeddings]({{ site.baseurl }}{% post_url 2018-04-01-dropout-cnns-skip-connections-embeddings %}#task-specific-loss-functions).
 
 To find more about the topic, the book [Mathematics for Machine Learning](https://mml-book.github.io/) by Deisenroth, Faisal and Ong covers empirical risk minimization and parameter estimation (chapter 8), and the maximum likelihood and maximum a posteriori estimators of linear regression (chapter 9).
 

@@ -499,10 +499,10 @@ $$
 where $$K$$ is the kernel, a non-negative function that integrates to 1, and $$h \gt 0$$ is the smoothing parameter (*bandwidth*). $$h$$ regulates the bias-variance trade-off: a large vs. small $$h$$ yields a flat vs. wiggly estimator. An example of $$K$$ is the standard normal pdf, as in the following picture:
 
 {: .picture}
-<img width="61.4%" height="61.4%" src="{{ site.assets }}/statistics-for-ml/kde.svg"/>
+<img width="62%" height="62%" src="{{ site.assets }}/statistics-for-ml/kde.svg"/>
 
 {: .caption}
-Histogram with bins of width 2 (left) and Gaussian kernel density estimate with bandwidth $$h = 1.5$$ (right) of the same six data points. The estimate is the sum of six kernels centred at the points, each divided by $$n$$. Adapted from: [Kernel density estimation](https://en.wikipedia.org/wiki/Kernel_density_estimation)
+Histogram with bins of width 2 (left) and Gaussian kernel density estimate with bandwidth $$h = 1.5$$ (right) of the same six data points. The estimate is the sum of six kernels centered at the points, each divided by $$n$$. Adapted from: [Kernel density estimation](https://en.wikipedia.org/wiki/Kernel_density_estimation)
 
 Compared to the histogram on the left, the kernel density estimate is smooth and converges faster to the true density of a continuous random variable.
 
