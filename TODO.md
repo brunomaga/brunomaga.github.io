@@ -964,16 +964,6 @@ that is not wrong.
   (rows 1 and 3, and rows 2 and 4, repeat their colors). In the per-row panel each color is one scale, so the
   per-group panel reads as 6 scales. Fix: a black frame around each group, or 12 distinct fills.
 
-### GPT from scratch in C++ and CUDA vs. fused PyTorch (_drafts/2026-08-17-gpt-cpp-cuda.md)
-
-- Optional: the pictures of the matrix multiplication section show the three kernels of the guide, but not
-  `tiledMultiply`. Fix: a picture of its tiles (the row of tiles of A and the column of tiles of B that one thread
-  block reads, one pair at a time, for its tile of C).
-- The C++ and Tensor Cores tabs of the matrix multiplication section have no picture, while each kernel tab has one.
-  Fix: for C++, the textbook loop order, which reads a column of B, next to the loop order of `matmul`, which reads
-  rows of B and C contiguously; for the Tensor Cores, a warp that multiplies two 16 x 16 tiles of BF16 values and
-  adds the product to a 16 x 16 tile of FP32 sums in one `mma_sync`.
-
 ### Publication Summaries (publications.md)
 
 - Optional, `publications/llama_3_multi_modal.svg`: the connectors "Every 4th layer" and "Every ~3rd layer" have arrow

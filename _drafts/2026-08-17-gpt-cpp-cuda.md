@@ -33,7 +33,7 @@ The [CUDA C++ Best Practices Guide](https://docs.nvidia.com/cuda/cuda-c-best-pra
 constexpr int TILE_DIM = 32;   // tiles of TILE_DIM x TILE_DIM values, with one thread per value
 ```
 
-The tabs below show the product in C++ on the CPU, the three kernels of the guide, each with a picture of the values of $$A$$ and $$B$$ that a warp reads in the iteration $$k$$ and of the memory that it reads them from, and the product on the Tensor Cores:
+Each tab below shows one implementation, with its code and a picture: the product in C++ on the CPU, the three kernels of the guide, whose pictures show the values of $$A$$ and $$B$$ that a warp reads in the iteration $$k$$ and the memory that it reads them from, and the product on the Tensor Cores:
 
 <div class="code-tabs" markdown="1">
 <div class="tab" data-title="C++" markdown="1">
@@ -57,6 +57,12 @@ void matmul(const dt* A, const dt* B, dt* C, int M, int N, int O) {
 ```
 
 The matrices are stored in [row-major order](https://en.wikipedia.org/wiki/Row-_and_column-major_order), i.e. row after row, as in C and PyTorch, so that $$A_{ik}$$ is at `A[i*N + k]`, and `dt` is the type of the values (`float` on the CPU, as explained later). The loop over `k` comes before the loop over `j`, so that the inner loop reads a row of $$B$$ and a row of $$C$$ contiguously, which the compiler turns into vector instructions ([SIMD](https://en.wikipedia.org/wiki/Single_instruction,_multiple_data)). In the textbook order, with the loop over `k` inside, each iteration would read a value of $$B$$ one row away from the previous one, and use a single value of each cache line that it loads ([locality of reference](https://en.wikipedia.org/wiki/Locality_of_reference)). The line `#pragma omp parallel for` splits the rows of $$C$$ among the threads of the CPU, which write disjoint rows and need no synchronization.
+
+{: .picture}
+<img width="47.5%" height="47.5%" src="{{ site.assets }}/gpt-cpp-cuda/loop_order.svg"/>
+
+{: .caption}
+The values that the inner loop of the product reads. (a) In the textbook order, the inner loop over $$k$$ reads the row $$i$$ of $$A$$ and the column $$j$$ of $$B$$, whose values are $$O$$ apart in memory, for one value $$C_{ij}$$. (b) In the order of `matmul`, the inner loop over $$j$$ multiplies one value $$A_{ik}$$ by the row $$k$$ of $$B$$ and adds the products to the row $$i$$ of $$C$$, both contiguous in memory.
 
 Faster CPU implementations also split the loops into tiles that fit the caches of the CPU ([loop nest optimization](https://en.wikipedia.org/wiki/Loop_nest_optimization)). This is also the idea of `coalescedMultiply` and `sharedABMultiply`, in the next tabs, which read tiles of the matrices into the shared memory of the GPU.
 
@@ -143,6 +149,12 @@ The guide notes that the gains of `coalescedMultiply` and `sharedABMultiply` are
 
 Each thread of the kernels of the guide computes one multiply-add per instruction on the CUDA cores of the SM. In 2017, the [Volta](https://en.wikipedia.org/wiki/Volta_(microarchitecture)) GPUs of NVIDIA added **Tensor Cores**, units that multiply two small matrices and add the result to a third one in a single operation, i.e. a matrix [multiply-accumulate](https://en.wikipedia.org/wiki/Multiply%E2%80%93accumulate_operation). The first ones multiplied $$4 \times 4$$ matrices of [FP16](https://en.wikipedia.org/wiki/Half-precision_floating-point_format) values with sums in FP32, and the Ampere GPUs (2020) added BF16 values, among other types. As an example, the Tensor Cores of an A100 compute 312 TFLOP/s in BF16, 16 times the 19.5 TFLOP/s of its FP32 CUDA cores ([NVIDIA Ampere Architecture In-Depth](https://developer.nvidia.com/blog/nvidia-ampere-architecture-in-depth)).
 
+{: .picture}
+<img width="51.5%" height="51.5%" src="{{ site.assets }}/gpt-cpp-cuda/tensor_cores.svg"/>
+
+{: .caption}
+One `mma_sync` of a warp on the Tensor Cores: the 32 threads of the warp multiply a fragment of $$16 \times 16$$ values of $$A$$ by one of $$B$$, in BF16, and add the product to a fragment of $$16 \times 16$$ sums of $$C$$, in FP32.
+
 CUDA exposes the Tensor Cores to a kernel through its warp matrix functions (`nvcuda::wmma`), with which the 32 threads of a warp load two tiles of $$16 \times 16$$ values into *fragments*, multiply them (`mma_sync`) and store the result. A fast kernel needs much more than that, such as the tiling of `tiledMultiply` below the tabs, asynchronous copies from global to shared memory and layouts of shared memory without bank conflicts. So the GPT code of this post calls the matrix multiplication of cuBLAS, which uses the Tensor Cores for these types:
 
 ```cpp
@@ -188,6 +200,12 @@ The first `__syncthreads()` waits for the tiles to be loaded, and the second one
 dim3 threads(TILE_DIM, TILE_DIM), tiles(O / TILE_DIM, M / TILE_DIM);
 tiledMultiply<<<tiles, threads>>>(A, B, C, N, O);
 ```
+
+{: .picture}
+<img width="36.4%" height="36.4%" src="{{ site.assets }}/gpt-cpp-cuda/tiled_multiply.svg"/>
+
+{: .caption}
+The tiles of $$32 \times 32$$ values of `tiledMultiply`, for $$M = 96$$, $$N = 128$$ and $$O = 160$$: the thread block that computes the tile of $$C$$ reads the pairs of tiles of its row of tiles of $$A$$ and of its column of tiles of $$B$$ into shared memory, one pair per iteration, in the order of their numbers, and adds their products.
 
 Each value of $$A$$ and $$B$$ is now read from global memory once per thread block, i.e. $$O/32$$ and $$M/32$$ times, with coalesced reads, while `simpleMultiply` reads each value of $$B$$ once per row of $$C$$, i.e. $$M$$ times. On **[GPU]**, for $$M = N = O = 4096$$, the tiled kernel `tiledMultiply` computes **[x]** TFLOP/s, and cuBLAS **[y]** TFLOP/s. The program `matmul.cu` times each kernel, and compares its output with the product of cuBLAS of the Tensor Cores tab:
 
