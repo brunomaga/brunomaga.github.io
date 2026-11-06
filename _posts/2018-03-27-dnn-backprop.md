@@ -1,6 +1,7 @@
 ---
 layout: post
 title:  "Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings"
+redirect_from: /deep-neural-networks
 categories: ["Machine Learning"]
 tags: ["deep learning", "backpropagation", "autodiff", "NumPy", "activation functions", "dropout", "CNN", "skip connections", "optimizers", "SGD", "Adam", "embeddings"]
 description: "How deep neural networks compute and learn: activation functions and XOR, backpropagation derived and implemented in NumPy, automatic differentiation, dropout, convolutional neural networks (CNNs), skip connections, optimizers (SGD, Adam) and embeddings."

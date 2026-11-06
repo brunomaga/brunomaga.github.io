@@ -114,7 +114,7 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
   zip. Fix: `t = int(np.mod(s, x.shape[0]))`, or set `targetdigits = [0, 1, 2, 3]` directly, as the `hash.mat` item
   proposes.
 
-### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-deep-neural-networks.md)
+### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-dnn-backprop.md)
 
 - Deep neural networks, dropout snippet: `MyDropout` reads `self.p` but defines no `__init__` that sets it, so the
   first call fails with an `AttributeError`; also, `torch.distributions.binomial.Binomial(probs=1-self.p)` samples its
@@ -430,7 +430,7 @@ that is not wrong.
   of 2026-10-22, which fixed some of them: 178 boxes in 15 figures keep the rounded corners of the original with a
   corner radius of 2 to 4.5 px instead of 5 px (for example the GPT-lite pictures and
   `publications/visual_transformer.svg`); 147 arrows in 19 figures are curved but are neither pointers nor loops (for
-  example in `deep-neural-networks/densenet.svg`, `lif-brunel/diagram_class.svg` and
+  example in `dnn-backprop/densenet.svg`, `lif-brunel/diagram_class.svg` and
   `publications/graphconvnets.svg`); 176 filled cells of `distributed-training/imgs/mixture_of_depths.svg`, and a few
   in other figures, have no outline; `learning-from-sequences/transformer_attention.svg` uses a color outside the
   palette (#97afd2, a heat map shade); 3 figures have lines thinner than 0.4 px. Fix: set them to the values of
@@ -440,7 +440,7 @@ that is not wrong.
   (48 of them with 4.6 to 5.9 px, as the 6 px heads take more of short arrows, for example in
   `gptlite-cpp/torch_compile.svg` and the three `distributed-training/imgs/dnn_multiproc*.svg`), 197 lines through
   the text box of a label, 55 labels that run into a box, 28 heads on text and 8 overlapping boxes. Most are in dense
-  pictures from papers: `matrix-transpose/xcrs_format.svg` (48), `deep-neural-networks/densenet.svg` (42) and
+  pictures from papers: `matrix-transpose/xcrs_format.svg` (48), `dnn-backprop/densenet.svg` (42) and
   `publications/performers.svg` (21); some are text boxes larger than their text. Fix: run the check again, check
   each picture at its page size, move the labels and arrows that touch, and lengthen the short arrows (move their
   bend, or the boxes they join).
@@ -633,23 +633,23 @@ that is not wrong.
   "fibers", "neighbors" and "Input fibers", and "neighborhood" in the caption proposed above for kohonen_1 to
   kohonen_3.
 
-### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-deep-neural-networks.md)
+### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-dnn-backprop.md)
 
-- Optional, `deep-neural-networks/fully_sparse_connectivity.svg` and its caption keep the symbols of Figure 9.2 of
+- Optional, `dnn-backprop/fully_sparse_connectivity.svg` and its caption keep the symbols of Figure 9.2 of
   the Deep Learning book: inputs x1 to x5 and outputs s1 to s5. The text writes the input of a layer as $$x^{(0)}$$
   and its output as $$x^{(1)}$$, as `dnn.svg` does, and says that the $$x_i$$ and $$s_i$$ of the picture stand for
   them. Fix: inputs x₁⁽⁰⁾ to x₅⁽⁰⁾ and outputs x₁⁽¹⁾ to x₅⁽¹⁾ in both rows, and
   the caption "... where the input $$x_3^{(0)}$$ affects only the outputs $$x_2^{(1)}$$, $$x_3^{(1)}$$ and
   $$x_4^{(1)}$$. Bottom: a fully connected layer, where $$x_3^{(0)}$$ affects every output."
-- Optional, `deep-neural-networks/fully_sparse_connectivity.svg`, dense panel: the arrows from the far inputs reach
+- Optional, `dnn-backprop/fully_sparse_connectivity.svg`, dense panel: the arrows from the far inputs reach
   s1 and s5 only 6 to 11 degrees apart, so 2 to 3 heads overlap into one dark mark (less at s2 and s4). CLAUDE.md
   lets heads that converge on one node of a dense network touch. Fix: end the five arrows into each output at points
   about 7 px apart along the lower half of its circle.
-- `deep-neural-networks/densenet.svg`: the curved arrows into the fourth BN-ReLU-Conv box and into the Transition
+- `dnn-backprop/densenet.svg`: the curved arrows into the fourth BN-ReLU-Conv box and into the Transition
   Layer arrive horizontally on their slanted (24 degree) top edges, and the lower barb of each head touches the edge.
   Fix: end each curve perpendicular to the edge (its last control point on the normal of the edge), with the whole
   head outside the shape.
-- `deep-neural-networks/cnn.svg`: the fully connected layers read "Nx[512]" and "Nx[2]" under one title "Fully
+- `dnn-backprop/cnn.svg`: the fully connected layers read "Nx[512]" and "Nx[2]" under one title "Fully
   Connected", while the original picture (cnn.png at commit c1a083b4) has "1024x[512]" and "512x[2]", the shapes of
   the weights (4·4·64 = 1,024 inputs), under two titles. Fix: keep the activation shapes, which match the other
   labels, or restore the labels and the two titles of the original.
@@ -1147,9 +1147,9 @@ Content problems that need the author's decision, such as overlap between posts.
   expectation as $$\mathbb{E}$$ in ICA, as the statistics posts and the isolation forest section do, and keep the
   others, which each section defines.
 
-### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-deep-neural-networks.md)
+### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-dnn-backprop.md)
 
-- `deep-neural-networks/cnn.svg` gives no filter size, so the text assumes 3×3 filters: the first layer has 896
+- `dnn-backprop/cnn.svg` gives no filter size, so the text assumes 3×3 filters: the first layer has 896
   parameters, 7,000 times fewer than a dense layer, and the fully connected layers hold 96.4% of the 545,218
   parameters. With 5×5 filters, these numbers become 2,432 parameters, 2,600 times fewer, and 90.7% of 579,522.
   Proposed fix: confirm the filter size of the network of the picture, and keep or change the numbers; "more than all
@@ -1318,7 +1318,7 @@ category that the home page puts before it, fits on one line of the home page on
   deep neural networks (708 px), variable timestep (720 px) and the LIF neuron and Brunel network (694 px). Fix:
   shorter titles, under 690 px.
 
-### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-deep-neural-networks.md)
+### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-dnn-backprop.md)
 
 - The title does not name the optimizers (SGD, momentum, Adam) or the NumPy implementation of a network and its
   training loop that the post covers, and it is 708 px wide. Proposed: "DNNs, Backpropagation, Optimizers, Dropout,
