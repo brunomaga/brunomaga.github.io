@@ -1011,7 +1011,7 @@ def pq_search(books, codes, q, k):
 
 The following functions implement HNSW. `search_layer` is a best-first search in one layer of the graph: it keeps the `ef` nearest nodes that it has found, and expands the nearest of them that it has not expanded yet, i.e. computes the distances to its neighbors, until all of them are expanded. `select` picks the links of a node with the heuristic of the paper: a candidate is kept only if it is closer to the node than to the candidates kept before it, so that the links point in diverse directions, e.g. towards a nearby cluster, instead of only towards the nearest nodes of the same cluster.
 
-`hnsw_index` inserts the vectors one by one. Each vector gets a random top layer, from an exponential distribution, so that each layer holds about $$1/M$$ of the nodes of the layer below. The new node descends greedily from the top layer of the graph to its own top layer, and from there down to the bottom layer, it is linked to up to $$M$$ of the `ef` nearest nodes found in each layer, and back, with up to $$2M$$ links per node in the bottom layer, as in the paper. A query descends greedily through the upper layers, and searches the bottom layer with `ef` candidates:
+`hnsw_index` inserts the vectors one by one. Each vector gets a random top layer, from an exponential distribution, so that each layer holds about $$1/M$$ of the nodes of the layer below. The new node descends greedily from the top layer of the graph to its own top layer, and from there down to the bottom layer, it is linked to up to $$M$$ of the `ef` nearest nodes found in each layer, and back. Each node keeps up to $$M$$ links per layer, or $$2M$$ in the bottom layer, as in the paper: a node that gets more links keeps those that `select` picks. A query descends greedily through the upper layers, and searches the bottom layer with `ef` candidates:
 
 ```python
 def search_layer(X, graph, q, entries, ef):  # the ef nearest nodes to q that it finds
@@ -1044,7 +1044,9 @@ def hnsw_index(X, M=8, ef=32, seed=0):
                 graphs[l][i] = select(X, i, ep, M)
                 Mmax = 2 * M if l == 0 else M  # more links in layer 0
                 for j in graphs[l][i]:
-                    graphs[l][j] = select(X, j, graphs[l][j] + [i], Mmax)
+                    graphs[l][j].append(i)
+                    if len(graphs[l][j]) > Mmax:  # more than Mmax links: prune them
+                        graphs[l][j] = select(X, j, graphs[l][j], Mmax)
         if top >= len(graphs):  # new layers, with node i as their entry point
             graphs += [{i: []} for _ in range(top + 1 - len(graphs))]
             entry = i
@@ -1057,7 +1059,7 @@ def hnsw_search(X, graphs, entry, q, k, ef=32):
     return search_layer(X, graphs[0], q, ep, max(ef, k))[:k]
 ```
 
-For the sake of comparison, on 5,000 vectors of 32 dimensions in 50 clusters, normalized to unit length, and with the default parameters of the functions above, IVF finds all of the 10 nearest neighbors of a query by scanning 5.7% of the vectors, LSH finds 99% of them by ranking 6.7%, and HNSW 99% by computing the distances to 2.5%. PQ alone finds only 54% of them, as its distances are approximate, but all of them once its 100 best candidates are ranked again by their exact distances, a common way to use it.
+For the sake of comparison, on 5,000 vectors of 32 dimensions in 50 clusters, normalized to unit length, and with the default parameters of the functions above, IVF finds all of the 10 nearest neighbors of a query by scanning 5.7% of the vectors, LSH finds 98.8% of them by ranking 6.7%, and HNSW 99.8% by computing the distances to 2.9%. PQ alone finds only 54% of them, as its distances are approximate, but all of them once its 100 best candidates are ranked again by their exact distances, a common way to use it.
 
 Each method has its trade-off. LSH needs no training, but it needs many hash tables, i.e. much memory, for a high recall. IVF and PQ need a k-means training, and PQ stores each vector in a few bytes. HNSW reaches the highest recall for a given query time in benchmarks ([Aumüller, Bernhardsson and Faithfull, 2018](https://arxiv.org/abs/1807.05614)), but its index is slow to build and keeps the full vectors in memory. Thus, HNSW is the usual choice when the vectors fit in memory, and PQ when they do not.
 
